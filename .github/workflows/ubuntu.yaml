@@ -1,0 +1,61 @@
+name: Ubuntu Build
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref || github.run_id }}
+  cancel-in-progress: true
+
+jobs:
+  test_compilers_gcc:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        compiler: [11, 12, 13, 'latest']
+        preset: ['linux-release-user']
+    container: gcc:${{ matrix.compiler }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          submodules: true
+      - name: Set up latest CMake and Ninja
+        uses: lukka/get-cmake@latest
+      - name: Install Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'adopt'
+          java-version: '8'
+      - name: Run CMake
+        run: |
+          cmake --preset ${{ matrix.preset }}
+          cmake --build out/build/${{ matrix.preset }}
+          cmake --build out/build/${{ matrix.preset }} --target install
+
+  test_compilers_clang:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        compiler: [ 16, 17, 'latest' ]
+        preset: [ 'linux-release-user' ]
+    container: silkeh/clang:${{ matrix.compiler }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          submodules: true
+      - name: Setup latest CMake and Ninja
+        uses: lukka/get-cmake@latest
+      - name: Install Java
+        uses: actions/setup-java@v4
+      - name: Run CMake
+        run: |
+          cmake --preset ${{ matrix.preset }}
+          cmake --build out/build/${{ matrix.preset }}
+          cmake --build out/build/${{ matrix.preset }} --target install

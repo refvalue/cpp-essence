@@ -1,0 +1,52 @@
+#pragma once
+
+#include <locale>
+#include <string_view>
+#include <utility>
+
+#if ES_IS_CPPESSENCE_IMPL
+#include "abi/string.hpp"
+#include "compat.hpp"
+#include "globalization/abstract/translator.hpp"
+#include "globalization/simple_messages.hpp"
+#else
+#include <essence/abi/string.hpp>
+#include <essence/compat.hpp>
+#include <essence/globalization/abstract/translator.hpp>
+#include <essence/globalization/simple_messages.hpp>
+#endif
+
+#if @ES_WITH_EXPORTS@
+#if ES_IS_CPPESSENCE_IMPL
+#include "compat.hpp"
+#else
+#include <essence/compat.hpp>
+#endif
+#endif
+
+namespace @ES_USER_NAMESPACE@ {
+#if @ES_WITH_EXPORTS@
+    ES_API(@ES_USER_NAME@) const essence::globalization::abstract::translator& get_bounded_translator();
+#else
+    const essence::globalization::abstract::translator& get_bounded_translator();
+#endif
+
+    inline const std::locale& get_bounded_locale() {
+        class messages_by_translator : public essence::globalization::simple_messages {
+        public:
+            explicit messages_by_translator(essence::globalization::abstract::translator translator)
+                : translator_{std::move(translator)} {}
+
+        private:
+            [[nodiscard]] essence::abi::string do_get(std::string_view name) const override {
+                return translator_.get_text(name);
+            }
+
+            essence::globalization::abstract::translator translator_;
+        };
+
+        static const std::locale locale{std::locale{}, new messages_by_translator{get_bounded_translator()}};
+
+        return locale;
+    }
+}

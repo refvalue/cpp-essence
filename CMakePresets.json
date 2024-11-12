@@ -1,0 +1,220 @@
+﻿{
+  "version": 3,
+  "configurePresets": [
+    {
+      "name": "rsync-config",
+      "hidden": true,
+      "vendor": {
+        "microsoft.com/VisualStudioRemoteSettings/CMake/1.0": {
+          "sourceDir": "$env{HOME}/.vs/$ms{projectDirName}",
+          "rsyncCommandArgs": [
+            "--include=third-party/boost-archive-for-cpprestsdk/**/build",
+            "--include=third-party/zstd/build",
+            "--exclude=third-party/**/test",
+            "--exclude=third-party/**/tests",
+            "-W"
+          ]
+        }
+      }
+    },
+    {
+      "name": "windows-base",
+      "hidden": true,
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/out/build/${presetName}",
+      "installDir": "${sourceDir}/out/install/${presetName}",
+      "cacheVariables": {
+        "CMAKE_C_COMPILER": "cl.exe",
+        "CMAKE_CXX_COMPILER": "cl.exe",
+        "ES_STATIC_RUNTIME": "OFF",
+        "ES_WITH_TESTS": "ON"
+      },
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows"
+      },
+      "vendor": {
+        "jetbrains.com/clion": {
+          "toolchain": "Visual Studio"
+        }
+      }
+    },
+    {
+      "name": "emscripten-wasm-base",
+      "hidden": true,
+      "inherits": "linux-base",
+      "description": "Target Emscripten/WASM on the Windows Subsystem for Linux (WSL) or a remote Linux system.",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/out/build/${presetName}",
+      "installDir": "${sourceDir}/out/install/${presetName}",
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Linux"
+      }
+    },
+    {
+      "name": "linux-base",
+      "inherits": "rsync-config",
+      "hidden": true,
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/out/build/${presetName}",
+      "installDir": "${sourceDir}/out/install/${presetName}",
+      "cacheVariables": {
+        "ES_WITH_NET": "ON",
+        "ES_WITH_TESTS": "ON",
+        "ES_STATIC_RUNTIME": "OFF",
+        "ES_WITH_JNI": "ON"
+      },
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Linux"
+      },
+      "vendor": {
+        "microsoft.com/VisualStudioRemoteSettings/CMake/1.0": {
+          "sourceDir": "$env{HOME}/.vs/$ms{projectDirName}",
+          "copyAdditionalIncludeDirectoriesList": [
+            "${sourceDir}/out/install/${presetName}/include",
+            "${sourceDir}/out/build/${presetName}/third-party/install/include"
+          ]
+        }
+      }
+    },
+    {
+      "name": "windows-debug",
+      "hidden": true,
+      "inherits": "windows-base",
+      "architecture": {
+        "value": "x64",
+        "strategy": "external"
+      },
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug"
+      }
+    },
+    {
+      "name": "windows-release",
+      "hidden": true,
+      "inherits": "windows-debug",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release"
+      }
+    },
+    {
+      "name": "linux-debug",
+      "hidden": true,
+      "inherits": "linux-base",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "ES_STATIC_RUNTIME": "OFF",
+        "ES_WITH_JNI": "OFF"
+      }
+    },
+    {
+      "name": "linux-release",
+      "hidden": true,
+      "inherits": "linux-debug",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release"
+      }
+    },
+    {
+      "name": "macos-debug",
+      "hidden": true,
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/out/build/${presetName}",
+      "installDir": "${sourceDir}/out/install/${presetName}",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug"
+      },
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Darwin"
+      }
+    },
+    {
+      "name": "macos-release",
+      "hidden": true,
+      "inherits": "macos-debug",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release"
+      }
+    },
+    {
+      "name": "emscripten-wasm-release",
+      "hidden": true,
+      "inherits": "emscripten-wasm-base",
+      "architecture": {
+        "value": "wasm32",
+        "strategy": "external"
+      },
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_FIND_DEBUG_MODE": "OFF",
+        "CMAKE_TOOLCHAIN_FILE": "$env{ES_EMSDK_ROOT}/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmake",
+        "ES_WITH_JNI": "OFF",
+        "ES_WITH_NET": "OFF",
+        "ES_WITH_THREADS": "OFF"
+      },
+      "vendor": {
+        "microsoft.com/VisualStudioRemoteSettings/CMake/1.0": {
+          "copyAdditionalIncludeDirectoriesList": [
+            "$env{ES_EMSDK_ROOT}/upstream/emscripten/cache/sysroot/include/fakesdl",
+            "$env{ES_EMSDK_ROOT}/upstream/emscripten/cache/sysroot/include/compat",
+            "$env{ES_EMSDK_ROOT}/upstream/emscripten/cache/sysroot/include/c++/v1",
+            "$env{ES_EMSDK_ROOT}/upstream/lib/clang/17/include",
+            "$env{ES_EMSDK_ROOT}/upstream/emscripten/cache/sysroot/include",
+            "${sourceDir}/out/build/${presetName}/third-party/install/include",
+            "${sourceDir}/out/build/${presetName}/third-party/install/include/freetype2",
+            "${sourceDir}/out/build/${presetName}/_cmrc/include",
+            "${sourceDir}/third-party/glm"
+          ]
+        },
+        "microsoft.com/VisualStudioSettings/CMake/1.0": {
+          "intelliSenseMode": "linux-gcc-x86"
+        }
+      }
+    },
+    {
+      "name": "aarch64-gnu-linux-release",
+      "hidden": true,
+      "inherits": "linux-base",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_TOOLCHAIN_FILE": "${sourceDir}/cmake/ArmToolchain.cmake",
+        "ES_WITH_JNI": "ON"
+      }
+    },
+    {
+      "name": "aarch64-linux-android",
+      "hidden": true,
+      "inherits": "rsync-config",
+      "displayName": "AArch64 GNU/Linux Android",
+      "binaryDir": "${sourceDir}/out/build/${presetName}",
+      "installDir": "${sourceDir}/out/install/${presetName}",
+      "toolchainFile": "${sourceDir}/cmake/NDKToolchain.cmake",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release"
+      },
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Linux"
+      },
+      "vendor": {
+        "microsoft.com/VisualStudioSettings/CMake/1.0": {
+          "intelliSenseMode": "android-clang-arm64"
+        },
+        "microsoft.com/VisualStudioRemoteSettings/CMake/1.0": {
+          "copyAdditionalIncludeDirectoriesList": [
+            "${sourceDir}/out/install/${presetName}/include",
+            "${sourceDir}/out/build/${presetName}/third-party/install/include"
+          ]
+        }
+      }
+    }
+  ]
+}

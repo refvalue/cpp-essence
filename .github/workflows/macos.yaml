@@ -1,0 +1,66 @@
+name: MacOS Build
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref || github.run_id }}
+  cancel-in-progress: true
+
+jobs:
+  test_compilers_gcc:
+    runs-on: macos-latest
+    strategy:
+      matrix:
+        compiler: [11, 12, 13]
+        preset: ['macos-release-user']
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          submodules: true
+      - name: Set up latest CMake and Ninja
+        uses: lukka/get-cmake@latest
+      - name: Install Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'adopt'
+          java-version: '8'
+      - name: Install dependencies
+        run: brew install gcc@${{ matrix.compiler }}
+      - name: Run CMake
+        run: |
+          cmake --preset ${{ matrix.preset }}
+          cmake --build out/build/${{ matrix.preset }}
+          cmake --build out/build/${{ matrix.preset }} --target install
+
+  test_compilers_clang:
+    runs-on: macos-latest
+    strategy:
+      matrix:
+        compiler: [16]
+        preset: ['macos-release-user']
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          submodules: true
+      - name: Set up latest CMake and Ninja
+        uses: lukka/get-cmake@latest
+      - name: Install Java
+        uses: actions/setup-java@v4
+      - name: Install dependencies
+        run: |
+          brew install clang@${{ matrix.compiler }}
+          export CC=/opt/homebrew/opt/llvm/bin/clang
+          export CXX=/opt/homebrew/opt/llvm/bin/clang++
+      - name: Run CMake
+        run: |
+          cmake --preset ${{ matrix.preset }}
+          cmake --build out/build/${{ matrix.preset }}
+          cmake --build out/build/${{ matrix.preset }} --target install

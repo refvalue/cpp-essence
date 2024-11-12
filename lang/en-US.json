@@ -1,0 +1,5 @@
+{
+    "hello world": "hello world",
+    "file not found": "The file was not found.",
+    "illegal pattern": "The regex pattern was illegal."
+}

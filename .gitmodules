@@ -1,0 +1,21 @@
+[submodule "third-party/fmt"]
+	path = third-party/fmt
+	url = https://github.com/fmtlib/fmt.git
+[submodule "third-party/cpprestsdk"]
+	path = third-party/cpprestsdk
+	url = https://github.com/microsoft/cpprestsdk.git
+[submodule "third-party/zlib-ng"]
+	path = third-party/zlib-ng
+	url = https://github.com/zlib-ng/zlib-ng.git
+[submodule "third-party/openssl"]
+	path = third-party/openssl
+	url = https://github.com/openssl/openssl.git
+[submodule "third-party/boost-archive-for-cpprestsdk"]
+	path = third-party/boost-archive-for-cpprestsdk
+	url = https://github.com/refvalue/boost-archive-for-cpprestsdk.git
+[submodule "third-party/zstd"]
+	path = third-party/zstd
+	url = https://github.com/facebook/zstd.git
+[submodule "third-party/spdlog"]
+	path = third-party/spdlog
+	url = https://github.com/gabime/spdlog.git

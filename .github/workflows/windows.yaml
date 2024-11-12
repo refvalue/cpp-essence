@@ -1,0 +1,39 @@
+name: Windows Build
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref || github.run_id }}
+  cancel-in-progress: true
+
+jobs:
+  test_compilers_msvc:
+    runs-on: windows-2022
+    strategy:
+      matrix:
+        preset: [ 'windows-debug-user', 'windows-release-user' ]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          submodules: true
+      - name: Install Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'adopt'
+          java-version: '8'
+      - name: Set up MSVC environment
+        uses: ilammy/msvc-dev-cmd@v1
+      - name: Install Ninja
+        run: choco install ninja --yes
+      - name: Run CMake
+        run: |
+          cmake --preset ${{ matrix.preset }}
+          cmake --build out/build/${{ matrix.preset }}
+          cmake --build out/build/${{ matrix.preset }} --target install

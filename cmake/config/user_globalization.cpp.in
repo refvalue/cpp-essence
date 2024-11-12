@@ -1,0 +1,22 @@
+#include "user_globalization_@ES_USER_NAME@.hpp"
+
+#if ES_IS_CPPESSENCE_IMPL
+#include "globalization/translator.hpp"
+#include "io/fs_operator.hpp"
+#else
+#include <essence/globalization/translator.hpp>
+#include <essence/io/fs_operator.hpp>
+#endif
+
+#include <cmrc/cmrc.hpp>
+
+CMRC_DECLARE(@ES_USER_NAMESPACE@);
+
+namespace @ES_USER_NAMESPACE@ {
+    const essence::globalization::abstract::translator& get_bounded_translator() {
+        static const auto translator = essence::globalization::make_translator(
+            essence::io::make_cmrc_fs_operator(cmrc::@ES_USER_NAMESPACE@::get_filesystem()));
+
+        return translator;
+    }
+}
