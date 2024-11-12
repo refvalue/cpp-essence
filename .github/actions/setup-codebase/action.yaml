@@ -28,6 +28,7 @@ runs:
       uses: ilammy/msvc-dev-cmd@v1
     - name: Install Ninja
       if: ${{ runner.os == 'Windows' }}
+      shell: ${{ inputs.shell }}
       run: choco install ninja --yes
     - name: Set up latest CMake and Ninja
       if: ${{ runner.os != 'Windows' }}
