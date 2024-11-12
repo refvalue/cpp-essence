@@ -27,7 +27,7 @@ jobs:
       - name: Install dependencies
         run: brew install gcc@${{ matrix.compiler }}
       - name: Make and test
-        uses: ./.github/actions/make-and-test
+        uses: refvalue/make-and-test-action@main
         with:
           preset: ${{ matrix.preset }}
           shell: bash

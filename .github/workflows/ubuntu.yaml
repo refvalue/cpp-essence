@@ -26,7 +26,7 @@ jobs:
         with:
           shell: bash
       - name: Make and test
-        uses: ./.github/actions/make-and-test
+        uses: refvalue/make-and-test-action@main
         with:
           preset: ${{ matrix.preset }}
           shell: bash
