@@ -2,6 +2,7 @@
 
 executing_directory=$(dirname "$(realpath "$0")")
 cd "$executing_directory" || exit
+echo "$executing_directory"
 
 git submodule update --init
 
