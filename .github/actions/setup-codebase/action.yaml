@@ -7,26 +7,9 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Install Git
-      if: ${{ runner.os == 'Linux' }}
-      shell: ${{ inputs.shell }}
-      run: |
-        apt update -y
-        apt install -y git
-        git config --global --add safe.directory .
     - name: Deploy CMakeUserPresets.json
       shell: ${{ inputs.shell }}
       run: cp ./CMakeUserPresets-example.json ./CMakeUserPresets.json
-    - name: Bootstrap project on Windows
-      if: ${{ runner.os == 'Windows' }}
-      shell: ${{ inputs.shell }}
-      run: ./bootstrap.ps1
-    - name: Bootstrap project on Linux/MacOS
-      if: ${{ runner.os != 'Windows' }}
-      shell: ${{ inputs.shell }}
-      run: |
-        chmod +x ./bootstrap.sh
-        ./bootstrap.sh
     - name: Install Java
       uses: actions/setup-java@v4
       with:

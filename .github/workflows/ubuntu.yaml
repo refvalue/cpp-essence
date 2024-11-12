@@ -23,6 +23,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+        with:
+          submodules: true
       - name: Set up codebase
         uses: ./.github/actions/setup-codebase
         with:
@@ -42,6 +44,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+        with:
+          submodules: true
       - name: Set up codebase
         uses: ./.github/actions/setup-codebase
         with:
