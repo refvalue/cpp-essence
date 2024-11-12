@@ -24,7 +24,9 @@ runs:
     - name: Bootstrap project on Linux/MacOS
       if: ${{ runner.os != 'Windows' }}
       shell: ${{ inputs.shell }}
-      run: ./bootstrap.sh
+      run: |
+        chmod +x ./bootstrap.sh
+        ./bootstrap.sh
     - name: Install Java
       uses: actions/setup-java@v4
       with:
