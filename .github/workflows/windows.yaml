@@ -20,11 +20,11 @@ jobs:
         preset: [ 'windows-debug-user', 'windows-release-user' ]
     steps:
       - name: Set up codebase
-        uses: ./.github/actions/setup-codebase
+        uses: refvalue/setup-codebase-action
         with:
           shell: pwsh
       - name: Make and test
-        uses: ./.github/actions/make-and-test
+        uses: refvalue/make-and-test-action
         with:
           preset: ${{ matrix.preset }}
           shell: pwsh

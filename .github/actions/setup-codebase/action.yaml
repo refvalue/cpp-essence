@@ -21,6 +21,7 @@ runs:
       shell: ${{ inputs.shell }}
       run: |
         git config --global --add safe.directory .
+        git pull
         chmod +x ./bootstrap.sh
         ./bootstrap.sh
     - name: Deploy CMakeUserPresets.json
@@ -30,7 +31,7 @@ runs:
       uses: actions/setup-java@v4
       with:
         distribution: 'adopt'
-        java-version: '8'
+        java-version: '11'
     - name: Set up MSVC environment
       if: ${{ runner.os == 'Windows' }}
       uses: ilammy/msvc-dev-cmd@v1
