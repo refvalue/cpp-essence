@@ -19,6 +19,8 @@ jobs:
       matrix:
         preset: [ 'windows-debug-user', 'windows-release-user' ]
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
       - name: Set up codebase
         uses: ./.github/actions/setup-codebase
       - name: Make and test

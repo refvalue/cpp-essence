@@ -20,6 +20,8 @@ jobs:
         compiler: [ 11, 12, 13 ]
         preset: [ 'macos-release-user' ]
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
       - name: Set up codebase
         uses: ./.github/actions/setup-codebase
       - name: Install dependencies
@@ -36,6 +38,8 @@ jobs:
         compiler: [ 16 ]
         preset: [ 'macos-release-user' ]
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
       - name: Set up codebase
         uses: ./.github/actions/setup-codebase
       - name: Install dependencies
