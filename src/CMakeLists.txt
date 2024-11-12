@@ -282,7 +282,7 @@ if(NOT CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
         PRIVATE
         LINKER:-Bsymbolic
         LINKER:--exclude-libs,libfmt.a
-        LINKER:--exclude-libs,libcpprest_2_10.a
+        LINKER:--exclude-libs,libcpprest.a
         LINKER:--exclude-libs,libcrypto.a
         LINKER:--exclude-libs,libssl.a
         LINKER:--exclude-libs,libz.a

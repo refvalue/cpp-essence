@@ -193,6 +193,8 @@ if(ES_WITH_NET)
 
     if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
         list(APPEND cpprestsdk_extra_cmake_args -DCMAKE_CXX_FLAGS=-Wno-format-truncation)
+    elseif(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+        list(APPEND cpprestsdk_extra_cmake_args -DCMAKE_CXX_FLAGS=-Wno-enum-constexpr-conversion)
     endif()
 
     # Boost is excluded without compiling websocketpp as a dependency.

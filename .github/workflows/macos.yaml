@@ -25,7 +25,10 @@ jobs:
         with:
           shell: bash
       - name: Install dependencies
-        run: brew install gcc@${{ matrix.compiler }}
+        run: |
+          brew install gcc@${{ matrix.compiler }}
+          export CC=gcc
+          export CXX=g++
       - name: Make and test
         uses: refvalue/make-and-test-action@main
         with:

@@ -1,6 +1,10 @@
 # 😀CPP Essence -- Modern C++ Utility Library
 
-[TOC]
+
+
+[![Windows Build](https://github.com/refvalue/cpp-essence/actions/workflows/windows.yaml/badge.svg)](https://github.com/refvalue/cpp-essence/actions/workflows/windows.yaml)[![Ubuntu Build](https://github.com/refvalue/cpp-essence/actions/workflows/ubuntu.yaml/badge.svg)](https://github.com/refvalue/cpp-essence/actions/workflows/ubuntu.yaml)[![MacOS Build](https://github.com/refvalue/cpp-essence/actions/workflows/macos.yaml/badge.svg)](https://github.com/refvalue/cpp-essence/actions/workflows/macos.yaml)
+
+
 
 ## 📚Requirements
 
@@ -791,8 +795,6 @@ The `getopt` command in GNU/Linux is used for parsing command-line arguments in 
 
 #### The compatible implementation: `cli::option<T>`
 
-
-
 ```cpp
 #include <string>
 #include <string_view>
@@ -822,29 +824,25 @@ namespace {
 }
 
 int main(){
-    // 字符串选项。
     auto opt1 = cli::option<std::string>{}
                  .set_name(U8("set_text"))
-                 .set_description(U8("设置文本。"))
+                 .set_description(U8("Sets text"))
                  .add_aliases(U8("t"))
                  .set_valid_values(U8("a"), U8("b"), U8("c"))
                  .as_abstract();
 
-    // 开关选项。
     auto opt2 = cli::option<bool>{}
                  .set_name(U8("set_flower"))
-                 .set_description(U8("开启花花。"))
+                 .set_description(U8("Enables a flower"))
                  .add_aliases(U8("f"))
                  .as_abstract();
     
-    // 枚举值数组选项。
     auto opt3 = cli::option<std::vector<tex>>{}
                  .set_name(U8("set_target"))
-                 .set_description(U8("设置目标列表。"))
+                 .set_description(U8("Sets a target list"))
                  .add_aliases(U8("d"))
                  .as_abstract();
 
-    // 创建解析器。
     cli::arg_parser parser;
     
     parser.on_error([](std::string_view message) { spdlog::error(message); });
@@ -853,26 +851,21 @@ int main(){
     parser.add_option(opt2);
     parser.add_option(opt3);
 	
-    // 模拟命令行参数解析。
     parser.parse(std::array<abi::string, 6>{
         U8("--set_text"), U8("a"), U8("-f=false"), U8("hahaha"), U8("--set_target"), U8("fire,bat")});
 
-    // 当 operator bool() 返回 true 时，代表最近一次解析成功。
     if (parser) {
-        // 获取原始解析结果。
         for (auto&& [key, value] : parser.cached_result()) {
             spdlog::info(U8("{} = {}"), key, value.raw_value);
         }
 
-        // 将原始解析结果反序列化为数据模型。
         if (auto m = parser.to_model<model>()) {
             spdlog::info(json(m).dump(4));
         }
         
-        // 获取剩余未匹配的参数。
         auto joint = join_with(parser.unmatched_args(), std::string_view{U8(",")});
 
-        spdlog::info(U8("未匹配的参数: {}"), std::string{joint.begin(), joint.end()});
+        spdlog::info(U8("Unmatched args: {}"), std::string{joint.begin(), joint.end()});
     }
 }
 ```
@@ -898,16 +891,3 @@ This library includes several third-party submodules, each of which is exception
 <img src="https://avatars.githubusercontent.com/u/45075615?s=48&v=4" width="56" height="56">[zlib-ng/zlib-ng: zlib replacement with optimizations for "next generation" systems.](https://github.com/zlib-ng/zlib-ng)
 
 ![](https://avatars.githubusercontent.com/u/69631?s=48&v=4)[facebook/zstd: Zstandard - Fast real-time compression algorithm](https://github.com/facebook/zstd)
-
-
-
-## 👇下载开发包
-
-- [RV1109 开发板  1.1.11（暂停维护）](http://pub:glsix666@192.168.15.39:3690/Fundamental/release/1.1.11/gx-miscellaneous-1.1.11-no-jni-arm-linux-rv1109.tgz)
-- [RV1106 开发版 1.1.10（暂停维护）](http://pub:glsix666@192.168.15.39:3690/Fundamental/release/1.1.10/gx-miscellaneous-1.1.10-no-jni-arm-linux-rv1106.tgz)
-- [Windows Debug 1.2.0 + JDK 8](http://pub:glsix666@192.168.15.39:3690/Fundamental/release/1.2.0/gx-miscellaneous-1.2.0-jdk-8-x86_64-windows-debug.zip)
-- [Windows Release 1.3.0 + JDK 8 ](http://pub:glsix666@192.168.15.39:3690/Fundamental/release/1.3.0/gx-miscellaneous-1.3.0-jdk-8-x86_64-windows-release.zip)
-- [x86_64 GNU Linux 1.3.0 + JDK 8, glibc >= 2.17](http://pub:glsix666@192.168.15.39:3690/Fundamental/release/1.3.0/gx-miscellaneous-1.3.0-jdk-8-x86_64-linux.tgz)
-- [AArch64 GNU Linux 1.3.0 + JDK21](http://pub:glsix666@192.168.15.39:3690/Fundamental/release/1.3.0/gx-miscellaneous-1.3.0-jdk-21-aarch64-linux.tgz)
-- [Android 1.1.11（暂停维护）](http://pub:glsix666@192.168.15.39:3690/Fundamental/release/1.1.11/gx-miscellaneous-1.1.11-aarch64-linux-android.tgz)
-- [下载 Windows C++ 运行时：Visual C++ 2015, 2017 and 2022 x86_64 Redistributable](https://aka.ms/vs/17/release/vc_redist.x64.exe)
