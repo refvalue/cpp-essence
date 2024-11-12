@@ -21,10 +21,6 @@ jobs:
         preset: [ 'linux-release-user' ]
     container: gcc:${{ matrix.compiler }}
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-        with:
-          submodules: true
       - name: Set up codebase
         uses: ./.github/actions/setup-codebase
         with:
@@ -33,6 +29,7 @@ jobs:
         uses: ./.github/actions/make-and-test
         with:
           preset: ${{ matrix.preset }}
+          shell: bash
 
   test_compilers_clang:
     runs-on: ubuntu-latest
@@ -42,10 +39,6 @@ jobs:
         preset: [ 'linux-release-user' ]
     container: silkeh/clang:${{ matrix.compiler }}
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-        with:
-          submodules: true
       - name: Set up codebase
         uses: ./.github/actions/setup-codebase
         with:

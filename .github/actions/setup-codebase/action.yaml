@@ -7,6 +7,22 @@ inputs:
 runs:
   using: "composite"
   steps:
+    - name: Bootstrap project on Windows
+      if: ${{ runner.os == 'Windows' }}
+      uses: actions/checkout@v3
+      shell: ${{ inputs.shell }}
+      run: |
+        git config --global --add safe.directory .
+        git pull
+        ./bootstrap.ps1
+    - name: Bootstrap project on Linux/MacOS
+      if: ${{ runner.os != 'Windows' }}
+      uses: actions/checkout@v3
+      shell: ${{ inputs.shell }}
+      run: |
+        git config --global --add safe.directory .
+        chmod +x ./bootstrap.sh
+        ./bootstrap.sh
     - name: Deploy CMakeUserPresets.json
       shell: ${{ inputs.shell }}
       run: cp ./CMakeUserPresets-example.json ./CMakeUserPresets.json
