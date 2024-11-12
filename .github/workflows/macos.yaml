@@ -25,13 +25,14 @@ jobs:
       - name: Set up codebase
         uses: ./.github/actions/setup-codebase
         with:
-          shell: zsh
+          shell: bash
       - name: Install dependencies
         run: brew install gcc@${{ matrix.compiler }}
       - name: Make and test
         uses: ./.github/actions/make-and-test
         with:
           preset: ${{ matrix.preset }}
+          shell: bash
 
   test_compilers_clang:
     runs-on: macos-latest
@@ -45,7 +46,7 @@ jobs:
       - name: Set up codebase
         uses: ./.github/actions/setup-codebase
         with:
-          shell: zsh
+          shell: bash
       - name: Install dependencies
         run: |
           brew install clang@${{ matrix.compiler }}
@@ -55,3 +56,4 @@ jobs:
         uses: ./.github/actions/make-and-test
         with:
           preset: ${{ matrix.preset }}
+          shell: bash

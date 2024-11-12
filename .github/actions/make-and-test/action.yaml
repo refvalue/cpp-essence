@@ -2,6 +2,9 @@ name: Project Build and Test
 inputs:
   preset:
     description: 'The CMake preset to be built'
+    required: true,
+  shell:
+    description: 'The shell executable that runs the script'
     required: true
 
 runs:

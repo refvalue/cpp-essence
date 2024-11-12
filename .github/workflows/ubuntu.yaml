@@ -50,3 +50,4 @@ jobs:
         uses: ./.github/actions/make-and-test
         with:
           preset: ${{ matrix.preset }}
+          shell: bash
