@@ -21,11 +21,11 @@ jobs:
         preset: [ 'macos-release-user' ]
     steps:
       - name: Set up codebase
-        use: ./.github/actions/setup-codebase
+        uses: ./.github/actions/setup-codebase
       - name: Install dependencies
         run: brew install gcc@${{ matrix.compiler }}
       - name: Make and test
-        use: ./.github/actions/make-and-test
+        uses: ./.github/actions/make-and-test
         with:
           preset: ${{ matrix.preset }}
 
@@ -37,13 +37,13 @@ jobs:
         preset: [ 'macos-release-user' ]
     steps:
       - name: Set up codebase
-        use: ./.github/actions/setup-codebase
+        uses: ./.github/actions/setup-codebase
       - name: Install dependencies
         run: |
           brew install clang@${{ matrix.compiler }}
           export CC=/opt/homebrew/opt/llvm/bin/clang
           export CXX=/opt/homebrew/opt/llvm/bin/clang++
       - name: Make and test
-        use: ./.github/actions/make-and-test
+        uses: ./.github/actions/make-and-test
         with:
           preset: ${{ matrix.preset }}

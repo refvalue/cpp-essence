@@ -22,9 +22,9 @@ jobs:
     container: gcc:${{ matrix.compiler }}
     steps:
       - name: Set up codebase
-        use: ./.github/actions/setup-codebase
+        uses: ./.github/actions/setup-codebase
       - name: Make and test
-        use: ./.github/actions/make-and-test
+        uses: ./.github/actions/make-and-test
         with:
           preset: ${{ matrix.preset }}
 
@@ -37,8 +37,8 @@ jobs:
     container: silkeh/clang:${{ matrix.compiler }}
     steps:
       - name: Set up codebase
-        use: ./.github/actions/setup-codebase
+        uses: ./.github/actions/setup-codebase
       - name: Make and test
-        use: ./.github/actions/make-and-test
+        uses: ./.github/actions/make-and-test
         with:
           preset: ${{ matrix.preset }}

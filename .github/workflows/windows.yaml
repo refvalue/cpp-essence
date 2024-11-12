@@ -20,8 +20,8 @@ jobs:
         preset: [ 'windows-debug-user', 'windows-release-user' ]
     steps:
       - name: Set up codebase
-        use: ./.github/actions/setup-codebase
+        uses: ./.github/actions/setup-codebase
       - name: Make and test
-        use: ./.github/actions/make-and-test
+        uses: ./.github/actions/make-and-test
         with:
           preset: ${{ matrix.preset }}
