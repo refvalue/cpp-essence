@@ -1,4 +1,4 @@
-﻿set(target_version 1.3.0)
+﻿set(target_version 1.0.0)
 set(target_name cpp-essence)
 set(target_name_header_only cpp-essence-header-only)
 set(package_name CppEssence)
@@ -281,7 +281,12 @@ if(NOT CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
         ${target_name}
         PRIVATE
         LINKER:-Bsymbolic
-        LINKER:--exclude-libs,ALL
+        LINKER:--exclude-libs,libfmt.a
+        LINKER:--exclude-libs,libcpprest_2_10.a
+        LINKER:--exclude-libs,libcrypto.a
+        LINKER:--exclude-libs,libssl.a
+        LINKER:--exclude-libs,libz.a
+        LINKER:--exclude-libs,libzstd.a
         $<$<CONFIG:RELEASE>:-s>
     )
 

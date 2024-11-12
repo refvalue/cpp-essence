@@ -1,4 +1,5 @@
-﻿set(target_name cpp-essence-test)
+﻿enable_testing()
+set(target_name cpp-essence-test)
 
 add_executable(${target_name} ${headers_and_sources})
 

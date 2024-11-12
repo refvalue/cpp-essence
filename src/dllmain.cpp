@@ -45,7 +45,7 @@ ES_API(CPPESSENCE) unsigned long getauxval(unsigned long type) {
 }
 #endif
 
-namespace {SPDLOG_INLINE
+namespace {
     ES_KEEP_ALIVE [[maybe_unused]] struct init {
         init() {
             try {
@@ -57,8 +57,6 @@ namespace {SPDLOG_INLINE
             } catch (...) {
                 spdlog::warn(U8("Failed to initialize the locale, then keeping the default."));
             }
-
-            spdlog::info(U8("C++ Essence Library Version {} | Build {}"), CPP_ESSENCE_VERSION, CPP_ESSENCE_DATETIME);
         }
     } force_init;
 } // namespace

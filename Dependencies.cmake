@@ -5,6 +5,7 @@ include(ESOpenSSL)
 include(ESEmscripten)
 include(ESLangCompiler)
 include(ESThirdPartyLibrary)
+include(FetchContent)
 
 if(NOT EMSCRIPTEN)
     find_package(Threads REQUIRED)
@@ -22,8 +23,36 @@ endif()
 
 message(STATUS "runtime_args: ${runtime_args}")
 
-es_deploy_lang_compiler("http://misc.refvalue.org/cpp-essence-lang-compiler")
-message(STATUS "ES_LANG_COMPILER_EXECUTABLE: ${ES_LANG_COMPILER_EXECUTABLE}")
+set(ENV{HTTP_PROXY} "http://127.0.0.1:10809")
+set(ENV{HTTPS_PROXY} "http://127.0.0.1:10809")
+
+if(CMAKE_HOST_SYSTEM_NAME STREQUAL "Windows")
+    FetchContent_Declare(
+        perl-windows
+        URL https://github.com/refvalue/cpp-essence/releases/download/v5.36.0-perl-windows/perl-5.36-windows.zip
+    )
+
+    FetchContent_MakeAvailable(perl-windows)
+    es_add_to_env(
+        PREPEND
+        NAME PATH
+        VALUE ${CMAKE_BINARY_DIR}/_deps/perl-windows-src/bin
+    )
+endif()
+
+if(ES_WITH_TESTS)
+    es_deploy_lang_compiler("http://misc.refvalue.org/cpp-essence-lang-compiler")
+    message(STATUS "ES_LANG_COMPILER_EXECUTABLE: ${ES_LANG_COMPILER_EXECUTABLE}")
+
+    FetchContent_Declare(
+        googletest
+        URL https://github.com/google/googletest/archive/03597a01ee50ed33e9dfd640b249b4be3799d395.zip
+    )
+
+    # For Windows: Prevents overriding the parent project's compiler/linker settings.
+    set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+    FetchContent_MakeAvailable(googletest)
+endif()
 
 set(extra_openssl_args no-tests no-afalgeng no-aria no-async no-autoload-config no-blake2 no-bf no-camellia no-cast no-chacha no-cmac no-cms no-cmp no-comp no-ct no-des no-dgram no-dh no-dsa no-dtls no-ec2m no-engine no-filenames no-gost no-idea no-ktls no-mdc2 no-md4 no-multiblock no-nextprotoneg no-ocsp no-ocb no-poly1305 no-psk no-rc2 no-rc4 no-rmd160 no-seed no-siphash no-siv no-srp no-srtp no-ssl3 no-ssl3-method no-ts no-ui-console no-whirlpool)
 
@@ -50,6 +79,7 @@ es_make_openssl(
     REQUIRED
     STATIC
     ${runtime_args}
+    PARALLEL_BUILD
     SYNC_BUILD_TYPE
     ${extra_openssl_args}
     SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/third-party/openssl

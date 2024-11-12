@@ -13,7 +13,7 @@ function(es_openssl_patch_lib64 install_dir)
 endfunction()
 
 function(es_make_openssl_impl)
-    set(options SYNC_BUILD_TYPE REQUIRED STATIC STATIC_RUNTIME)
+    set(options SYNC_BUILD_TYPE REQUIRED STATIC STATIC_RUNTIME PARALLEL_BUILD)
     set(one_value_args SOURCE_DIR BINARY_DIR CROSS_COMPILE CROSS_PLATFORM CC RESULT_FIND_PACKAGE_OPTIONS)
     set(multi_value_args "")
     cmake_parse_arguments(PARSE_ARGV 0 ARG "${options}" "${one_value_args}" "${multi_value_args}")
@@ -58,7 +58,7 @@ function(es_make_openssl_impl)
 
         list(APPEND configure_args /FS)
 
-        set(configure_command ${_es_openssl_absolute_current_dir}/../tool/perl-win/bin/perl.exe)
+        set(configure_command perl.exe)
         set(make_command nmake.exe)
     else()
         set(configure_command ${ARG_SOURCE_DIR}/config)
@@ -114,6 +114,13 @@ function(es_make_openssl_impl)
         else()
             list(APPEND configure_args ${release_flags})
         endif()
+    endif()
+
+    set(make_extra_args "")
+
+    if(ARG_PARALLEL_BUILD AND NOT CMAKE_HOST_SYSTEM_NAME STREQUAL "Windows")
+        es_thread_pool_worker_count(thread_count)
+        set(make_extra_args -j${thread_count})
     endif()
 
     if(CMAKE_C_FLAGS AND NOT CMAKE_C_FLAGS STREQUAL "\"\"")

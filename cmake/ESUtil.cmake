@@ -268,3 +268,28 @@ function(es_datetime result)
 
     set(${result} ${current_date} PARENT_SCOPE)
 endfunction()
+
+function(es_add_to_env)
+    set(options PREPEND)
+    set(one_value_args NAME VALUE)
+    set(multi_value_args "")
+    cmake_parse_arguments(PARSE_ARGV 0 ARG "${options}" "${one_value_args}" "${multi_value_args}")
+    es_ensure_parameters(es_add_to_env ARG NAME VALUE)
+
+    if(CMAKE_HOST_SYSTEM_NAME STREQUAL "Windows")
+        set(delimiter ";")
+    else()
+        set(delimiter ":")
+    endif()
+
+    set(current_env $ENV{${ARG_NAME}})
+    string(FIND "${current_env}" "${ARG_VALUE}" position)
+
+    if(position EQUAL -1)
+        if(ARG_PREPEND)
+            set(ENV{${ARG_NAME}} "${ARG_VALUE}${delimiter}${current_env}")
+        else()
+            set(ENV{${ARG_NAME}} "${current_env}${delimiter}${ARG_VALUE}")
+        endif()
+    endif()
+endfunction()

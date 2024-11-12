@@ -63,8 +63,8 @@ namespace essence::tooling {
             const std::filesystem::path& input_directory, const std::filesystem::path& output_directory) {
             for (auto&& item : std::filesystem::recursive_directory_iterator{
                      input_directory, std::filesystem::directory_options::skip_permission_denied}) {
-                if (const auto extenstion = from_u8string(item.path().extension().u8string());
-                    icase_string_comparer{}(extenstion, U8(".json"))) {
+                if (const auto extension = from_u8string(item.path().extension().u8string());
+                    icase_string_comparer{}(extension, U8(".json"))) {
                     auto output_path               = output_directory / item.path().lexically_relative(input_directory);
                     const auto output_subdirectory = output_path.parent_path();
 

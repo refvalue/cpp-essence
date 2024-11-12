@@ -37,7 +37,7 @@ namespace essence::meta {
     };
 
     template <typename T>
-    static constexpr auto friendly_name_v = friendly_name<T>::value;
+    inline constexpr auto friendly_name_v = friendly_name<T>::value;
 
     template <>
     struct friendly_name<std::int8_t> {

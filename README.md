@@ -8,6 +8,7 @@
 - GCC >= 11.2
 - Clang >= 16.0
 - Emscripten >= 3.1.52
+- Host GLIBC >= 2.34 (when compiling on Linux)
 - C++ 20 Support
 - JDK >= 8 (Optional if `ES_WITH_JNI` = `OFF`)
 

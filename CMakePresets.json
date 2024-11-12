@@ -33,11 +33,6 @@
         "type": "equals",
         "lhs": "${hostSystemName}",
         "rhs": "Windows"
-      },
-      "vendor": {
-        "jetbrains.com/clion": {
-          "toolchain": "Visual Studio"
-        }
       }
     },
     {
@@ -192,7 +187,6 @@
       "name": "aarch64-linux-android",
       "hidden": true,
       "inherits": "rsync-config",
-      "displayName": "AArch64 GNU/Linux Android",
       "binaryDir": "${sourceDir}/out/build/${presetName}",
       "installDir": "${sourceDir}/out/install/${presetName}",
       "toolchainFile": "${sourceDir}/cmake/NDKToolchain.cmake",
@@ -214,6 +208,26 @@
             "${sourceDir}/out/build/${presetName}/third-party/install/include"
           ]
         }
+      }
+    },
+    {
+      "name": "lang-compiler-windows",
+      "hidden": true,
+      "inherits": "windows-release",
+      "cacheVariables": {
+        "ES_WITH_JNI": "OFF",
+        "ES_WITH_TESTS": "OFF",
+        "ES_WITH_NET": "OFF"
+      }
+    },
+    {
+      "name": "lang-compiler-linux",
+      "hidden": true,
+      "inherits": "linux-release",
+      "cacheVariables": {
+        "ES_WITH_JNI": "OFF",
+        "ES_WITH_TESTS": "OFF",
+        "ES_WITH_NET": "OFF"
       }
     }
   ]

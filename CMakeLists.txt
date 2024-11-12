@@ -72,4 +72,6 @@ if(ES_WITH_LANG_COMPILER)
     add_subdirectory(tool/lang-compiler)
 endif()
 
-add_subdirectory(lang)
+if(ES_WITH_TESTS)
+    add_subdirectory(lang)
+endif()
