@@ -1,15 +1,22 @@
 name: Make the Codebase Geared Up for Building
+inputs:
+  shell:
+    description: 'The shell executable that runs the script'
+    required: true
 
 runs:
   using: "composite"
   steps:
     - name: Deploy CMakeUserPresets.json
+      shell: ${{ inputs.shell }}
       run: cp ./CMakeUserPresets-example.json ./CMakeUserPresets.json
     - name: Bootstrap project on Windows
-      if: runner.os == 'Windows'
+      if: ${{ runner.os == 'Windows' }}
+      shell: ${{ inputs.shell }}
       run: ./bootstrap.ps1
     - name: Bootstrap project on Linux/MacOS
-      if: runner.os != 'Windows'
+      if: ${{ runner.os != 'Windows' }}
+      shell: ${{ inputs.shell }}
       run: sh bootstrap.sh
     - name: Install Java
       uses: actions/setup-java@v4
@@ -17,11 +24,11 @@ runs:
         distribution: 'adopt'
         java-version: '8'
     - name: Set up MSVC environment
-      if: runner.os == 'Windows'
+      if: ${{ runner.os == 'Windows' }}
       uses: ilammy/msvc-dev-cmd@v1
     - name: Install Ninja
-      if: runner.os == 'Windows'
+      if: ${{ runner.os == 'Windows' }}
       run: choco install ninja --yes
     - name: Set up latest CMake and Ninja
-      if: runner.os != 'Windows'
+      if: ${{ runner.os != 'Windows' }}
       uses: lukka/get-cmake@latest

@@ -23,6 +23,8 @@ jobs:
         uses: actions/checkout@v3
       - name: Set up codebase
         uses: ./.github/actions/setup-codebase
+        with:
+          shell: pwsh
       - name: Make and test
         uses: ./.github/actions/make-and-test
         with:
