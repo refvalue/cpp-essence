@@ -1,0 +1,31 @@
+name: Make the Codebase Geared Up for Building
+
+runs:
+  using: "composite"
+  steps:
+    - name: Deploy CMakeUserPresets.json
+      run: cp ./CMakeUserPresets-example.json ./CMakeUserPresets.json
+    - name: Checkout code
+      uses: actions/checkout@v3
+      with:
+        submodules: true
+    - name: Bootstrap project on Windows
+      if: runner.os == 'Windows'
+      run: ./bootstrap.ps1
+    - name: Bootstrap project on Linux/MacOS
+      if: runner.os != 'Windows'
+      run: sh bootstrap.sh
+    - name: Install Java
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'adopt'
+        java-version: '8'
+    - name: Set up MSVC environment
+      if: runner.os == 'Windows'
+      uses: ilammy/msvc-dev-cmd@v1
+    - name: Install Ninja
+      if: runner.os == 'Windows'
+      run: choco install ninja --yes
+    - name: Set up latest CMake and Ninja
+      if: runner.os != 'Windows'
+      uses: lukka/get-cmake@latest

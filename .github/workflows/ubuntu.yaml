@@ -17,26 +17,16 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        compiler: [11, 12, 13, 'latest']
-        preset: ['linux-release-user']
+        compiler: [ 11, 12, 13, 'latest' ]
+        preset: [ 'linux-release-user' ]
     container: gcc:${{ matrix.compiler }}
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - name: Set up codebase
+        use: ./.github/actions/setup-codebase
+      - name: Make and test
+        use: ./.github/actions/make-and-test
         with:
-          submodules: true
-      - name: Set up latest CMake and Ninja
-        uses: lukka/get-cmake@latest
-      - name: Install Java
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'adopt'
-          java-version: '8'
-      - name: Run CMake
-        run: |
-          cmake --preset ${{ matrix.preset }}
-          cmake --build out/build/${{ matrix.preset }}
-          cmake --build out/build/${{ matrix.preset }} --target install
+          preset: ${{ matrix.preset }}
 
   test_compilers_clang:
     runs-on: ubuntu-latest
@@ -46,16 +36,9 @@ jobs:
         preset: [ 'linux-release-user' ]
     container: silkeh/clang:${{ matrix.compiler }}
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - name: Set up codebase
+        use: ./.github/actions/setup-codebase
+      - name: Make and test
+        use: ./.github/actions/make-and-test
         with:
-          submodules: true
-      - name: Setup latest CMake and Ninja
-        uses: lukka/get-cmake@latest
-      - name: Install Java
-        uses: actions/setup-java@v4
-      - name: Run CMake
-        run: |
-          cmake --preset ${{ matrix.preset }}
-          cmake --build out/build/${{ matrix.preset }}
-          cmake --build out/build/${{ matrix.preset }} --target install
+          preset: ${{ matrix.preset }}

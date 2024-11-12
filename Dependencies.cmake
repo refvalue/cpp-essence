@@ -23,9 +23,6 @@ endif()
 
 message(STATUS "runtime_args: ${runtime_args}")
 
-set(ENV{HTTP_PROXY} "http://127.0.0.1:10809")
-set(ENV{HTTPS_PROXY} "http://127.0.0.1:10809")
-
 if(CMAKE_HOST_SYSTEM_NAME STREQUAL "Windows")
     FetchContent_Declare(
         perl-windows
@@ -41,7 +38,7 @@ if(CMAKE_HOST_SYSTEM_NAME STREQUAL "Windows")
 endif()
 
 if(ES_WITH_TESTS)
-    es_deploy_lang_compiler("http://misc.refvalue.org/cpp-essence-lang-compiler")
+    es_deploy_lang_compiler("https://github.com/refvalue/cpp-essence/releases/download/v1.0.0-lang-compiler")
     message(STATUS "ES_LANG_COMPILER_EXECUTABLE: ${ES_LANG_COMPILER_EXECUTABLE}")
 
     FetchContent_Declare(

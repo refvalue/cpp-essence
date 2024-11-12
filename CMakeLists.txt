@@ -3,7 +3,7 @@
 #
 cmake_minimum_required(VERSION 3.25)
 
-project(gx-miscellaneous C CXX)
+project(cpp-essence C CXX)
 
 option(ES_WITH_NET "Whether to include the net support." ON)
 option(ES_WITH_JNI "Whether to include JNI support." ON)
@@ -30,6 +30,8 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(ES_PUBLIC_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
+
+
 
 if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU" OR CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
     string(APPEND CMAKE_CXX_FLAGS " -frtti -fexceptions -fvisibility=hidden")

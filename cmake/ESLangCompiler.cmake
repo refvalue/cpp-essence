@@ -10,6 +10,7 @@ function(es_deploy_lang_compiler base_uri)
 
     string(TOLOWER ${CMAKE_HOST_SYSTEM_NAME} lower_case_host_system_name)
     string(TOLOWER ${CMAKE_HOST_SYSTEM_PROCESSOR} lower_case_host_processor)
+    string(REPLACE "x86_64" "amd64" lower_case_host_processor "${lower_case_host_processor}")
 
     set(file_name cpp-essence-lang-compiler)
     set(component_name ${file_name}-bin)

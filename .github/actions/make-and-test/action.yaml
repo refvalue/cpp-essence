@@ -1,0 +1,14 @@
+name: Project Build and Test
+inputs:
+  preset:
+    description: 'The CMake preset to be built'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Run CMake
+      run: |
+        cmake --preset ${{ inputs.preset }}
+        cmake --build out/build/${{ inputs.preset }}
+        cmake --build out/build/${{ inputs.preset }} --target install

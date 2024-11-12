@@ -1,0 +1,109 @@
+﻿{
+  "version": 3,
+  "configurePresets": [
+    {
+      "name": "windows-debug-user",
+      "inherits": "windows-debug",
+      "vendor": {
+        "jetbrains.com/clion": {
+          "toolchain": "Visual Studio"
+        }
+      }
+    },
+    {
+      "name": "windows-release-user",
+      "inherits": "windows-release",
+      "vendor": {
+        "jetbrains.com/clion": {
+          "toolchain": "Visual Studio"
+        }
+      }
+    },
+    {
+      "name": "linux-debug-user",
+      "inherits": "linux-debug",
+      "vendor": {
+        "jetbrains.com/clion": {
+          "toolchain": "WSL-Linux"
+        }
+      }
+    },
+    {
+      "name": "linux-release-user",
+      "inherits": "linux-release",
+      "vendor": {
+        "jetbrains.com/clion": {
+          "toolchain": "WSL-Linux"
+        }
+      }
+    },
+    {
+      "name": "macos-debug-user",
+      "inherits": "macos-debug"
+    },
+    {
+      "name": "macos-release-user",
+      "inherits": "macos-release"
+    },
+    {
+      "name": "aarch64-linux-android-user",
+      "inherits": "aarch64-linux-android",
+      "cacheVariables": {
+        "ES_WITH_TESTS": "ON",
+        "ES_WITH_NET": "ON",
+        "ES_WITH_JNI": "ON",
+        "ES_NDK_ROOT": "/opt/android-ndk-r25c"
+      },
+      "vendor": {
+        "jetbrains.com/clion": {
+          "toolchain": "WSL-Linux"
+        }
+      }
+    },
+    {
+      "name": "aarch64-gnu-linux-release-user",
+      "inherits": "aarch64-gnu-linux-release",
+      "environment": {
+        "JAVA_HOME": "/opt/jdk-21.0.2"
+      },
+      "cacheVariables": {
+        "ES_TOOLCHAIN_PREFIX": "/opt/toolchain-aarch64-g6-linux-gnu/bin/aarch64-g6-linux-gnu-"
+      },
+      "vendor": {
+        "jetbrains.com/clion": {
+          "toolchain": "WSL-Linux"
+        }
+      }
+    },
+    {
+      "name": "emscripten-wasm-release-user",
+      "inherits": "emscripten-wasm-release",
+      "environment": {
+        "ES_EMSDK_ROOT": "/opt/emsdk"
+      },
+      "vendor": {
+        "jetbrains.com/clion": {
+          "toolchain": "WSL-Linux"
+        }
+      }
+    },
+    {
+      "name": "lang-compiler-windows-user",
+      "inherits": "lang-compiler-windows",
+      "vendor": {
+        "jetbrains.com/clion": {
+          "toolchain": "Visual Studio"
+        }
+      }
+    },
+    {
+      "name": "lang-compiler-linux-user",
+      "inherits": "lang-compiler-linux",
+      "vendor": {
+        "jetbrains.com/clion": {
+          "toolchain": "WSL-Linux"
+        }
+      }
+    }
+  ]
+}

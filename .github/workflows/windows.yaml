@@ -19,21 +19,9 @@ jobs:
       matrix:
         preset: [ 'windows-debug-user', 'windows-release-user' ]
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - name: Set up codebase
+        use: ./.github/actions/setup-codebase
+      - name: Make and test
+        use: ./.github/actions/make-and-test
         with:
-          submodules: true
-      - name: Install Java
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'adopt'
-          java-version: '8'
-      - name: Set up MSVC environment
-        uses: ilammy/msvc-dev-cmd@v1
-      - name: Install Ninja
-        run: choco install ninja --yes
-      - name: Run CMake
-        run: |
-          cmake --preset ${{ matrix.preset }}
-          cmake --build out/build/${{ matrix.preset }}
-          cmake --build out/build/${{ matrix.preset }} --target install
+          preset: ${{ matrix.preset }}

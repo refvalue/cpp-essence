@@ -17,50 +17,33 @@ jobs:
     runs-on: macos-latest
     strategy:
       matrix:
-        compiler: [11, 12, 13]
-        preset: ['macos-release-user']
+        compiler: [ 11, 12, 13 ]
+        preset: [ 'macos-release-user' ]
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-        with:
-          submodules: true
-      - name: Set up latest CMake and Ninja
-        uses: lukka/get-cmake@latest
-      - name: Install Java
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'adopt'
-          java-version: '8'
+      - name: Set up codebase
+        use: ./.github/actions/setup-codebase
       - name: Install dependencies
         run: brew install gcc@${{ matrix.compiler }}
-      - name: Run CMake
-        run: |
-          cmake --preset ${{ matrix.preset }}
-          cmake --build out/build/${{ matrix.preset }}
-          cmake --build out/build/${{ matrix.preset }} --target install
+      - name: Make and test
+        use: ./.github/actions/make-and-test
+        with:
+          preset: ${{ matrix.preset }}
 
   test_compilers_clang:
     runs-on: macos-latest
     strategy:
       matrix:
-        compiler: [16]
-        preset: ['macos-release-user']
+        compiler: [ 16 ]
+        preset: [ 'macos-release-user' ]
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-        with:
-          submodules: true
-      - name: Set up latest CMake and Ninja
-        uses: lukka/get-cmake@latest
-      - name: Install Java
-        uses: actions/setup-java@v4
+      - name: Set up codebase
+        use: ./.github/actions/setup-codebase
       - name: Install dependencies
         run: |
           brew install clang@${{ matrix.compiler }}
           export CC=/opt/homebrew/opt/llvm/bin/clang
           export CXX=/opt/homebrew/opt/llvm/bin/clang++
-      - name: Run CMake
-        run: |
-          cmake --preset ${{ matrix.preset }}
-          cmake --build out/build/${{ matrix.preset }}
-          cmake --build out/build/${{ matrix.preset }} --target install
+      - name: Make and test
+        use: ./.github/actions/make-and-test
+        with:
+          preset: ${{ matrix.preset }}
