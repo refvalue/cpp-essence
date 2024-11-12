@@ -9,7 +9,10 @@ runs:
   steps:
     - name: Deploy CMakeUserPresets.json
       shell: ${{ inputs.shell }}
-      run: cp ./CMakeUserPresets-example.json ./CMakeUserPresets.json
+      run: |
+        cp ./CMakeUserPresets-example.json ./CMakeUserPresets.json
+        git config --global --add safe.directory .
+
     - name: Bootstrap project on Windows
       if: ${{ runner.os == 'Windows' }}
       shell: ${{ inputs.shell }}

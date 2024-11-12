@@ -3,8 +3,6 @@
 executing_directory=$(dirname "$(realpath "$0")")
 cd "$executing_directory" || exit
 
-git config --local --unset-all safe.directory "$executing_directory"
-git config --local --add safe.directory "$executing_directory"
 git submodule update --init
 
 cd "$executing_directory/third-party/boost-archive-for-cpprestsdk" || exit
