@@ -27,16 +27,6 @@
 
 #include <spdlog/spdlog.h>
 
-#if _MSC_VER
-#pragma comment(linker, \
-    "/export:??0log_msg@details@spdlog@@QEAA@Usource_loc@2@V?$basic_string_view@D@v10@fmt@@W4level_enum@level@2@1@Z")
-#pragma comment(linker, "/export:?enabled@backtracer@details@spdlog@@QEBA_NXZ")
-#pragma comment(linker, "/export:?default_logger_raw@spdlog@@YAPEAVlogger@1@XZ")
-#pragma comment(linker, \
-    "/export:?err_handler_@logger@spdlog@@IEAAXAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z")
-#pragma comment(linker, "/export:?log_it_@logger@spdlog@@IEAAXAEBUlog_msg@details@2@_N1@Z")
-#endif
-
 #ifdef __UCLIBC__
 extern "C" {
 ES_API(CPPESSENCE) unsigned long getauxval(unsigned long type) {

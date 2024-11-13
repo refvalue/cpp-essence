@@ -172,16 +172,12 @@ target_compile_definitions(
     ${target_name}
     PUBLIC
     CPP_ESSENCE_HEADER_ONLY=0
-    SPDLOG_SHARED_LIB=1
-    SPDLOG_COMPILED_LIB=1
-    SPDLOG_FMT_EXTERNAL=1
 )
 
 target_compile_definitions(
     ${target_name}
     PRIVATE
     ES_IS_CPPESSENCE_IMPL=1
-    spdlog_EXPORTS=1
 )
 
 target_compile_definitions(
@@ -194,8 +190,8 @@ target_link_libraries(
     ${target_name}
     PUBLIC
     fmt::fmt
-    PRIVATE
     spdlog::spdlog
+    PRIVATE
     OpenSSL::SSL
     OpenSSL::Crypto
     ZLIB::ZLIB
@@ -281,12 +277,7 @@ if(NOT CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
         ${target_name}
         PRIVATE
         LINKER:-Bsymbolic
-        LINKER:--exclude-libs,libfmt.a
-        LINKER:--exclude-libs,libcpprest.a
-        LINKER:--exclude-libs,libcrypto.a
-        LINKER:--exclude-libs,libssl.a
-        LINKER:--exclude-libs,libz.a
-        LINKER:--exclude-libs,libzstd.a
+        LINKER:--exclude-libs,ALL
         $<$<CONFIG:RELEASE>:-s>
     )
 
