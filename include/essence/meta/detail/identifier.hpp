@@ -47,7 +47,7 @@ namespace essence::meta::detail {
      * @tparam Param The parameter for parsing the identifier.
      * @return The literal string.
      */
-    template <typename T, identifier_param Param = {}>
+    template <typename T, identifier_param Param = identifier_param{}>
     consteval auto get_literal_string() noexcept {
         return parse_raw_identifier_name(U8("essence::meta::detail::get_literal_string<"), ES_UNIFORM_FUNCSIG,
             identifier_param{
@@ -63,7 +63,7 @@ namespace essence::meta::detail {
      * @tparam Param The parameter for parsing the identifier.
      * @return The literal string.
      */
-    template <auto Value, typename T, identifier_param Param = {}>
+    template <auto Value, typename T, identifier_param Param = identifier_param{}>
     consteval auto get_literal_string() noexcept {
         return parse_raw_identifier_name(U8("essence::meta::detail::get_literal_string<"), ES_UNIFORM_FUNCSIG,
             identifier_param{
@@ -79,7 +79,7 @@ namespace essence::meta::detail {
      * @tparam Param The parameter for parsing the identifier.
      * @return The short literal string.
      */
-    template <typename T, identifier_param Param = {}>
+    template <typename T, identifier_param Param = identifier_param{}>
     consteval auto get_short_literal_string() noexcept {
         return parse_raw_identifier_name(U8("essence::meta::detail::get_short_literal_string<"), ES_UNIFORM_FUNCSIG,
             identifier_param{
@@ -96,7 +96,7 @@ namespace essence::meta::detail {
      * @tparam Param The parameter for parsing the identifier.
      * @return The short literal string.
      */
-    template <auto Value, typename T, identifier_param Param = {}>
+    template <auto Value, typename T, identifier_param Param = identifier_param{}>
     consteval auto get_short_literal_string() noexcept {
         return parse_raw_identifier_name(U8("essence::meta::detail::get_short_literal_string<"), ES_UNIFORM_FUNCSIG,
             identifier_param{
@@ -113,7 +113,7 @@ namespace essence::meta::detail {
      * @tparam Param The parameter for parsing the identifier.
      * @return The friendly name.
      */
-    template <auto Value, identifier_param Param = {}>
+    template <auto Value, identifier_param Param = identifier_param{}>
         requires(std::is_pointer_v<decltype(Value)> && std::is_function_v<std::remove_pointer_t<decltype(Value)>>)
     consteval auto get_function_name() noexcept {
         return parse_qualified_function_name(
@@ -131,7 +131,7 @@ namespace essence::meta::detail {
      * @tparam Param The parameter for parsing the identifier.
      * @return The short friendly name.
      */
-    template <auto Value, identifier_param Param = {}>
+    template <auto Value, identifier_param Param = identifier_param{}>
         requires(std::is_pointer_v<decltype(Value)> && std::is_function_v<std::remove_pointer_t<decltype(Value)>>)
     consteval auto get_short_function_name() noexcept {
         return get_short_identifier_name(get_function_name<Value, Param>());

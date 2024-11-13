@@ -33,7 +33,7 @@ namespace essence::meta {
      * @tparam Param The parameter for parsing the identifier.
      * @return The literal string.
      */
-    template <typename T, identifier_param Param = {}>
+    template <typename T, identifier_param Param = identifier_param{}>
     consteval auto get_literal_string_t() noexcept {
         if constexpr (Param.shortened) {
             return detail::get_short_literal_string<T, Param>();
@@ -49,7 +49,7 @@ namespace essence::meta {
      * @tparam Param The parameter for parsing the identifier.
      * @return The literal string.
      */
-    template <typename T, auto Value, identifier_param Param = {}>
+    template <typename T, auto Value, identifier_param Param = identifier_param{}>
     consteval auto get_literal_string_v() noexcept {
         if constexpr (Param.shortened) {
             return detail::get_short_literal_string<Value, T, Param>();
@@ -64,7 +64,7 @@ namespace essence::meta {
      * @tparam Param The parameter for parsing the identifier.
      * @return The friendly name.
      */
-    template <auto Value, identifier_param Param = {}>
+    template <auto Value, identifier_param Param = identifier_param{}>
         requires(std::is_pointer_v<decltype(Value)> && std::is_function_v<std::remove_pointer_t<decltype(Value)>>)
     consteval auto get_function_name() noexcept {
         if constexpr (Param.shortened) {
