@@ -80,7 +80,7 @@ namespace essence {
          * @tparam T The type of the similar object.
          */
         template <typename T>
-            requires similar_rational<std::decay_t<T>>
+            requires similar_rational<T>
         constexpr operator T() const noexcept(similar_rational<T>) { // NOLINT(*-explicit-constructor)
             return T{numerator, denominator};
         }
