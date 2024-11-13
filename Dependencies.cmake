@@ -101,6 +101,12 @@ es_make_install_third_party_library(
     INSTALL_DIR ${CMAKE_INSTALL_PREFIX}
 )
 
+if(ES_HAVE_STD_FORMAT)
+    set(spdlog_extra_args -DSPDLOG_USE_STD_FORMAT=ON)
+else()
+    set(spdlog_extra_args -DSPDLOG_FMT_EXTERNAL=ON)
+endif()
+
 es_make_install_third_party_library(
     spdlog
     REQUIRED
@@ -110,9 +116,9 @@ es_make_install_third_party_library(
     GENERATOR ${CMAKE_GENERATOR}
     CMAKE_ARGS
     -DSPDLOG_BUILD_PIC=ON
-    -DSPDLOG_FMT_EXTERNAL=ON
     -DCMAKE_PREFIX_PATH=${CMAKE_INSTALL_PREFIX}
     ${extra_cmake_args}
+    ${spdlog_extra_args}
     SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/third-party/spdlog
     INSTALL_DIR ${CMAKE_INSTALL_PREFIX}
 )

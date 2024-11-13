@@ -36,8 +36,7 @@
 #include <version>
 #endif
 
-#if __cpp_lib_format >= 201907L
-#define ES_WITH_STD_FORMAT
+#ifdef CPP_ESSENCE_USE_STD_FORMAT
 #define ES_FMT_NS std
 #include <format>
 #else
@@ -47,23 +46,13 @@
 #endif
 
 namespace essence {
-#ifdef ES_WITH_STD_FORMAT
-    using std::format;
-    using std::format_string;
-    using std::format_to;
-    using std::make_format_args;
-    using std::make_wformat_args;
-    using std::vformat;
-    using std::wformat_string;
-#else
-    using fmt::format;
-    using fmt::format_string;
-    using fmt::format_to;
-    using fmt::make_format_args;
-    using fmt::make_wformat_args;
-    using fmt::vformat;
-    using fmt::wformat_string;
-#endif
+    using ES_FMT_NS::format;
+    using ES_FMT_NS::format_string;
+    using ES_FMT_NS::format_to;
+    using ES_FMT_NS::make_format_args;
+    using ES_FMT_NS::make_wformat_args;
+    using ES_FMT_NS::vformat;
+    using ES_FMT_NS::wformat_string;
 
     /**
      * @brief Formats a group of arguments with a format string.
@@ -153,18 +142,4 @@ struct ES_FMT_NS::formatter<essence::basic_zstring_view<CharT, Traits>, CharT>
     }
 };
 
-// Provides compatibilities for spdlog which internally uses fmt::format instead of std::format.
-#ifdef ES_WITH_STD_FORMAT
-template <typename CharT, typename Traits>
-struct fmt::formatter<essence::basic_zstring_view<CharT, Traits>, CharT>
-    : formatter<std::basic_string_view<CharT, Traits>, CharT> {
-    template <typename FormatContext>
-    auto format(essence::basic_zstring_view<CharT, Traits> str, FormatContext& ctx) const {
-        return formatter<std::basic_string_view<CharT, Traits>, CharT>::format(
-            std::basic_string_view<CharT, Traits>{str}, ctx);
-    }
-};
-#endif
-
 #undef ES_FMT_NS
-#undef ES_WITH_STD_FORMAT

@@ -51,6 +51,7 @@ if(ES_STATIC_RUNTIME)
 endif()
 
 include(CTest)
+include(FeatureTests.cmake)
 include(Dependencies.cmake)
 
 add_subdirectory(src)
