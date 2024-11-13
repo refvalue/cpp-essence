@@ -53,10 +53,10 @@ namespace essence::detail {
     char8_t_string_literal(const char8_t (&)[N]) -> char8_t_string_literal<N>;
 
     template <char8_t_string_literal Literal, std::size_t... Is>
-    inline constexpr const char as_char_array_v[sizeof...(Is)]{static_cast<char>(Literal.sequence[Is])...};
+    inline constexpr char as_char_array_v[sizeof...(Is)]{static_cast<char>(Literal.sequence[Is])...};
 
     template <char8_t_string_literal Literal, std::size_t... Is>
-    constexpr auto&& make_as_char_array(std::index_sequence<Is...>) noexcept {
+    constexpr const char (&make_as_char_array(std::index_sequence<Is...>) noexcept)[sizeof...(Is)] {
         return as_char_array_v<Literal, Is...>;
     }
 } // namespace essence::detail
