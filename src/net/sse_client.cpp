@@ -101,9 +101,9 @@ namespace essence::net {
             web::http::http_request request{web::http::methods::GET};
 
             request.set_request_uri(make_cpprest_uri(relative_uri));
-            request.headers().add(web::http::header_names::accept, U("text/event-stream"));
-            request.headers().add(web::http::header_names::cache_control, U("no-store"));
-            request.headers().add(web::http::header_names::connection, U("keep-alive"));
+            request.headers().add(web::http::header_names::accept, _XPLATSTR("text/event-stream"));
+            request.headers().add(web::http::header_names::cache_control, _XPLATSTR("no-store"));
+            request.headers().add(web::http::header_names::connection, _XPLATSTR("keep-alive"));
 
             auto token = cancellation_token_source_.get_token();
 

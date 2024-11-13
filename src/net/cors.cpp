@@ -26,10 +26,10 @@
 
 namespace essence::net {
     void make_cors_any(web::http::http_response& response) {
-        response.headers().add(U("Access-Control-Allow-Origin"), U("*"));
-        response.headers().add(U("Access-Control-Request-Method"), U("GET,POST,OPTIONS"));
-        response.headers().add(U("Access-Control-Allow-Credentials"), U("true"));
-        response.headers().add(
-            U("Access-Control-Allow-Headers"), U("Content-Type,Access-Token,x-requested-with,Authorization"));
+        response.headers().add(_XPLATSTR("Access-Control-Allow-Origin"), _XPLATSTR("*"));
+        response.headers().add(_XPLATSTR("Access-Control-Request-Method"), _XPLATSTR("GET,POST,OPTIONS"));
+        response.headers().add(_XPLATSTR("Access-Control-Allow-Credentials"), _XPLATSTR("true"));
+        response.headers().add(_XPLATSTR("Access-Control-Allow-Headers"),
+            _XPLATSTR("Content-Type,Access-Token,x-requested-with,Authorization"));
     }
 } // namespace essence::net

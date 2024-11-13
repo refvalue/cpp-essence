@@ -172,6 +172,7 @@ target_compile_definitions(
     ${target_name}
     PUBLIC
     CPP_ESSENCE_HEADER_ONLY=0
+    _TURN_OFF_PLATFORM_STRING=1 # For cpprestsdk.
 )
 
 target_compile_definitions(
@@ -184,6 +185,7 @@ target_compile_definitions(
     ${target_name_header_only}
     INTERFACE
     CPP_ESSENCE_HEADER_ONLY=1
+    _TURN_OFF_PLATFORM_STRING=1 # For cpprestsdk.
 )
 
 target_link_libraries(

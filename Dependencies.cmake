@@ -93,6 +93,8 @@ es_make_install_third_party_library(
     GENERATOR ${CMAKE_GENERATOR}
     CMAKE_ARGS
     -DFMT_TEST=OFF
+    -DCMAKE_CXX_STANDARD=20
+    -DCMAKE_CXX_STANDARD_REQUIRED=ON
     -DCMAKE_POSITION_INDEPENDENT_CODE=ON
     ${extra_cmake_args}
     SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/third-party/fmt

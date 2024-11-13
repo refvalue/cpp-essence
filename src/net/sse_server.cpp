@@ -46,8 +46,8 @@ namespace essence::net {
                 : fields_{std::make_unique<private_fields>(request, token, on_error)} {
                 web::http::http_response response{web::http::status_codes::OK};
 
-                response.headers().set_content_type(U("text/event-stream"));
-                response.headers().set_cache_control(U("no-store"));
+                response.headers().set_content_type(_XPLATSTR("text/event-stream"));
+                response.headers().set_cache_control(_XPLATSTR("no-store"));
                 response.set_body(concurrency::streams::basic_istream<std::uint8_t>{
                     static_cast<Concurrency::streams::streambuf<char>>(fields_->rw_buffer)});
                 make_cors_any(response);

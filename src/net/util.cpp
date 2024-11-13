@@ -77,7 +77,7 @@ namespace essence::net {
     void ensure_status_code(const web::http::http_response& response, const source_location& location) {
         if (!is_successful_status_code(response.status_code())) {
             throw source_code_aware_runtime_error{location, U8("HTTP Status Code"), response.status_code(),
-                U8("Reason"), to_utf8_string(response.reason_phrase())};
+                U8("Reason"), internal::to_utf8_string(response.reason_phrase())};
         }
     }
 

@@ -1435,7 +1435,7 @@ int main() try {
 
     std::vector<std::string> strs;
 
-    spdlog::info(format("ZSTRING_VIEW TEST: {}\n", zstring_view{U8("你好啊。")}));
+    spdlog::info(U8("ZSTRING_VIEW TEST: {}\n"), zstring_view{U8("你好啊。")});
     spdlog::info("=============== HEX TEST");
 
     auto hex   = hex_encode(U8("我是一个中国人。"));

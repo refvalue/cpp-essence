@@ -29,6 +29,7 @@
 #include <iterator>
 #include <locale>
 #include <string>
+#include <string_view>
 #include <utility>
 
 #if __has_include(<version> )
@@ -147,7 +148,8 @@ struct ES_FMT_NS::formatter<essence::basic_zstring_view<CharT, Traits>, CharT>
     : formatter<std::basic_string_view<CharT, Traits>, CharT> {
     template <typename FormatContext>
     auto format(essence::basic_zstring_view<CharT, Traits> str, FormatContext& ctx) const {
-        return formatter<std::basic_string_view<CharT, Traits>, CharT>::format(str, ctx);
+        return formatter<std::basic_string_view<CharT, Traits>, CharT>::format(
+            std::basic_string_view<CharT, Traits>{str}, ctx);
     }
 };
 
