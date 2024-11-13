@@ -41,6 +41,7 @@ if(NOT CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
         ${target_name}
         PRIVATE
         LINKER:--exclude-libs,ALL
+        LINKER:-rpath=.
         $<$<CONFIG:RELEASE>:-s>
     )
 
