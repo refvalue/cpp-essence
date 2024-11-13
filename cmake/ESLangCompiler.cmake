@@ -22,11 +22,6 @@ function(es_deploy_lang_compiler base_uri)
 
     FetchContent_MakeAvailable(${component_name})
     set(compiler_executable ${CMAKE_BINARY_DIR}/_deps/${component_name}-src/${file_name}${CMAKE_EXECUTABLE_SUFFIX})
-
-    if(NOT CMAKE_HOST_SYSTEM_NAME STREQUAL "Windows")
-        string(APPEND compiler_executable ".sh")
-    endif()
-
     set(ES_LANG_COMPILER_EXECUTABLE ${compiler_executable} PARENT_SCOPE)
 endfunction()
 
