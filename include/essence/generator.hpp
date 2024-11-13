@@ -27,6 +27,7 @@
 #include <exception>
 #include <iterator>
 #include <memory>
+#include <new>
 #include <utility>
 
 namespace essence {

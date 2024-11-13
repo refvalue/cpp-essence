@@ -56,7 +56,7 @@ namespace essence::meta {
         constexpr auto min   = range.first;
         constexpr auto max   = range.second;
 
-        auto origin = []<std::size_t... Is>(std::index_sequence<Is...>) -> generator<std::pair<std::string_view, T>> {
+        auto origin = [&]<std::size_t... Is>(std::index_sequence<Is...>) -> generator<std::pair<std::string_view, T>> {
             (co_yield std::pair{get_literal_string_v<T, static_cast<T>(min + Is),
                                     identifier_param{
                                         .shortened          = Short,

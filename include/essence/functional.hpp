@@ -70,7 +70,7 @@ namespace essence {
     template <auto Function, typename T>
         requires std::is_member_function_pointer_v<decltype(Function)>
     auto make_member_function(T&& obj) {
-        return detail::member_function_wrapper<decltype(Function)>::make<Function>(std::forward<T>(obj));
+        return detail::member_function_wrapper<decltype(Function)>::template make<Function>(std::forward<T>(obj));
     }
 
     template <typename Function>
@@ -124,8 +124,7 @@ namespace essence {
     concept invocable_r = std::is_invocable_r_v<R, Callable, Args...>;
 
     template <typename Callable, typename R, typename... Args>
-    concept invocable_not_r =
-        invocable<Callable, Args...> && !std::same_as<std::invoke_result_t<Callable, Args...>, R>;
+    concept invocable_not_r = invocable<Callable, Args...> && !std::same_as<std::invoke_result_t<Callable, Args...>, R>;
 
     template <typename Callable, typename... Args>
     concept nothrow_invocable = std::is_nothrow_invocable_v<Callable, Args...>;
