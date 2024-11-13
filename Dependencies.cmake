@@ -51,14 +51,19 @@ if(ES_WITH_TESTS)
     FetchContent_MakeAvailable(googletest)
 endif()
 
+set(extra_cmake_args
+    -DCMAKE_CXX_STANDARD=20
+    -DCMAKE_CXX_STANDARD_REQUIRED=ON
+)
+
 set(extra_openssl_args no-tests no-afalgeng no-aria no-async no-autoload-config no-blake2 no-bf no-camellia no-cast no-chacha no-cmac no-cms no-cmp no-comp no-ct no-des no-dgram no-dh no-dsa no-dtls no-ec2m no-engine no-filenames no-gost no-idea no-ktls no-mdc2 no-md4 no-multiblock no-nextprotoneg no-ocsp no-ocb no-poly1305 no-psk no-rc2 no-rc4 no-rmd160 no-seed no-siphash no-siv no-srp no-srtp no-ssl3 no-ssl3-method no-ts no-ui-console no-whirlpool)
 
 if(CMAKE_CROSSCOMPILING AND NOT EMSCRIPTEN)
     # The Boost library is unnecessary if the websocketpp library is excluded
     # when compiling the cpprestsdk on Windows.
     message(STATUS "======== CROSS-COMPILING ========")
-    set(
-        extra_cmake_args
+    list(
+        APPEND extra_cmake_args
         -DES_TOOLCHAIN_PREFIX=${ES_TOOLCHAIN_PREFIX}
     )
 
@@ -66,23 +71,7 @@ if(CMAKE_CROSSCOMPILING AND NOT EMSCRIPTEN)
         list(APPEND extra_openssl_args CC ${CMAKE_C_ANDROID_TOOLCHAIN_PREFIX}clang)
         list(APPEND extra_cmake_args -DES_NDK_ROOT=${ES_NDK_ROOT})
     endif()
-elseif(EMSCRIPTEN)
-    set(extra_cmake_args "")
-else()
-    set(extra_cmake_args "")
 endif()
-
-es_make_openssl(
-    REQUIRED
-    STATIC
-    ${runtime_args}
-    PARALLEL_BUILD
-    SYNC_BUILD_TYPE
-    ${extra_openssl_args}
-    SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/third-party/openssl
-)
-
-message(STATUS "====OPENSSL_CRYPTO_LIBRARY: ${OPENSSL_CRYPTO_LIBRARY}")
 
 es_make_install_third_party_library(
     fmt
@@ -93,8 +82,6 @@ es_make_install_third_party_library(
     GENERATOR ${CMAKE_GENERATOR}
     CMAKE_ARGS
     -DFMT_TEST=OFF
-    -DCMAKE_CXX_STANDARD=20
-    -DCMAKE_CXX_STANDARD_REQUIRED=ON
     -DCMAKE_POSITION_INDEPENDENT_CODE=ON
     ${extra_cmake_args}
     SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/third-party/fmt
@@ -116,12 +103,26 @@ es_make_install_third_party_library(
     GENERATOR ${CMAKE_GENERATOR}
     CMAKE_ARGS
     -DSPDLOG_BUILD_PIC=ON
+    -DSPDLOG_BUILD_EXAMPLE=OFF
+    -DSPDLOG_BUILD_EXAMPLE_HO=OFF
     -DCMAKE_PREFIX_PATH=${CMAKE_INSTALL_PREFIX}
     ${extra_cmake_args}
     ${spdlog_extra_args}
     SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/third-party/spdlog
     INSTALL_DIR ${CMAKE_INSTALL_PREFIX}
 )
+
+es_make_openssl(
+    REQUIRED
+    STATIC
+    ${runtime_args}
+    PARALLEL_BUILD
+    SYNC_BUILD_TYPE
+    ${extra_openssl_args}
+    SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/third-party/openssl
+)
+
+message(STATUS "====OPENSSL_CRYPTO_LIBRARY: ${OPENSSL_CRYPTO_LIBRARY}")
 
 set(
     zlibng_cmake_args

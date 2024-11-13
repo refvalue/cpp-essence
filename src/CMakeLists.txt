@@ -171,8 +171,8 @@ target_include_directories(
 target_compile_definitions(
     ${target_name}
     PUBLIC
-    $<$<BOOL:${ES_HAVE_STD_FORMAT}>:CPP_ESSENCE_USE_STD_FORMAT=1>
     _TURN_OFF_PLATFORM_STRING=1 # For cpprestsdk.
+    $<$<BOOL:${ES_HAVE_STD_FORMAT}>:CPP_ESSENCE_USE_STD_FORMAT=1>
 )
 
 target_compile_definitions(
@@ -186,6 +186,7 @@ target_compile_definitions(
     INTERFACE
     CPP_ESSENCE_HEADER_ONLY=1
     _TURN_OFF_PLATFORM_STRING=1 # For cpprestsdk.
+    $<$<BOOL:${ES_HAVE_STD_FORMAT}>:CPP_ESSENCE_USE_STD_FORMAT=1>
 )
 
 target_link_libraries(
