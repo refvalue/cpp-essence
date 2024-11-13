@@ -153,5 +153,18 @@ struct ES_FMT_NS::formatter<essence::basic_zstring_view<CharT, Traits>, CharT>
     }
 };
 
+// Provides compatibilities for spdlog which internally uses fmt::format instead of std::format.
+#ifdef ES_WITH_STD_FORMAT
+template <typename CharT, typename Traits>
+struct fmt::formatter<essence::basic_zstring_view<CharT, Traits>, CharT>
+    : formatter<std::basic_string_view<CharT, Traits>, CharT> {
+    template <typename FormatContext>
+    auto format(essence::basic_zstring_view<CharT, Traits> str, FormatContext& ctx) const {
+        return formatter<std::basic_string_view<CharT, Traits>, CharT>::format(
+            std::basic_string_view<CharT, Traits>{str}, ctx);
+    }
+};
+#endif
+
 #undef ES_FMT_NS
 #undef ES_WITH_STD_FORMAT
