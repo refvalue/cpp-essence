@@ -16,4 +16,3 @@ cd "$executing_directory/third-party/openssl" || exit
 git config --local core.eol lf
 git config --local core.autocrlf false
 git rm --cached -r . && git reset --hard
-

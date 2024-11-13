@@ -31,7 +31,7 @@ function(es_deploy_lang_compiler base_uri)
 endfunction()
 
 function(es_add_lang_resources target_name)
-    if("${ES_LANG_COMPILER_EXECUTABLE}" STREQUAL "")
+    if(NOT EXISTS "${ES_LANG_COMPILER_EXECUTABLE}")
         message(FATAL_ERROR "The variable ES_LANG_COMPILER_EXECUTABLE does not exist. Please invoke es_deploy_lang_compiler first.")
     endif()
 
@@ -72,6 +72,7 @@ function(es_add_lang_resources target_name)
     )
 
     list(TRANSFORM generated_files REPLACE [=[^(.+)\.json$]=] "${output_dir}/\\1.lang")
+    es_dump_list(source_files)
     es_dump_list(generated_files)
 
     cmrc_add_resource_library(

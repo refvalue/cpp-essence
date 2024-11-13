@@ -3,7 +3,7 @@ include(${CMAKE_CURRENT_LIST_DIR}/ESUtil.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/ESEmscripten.cmake)
 
 function(es_write_boost_user_config_file)
-    set(options "")
+    set(options KEEP_OLD_FILE)
     set(one_value_args TOOLSET FILE RESULT_TOOLSET_ABBREVIATION)
     set(multi_value_args "")
     cmake_parse_arguments(PARSE_ARGV 0 ARG "${options}" "${one_value_args}" "${multi_value_args}")
@@ -48,7 +48,10 @@ function(es_write_boost_user_config_file)
 
     message(STATUS "[${CMAKE_CURRENT_FUNCTION}][toolset_name] ${toolset_name}")
 
-    file(WRITE ${ARG_FILE} "using ${toolset_name} : : \"${ARG_TOOLSET}\" : ;")
+    if(NOT EXISTS "${ARG_FILE}" OR NOT ARG_KEEP_OLD_FILE)
+        file(WRITE ${ARG_FILE} "using ${toolset_name} : : \"${ARG_TOOLSET}\" : ;")
+    endif()
+
     set(${ARG_RESULT_TOOLSET_ABBREVIATION} ${toolset_name} PARENT_SCOPE)
 endfunction()
 
@@ -134,6 +137,7 @@ function(es_make_boost_impl)
         es_write_boost_user_config_file(
             TOOLSET ${ARG_TOOLSET}
             FILE ${user_config_file}
+            KEEP_OLD_FILE
             RESULT_TOOLSET_ABBREVIATION toolset_abbreviation
         )
 
