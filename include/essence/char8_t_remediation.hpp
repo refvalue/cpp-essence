@@ -36,14 +36,14 @@ namespace essence::detail {
         bool char_literal;
         std::array<char8_t, N> sequence;
 
-        consteval char8_t_string_literal(char8_t ch) noexcept // NOLINT(*-explicit-constructor)
+        constexpr char8_t_string_literal(char8_t ch) noexcept // NOLINT(*-explicit-constructor)
             : char_literal{true}, sequence{ch} {}
 
         template <std::size_t... Is>
-        consteval char8_t_string_literal(const char8_t (&sequence)[N], std::index_sequence<Is...>) noexcept
+        constexpr char8_t_string_literal(const char8_t (&sequence)[N], std::index_sequence<Is...>) noexcept
             : char_literal{}, sequence{sequence[Is]...} {}
 
-        consteval char8_t_string_literal(const char8_t (&sequence)[N]) noexcept // NOLINT(*-explicit-constructor)
+        constexpr char8_t_string_literal(const char8_t (&sequence)[N]) noexcept // NOLINT(*-explicit-constructor)
             : char8_t_string_literal{sequence, std::make_index_sequence<N>{}} {}
     };
 

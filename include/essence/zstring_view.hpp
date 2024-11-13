@@ -22,7 +22,7 @@
 
 #pragma once
 
-#if __has_include(<compare> )
+#if __has_include(<compare>)
 #include <compare>
 #endif
 
@@ -55,8 +55,9 @@ namespace essence {
         constexpr basic_zstring_view(const CharT* str, size_type size) : view_{str, size} {}
 
         template <typename Allocator>
-        constexpr basic_zstring_view(const std::basic_string<CharT, Traits, Allocator>& str)
-            : view_{str} {} // NOLINT(*-explicit-constructor)
+        constexpr basic_zstring_view( // NOLINT(*-explicit-constructor)
+            const std::basic_string<CharT, Traits, Allocator>& str)
+            : view_{str} {}
 
 #ifndef __ANDROID__
         template <typename Iter, typename End>
@@ -243,7 +244,7 @@ namespace essence {
             return left.view_ == right.view_;
         }
 
-#if __has_include(<compare> )
+#if __has_include(<compare>)
         template <typename OtherTraits>
         friend constexpr auto operator<=>(
             basic_zstring_view<CharT, OtherTraits> left, basic_zstring_view<CharT, OtherTraits> right) noexcept {
