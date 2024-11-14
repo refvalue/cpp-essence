@@ -43,7 +43,7 @@ namespace essence::meta::detail {
      * @param raw_name The raw name.
      * @return The short identifier name.
      */
-    consteval std::string_view get_short_identifier_name(std::string_view raw_name) noexcept {
+    constexpr std::string_view get_short_identifier_name(std::string_view raw_name) noexcept {
         return extract_keyword<find_mode_type::full_match_reverse>(
             raw_name, language_tokens::scope, extraction_param{.ensure_correctness = false});
     }
@@ -55,7 +55,7 @@ namespace essence::meta::detail {
      * @param param The parameter for parsing the identifier.
      * @return The remaining part.
      */
-    consteval std::string_view parse_raw_identifier_name(
+    constexpr std::string_view parse_raw_identifier_name(
         std::string_view prefix, std::string_view signature, const identifier_param& param = {}) noexcept {
 #ifdef _MSC_VER
         const auto keyword = prefix;

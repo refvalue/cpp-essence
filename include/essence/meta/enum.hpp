@@ -56,19 +56,12 @@ namespace essence::meta {
         constexpr auto min   = range.first;
         constexpr auto max   = range.second;
 
-        struct dummy {
-            static constexpr auto copy(std::string_view str) noexcept {
-                // ReSharper disable once CppDFALocalValueEscapesFunction
-                return str;
-            }
-        };
-
         auto origin = [&]<std::size_t... Is>(std::index_sequence<Is...>) -> generator<std::pair<std::string_view, T>> {
-            (co_yield std::pair{dummy::copy(get_literal_string_v<T, static_cast<T>(min + Is),
+            (co_yield std::pair{get_literal_string_v<T, static_cast<T>(min + Is),
                                     identifier_param{
                                         .shortened          = Short,
                                         .ensure_correctness = false,
-                                    }>()),
+                                    }>(),
                  static_cast<T>(min + Is)},
                 ...);
         }(std::make_index_sequence<max - min + 1>{});
