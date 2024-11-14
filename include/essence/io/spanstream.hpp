@@ -49,7 +49,7 @@ namespace essence::io {
     template <typename CharT, typename Traits = std::char_traits<CharT>>
     struct basic_ispanstream : basic_spanstream_impl<std::basic_istream<CharT, Traits>, std::ios_base::in> {
         using base_type = basic_spanstream_impl<std::basic_istream<CharT, Traits>, std::ios_base::in>;
-        using base_type::basic_spanstream_impl;
+        using base_type::base_type;
 
         template <std::ranges::borrowed_range Range>
             requires(
@@ -73,7 +73,7 @@ namespace essence::io {
     template <typename CharT, typename Traits = std::char_traits<CharT>>
     struct basic_ospanstream : basic_spanstream_impl<std::basic_ostream<CharT, Traits>, std::ios_base::out> {
         using base_type = basic_spanstream_impl<std::basic_ostream<CharT, Traits>, std::ios_base::out>;
-        using base_type::basic_spanstream_impl;
+        using base_type::base_type;
 
         [[nodiscard]] std::span<typename base_type::char_type> span() const noexcept {
             return this->spanbuf_.span();
@@ -85,7 +85,7 @@ namespace essence::io {
         : basic_spanstream_impl<std::basic_iostream<CharT, Traits>, std::ios_base::in | std::ios_base::out> {
         using base_type =
             basic_spanstream_impl<std::basic_iostream<CharT, Traits>, std::ios_base::in | std::ios_base::out>;
-        using base_type::basic_spanstream_impl;
+        using base_type::base_type;
 
         [[nodiscard]] std::span<typename base_type::char_type> span() const noexcept {
             return this->spanbuf_.span();

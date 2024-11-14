@@ -27,6 +27,7 @@
 #include "spanstream.hpp"
 
 #include <concepts>
+#include <istream>
 #include <memory>
 #include <span>
 #include <string>
