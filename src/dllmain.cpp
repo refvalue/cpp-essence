@@ -36,7 +36,7 @@ ES_API(CPPESSENCE) unsigned long getauxval(unsigned long type) {
 #endif
 
 namespace {
-    ES_KEEP_ALIVE [[maybe_unused]] struct init {
+    [[maybe_unused]] ES_KEEP_ALIVE struct init {
         init() {
             try {
 #ifdef _WIN32

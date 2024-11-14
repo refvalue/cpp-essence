@@ -55,7 +55,7 @@ namespace essence::io {
 
         void decompress(std::span<const std::byte> buffer, const abstract::writable_buffer& result) {}
 
-        ES_KEEP_ALIVE [[maybe_unused]] struct init {
+        [[maybe_unused]] ES_KEEP_ALIVE struct init {
             init() {
                 add_compression_routines(compression_mode::zlib, compression_routines{
                                                                      .compress   = &compress,

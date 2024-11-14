@@ -125,7 +125,7 @@ namespace essence {
             raw_argv = argv;
         };
 
-        ES_KEEP_ALIVE [[maybe_unused]] struct init {
+        [[maybe_unused]] ES_KEEP_ALIVE struct init {
             init() {
                 command_line_args.reserve(raw_argc);
 

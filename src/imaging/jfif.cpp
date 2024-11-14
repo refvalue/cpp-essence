@@ -134,7 +134,7 @@ namespace essence::imaging {
             }
         };
 
-        ES_KEEP_ALIVE [[maybe_unused]] struct init {
+        [[maybe_unused]] ES_KEEP_ALIVE struct init {
             init() {
                 register_image_header_extractor(abstract::image_header_extractor{jfif_header_extractor{}});
             }

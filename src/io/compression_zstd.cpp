@@ -65,7 +65,7 @@ namespace essence::io {
             check_error(ZSTD_decompress(result.data(), result.size_bytes(), buffer.data(), buffer.size()));
         }
 
-        ES_KEEP_ALIVE [[maybe_unused]] struct init {
+        [[maybe_unused]] ES_KEEP_ALIVE struct init {
             init() {
                 add_compression_routines(compression_mode::zstd, compression_routines{
                                                                      .compress   = &compress,

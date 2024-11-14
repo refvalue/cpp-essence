@@ -29,7 +29,7 @@
 
 namespace essence::crypto {
     namespace {
-        ES_KEEP_ALIVE [[maybe_unused]] const scope_exit crypto_error_strings_scope{
+        [[maybe_unused]] ES_KEEP_ALIVE const scope_exit crypto_error_strings_scope{
             [] { ERR_load_crypto_strings(); }, [] { ERR_free_strings(); }};
     } // namespace
 
