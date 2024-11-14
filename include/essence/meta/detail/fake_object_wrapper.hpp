@@ -46,12 +46,12 @@ namespace essence::meta::detail {
     fake_object_wrapper(T) -> fake_object_wrapper<T>;
 
     template <typename T>
-    constexpr const T& make_fake_object_wrapper() noexcept {
+    consteval const T& make_fake_object_wrapper() noexcept {
         return fake_object_wrapper<T>::shadow.value;
     }
 
     template <typename T>
-    constexpr auto make_fake_object_wrapper(const T& obj) noexcept {
+    consteval auto make_fake_object_wrapper(const T& obj) noexcept {
         return fake_object_wrapper{obj};
     }
 
