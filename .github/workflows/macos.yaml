@@ -39,7 +39,7 @@ jobs:
     runs-on: macos-latest
     strategy:
       matrix:
-        compiler: [ 16 ]
+        compiler: [ 17 ]
         preset: [ 'macos-release-user' ]
     steps:
       - name: Set up codebase

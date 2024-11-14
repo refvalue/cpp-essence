@@ -35,7 +35,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        compiler: [ 16, 17 ]
+        compiler: [ 17, 18 ]
         preset: [ 'linux-release-user' ]
     container: silkeh/clang:${{ matrix.compiler }}
     steps:

@@ -50,6 +50,7 @@ else()
         PRIVATE
         cpp-essence
         Threads::Threads
+        GTest::gtest_main
     )
 
     if(NOT CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
