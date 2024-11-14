@@ -52,7 +52,7 @@ namespace essence::meta::detail {
 
     template <typename T>
     consteval auto make_fake_object_wrapper(const T& obj) noexcept {
-        return fake_object_wrapper{obj}.value;
+        return fake_object_wrapper{obj};
     }
 
 #ifdef _MSC_VER
