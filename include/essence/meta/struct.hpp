@@ -45,9 +45,9 @@ namespace essence::meta {
                                std::index_sequence<Is...>) -> generator<std::string_view> {
 #if defined(__llvm__) && defined(__clang__)
             (co_yield (detail::parse_data_member_name(get_literal_string_v<T,
-                        std::get<Is>(detail::make_fake_object_wrapper(
-                            detail::make_data_member_pointers(detail::make_fake_object_wrapper<T>())))>()),
-                ...);
+                           std::get<Is>(detail::make_fake_object_wrapper(
+                               detail::make_data_member_pointers(detail::make_fake_object_wrapper<T>())))>()),
+                ...));
 #else
             (co_yield detail::parse_data_member_name(get_literal_string_v<T,
                  std::get<Is>(detail::make_data_member_pointers(detail::make_fake_object_wrapper<T>()))>()),

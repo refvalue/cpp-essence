@@ -29,35 +29,36 @@
 #include <type_traits>
 #include <utility>
 
-namespace essence::detail {
-    template <typename T>
-    consteval auto rational_bindable_count(T obj) noexcept {
-        auto&& [a, b]                = obj;
-        constexpr std::size_t type_1 = std::same_as<std::decay_t<decltype(a)>, std::int64_t> ? 1U : 0U;
-        constexpr std::size_t type_2 = std::same_as<std::decay_t<decltype(b)>, std::int64_t> ? 1U : 0U;
-
-        return std::integral_constant<std::size_t, type_1 + type_2>{};
-    }
-} // namespace essence::detail
-
 namespace essence {
     /**
      * @brief Checks if an object is similar to essence::rational.
      */
     template <typename T>
-    concept similar_rational = requires(std::int64_t a, std::int64_t b, T obj) {
+    concept similar_rational = requires(std::int64_t a, std::int64_t b) {
         T{a, b};
-        { detail::rational_bindable_count(obj) } -> std::same_as<std::integral_constant<std::size_t, 2U>>;
+        {
+            [](T inner) {
+                auto&& [x, y]                = inner;
+                constexpr std::size_t type_1 = std::same_as<std::decay_t<decltype(x)>, std::int64_t> ? 1U : 0U;
+                constexpr std::size_t type_2 = std::same_as<std::decay_t<decltype(y)>, std::int64_t> ? 1U : 0U;
+
+                return std::integral_constant<std::size_t, type_1 + type_2>{};
+            }(T{})
+        } -> std::same_as<std::integral_constant<std::size_t, 2U>>;
     };
 
     /**
      * @brief Represents a rational number consisting of its corresponding numerator and denominator.
      */
     struct rational {
-        std::int64_t numerator;
-        std::int64_t denominator;
+        std::int64_t numerator{};
+        std::int64_t denominator{};
 
-        constexpr rational() noexcept : numerator{}, denominator{} {}
+        constexpr rational() noexcept = default;
+
+        constexpr rational(const rational&) = default;
+
+        constexpr rational(rational&&) noexcept = default;
 
         explicit constexpr rational(std::int64_t numerator) noexcept : rational{numerator, 1} {}
 
@@ -68,21 +69,35 @@ namespace essence {
 
         template <typename T>
             requires(std::is_aggregate_v<std::decay_t<T>> && similar_rational<std::decay_t<T>>)
-        explicit rational(T&& object) noexcept : rational{} {
-            auto&& [numerator, denominator] = std::forward<T>(object);
+        explicit constexpr rational(T&& obj) noexcept : rational{} {
+            auto&& [numerator, denominator] = std::forward<T>(obj);
 
             this->numerator   = numerator;
             this->denominator = denominator;
+            simplify();
         }
+
+        rational& operator=(const rational&) = default;
+
+        rational& operator=(rational&&) noexcept = default;
 
         /**
          * @brief Converts to a similar object.
          * @tparam T The type of the similar object.
          */
         template <typename T>
-            requires similar_rational<T>
-        constexpr operator T() const noexcept(similar_rational<T>) { // NOLINT(*-explicit-constructor)
-            return T{numerator, denominator};
+            requires similar_rational<std::decay_t<T>>
+        constexpr operator T() const noexcept(similar_rational<std::decay_t<T>>) { // NOLINT(*-explicit-constructor)
+            return std::decay_t<T>{numerator, denominator};
+        }
+
+        /**
+         * @brief Converts to a floating-point number.
+         * @tparam T The type of the floating-point number.
+         */
+        template <std::floating_point T>
+        explicit constexpr operator T() const noexcept {
+            return static_cast<T>(numerator) / static_cast<T>(denominator);
         }
 
         /**
@@ -107,15 +122,6 @@ namespace essence {
          */
         [[nodiscard]] constexpr rational reciprocal() const noexcept {
             return rational{denominator, numerator};
-        }
-
-        /**
-         * @brief Converts to a floating-point number.
-         * @tparam T The type of the floating-point number.
-         */
-        template <std::floating_point T>
-        explicit constexpr operator T() const noexcept {
-            return static_cast<T>(numerator) / static_cast<T>(denominator);
         }
 
         constexpr bool operator<(const rational& right) const noexcept {

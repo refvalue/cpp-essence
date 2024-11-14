@@ -43,7 +43,11 @@ namespace essence {
             }
 
             void operator delete(void* ptr, std::size_t size) {
+#if __cpp_sized_deallocation >= 201309L
                 ::operator delete(ptr, size);
+#else
+                ::operator delete(ptr);
+#endif
             }
 
             generator get_return_object() noexcept {
