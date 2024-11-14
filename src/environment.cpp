@@ -119,8 +119,8 @@ namespace essence {
         // that means anything in this array will run after constructors are done.
         // You can tell the compiler you want a function to run at this phase. The function will receive the same
         // arguments as main.
-        __attribute__((used, section(".init_array")))
-        [[maybe_unused]] void (*get_argc_argv)(int, char**, char**) = [](int argc, char** argv, [[maybe_unused]] char** envp) {
+        [[maybe_unused]] __attribute__((used, section(".init_array"))) void (*get_argc_argv)(
+            int, char**, char**) = [](int argc, char** argv, [[maybe_unused]] char** envp) {
             raw_argc = static_cast<std::size_t>(argc);
             raw_argv = argv;
         };
