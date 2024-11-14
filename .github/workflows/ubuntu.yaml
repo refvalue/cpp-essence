@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        compiler: [ 11, 12, 13 ]
+        compiler: [ 11, 12, 13, 14 ]
         preset: [ 'linux-release-user' ]
     container: gcc:${{ matrix.compiler }}
     steps:
