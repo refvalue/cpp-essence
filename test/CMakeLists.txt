@@ -69,10 +69,11 @@ else()
     endif()
 endif()
 
-add_test(NAME ${target_name} COMMAND ${target_name})
-
 include(ESPackaging)
 
 es_make_install_package(
     TARGET_NAME ${target_name}
 )
+
+include(GoogleTest)
+gtest_discover_tests(${target_name})

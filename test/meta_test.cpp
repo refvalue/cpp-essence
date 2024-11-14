@@ -22,15 +22,25 @@
 
 #include <type_traits>
 
+#include <essence/char8_t_remediation.hpp>
 #include <essence/meta/fingerprint.hpp>
+#include <essence/meta/literal_string.hpp>
+#include <essence/meta/runtime/enum.hpp>
 
 #include <gtest/gtest.h>
 
-namespace test {
+namespace essence::testing {
     struct foo {};
-} // namespace test
 
-using namespace essence::meta;
+    enum class bazflags{a};
+} // namespace essence::testing
+
+using namespace essence;
+using namespace essence::testing;
 
 TEST(meta_test, identifiers) {
+    static constexpr meta::fingerprint fp_foo{std::type_identity<foo>{}};
+
+    EXPECT_STREQ(fp_foo.friendly_name(), U8("essence::testing::foo"));
+    EXPECT_EQ(meta::runtime::to_string(bazflags::a), U8("a"));
 }

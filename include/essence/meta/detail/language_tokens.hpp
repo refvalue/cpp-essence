@@ -25,16 +25,23 @@
 #include "../../char8_t_remediation.hpp"
 #include "../literal_string.hpp"
 
+#include <tuple>
+
 namespace essence::meta::detail {
     /**
      * @brief Some tokens of the C++ programming language.
      */
     struct language_tokens {
+        static constexpr literal_string reference{U8("&")};
         static constexpr literal_string dot{U8(".")};
         static constexpr literal_string scope{U8("::")};
         static constexpr literal_string arrow{U8("->")};
         static constexpr literal_string comma{U8(",")};
         static constexpr literal_string semicolon{U8(";")};
+
+        static constexpr literal_string enum_prefix{U8("enum ")};
+        static constexpr literal_string class_prefix{U8("class ")};
+        static constexpr literal_string struct_prefix{U8("struct ")};
 
         static constexpr literal_string left_parentheses{U8("(")};
         static constexpr literal_string left_angle_bracket{U8("<")};
@@ -49,5 +56,7 @@ namespace essence::meta::detail {
 
         static constexpr literal_string right_enclosing_tokens{
             right_parentheses, right_angle_bracket, right_square_bracket};
+
+        static constexpr auto type_prefixes = std::forward_as_tuple(enum_prefix, class_prefix, struct_prefix);
     };
 } // namespace essence::meta::detail

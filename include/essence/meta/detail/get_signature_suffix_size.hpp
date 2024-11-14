@@ -35,7 +35,7 @@ namespace essence::meta::detail {
      */
     constexpr std::size_t get_signature_suffix_size(std::string_view signature) noexcept {
         auto&& terminator =
-#ifdef _MSC_VER
+#if defined(_MSC_VER) || defined(__clang__)
             language_tokens::comma;
 #else
             language_tokens::semicolon;

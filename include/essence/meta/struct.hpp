@@ -31,6 +31,7 @@
 #include <cstddef>
 #include <tuple>
 #include <type_traits>
+#include <utility>
 
 namespace essence::meta {
     /**
@@ -45,9 +46,9 @@ namespace essence::meta {
         const auto names = []<std::size_t... Is>(
                                std::index_sequence<Is...>) -> generator<std::string_view> {
 #if defined(__llvm__) && defined(__clang__)
-            co_yield (detail::parse_data_member_name(get_literal_string_v<T,
-                          detail::make_fake_object_wrapper(std::get<Is>(
-                              detail::make_data_member_pointers(detail::make_fake_object_wrapper<T>())))>()),
+            (co_yield detail::parse_data_member_name(get_literal_string_v<T,
+                 detail::make_fake_object_wrapper(
+                     std::get<Is>(detail::make_data_member_pointers(detail::make_fake_object_wrapper<T>())))>()),
                 ...);
 #else
             (co_yield detail::parse_data_member_name(get_literal_string_v<T,

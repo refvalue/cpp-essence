@@ -1,14 +1,16 @@
 # 😀CPP Essence -- Modern C++ Utility Library
 
-[![Windows Build](https://github.com/refvalue/cpp-essence/actions/workflows/windows.yaml/badge.svg)](https://github.com/refvalue/cpp-essence/actions/workflows/windows.yaml)[![Ubuntu Build](https://github.com/refvalue/cpp-essence/actions/workflows/ubuntu.yaml/badge.svg)](https://github.com/refvalue/cpp-essence/actions/workflows/ubuntu.yaml)[![MacOS Build](https://github.com/refvalue/cpp-essence/actions/workflows/macos.yaml/badge.svg)](https://github.com/refvalue/cpp-essence/actions/workflows/macos.yaml)
+[![Windows Build](https://github.com/refvalue/cpp-essence/actions/workflows/windows.yaml/badge.svg)](https://github.com/refvalue/cpp-essence/actions/workflows/windows.yaml)
+
+[![Ubuntu Build](https://github.com/refvalue/cpp-essence/actions/workflows/ubuntu.yaml/badge.svg)](https://github.com/refvalue/cpp-essence/actions/workflows/ubuntu.yaml)
 
 ## 📚Requirements
 
 - MSVC >= 14.30 (Visual Studio 2022 17.0)
 - GCC >= 11.2
-- Clang >= 17.0 (Supporting Class Template argument Deduction for Aggregates)
+- Clang >= 17.0 (Supporting [P1816R0 Class Template Argument Deduction for Aggregates](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2019/p1816r0.pdf))
 - Emscripten >= 3.1.52
-- Host GLIBC >= 2.31 (when compiling on Linux)
+- Host GLIBC >= 2.31 (When compiling on Linux)
 - C++ 20 Support
 - JDK >= 8 (Optional if `ES_WITH_JNI` = `OFF`)
 

@@ -35,6 +35,7 @@
 
 #include <cstddef>
 #include <string_view>
+#include <tuple>
 
 namespace essence::meta::detail {
     /**
@@ -66,14 +67,23 @@ namespace essence::meta::detail {
 #error "Unsupported compiler."
 #endif
 
-        // Skips the possible '&' token for GCC and Clang.
         const auto result = extract_keyword<find_mode_type::full_match>(signature, keyword,
             extraction_param{
                 .preview_first_character = param.preview_first_character,
                 .ensure_correctness      = param.ensure_correctness,
                 .suffix_size             = get_signature_suffix_size(signature),
                 .extra_size_func         = [](std::string_view str, std::size_t prefix_size) -> std::size_t {
-                    return str[prefix_size] == '&' ? 1U : 0U;
+#ifdef _MSC_VER
+                    // Skips 'enum', 'class', 'struct' for MSVC.
+                    return std::apply(
+                        [&, size = std::size_t{}](const auto&... args) mutable {
+                            return ((str.starts_with(args) == 0 ? (size = args.size()) : 0U), ..., size);
+                        },
+                        language_tokens::type_prefixes);
+#else
+                    // Skips the possible '&' token for GCC and Clang.
+                    return static_cast<std::size_t>(str[prefix_size] == language_tokens::reference.front());
+#endif
                 },
             });
 
