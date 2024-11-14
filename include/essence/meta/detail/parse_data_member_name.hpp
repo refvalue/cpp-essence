@@ -33,7 +33,7 @@ namespace essence::meta::detail {
      * @param raw_name The raw name of the data member.
      * @return The name of the data member.
      */
-    consteval std::string_view parse_data_member_name(std::string_view raw_name) noexcept {
+    constexpr std::string_view parse_data_member_name(std::string_view raw_name) noexcept {
 #ifdef _MSC_VER
         return extract_keyword<find_mode_type::full_match_reverse>(raw_name, language_tokens::arrow);
 #elif defined(__llvm__) && defined(__clang__)

@@ -33,7 +33,7 @@ namespace essence::meta::detail {
      * @param signature The function signature.
      * @return The size of the suffix.
      */
-    consteval std::size_t get_signature_suffix_size(std::string_view signature) noexcept {
+    constexpr std::size_t get_signature_suffix_size(std::string_view signature) noexcept {
         auto&& terminator =
 #ifdef _MSC_VER
             language_tokens::comma;

@@ -41,25 +41,17 @@ namespace essence::meta {
     template <typename T>
         requires std::is_class_v<T>
     generator<std::string_view> probe_data_member_names() {
-        struct forwarder {
-            std::string_view name;
-
-            explicit consteval forwarder(std::string_view name) noexcept : name{name} {}
-        };
 
         const auto names = []<std::size_t... Is>(
                                std::index_sequence<Is...>) -> generator<std::string_view> {
 #if defined(__llvm__) && defined(__clang__)
-            co_yield forwarder{detail::parse_data_member_name(get_literal_string_v<T,
+            co_yield (detail::parse_data_member_name(get_literal_string_v<T,
                           detail::make_fake_object_wrapper(std::get<Is>(
-                              detail::make_data_member_pointers(detail::make_fake_object_wrapper<T>())))>())}.name,
+                              detail::make_data_member_pointers(detail::make_fake_object_wrapper<T>())))>()),
                 ...);
 #else
-            (
-                co_yield forwarder{
-                    detail::parse_data_member_name(get_literal_string_v<T,
-                        std::get<Is>(detail::make_data_member_pointers(detail::make_fake_object_wrapper<T>()))>())}
-                    .name,
+            (co_yield detail::parse_data_member_name(get_literal_string_v<T,
+                 std::get<Is>(detail::make_data_member_pointers(detail::make_fake_object_wrapper<T>()))>()),
                 ...);
 #endif
         }(std::make_index_sequence<std::tuple_size_v<decltype(detail::make_data_member_pointers(

@@ -37,7 +37,7 @@ namespace essence::meta::detail {
      * @return The substring.
      */
     template <find_mode_type Mode, typename Callable = extraction_param<>::extra_size_func_type>
-    consteval std::string_view extract_keyword(
+    constexpr std::string_view extract_keyword(
         std::string_view str, std::string_view keyword, const extraction_param<Callable>& param = {}) noexcept {
         const auto prefix_size =
             uniform_find_string<Mode>(str, keyword, string_finder_traits<Mode>::default_index, true);
