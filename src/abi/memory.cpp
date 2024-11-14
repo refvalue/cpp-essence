@@ -31,11 +31,19 @@ void* es_aligned_alloc(std::size_t size, std::size_t alignment) noexcept {
 }
 
 void es_dealloc(void* ptr, std::size_t size) noexcept {
+#if __cpp_sized_deallocation >= 201309L
     ::operator delete(ptr, size);
+#else
+    ::operator delete(ptr);
+#endif
 }
 
 void es_aligned_dealloc(void* ptr, std::size_t size, std::size_t alignment) noexcept {
+#if __cpp_sized_deallocation >= 201309L
     ::operator delete(ptr, size, std::align_val_t{alignment});
+#else
+    ::operator delete(ptr, std::align_val_t{alignment});
+#endif
 }
 
 namespace essence::abi {
