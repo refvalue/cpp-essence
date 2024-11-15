@@ -38,7 +38,7 @@ if(CMAKE_HOST_SYSTEM_NAME STREQUAL "Windows")
 endif()
 
 if(ES_WITH_TESTS)
-    es_deploy_lang_compiler("https://github.com/refvalue/cpp-essence/releases/download/v1.0.0-lang-compiler")
+    es_deploy_lang_compiler("https://github.com/refvalue/cpp-essence/releases/download/v0.1.0-lang-compiler")
     message(STATUS "ES_LANG_COMPILER_EXECUTABLE: ${ES_LANG_COMPILER_EXECUTABLE}")
 
     FetchContent_Declare(
