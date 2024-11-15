@@ -80,7 +80,8 @@ namespace essence::meta::detail {
                     // Skips 'enum', 'class', 'struct' for MSVC.
                     return std::apply(
                         [&, size = std::size_t{}](const auto&... args) mutable {
-                            return ((str.starts_with(args) == 0 ? (size = args.size()) : 0U), ..., size);
+                            return ((str.compare(prefix_size, args.size(), args) == 0 ? (size = args.size()) : 0U), ...,
+                                size);
                         },
                         language_tokens::type_prefixes);
 #else
