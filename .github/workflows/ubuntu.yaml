@@ -14,7 +14,7 @@ concurrency:
 
 jobs:
   test_compilers_gcc:
-    run-on: ubuntu-latest
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         compiler: [ 11, 12, 13, 14 ]
