@@ -35,7 +35,10 @@
 
 #include <cstddef>
 #include <string_view>
+
+#ifdef _MSC_VER
 #include <tuple>
+#endif
 
 namespace essence::meta::detail {
     /**
@@ -82,7 +85,7 @@ namespace essence::meta::detail {
                         language_tokens::type_prefixes);
 #else
                     // Skips the possible '&' token for GCC and Clang.
-                    return static_cast<std::size_t>(str[prefix_size] == language_tokens::reference.front());
+                    return str[prefix_size] == language_tokens::reference.front();
 #endif
                 },
             });
