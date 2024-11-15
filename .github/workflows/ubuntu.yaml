@@ -50,7 +50,7 @@ jobs:
           shell: bash
 
   run_coverage_analysis:
-    runs-: ubuntu-latest
+    runs-on: ubuntu-latest
     container: gcc:14
     steps:
       - name: Set up codebase
