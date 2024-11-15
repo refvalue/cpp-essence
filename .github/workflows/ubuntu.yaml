@@ -14,7 +14,7 @@ concurrency:
 
 jobs:
   test_compilers_gcc:
-    runs-on: ubuntu-latest
+    run-on: ubuntu-latest
     strategy:
       matrix:
         compiler: [ 11, 12, 13, 14 ]
@@ -48,3 +48,18 @@ jobs:
         with:
           preset: ${{ matrix.preset }}
           shell: bash
+
+  run_coverage_analysis:
+    runs-: ubuntu-latest
+    container: gcc:14
+    steps:
+      - name: Set up codebase
+        uses: refvalue/setup-codebase-action@main
+        with:
+          shell: bash
+      - name: Make test and run coverage
+        uses: refvalue/make-and-test-action@main
+        with:
+          preset: 'linux-release-user'
+          shell: bash
+          coverage: true

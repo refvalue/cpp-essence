@@ -48,7 +48,7 @@ jobs:
           shell: bash
       - name: Install dependencies
         run: |
-          brew install clang@${{ matrix.compiler }}
+          brew install llvm@${{ matrix.compiler }}
           export CC=/opt/homebrew/opt/llvm/bin/clang
           export CXX=/opt/homebrew/opt/llvm/bin/clang++
       - name: Make and test

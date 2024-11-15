@@ -20,3 +20,23 @@
  * THE SOFTWARE.
  */
 
+#include <essence/json_compat.hpp>
+#include <essence/char8_t_remediation.hpp>
+
+#include <gtest/gtest.h>
+
+using namespace essence;
+
+TEST(json_test, fundamental_io) {
+    const auto json = json::parse(U8(R"({
+  "name": "testing",
+  "sex": "female",
+  "age": 18,
+  "data" : [
+    { "friend": "Sam" },
+    { "friend": "John" }
+  ]
+})"), nullptr, false);
+
+    EXPECT_FALSE(json.is_discarded());
+}
