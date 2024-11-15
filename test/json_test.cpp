@@ -20,31 +20,3 @@
  * THE SOFTWARE.
  */
 
-#pragma once
-
-#include "../basic_vector.hpp"
-#include "../char8_t_remediation.hpp"
-#include "friendly_name_base.hpp"
-
-#include <algorithm>
-#include <array>
-#include <string_view>
-
-namespace essence::meta {
-    template <std_vector T>
-    struct friendly_name<T> {
-        static constexpr auto&& nested_value = friendly_name_v<typename T::value_type>;
-        static constexpr auto buffer{[] {
-            std::array<char, nested_value.size() + 9> result{};
-            auto iter = result.begin();
-
-            iter = std::ranges::copy(std::string_view{U8("vector<")}, iter).out;
-            iter = std::ranges::copy(nested_value, iter).out;
-            iter = std::ranges::copy(std::string_view{U8(">")}, iter).out;
-
-            return result;
-        }()};
-
-        static constexpr std::string_view value{buffer.data()};
-    }; // namespace essence::meta
-} // namespace essence::meta

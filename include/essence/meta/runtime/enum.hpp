@@ -93,7 +93,7 @@ namespace essence::meta::runtime {
      */
     template <typename T, typename Tag = void>
         requires std::is_enum_v<T>
-    std::span<const std::string> get_enum_names_only(bool short_name = false) {
+    std::span<const std::string> get_enum_names_only(bool short_name = true) {
         static const auto make_cache = [](bool short_name) {
             std::vector<std::string> result;
 

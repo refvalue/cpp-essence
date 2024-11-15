@@ -1,4 +1,4 @@
-﻿set(target_version 1.0.0)
+﻿set(target_version 0.1.0)
 set(target_name cpp-essence)
 set(target_name_header_only cpp-essence-header-only)
 set(package_name CppEssence)

@@ -26,12 +26,10 @@
 #include "common_types.hpp"
 #include "detail/naming_convention.hpp"
 
-#include <concepts>
 #include <utility>
 
 namespace essence::meta {
-    template <std::same_as<naming_convention>>
-    consteval auto get_enum_searching_range() noexcept {
+    consteval auto get_enum_searching_range(naming_convention) noexcept {
         return std::pair{0, 4};
     }
 

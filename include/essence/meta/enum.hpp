@@ -34,12 +34,13 @@
 
 namespace essence::meta {
     /**
-     * @brief Gets the numeric range of an enumeration for searching its valid values.
+     * @brief Gets the numeric range of an enumeration for searching its valid values, supporting ADL
+     *        (Argument-Dependent Lookup).
      * @tparam T The type of the enumeration.
      * @return The searching range.
      */
     template <typename T>
-    consteval auto get_enum_searching_range() noexcept {
+    consteval auto get_enum_searching_range(T) noexcept {
         return std::pair<std::int64_t, std::int64_t>{-64, 64};
     };
 
@@ -52,7 +53,7 @@ namespace essence::meta {
     template <typename T, bool Short = true>
         requires std::is_enum_v<T>
     generator<std::pair<std::string_view, T>> probe_enum_names() {
-        static constexpr auto range = get_enum_searching_range<T>();
+        static constexpr auto range = get_enum_searching_range(T{});
         static constexpr auto min   = range.first;
         static constexpr auto max   = range.second;
 

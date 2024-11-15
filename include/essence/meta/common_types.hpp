@@ -68,5 +68,6 @@ namespace essence::meta {
         snake = snake_case,
     };
 
-    struct all_naming_conventions_tag{};
+    struct all_naming_conventions_tag {};
+    struct original_name_cache_tag {};
 } // namespace essence::meta

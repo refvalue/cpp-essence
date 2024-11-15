@@ -23,11 +23,8 @@
 #pragma once
 
 #include "friendly_name.hpp"
-#include "identifier.hpp"
-#include "literal_string.hpp"
 
 #include <compare>
-#include <span>
 #include <string_view>
 
 namespace essence::meta {
@@ -35,12 +32,6 @@ namespace essence::meta {
      * @brief A unique identifier of a type, i.e. a fingerprint.
      */
     class fingerprint {
-        template <typename T>
-        struct typename_cache {
-            static constexpr auto origin = get_literal_string_t<T>();
-            static constexpr literal_string value{std::span<const char, origin.size()>{origin.data(), origin.size()}};
-        };
-
     public:
         /**
          * @brief Create a fingerprint for a type.
@@ -48,7 +39,7 @@ namespace essence::meta {
          */
         template <typename T>
         explicit consteval fingerprint(std::type_identity<T>) noexcept
-            : typename_{typename_cache<T>::value}, friendly_name_{friendly_name_v<T>} {}
+            : typename_{friendly_name_v<T, original_name_cache_tag>}, friendly_name_{friendly_name_v<T>} {}
 
         constexpr auto operator<=>(const fingerprint&) const noexcept = default;
 
