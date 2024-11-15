@@ -52,12 +52,12 @@ namespace essence::meta {
     template <typename T, bool Short = true>
         requires std::is_enum_v<T>
     generator<std::pair<std::string_view, T>> probe_enum_names() {
+        static constexpr auto range = get_enum_searching_range<T>();
+        static constexpr auto min   = range.first;
+        static constexpr auto max   = range.second;
+
         const auto origin = []<std::size_t... Is>(
                                 std::index_sequence<Is...>) -> generator<std::pair<std::string_view, T>> {
-            constexpr auto range = get_enum_searching_range<T>();
-            constexpr auto min   = range.first;
-            constexpr auto max   = range.second;
-
             (co_yield std::pair{get_literal_string_v<T, static_cast<T>(min + Is),
                                     identifier_param{
                                         .shortened          = Short,
