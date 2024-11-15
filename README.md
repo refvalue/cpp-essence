@@ -1,8 +1,10 @@
 # 😀CPP Essence -- Modern C++ Utility Library
 
-[![Windows Build](https://github.com/refvalue/cpp-essence/actions/workflows/windows.yaml/badge.svg)](https://github.com/refvalue/cpp-essence/actions/workflows/windows.yaml)
+[![Windows Build](https://github.com/refvalue/cpp-essence/actions/workflows/windows.yaml/badge.svg)](https://github.com/refvalue/cpp-essence/actions/workflows/windows.yaml) [![Ubuntu Build](https://github.com/refvalue/cpp-essence/actions/workflows/ubuntu.yaml/badge.svg)](https://github.com/refvalue/cpp-essence/actions/workflows/ubuntu.yaml) [![Coverage Status](https://coveralls.io/repos/github/refvalue/cpp-essence/badge.svg)](https://coveralls.io/github/refvalue/cpp-essence)
 
-[![Ubuntu Build](https://github.com/refvalue/cpp-essence/actions/workflows/ubuntu.yaml/badge.svg)](https://github.com/refvalue/cpp-essence/actions/workflows/ubuntu.yaml)
+## ⌨Under Development
+
+This open-source project is currently under development, with the author focusing on completing and improving unit tests to ensure code correctness. Please note that this README is unstable and may change at any time until the first version is released. I really appreciate your contributions through GitHub issues in this area.
 
 ## 📚Requirements
 
