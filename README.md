@@ -234,7 +234,7 @@ characters. However, the decision to **ban implicit conversions between `char8_t
 challenges for developers, especially when migrating legacy code that was designed around `std::string` (which uses
 `char`) and `std::string_view`.
 
-```c++
+```cpp
 #include <string>
 #include <string_view>
 
@@ -256,7 +256,7 @@ without modification or the need for explicit casting between `char` and `char8_
 The macro `U8` represents a UTF-8 encoded string literal within this implementation of **P1423R3**. Here’s a simple code
 block demonstrating how this compatibility could be managed:
 
-```c++
+```cpp
 #include <array>
 #include <string>
 #include <string_view>
@@ -281,7 +281,7 @@ const std::string strconv = essence::from_u8string(u8str);
 
 The `std::filesystem::path` introduced by the C++17 Standard defines one constructor which has a signature as follows:
 
-```c++
+```cpp
 template<typename Source>
 std::filesystem::path::path(const Source& source, std::filesystem::path::format fmt = std::filesystem::path::auto_format);
 ```
@@ -290,7 +290,7 @@ Any of the character types `char`, `char8_t`, `char16_t`, `char32_t`, `wchar_t` 
 `Source`. To designate a UTF-8 encoded string precisely, you can call `essence::to_u8string` to convert your
 `std::string` to `std::u8string` to enable the `char8_t` overload.
 
-```c++
+```cpp
 #include <filesystem>
 
 #include <essence/char8_t_remediation.hpp>
@@ -352,7 +352,7 @@ es_add_lang_resources(
 To enable globalization integration, you need to rebuild the CMake cache and then the generated header will be
 available.
 
-```c++
+```cpp
 #include "user_globalization_my_test.hpp"
 
 #include <essence/abi/string.hpp>
@@ -414,7 +414,7 @@ C++20, we can implement a basic reflection library by parsing the output of thes
 The `meta::fingerprint` class stores compile-time information about a type, including both the raw and friendly names.
 The code below shows how to create a fingerprint which is evaluated at compile time.
 
-```c++
+```cpp
 #include <type_traits>
 
 #include <essence/char8_t_remediation.hpp>
@@ -471,7 +471,7 @@ in a constexpr context such as non-type template arguments. It allows you to sto
 partial code of the reflection module contains interfaces that use `meta::literal_string` as return values. Here’s an
 example to illustrate how such a `struct` template could be used:
 
-```c++
+```cpp
 #include <string_view>
 
 #include <essence/char8_t_remediation.hpp>
@@ -495,7 +495,7 @@ const some_class_with_literal_string<U8("Non-type Arg")> obj;
 `meta::literal_string` provides iteration function pairs `begin` and `end` and therefore all STL algorithms can be
 applied to any instances of it.
 
-```c++
+```cpp
 #include <algorithm>
 #include <vector>
 
@@ -515,7 +515,7 @@ std::ranges::copy(str, std::back_inserter(chars));
 Several utility functions are available to facilitate the conversion of boolean values to and from string
 representations, such as the literals `"true"` and `"false"`.
 
-```c++
+```cpp
 #include <essence/char8_t_remediation.hpp>
 #include <essence/meta/boolean.hpp>
 
@@ -538,7 +538,7 @@ range of an enumeration type and use the internal `meta::get_literal_string_v` f
 value into its string representation. By default, the range is set to [−64, 64], which is broad enough to cover most
 typical use cases.
 
-```c++ 
+```cpp
 template <typename T>
 consteval auto get_enum_searching_range() noexcept {
     return std::pair<std::int64_t, std::int64_t>{-64, 64};
@@ -548,7 +548,7 @@ consteval auto get_enum_searching_range() noexcept {
 You can customize the range for a specific enumeration type by overloading the `meta::get_enum_searching_range` function
 template.
 
-```c++
+```cpp
 #include <concepts>
 #include <utility>
 
@@ -570,7 +570,7 @@ namespace essence::meta {
 
 The following code demonstrates how to implement conversions between strings and enumeration names:
 
-```c++
+```cpp
 #include <essence/char8_t_remediation.hpp>
 #include <essence/meta/runtime/enum.hpp>
 
@@ -596,7 +596,7 @@ name in `PascalCase`, the function can correctly interpret names written in othe
 `camelCase`. This allows for greater flexibility when processing strings, making it easier to work with various naming
 conventions without worrying about case sensitivity or specific formatting.
 
-```c++
+```cpp
 #include <essence/char8_t_remediation.hpp>
 #include <essence/meta/runtime/boolean.hpp>
 #include <essence/meta/runtime/enum.hpp>
@@ -659,7 +659,7 @@ Similar to `meta::runtime::enumerate_data_members`, the `meta::runtime::get_enum
 `meta::runtime::get_enum_names_only` functions are designed to retrieve the names of an enumeration. The difference
 between them is illustrated below:
 
-```C++
+```cpp
 #include <type_traits>
 
 #include <essence/char8_t_remediation.hpp>
@@ -696,7 +696,7 @@ header file `<essence/json_compat.hpp>` defines `essence::json` with a custom JS
 `meta::runtime::json_serializer` class. The custom serializer is able to reflect the data members of a `struct` and
 convert the value to or from a JSON value fast.
 
-```c++
+```cpp
 using json = nlohmann::basic_json<std::map, std::vector, std::string, bool, std::int64_t, std::uint64_t, double,
         std::allocator, meta::runtime::json_serializer>;
 ```
@@ -704,7 +704,7 @@ using json = nlohmann::basic_json<std::map, std::vector, std::string, bool, std:
 In addition, the header file includes the concept `essence::json_serializable<T>`, which allows users to check if a
 `struct` can be serialized by `meta::runtime::json_serializer`.
 
-```c++
+```cpp
 #include <string>
 
 #include <essence/json_compat.hpp>
@@ -717,7 +717,7 @@ if constexpr(essence::json_serializable<std::string>) {
 To use the features of this version of JSON class, you simply need to manipulate the JSON value as you would with the
 regular `nlohmann::json`. Below is an example code:
 
-```c++
+```cpp
 #include <fstream>
 
 #include <essence/char8_t_remediation.hpp>
@@ -752,7 +752,7 @@ deserialization. The `meta::runtime::json_serializer` will check if a `json_seri
 a `struct` type. Currently, `snake_case`, `camelCase`, and `PascalCase` naming conventions are supported. The following
 code demonstrates how to define this nested enumeration:
 
-```c++
+```cpp
 struct entity {
     enum class json_serialization { camel_case };
 };
@@ -770,7 +770,7 @@ By default, an enumeration value is serialized as a JSON number, and vice versa.
 to its string representation, you need to add an `enum_to_string` member to the `json_serialization` enumeration
 described above.
 
-```c++
+```cpp
 struct entity {
     enum class json_serialization {
         camel_case,
@@ -783,7 +783,7 @@ struct entity {
 
 Here are some examples of JSON serialization including complex values:
 
-```c++
+```cpp
 #include <map>
 #include <optional>
 #include <string>
