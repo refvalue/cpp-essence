@@ -1,10 +1,16 @@
 # 😀CPP Essence -- Modern C++ Utility Library
 
+
+
 [![Windows Build](https://github.com/refvalue/cpp-essence/actions/workflows/windows.yaml/badge.svg)](https://github.com/refvalue/cpp-essence/actions/workflows/windows.yaml) [![Ubuntu Build](https://github.com/refvalue/cpp-essence/actions/workflows/ubuntu.yaml/badge.svg)](https://github.com/refvalue/cpp-essence/actions/workflows/ubuntu.yaml) [![Coverage Status](https://coveralls.io/repos/github/refvalue/cpp-essence/badge.svg)](https://coveralls.io/github/refvalue/cpp-essence)
+
+
 
 ## ⌨Under Development
 
 This open-source project is currently under development, with the author focusing on completing and improving unit tests to ensure code correctness. Please note that this README is unstable and may change at any time until the first version is released. I really appreciate your contributions through GitHub issues in this area.
+
+
 
 ## 📚Requirements
 
@@ -15,6 +21,12 @@ This open-source project is currently under development, with the author focusin
 - Host GLIBC >= 2.31 (When compiling on Linux)
 - C++ 20 Support
 - JDK >= 8 (Optional if `ES_WITH_JNI` = `OFF`)
+
+
+
+## 📂[Document & API Reference](https://docs.refvalue.org/cppessence/)
+
+
 
 ## 💻Importing the Prebuilt Package with CMake
 
@@ -86,6 +98,8 @@ To avoid this problem, it is highly recommended to ensure that your DLL has the 
 
 There is no such issue on Linux/Unix platform, so only the Release version is provided on
 the [Release](http://www.baidu.com) page.
+
+
 
 ## 💡Main Features
 
@@ -221,6 +235,8 @@ the [Release](http://www.baidu.com) page.
 
 - **ZSTD, ZIP, and GZIP**: Supports ZSTD, ZIP, and GZIP compression algorithms for efficient data compression and
   decompression.
+
+
 
 ## 🙋Quick Samples
 
@@ -959,6 +975,8 @@ int main(){
     }
 }
 ```
+
+
 
 ## Acknowledgements
 
