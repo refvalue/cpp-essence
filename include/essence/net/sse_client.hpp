@@ -61,7 +61,7 @@ namespace essence::net {
         ES_API(CPPESSENCE) void on_message(const sse_message_handler& handler) const;
 
         /**
-         * @brief Registers a error callback.
+         * @brief Registers an error callback.
          * @param handler The error callback.
          */
         ES_API(CPPESSENCE) void on_error(const error_handler& handler) const;

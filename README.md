@@ -6,9 +6,15 @@
 
 
 
-## ⌨Under Development
+![](assets/header.gif)
 
-This open-source project is currently under development, with the author focusing on completing and improving unit tests to ensure code correctness. Please note that this README is unstable and may change at any time until the first version is released. I really appreciate your contributions through GitHub issues in this area.
+
+
+## ℹA NEW RELEASE COMING SOON!
+
+This open-source project is currently under development, with the author focusing on completing and improving unit tests to ensure code correctness. Please note that this README is unstable and may change at any time until the first version is released. I really appreciate your contributions through GitHub issues in this area. 
+
+❤Consider forking this repo or upstream if you like this project! Big thanks!
 
 
 
@@ -38,11 +44,11 @@ the [Release](http://www.baidu.com) page. After obtaining the compressed files, 
 location on your disk.
 
 ```powershell
-Expand-Archive -Path './cpp-essence-1.0-windows-x86_64-release.zip' -DestinationPath 'C:\path\to\extract\folder'
+Expand-Archive -Path './cpp-essence-0.1.0-windows-amd64-release.zip' -DestinationPath 'C:\path\to\extract\folder'
 ```
 
 ```bash
-tar -zxf ./cpp-essence-1.0-linux-x86_64.tgz
+tar -zxf ./cpp-essence-0.1.0-linux-amd64.tgz
 ```
 
 Then you need to modify the `CMakeUserPresets.json` file in your own project to add a CMake variable which stores the
@@ -56,21 +62,21 @@ path of the directory that the file was decompressed to. Here is an example:
       "name": "windows-debug-user",
       "inherits": "windows-debug",
       "cacheVariables": {
-        "ES_CPP_ESSENCE_ROOT": "E:/Libs/cpp-essence-1.0-windows-x86_64-debug"
+        "ES_CPP_ESSENCE_ROOT": "E:/Libs/cpp-essence-0.1.0-windows-amd64-debug"
       }
     },
     {
       "name": "windows-release-user",
       "inherits": "windows-release",
       "cacheVariables": {
-        "ES_CPP_ESSENCE_ROOT": "E:/Libs/cpp-essence-1.0-windows-x86_64-release"
+        "ES_CPP_ESSENCE_ROOT": "E:/Libs/cpp-essence-0.1.0-windows-amd64-release"
       }
     },
     {
       "name": "linux-release-user",
       "inherits": "linux-release",
       "cacheVariables": {
-        "ES_CPP_ESSENCE_ROOT": "/opt/cpp-essence-1.0-linux-x86_64"
+        "ES_CPP_ESSENCE_ROOT": "/opt/cpp-essence-0.1.0-linux-amd64"
       }
     }
   ]
