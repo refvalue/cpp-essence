@@ -266,12 +266,15 @@ MAKE_TEST(exceptions) {
     try {
         [[maybe_unused]] const auto obj = json{{U8("value"), U8("non-existance")}}.get<foo>();
     } catch (const std::exception& ex) {
-        static_assert(true, "This suite will activate the 'enum-parsing' exception.");
+        EXPECT_NE(
+            std::string_view{ex.what()}.find(meta::fingerprint{std::type_identity<foo::catalog>{}}.friendly_name()),
+            std::string_view::npos);
     }
 
     try {
         [[maybe_unused]] const auto obj = json{{U8("non_existance"), U8("whatever")}}.get<foo>();
     } catch (const std::exception& ex) {
-        static_assert(true, "This suite will activate the 'nonexistent-key' exception.");
+        EXPECT_NE(std::string_view{ex.what()}.find(U8("Failed to deserialize the JSON value to the data member.")),
+            std::string_view::npos);
     }
 }

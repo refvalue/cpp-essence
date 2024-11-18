@@ -25,14 +25,14 @@
 
 #include <essence/char8_t_remediation.hpp>
 #include <essence/crypto/file_validation.hpp>
+#include <essence/io/fs_operator.hpp>
 
 #include <gtest/gtest.h>
 
 using namespace essence;
+using namespace essence::io;
 using namespace essence::crypto;
 
 #define MAKE_TEST(name) TEST(crypto_test, name)
 
-MAKE_TEST(file_validation) {
-
-}
+MAKE_TEST(file_validation) {}
