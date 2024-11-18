@@ -39,13 +39,34 @@
 
 namespace essence::meta::runtime {
     /**
+     * @brief Stashes the current 'enum_to_string' and 'naming_convention' configurations during the serialization.
+     */
+    struct json_serializer_base {
+        static bool& get_enum_to_string_ref() noexcept {
+            thread_local bool enabled{};
+
+            return enabled;
+        }
+
+        static naming_convention& get_naming_convention_ref() noexcept {
+            thread_local auto convention = detail::get_json_naming_convention<std::type_identity<void>>();
+
+            return convention;
+        }
+
+        static void reset() noexcept {
+            get_enum_to_string_ref()    = {};
+            get_naming_convention_ref() = detail::get_json_naming_convention<std::type_identity<void>>();
+        }
+    };
+
+    /**
      * @brief A JSON serializer by using the meta reflection implementation in this project.
      * @tparam T The type of the value.
      */
     template <typename T, typename = void>
-    struct json_serializer {
-        template <typename U, typename BasicJsonContext>
-            requires nlohmann::detail::is_basic_json_context<BasicJsonContext>::value
+    struct json_serializer : json_serializer_base {
+        template <typename U, detail::basic_json_context BasicJsonContext>
         [[noreturn]] static void throw_exception(const U& member, std::string_view json_key, std::string_view message,
             std::string_view internal, BasicJsonContext context) {
 
@@ -63,11 +84,7 @@ namespace essence::meta::runtime {
          * @param json The JSON value.
          * @param value The primitive value.
          */
-        template <typename BasicJson, typename U = T>
-            requires(
-                nlohmann::detail::is_basic_json<BasicJson>::value
-                && (nlohmann::detail::is_compatible_type<nlohmann::json, U>::value || std::ranges::forward_range<U>)
-                && !std::is_enum_v<U>)
+        template <detail::basic_json BasicJson, detail::primitive_json_serializable U = T>
         static void to_json(BasicJson& json, const U& value) {
             nlohmann::to_json(json, value);
         }
@@ -79,11 +96,7 @@ namespace essence::meta::runtime {
          * @param json The JSON value.
          * @param value The primitive value.
          */
-        template <typename BasicJson, typename U = T>
-            requires(
-                nlohmann::detail::is_basic_json<BasicJson>::value
-                && (nlohmann::detail::is_compatible_type<nlohmann::json, U>::value || std::ranges::forward_range<U>)
-                && !std::is_enum_v<U>)
+        template <detail::basic_json BasicJson, detail::primitive_json_serializable U = T>
         static void from_json(const BasicJson& json, U& value) {
             nlohmann::from_json(json, value);
         }
@@ -95,8 +108,7 @@ namespace essence::meta::runtime {
          * @param json The JSON value.
          * @param value The std::optional<> value.
          */
-        template <typename BasicJson, typename U = T>
-            requires(nlohmann::detail::is_basic_json<BasicJson>::value && std_optional<U>)
+        template <detail::basic_json BasicJson, std_optional U = T>
         static void to_json(BasicJson& json, const U& value) {
             if (value) {
                 to_json(json, *value);
@@ -112,8 +124,7 @@ namespace essence::meta::runtime {
          * @param json The JSON value.
          * @param value The std::optional<> value.
          */
-        template <typename BasicJson, typename U = T>
-            requires(nlohmann::detail::is_basic_json<BasicJson>::value && std_optional<U>)
+        template <detail::basic_json BasicJson, std_optional U = T>
         static void from_json(const BasicJson& json, U& value) {
             if (json.is_null()) {
                 value.reset();
@@ -132,10 +143,7 @@ namespace essence::meta::runtime {
          * @param json The JSON value.
          * @param value The class object.
          */
-        template <typename BasicJson, typename U = T>
-            requires(std::is_class_v<U> && nlohmann::detail::is_basic_json<BasicJson>::value
-                     && !nlohmann::detail::is_compatible_type<nlohmann::json, U>::value
-                     && !std::ranges::forward_range<U> && !std_optional<U>)
+        template <detail::basic_json BasicJson, detail::non_iterable_object_json_serializable U = T>
         static void to_json(BasicJson& json, const U& value) {
             auto handler = [&](const auto& item) {
                 try {
@@ -151,8 +159,13 @@ namespace essence::meta::runtime {
                 }
             };
 
+            get_enum_to_string_ref()    = detail::has_enum_to_string_config<U>;
+            get_naming_convention_ref() = detail::get_json_naming_convention<U>();
+
             enumerate_data_members<detail::get_json_naming_convention<U>()>(
                 value, [&](const auto&... members) { (handler(members), ...); });
+
+            reset();
         }
 
         /**
@@ -162,10 +175,7 @@ namespace essence::meta::runtime {
          * @param json The JSON value.
          * @param value The class object.
          */
-        template <typename BasicJson, typename U = T>
-            requires(std::is_class_v<U> && nlohmann::detail::is_basic_json<BasicJson>::value
-                     && !nlohmann::detail::is_compatible_type<nlohmann::json, U>::value
-                     && !std::ranges::forward_range<U> && !std_optional<U>)
+        template <detail::basic_json BasicJson, detail::non_iterable_object_json_serializable U = T>
         static void from_json(const BasicJson& json, U& value) {
             auto handler = [&](const auto& item) {
                 try {
@@ -189,13 +199,11 @@ namespace essence::meta::runtime {
          * @param json The JSON value.
          * @param value The enumeration value.
          */
-        template <typename BasicJson, typename U = T>
-            requires(nlohmann::detail::is_basic_json<BasicJson>::value
-                     && std::same_as<typename BasicJson::string_t::value_type, char> && std::is_enum_v<U>)
+        template <detail::basic_json BasicJson, typename U = T>
+            requires(std::same_as<typename BasicJson::string_t::value_type, char> && std::is_enum_v<U>)
         static void to_json(BasicJson& json, const U& value) {
-            if constexpr (detail::has_enum_to_string_config<T>) {
-                nlohmann::to_json(
-                    json, convert_naming_convention(to_string(value), detail::get_json_naming_convention<T>()));
+            if (get_enum_to_string_ref()) {
+                nlohmann::to_json(json, convert_naming_convention(to_string(value), get_naming_convention_ref()));
             } else {
                 nlohmann::to_json(json, value);
             }
@@ -208,9 +216,8 @@ namespace essence::meta::runtime {
          * @param json The JSON value.
          * @param value The enumeration value.
          */
-        template <typename BasicJson, typename U = T>
-            requires(nlohmann::detail::is_basic_json<BasicJson>::value
-                     && std::same_as<typename BasicJson::string_t::value_type, char> && std::is_enum_v<U>)
+        template <detail::basic_json BasicJson, typename U = T>
+            requires(std::same_as<typename BasicJson::string_t::value_type, char> && std::is_enum_v<U>)
         static void from_json(const BasicJson& json, U& value) {
             if (json.is_string()) {
                 const auto name = json.template get_ptr<const typename BasicJson::string_t*>();

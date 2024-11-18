@@ -38,6 +38,8 @@
 
 #include <gtest/gtest.h>
 
+#define MAKE_TEST(name) TEST(meta_test, name)
+
 namespace essence::testing {
     struct foo {};
 
@@ -65,7 +67,7 @@ namespace essence::testing {
 using namespace essence;
 using namespace essence::testing;
 
-TEST(meta_test, fingerprint_for_nontemplate_types) {
+MAKE_TEST(fingerprint_for_nontemplate_types) {
     static constexpr std::array fingerprints{
         std::pair{meta::fingerprint{std::type_identity<std::int8_t>{}}, U8("int8")},
         std::pair{meta::fingerprint{std::type_identity<std::int16_t>{}}, U8("int16")},
@@ -90,7 +92,7 @@ TEST(meta_test, fingerprint_for_nontemplate_types) {
     }
 }
 
-TEST(meta_test, enumerations) {
+MAKE_TEST(enumerations) {
     EXPECT_EQ(meta::runtime::to_string(problem::nuts), U8("nuts"));
     EXPECT_TRUE(meta::runtime::from_string<problem>(U8("playing")));
     EXPECT_FALSE(meta::runtime::from_string<problem>(U8("none")));
@@ -137,7 +139,7 @@ TEST(meta_test, enumerations) {
     EXPECT_EQ(customized_range_enum_names[2], (std::pair<std::string, face_action>{U8("crying"), face_action::crying}));
 }
 
-TEST(meta_test, boolean) {
+MAKE_TEST(boolean) {
     EXPECT_EQ(meta::true_string, U8("true"));
     EXPECT_EQ(meta::false_string, U8("false"));
 
@@ -150,7 +152,7 @@ TEST(meta_test, boolean) {
     EXPECT_EQ(meta::runtime::to_string(false), U8("false"));
 }
 
-TEST(meta_test, literal_string) {
+MAKE_TEST(literal_string) {
     static constexpr meta::literal_string str1{U8("Hello")};
     static constexpr meta::literal_string str2{U8("World")};
 

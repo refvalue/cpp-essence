@@ -211,3 +211,70 @@ MAKE_TEST(naming_convention) {
     EXPECT_EQ(obj_qux.pacific_ocean, 3);
     EXPECT_EQ(obj_qux.indian_ocean, true);
 }
+
+MAKE_TEST(enum_to_string) {
+    struct foo {
+        enum class catalog {
+            first_item,
+            second_item,
+            third_item,
+        };
+
+        enum class json_serialization {
+            pascal_case,
+            enum_to_string,
+        };
+
+        catalog root{catalog::second_item};
+
+        std::vector<catalog> catalogs{
+            catalog::first_item,
+            catalog::second_item,
+            catalog::third_item,
+        };
+    };
+
+    static_assert(json_serializable<foo>);
+
+    const json json(foo{});
+
+    EXPECT_EQ(json[U8("Root")], U8("SecondItem"));
+
+    EXPECT_EQ(json[U8("Catalogs")].size(), 3);
+    EXPECT_EQ(json[U8("Catalogs")][0], U8("FirstItem"));
+    EXPECT_EQ(json[U8("Catalogs")][1], U8("SecondItem"));
+    EXPECT_EQ(json[U8("Catalogs")][2], U8("ThirdItem"));
+
+    const auto obj = json.get<foo>();
+
+    EXPECT_EQ(obj.root, foo::catalog::second_item);
+
+    EXPECT_EQ(obj.catalogs.size(), 3);
+    EXPECT_EQ(obj.catalogs[0], foo::catalog::first_item);
+    EXPECT_EQ(obj.catalogs[1], foo::catalog::second_item);
+    EXPECT_EQ(obj.catalogs[2], foo::catalog::third_item);
+}
+
+MAKE_TEST(exceptions) {
+    struct foo {
+        enum class json_serialization { camel_case };
+        enum class catalog { here };
+
+        catalog value{};
+    };
+
+    try {
+        [[maybe_unused]] const auto obj = json{{U8("value"), U8("non-existance")}}.get<foo>();
+    } catch (const std::exception& ex) {
+        EXPECT_TRUE(
+            std::string_view{ex.what()}.find(meta::fingerprint{std::type_identity<foo::catalog>{}}.friendly_name())
+            != std::string_view::npos);
+    }
+
+    try {
+        [[maybe_unused]] const auto obj = json{{U8("non_existance"), U8("whatever")}}.get<foo>();
+    } catch (const std::exception& ex) {
+        EXPECT_TRUE(std::string_view{ex.what()}.find(U8("Failed to deserialize the JSON value to the data member."))
+                    != std::string_view::npos);
+    }
+}

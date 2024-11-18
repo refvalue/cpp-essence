@@ -22,13 +22,37 @@
 
 #pragma once
 
+#include "../../json.hpp"
 #include "../common_types.hpp"
 #include "../runtime/struct.hpp"
 
+#include <ranges>
 #include <type_traits>
 #include <unordered_set>
 
 namespace essence::meta::detail {
+    template <typename T>
+    concept basic_json_context = nlohmann::detail::is_basic_json_context<T>::value;
+
+    template <typename T>
+    concept basic_json = nlohmann::detail::is_basic_json<T>::value;
+
+    template <typename T>
+    concept json_compatible_type = nlohmann::detail::is_compatible_type<nlohmann::json, T>::value;
+
+    template <typename T>
+    concept primitive_json_serializable =
+        (json_compatible_type<T> || std::ranges::forward_range<T>) &&!std::is_enum_v<T>;
+
+    template <typename T>
+    concept non_iterable_object_json_serializable =
+        std::is_class_v<T> && !json_compatible_type<T> && !std::ranges::forward_range<T> && !std_optional<T>;
+
+    template <typename T>
+    concept iterable_json_serializable = std::ranges::forward_range<T>
+                                      && (json_compatible_type<std::ranges::range_value_t<T>>
+                                          || non_iterable_object_json_serializable<std::ranges::range_value_t<T>>);
+
     template <typename T>
     concept has_json_serialization_config = std::is_class_v<T> && requires {
         typename T::json_serialization;
