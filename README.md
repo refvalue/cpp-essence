@@ -2,7 +2,7 @@
 
 
 
-[![Windows Build](https://github.com/refvalue/cpp-essence/actions/workflows/windows.yaml/badge.svg)](https://github.com/refvalue/cpp-essence/actions/workflows/windows.yaml) [![Ubuntu Build](https://github.com/refvalue/cpp-essence/actions/workflows/ubuntu.yaml/badge.svg)](https://github.com/refvalue/cpp-essence/actions/workflows/ubuntu.yaml) [![Coverage Status](https://coveralls.io/repos/github/refvalue/cpp-essence/badge.svg)](https://coveralls.io/github/refvalue/cpp-essence)
+[![Windows Build](https://github.com/refvalue/cpp-essence/actions/workflows/windows.yaml/badge.svg)](https://github.com/refvalue/cpp-essence/actions/workflows/windows.yaml) [![Ubuntu Build](https://github.com/refvalue/cpp-essence/actions/workflows/ubuntu.yaml/badge.svg)](https://github.com/refvalue/cpp-essence/actions/workflows/ubuntu.yaml) [![Coverage Status](https://coveralls.io/repos/github/refvalue/cpp-essence/badge.svg?branch=main)](https://coveralls.io/github/refvalue/cpp-essence?branch=main)
 
 
 
