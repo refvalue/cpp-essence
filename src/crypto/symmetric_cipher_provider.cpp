@@ -33,7 +33,7 @@
 
 namespace essence::crypto {
     namespace {
-        struct updatation_tag {};
+        struct update_tag {};
         struct finalization_tag {};
     } // namespace
 
@@ -85,7 +85,7 @@ namespace essence::crypto {
             auto process_chunk = [&]<typename Tag>(Tag, const std::byte* chunk, std::size_t size) {
                 std::span<std::byte> output{intermediate};
 
-                if constexpr (std::same_as<Tag, updatation_tag>) {
+                if constexpr (std::same_as<Tag, update_tag>) {
                     processor_.update(std::span{chunk, size}, output);
                 } else {
                     processor_.finalize(output);
@@ -98,12 +98,12 @@ namespace essence::crypto {
             const auto complete_ptr_end = buffer.data() + buffer.size() / intermediate_size * intermediate_size;
 
             for (auto ptr = buffer.data(); ptr < complete_ptr_end; ptr += intermediate_size) {
-                process_chunk(updatation_tag{}, ptr, intermediate_size);
+                process_chunk(update_tag{}, ptr, intermediate_size);
             }
 
             // Processes the remaining chunk.
             if (const auto ptr_end = buffer.data() + buffer.size(); complete_ptr_end < ptr_end) {
-                process_chunk(updatation_tag{}, complete_ptr_end, ptr_end - complete_ptr_end);
+                process_chunk(update_tag{}, complete_ptr_end, ptr_end - complete_ptr_end);
             }
 
             process_chunk(finalization_tag{}, nullptr, 0U);

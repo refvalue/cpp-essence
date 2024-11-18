@@ -43,9 +43,9 @@ namespace essence::crypto {
                 std::forward<Args>(args)...};
         }
 
-        template <typename... Args>
+        template <std::int32_t SpecialUpperBound = 0, typename... Args>
         void check_error(std::int32_t code, logging_string_view hint, Args&&... args) const {
-            if (code <= 0) {
+            if (code <= SpecialUpperBound) {
                 raise_error(hint, std::forward<Args>(args)...);
             }
         }

@@ -36,7 +36,7 @@
 
 namespace essence::crypto {
     /**
-     * @brief Encodes a memory buffer into a hexadecimal string.
+     * @brief Encodes a memory buffer to a hexadecimal string.
      * @param buffer The memory buffer.
      * @param delimiter An optional delimiter to be inserted between two hexadecimal units.
      * @return The hexadecimal string.
@@ -51,13 +51,22 @@ namespace essence::crypto {
     ES_API(CPPESSENCE) abi::string hex_encode(std::span<const std::byte> buffer, std::optional<char> delimiter = {});
 
     /**
-     * @brief Decodes a hexadecimal string into a byte array.
+     * @brief Decodes a hexadecimal string to a byte array.
      * @param hex The hexadecimal string.
      * @param delimiter An optional delimiter assumed existing between two hexadecimal units within "hex".
      * @return The byte array.
      * @see hex_encode()
      */
     ES_API(CPPESSENCE) abi::vector<std::byte> hex_decode(zstring_view hex, std::optional<char> delimiter = {});
+
+    /**
+     * @brief Decodes a hexadecimal string to a string.
+     * @param hex The hexadecimal string.
+     * @param delimiter An optional delimiter assumed existing between two hexadecimal units within "hex".
+     * @return The string.
+     * @see hex_encode()
+     */
+    ES_API(CPPESSENCE) abi::string hex_decode_as_string(zstring_view hex, std::optional<char> delimiter = {});
 
     /**
      * @brief Digests a memory buffer in MD5 mode.
@@ -69,7 +78,7 @@ namespace essence::crypto {
     ES_API(CPPESSENCE) abi::string md5_hash(std::span<const std::byte> buffer);
 
     /**
-     * @brief Encodes a memory buffer into a base64 string.
+     * @brief Encodes a memory buffer to a base64 string.
      * @param buffer The memory buffer.
      * @return The base64 encoded string.
      * @see base64_decode()
@@ -85,14 +94,21 @@ namespace essence::crypto {
     ES_API(CPPESSENCE) abi::vector<std::byte> base64_decode(std::string_view encoded_text);
 
     /**
+     * @brief Decodes a base64 encoded string to a string.
+     * @param encoded_text The base64 encoded string.
+     * @return The decoded string.
+     * @see base64_encode()
+     */
+    ES_API(CPPESSENCE) abi::string base64_decode_as_string(std::string_view encoded_text);
+
+    /**
      * @brief Calculates a HMAC hash.
      * @param mode The hashing mode.
      * @param key The HMAC key.
      * @param buffer The memory buffer.
      * @return The hash code.
      */
-    ES_API(CPPESSENCE)
-    abi::string hmac_hash(digest_mode mode, std::string_view key, std::span<const std::byte> buffer);
+    ES_API(CPPESSENCE) abi::string hmac_hash(digest_mode mode, std::string_view key, std::span<const std::byte> buffer);
 
     /**
      * @brief Calculates a hash.
@@ -111,8 +127,7 @@ namespace essence::crypto {
     ES_API(CPPESSENCE) abi::string make_file_digest(digest_mode mode, std::string_view path);
 
     template <byte_like_contiguous_range Range>
-    abi::string hex_encode(
-        Range&& range, std::optional<char> delimiter = {}) {
+    abi::string hex_encode(Range&& range, std::optional<char> delimiter = {}) {
         return hex_encode(as_const_byte_span(range), delimiter);
     }
 
@@ -127,8 +142,7 @@ namespace essence::crypto {
     }
 
     template <byte_like_contiguous_range Range>
-    abi::string hmac_hash(
-        digest_mode mode, std::string_view key, Range&& range) {
+    abi::string hmac_hash(digest_mode mode, std::string_view key, Range&& range) {
         return hmac_hash(mode, key, as_const_byte_span(range));
     }
 

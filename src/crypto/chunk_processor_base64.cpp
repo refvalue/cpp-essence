@@ -58,7 +58,7 @@ namespace essence::crypto {
             .raw_update   = &EVP_DecodeUpdate,
             .raw_finalize = &EVP_DecodeFinal,
             .check_error  = [](std::int32_t code,
-                               std::string_view message) { decoding_builder.check_error(code, message); },
+                               std::string_view message) { decoding_builder.check_error<-1>(code, message); },
         };
 
         template <bool Encoder>
@@ -103,7 +103,11 @@ namespace essence::crypto {
             }
 
             [[nodiscard]] static rational size_factor() noexcept {
-                return rational{4, 3};
+                if constexpr (Encoder) {
+                    return rational{4, 3};
+                } else {
+                    return rational{3, 4};
+                }
             }
 
             void init() const {

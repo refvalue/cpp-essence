@@ -41,6 +41,79 @@
 
 namespace essence::crypto {
     namespace {
+        template <byte_like_contiguous_range Container>
+        Container hex_decode_impl(zstring_view hex, std::optional<char> delimiter) {
+            std::size_t size{};
+            const auto inner_delimiter = delimiter ? *delimiter : U8('\0');
+
+            if (OPENSSL_hexstr2buf_ex(nullptr, 0, &size, hex.c_str(), inner_delimiter) == 0) {
+                throw source_code_aware_runtime_error{
+                    U8("Failed to calculate the required size of the original buffer.")};
+            }
+
+            Container result;
+
+            // Keeps compatible with std::basic_string and std::vector simultaneously.
+            result.resize(size);
+
+            if (OPENSSL_hexstr2buf_ex(
+                    reinterpret_cast<std::uint8_t*>(result.data()), result.size(), &size, hex.c_str(), inner_delimiter)
+                == 0) {
+                throw source_code_aware_runtime_error{U8("Failed to decode the hexadecimal string.")};
+            }
+
+            return result;
+        }
+
+        template <byte_like_contiguous_range Container>
+        Container base64_decode_impl(std::string_view encoded_text) {
+            if (encoded_text.empty()) {
+                return {};
+            }
+
+            if (encoded_text.size() % 4 != 0) {
+                throw source_code_aware_runtime_error{U8("Base64 Text Length"), encoded_text.size(), U8("Message"),
+                    U8("Illegal length of the base64 text, which should be divisible by 4.")};
+            }
+
+            // Detects all paddings.
+            const auto padding_size = [&]() -> std::size_t {
+                if (const auto iter = std::ranges::find_if_not(
+                        std::views::reverse(encoded_text), [](char c) { return c == U8('='); });
+                    iter != encoded_text.rend()) {
+                    return static_cast<std::size_t>(std::ranges::distance(encoded_text.rbegin(), iter));
+                }
+
+                return 0;
+            }();
+
+            // https://www.openssl.org/docs/man3.0/man3/EVP_DecodeBlock.html
+            Container result;
+
+            // Keeps compatible with std::basic_string and std::vector simultaneously.
+            result.resize(encoded_text.size() / 4 * 3);
+
+            auto actual_size = EVP_DecodeBlock(reinterpret_cast<std::uint8_t*>(result.data()),
+                reinterpret_cast<const std::uint8_t*>(encoded_text.data()),
+                static_cast<std::int32_t>(encoded_text.size()));
+
+            if (actual_size == -1) {
+                throw source_code_aware_runtime_error{U8("An error occurred when invoking \"EVP_DecodeBlock\".")};
+            }
+
+            if (result.size() != static_cast<std::size_t>(actual_size)) {
+                throw source_code_aware_runtime_error{U8("Excepted Size"), result.size(), U8("Actual Size"),
+                    actual_size, U8("Message"), U8("The actual size must be equal to the expected size.")};
+            }
+
+            // Removes all padding zeros.
+            if (result.size() >= padding_size) {
+                result.resize(result.size() - padding_size);
+            }
+
+            return result;
+        }
+
         template <std::invocable<EVP_MD_CTX*> Callable>
         abi::string make_digest_impl(digest_mode mode, Callable&& update_handler) {
             std::unique_ptr<EVP_MD_CTX, decltype([](EVP_MD_CTX* inner) { EVP_MD_CTX_free(inner); })> context{
@@ -90,22 +163,11 @@ namespace essence::crypto {
     }
 
     abi::vector<std::byte> hex_decode(zstring_view hex, std::optional<char> delimiter) {
-        std::size_t size{};
-        const auto inner_delimiter = delimiter ? *delimiter : U8('\0');
+        return hex_decode_impl<abi::vector<std::byte>>(hex, delimiter);
+    }
 
-        if (OPENSSL_hexstr2buf_ex(nullptr, 0, &size, hex.c_str(), inner_delimiter) == 0) {
-            throw source_code_aware_runtime_error{U8("Failed to calculate the required size of the original buffer.")};
-        }
-
-        abi::vector<std::byte> result(size);
-
-        if (OPENSSL_hexstr2buf_ex(
-                reinterpret_cast<std::uint8_t*>(result.data()), result.size(), &size, hex.c_str(), inner_delimiter)
-            == 0) {
-            throw source_code_aware_runtime_error{U8("Failed to decode the hexadecimal string.")};
-        }
-
-        return result;
+    abi::string hex_decode_as_string(zstring_view hex, std::optional<char> delimiter) {
+        return hex_decode_impl<abi::string>(hex, delimiter);
     }
 
     abi::string md5_hash(std::span<const std::byte> buffer) {
@@ -114,7 +176,7 @@ namespace essence::crypto {
 
     abi::string base64_encode(std::span<const std::byte> buffer) {
         if (buffer.empty()) {
-            return abi::string{};
+            return {};
         }
 
         // https://www.openssl.org/docs/man3.0/man3/EVP_EncodeBlock.html
@@ -131,46 +193,11 @@ namespace essence::crypto {
     }
 
     abi::vector<std::byte> base64_decode(std::string_view encoded_text) {
-        if (encoded_text.empty()) {
-            return {};
-        }
+        return base64_decode_impl<abi::vector<std::byte>>(encoded_text);
+    }
 
-        if (encoded_text.size() % 4 != 0) {
-            throw source_code_aware_runtime_error{U8("Base64 Text Length"), encoded_text.size(), U8("Message"),
-                U8("Illegal length of the base64 text, which should be divisible by 4.")};
-        }
-
-        // Detects all paddings.
-        const auto padding_size = [&]() -> std::size_t {
-            if (const auto iter =
-                    std::find_if_not(encoded_text.rbegin(), encoded_text.rend(), [](char c) { return c == U8('='); });
-                iter != encoded_text.rend()) {
-                return static_cast<std::size_t>(std::distance(encoded_text.rbegin(), iter));
-            }
-
-            return 0;
-        }();
-
-        // https://www.openssl.org/docs/man3.0/man3/EVP_DecodeBlock.html
-        abi::vector<std::byte> result(encoded_text.size() / 4 * 3);
-        auto actual_size = EVP_DecodeBlock(reinterpret_cast<std::uint8_t*>(result.data()),
-            reinterpret_cast<const std::uint8_t*>(encoded_text.data()), static_cast<std::int32_t>(encoded_text.size()));
-
-        if (actual_size == -1) {
-            throw source_code_aware_runtime_error{U8("An error occurred when invoking \"EVP_DecodeBlock\".")};
-        }
-
-        if (result.size() != static_cast<std::size_t>(actual_size)) {
-            throw source_code_aware_runtime_error{U8("Excepted Size"), result.size(), U8("Actual Size"), actual_size,
-                U8("Message"), U8("The actual size must be equal to the expected size.")};
-        }
-
-        // Removes all padding zeros.
-        if (result.size() >= padding_size) {
-            result.resize(result.size() - padding_size);
-        }
-
-        return result;
+    abi::string base64_decode_as_string(std::string_view encoded_text) {
+        return base64_decode_impl<abi::string>(encoded_text);
     }
 
     abi::string hmac_hash(digest_mode mode, std::string_view key, std::span<const std::byte> buffer) {

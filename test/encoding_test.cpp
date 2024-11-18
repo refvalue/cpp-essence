@@ -34,14 +34,14 @@ using namespace essence;
 #define MAKE_TEST(name) TEST(encoding_test, name)
 
 MAKE_TEST(conversion) {
-    constexpr std::string_view str{U8("Hello world!")};
-    constexpr std::string_view cjk_str{U8("中日韩汉字")};
+    static constexpr std::string_view str{U8("Hello world!")};
+    static constexpr std::string_view cjk_str{U8("中日韩汉字")};
 
-    constexpr std::wstring_view wide_str{L"Hello world!"};
-    constexpr std::wstring_view wide_cjk_str{L"中日韩汉字"};
+    static constexpr std::wstring_view wide_str{L"Hello world!"};
+    static constexpr std::wstring_view wide_cjk_str{L"中日韩汉字"};
 
-    constexpr std::u16string_view u16_str{u"Hello world!"};
-    constexpr std::u16string_view u16_cjk_str{u"中日韩汉字"};
+    static constexpr std::u16string_view u16_str{u"Hello world!"};
+    static constexpr std::u16string_view u16_cjk_str{u"中日韩汉字"};
 
     const essence::abi::vector<std::uint16_t> u16_vec{
         u'H', u'e', u'l', u'l', u'o', u' ', u'w', u'o', u'r', u'l', u'd', u'!'};
