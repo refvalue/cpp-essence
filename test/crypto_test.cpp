@@ -117,7 +117,7 @@ MAKE_TEST(digest) {
 }
 
 MAKE_TEST(base64) {
-    static const abi::vector<std::byte> binary{std::byte{0}, std::byte{1}, std::byte{2}, std::byte{3}};
+    static const essence::abi::vector<std::byte> binary{std::byte{0}, std::byte{1}, std::byte{2}, std::byte{3}};
     static constexpr zstring_view str{U8("Something like that!!!")};
     static constexpr zstring_view base64_binary{U8("AAECAw==")};
     static constexpr zstring_view base64_str{U8("U29tZXRoaW5nIGxpa2UgdGhhdCEhIQ==")};
@@ -129,7 +129,7 @@ MAKE_TEST(base64) {
 }
 
 MAKE_TEST(hex) {
-    static const abi::vector<std::byte> binary{std::byte{0}, std::byte{1}, std::byte{2}, std::byte{3}};
+    static const essence::abi::vector<std::byte> binary{std::byte{0}, std::byte{1}, std::byte{2}, std::byte{3}};
     static constexpr zstring_view str{U8("Something like that!!!")};
     static constexpr zstring_view hex_binary{U8("00010203")};
     static constexpr zstring_view hex_str{U8("536F6D657468696E67206C696B652074686174212121")};
