@@ -43,8 +43,9 @@ MAKE_TEST(conversion) {
     constexpr std::u16string_view u16_str{u"Hello world!"};
     constexpr std::u16string_view u16_cjk_str{u"中日韩汉字"};
 
-    const abi::vector<std::uint16_t> u16_vec{u'H', u'e', u'l', u'l', u'o', u' ', u'w', u'o', u'r', u'l', u'd', u'!'};
-    const abi::vector<std::uint16_t> u16_cjk_vec{u'中', u'日', u'韩', u'汉', u'字'};
+    const essence::abi::vector<std::uint16_t> u16_vec{
+        u'H', u'e', u'l', u'l', u'o', u' ', u'w', u'o', u'r', u'l', u'd', u'!'};
+    const essence::abi::vector<std::uint16_t> u16_cjk_vec{u'中', u'日', u'韩', u'汉', u'字'};
 
 #ifdef _WIN32
     ASSERT_EQ(to_native_string(str), wide_str);

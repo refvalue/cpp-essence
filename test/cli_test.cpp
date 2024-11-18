@@ -104,9 +104,9 @@ MAKE_TEST(option) {
     parser.on_error([](std::string_view message) {});
     parser.on_output([](std::string_view message) {});
 
-    if (parser.parse(std::vector<abi::string>{U8("-b"), U8("-i=2"), U8("--float32=3.14"), U8("--string"), U8("hello"),
-            U8("-a=dog"), U8("--lines"), U8("123,abc"), U8("--numbers=2,2,2,3,1,1"), U8("-z"), U8("cat,mouse,dog"),
-            U8("other"), U8("lol")});
+    if (parser.parse(std::vector<essence::abi::string>{U8("-b"), U8("-i=2"), U8("--float32=3.14"), U8("--string"),
+            U8("hello"), U8("-a=dog"), U8("--lines"), U8("123,abc"), U8("--numbers=2,2,2,3,1,1"), U8("-z"),
+            U8("cat,mouse,dog"), U8("other"), U8("lol")});
         parser) {
         struct foo {
             bool boolean{};
