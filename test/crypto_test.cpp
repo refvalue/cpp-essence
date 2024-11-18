@@ -24,10 +24,15 @@
 #include <string_view>
 
 #include <essence/char8_t_remediation.hpp>
+#include <essence/crypto/file_validation.hpp>
 
 #include <gtest/gtest.h>
 
 using namespace essence;
+using namespace essence::crypto;
 
 #define MAKE_TEST(name) TEST(crypto_test, name)
 
+MAKE_TEST(file_validation) {
+
+}
