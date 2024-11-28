@@ -39,7 +39,7 @@ namespace essence::jni {
             static auto&& entry =
                 jvm::instance().add_managed_entry(jvm::instance().ensure_env()->FindClass(Name.c_str()));
 
-            return global_ref_ex<jclass>{static_cast<jclass>(entry.get())};
+            return global_ref_ex{static_cast<jclass>(entry.get())};
         }
 
         template <auto Create, auto GetRegion, auto GetElements, auto ReleaseElements>
@@ -195,7 +195,7 @@ namespace essence::jni {
     }
 
     abi::vector<local_ref> from_array(jobjectArray array) {
-        return abi::vector<local_ref>(::begin(array), ::end(array));
+        return {::begin(array), ::end(array)};
     }
 
     abi::vector<abi::string> from_string_array(jobjectArray array) {
@@ -297,15 +297,18 @@ namespace essence::jni {
 
     std::optional<abi::string> try_catch_exception() {
         if (const auto env = jvm::instance().ensure_env(); env->ExceptionCheck()) {
-            const auto ex = env->ExceptionOccurred();
-            const global_ref_ex class_ex{env->GetObjectClass(ex), true};
+            const scope_exit exception_scope{[&] { env->ExceptionClear(); }};
+            const local_ref ex{env->ExceptionOccurred(), true};
+            const local_ref_ex class_ex{env->GetObjectClass(ex.get()), true};
 
             if (const auto method_get_message =
                     env->GetMethodID(class_ex.get(), U8("getMessage"), U8("()Ljava/lang/String;"))) {
-                return from_string(static_cast<jstring>(env->CallObjectMethod(ex, method_get_message)));
+                return from_string(
+                    local_ref_ex{reinterpret_cast<jstring>(env->CallObjectMethod(ex.get(), method_get_message)), true}
+                        .get());
             }
 
-            env->ExceptionClear();
+            return U8("Unknown Java exception.");
         }
 
         return std::nullopt;
