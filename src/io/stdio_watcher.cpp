@@ -24,6 +24,7 @@
 #include "delegate.hpp"
 #include "error_extensions.hpp"
 #include "managed_handle.hpp"
+#include "native_handle.hpp"
 
 #include <array>
 #include <cstdint>
@@ -32,6 +33,12 @@
 #ifdef _WIN32
 #include <fcntl.h>
 #include <io.h>
+
+#define WIN32_LEAN_AND_MEAN
+#define NOMINMAX
+#define NOGDI
+
+#include <Windows.h>
 #else
 #include <fcntl.h>
 #include <unistd.h>
@@ -68,9 +75,18 @@ namespace essence::io {
         void stop() {
             // Restores the original handle and closes the pipe.
             if (origin_) {
-                _dup2(origin_.get(), current_file_handle());
+                _dup2(origin_.get(), current_stdio_descriptor());
                 origin_.reset();
             }
+
+#ifdef _WIN32
+            if (original_std_handle_) {
+                SetStdHandle(current_std_handle_type(), original_std_handle_);
+                original_std_handle_ = {};
+            }
+#endif
+
+            pipe_write_.reset();
 
             if (worker_.joinable()) {
                 worker_.join();
@@ -84,14 +100,21 @@ namespace essence::io {
         }
 
     private:
-        std::int32_t current_file_handle() const {
+        [[nodiscard]] std::int32_t current_stdio_descriptor() const noexcept {
             return mode_ == stdio_watcher_mode::output ? _fileno(stdout) : _fileno(stderr);
         }
 
+#ifdef _WIN32
+        std::uint32_t current_std_handle_type() const noexcept {
+            return mode_ == stdio_watcher_mode::output ? STD_OUTPUT_HANDLE : STD_ERROR_HANDLE;
+        }
+#endif
+
         void dispatch_messages() const {
             thread_local std::array<char, buffer_size> buffer{};
+            using size_type = decltype(_read({}, {}, {}));
 
-            for (std::int32_t bytes_read{};
+            for (size_type bytes_read{};
                 (bytes_read = _read(pipe_read_.get(), buffer.data(), static_cast<std::uint32_t>(buffer.size() - 1)))
                 > 0;) {
                 buffer[bytes_read] = U8('\0');
@@ -100,7 +123,10 @@ namespace essence::io {
         }
 
         void redirect_buffer() {
-            origin_.reset(_dup(current_file_handle()));
+#ifdef _WIN32
+            original_std_handle_ = GetStdHandle(current_std_handle_type());
+#endif
+            origin_.reset(_dup(current_stdio_descriptor()));
 
             std::array<std::int32_t, 2> pipe_handles{};
 
@@ -112,18 +138,28 @@ namespace essence::io {
                 throw source_code_aware_runtime_error{U8("Failed to create a pipe for stdio redirection.")};
             }
 
-            const posix_handle pipe_write{pipe_handles.back()};
-
             pipe_read_.reset(pipe_handles.front());
+            pipe_write_.reset(pipe_handles.back());
 
-            if (_dup2(pipe_write.get(), current_file_handle()) == -1) {
+            if (_dup2(pipe_write_.get(), current_stdio_descriptor()) == -1) {
                 throw source_code_aware_runtime_error{U8("Failed to redirect the stdio buffer to the pipe.")};
             }
+
+#ifdef _WIN32
+            if (!SetStdHandle(mode_ == stdio_watcher_mode::output ? STD_OUTPUT_HANDLE : STD_ERROR_HANDLE,
+                    reinterpret_cast<HANDLE>(_get_osfhandle(pipe_write_.get())))) {
+                throw source_code_aware_runtime_error{U8("Failed to redirect the underlying Win32 standard handle.")};
+            }
+#endif
         }
 
         stdio_watcher_mode mode_;
         posix_handle origin_;
         posix_handle pipe_read_;
+        posix_handle pipe_write_;
+#ifdef _WIN32
+        native_handle original_std_handle_;
+#endif
         std::jthread worker_;
         delegate<stdio_message_handler> on_message_;
     };
