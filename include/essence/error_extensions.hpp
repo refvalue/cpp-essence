@@ -37,7 +37,7 @@
 namespace essence::detail {
     template <std::size_t N>
     consteval auto make_format_str() noexcept {
-        constexpr std::string_view part1{U8("[{}]")};
+        constexpr std::string_view part1{U8("[{}] ")};
         constexpr std::string_view part2{U8("{} ")};
         constexpr std::size_t size = ((part1.size() + part2.size()) * (N / 2) + (N % 2 == 0 ? 0 : part1.size())) + 1;
 
@@ -93,7 +93,7 @@ namespace essence {
 
                   // Removes the directory part from the file name to provide a simplified output.
                   const std::string_view file_name{location.file_name()};
-                  auto file_name_without_directory = file_name.substr(file_name.find_last_of(U8(R"(/\)")) + 1);
+                  const auto file_name_without_directory = file_name.substr(file_name.find_last_of(U8(R"(/\)")) + 1);
 
                   if constexpr (sizeof...(Args) == 1) {
                       return format(format_str, U8("File"), file_name_without_directory, U8("Message"),

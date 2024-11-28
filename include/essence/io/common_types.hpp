@@ -22,9 +22,19 @@
 
 #pragma once
 
+#include <functional>
+#include <string_view>
+
 namespace essence::io {
     enum class compression_mode {
         zstd,
         zlib,
     };
-}
+
+    enum class stdio_watcher_mode {
+        output,
+        error,
+    };
+
+    using stdio_message_handler = std::function<void(std::string_view message)>;
+} // namespace essence::io

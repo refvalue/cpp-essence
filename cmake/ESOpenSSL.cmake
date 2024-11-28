@@ -40,6 +40,8 @@ function(es_make_openssl_impl)
 
     es_check_emscripten(use_emcc use_emxx emscripten_dir)
 
+    set(environment_variables "")
+
     if(ARG_CROSS_COMPILE)
         es_ensure_parameters(es_make_openssl ARG CROSS_PLATFORM)
         set(configure_command ${ARG_SOURCE_DIR}/Configure)
@@ -56,10 +58,9 @@ function(es_make_openssl_impl)
             message(FATAL_ERROR "This build system does not support non-32-bit or non-64-bit targets.")
         endif()
 
-        list(APPEND configure_args /FS)
-
         set(configure_command perl.exe)
         set(make_command nmake.exe)
+        list(APPEND environment_variables CL=/MP)
     else()
         set(configure_command ${ARG_SOURCE_DIR}/config)
         set(make_command make)
@@ -90,8 +91,6 @@ function(es_make_openssl_impl)
     elseif(NOT WIN32)
         list(APPEND configure_args CC=${CMAKE_C_COMPILER})
     endif()
-
-    set(environment_variables "")
 
     if(ARG_STATIC)
         list(APPEND configure_args no-shared)

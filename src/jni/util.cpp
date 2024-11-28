@@ -294,6 +294,22 @@ namespace essence::jni {
 
         return env->ThrowNew(exception_type, message.c_str());
     }
+
+    std::optional<abi::string> try_catch_exception() {
+        if (const auto env = jvm::instance().ensure_env(); env->ExceptionCheck()) {
+            const auto ex = env->ExceptionOccurred();
+            const global_ref_ex class_ex{env->GetObjectClass(ex), true};
+
+            if (const auto method_get_message =
+                    env->GetMethodID(class_ex.get(), U8("getMessage"), U8("()Ljava/lang/String;"))) {
+                return from_string(static_cast<jstring>(env->CallObjectMethod(ex, method_get_message)));
+            }
+
+            env->ExceptionClear();
+        }
+
+        return std::nullopt;
+    }
 } // namespace essence::jni
 
 namespace essence::jni::scoped {

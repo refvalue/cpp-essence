@@ -197,3 +197,7 @@ MAKE_TEST(symmetric_cipher_chunked) {
 
     EXPECT_STREQ(str.c_str(), buffer.c_str());
 }
+
+MAKE_TEST(pubkey_cipher) {
+
+}

@@ -37,6 +37,7 @@
 #include <cstddef>
 #include <cstdint>
 #include <new>
+#include <optional>
 #include <ranges>
 #include <span>
 #include <string_view>
@@ -152,6 +153,8 @@ namespace essence::jni {
 
         return std::move(value);
     }
+
+    ES_API(JNISUPPORT) std::optional<abi::string> try_catch_exception();
 } // namespace essence::jni
 
 namespace essence::jni::scoped {
