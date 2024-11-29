@@ -77,7 +77,7 @@ namespace essence {
                     }
 
                     result.append(format(
-                        U8("{}{}\n"), std::string(static_cast<std::size_t>(indent) * level, U8('-')), ex.what()));
+                        U8("{} {}\n"), std::string(static_cast<std::size_t>(indent) * level, U8('-')), ex.what()));
 
                     try {
                         std::rethrow_if_nested(ex);
@@ -97,10 +97,9 @@ namespace essence {
                 });
 
                 if (!recursive) {
-                    // Removes the redundant '\n' and adds a space.
+                    // Removes the redundant '\n'.
                     if (!result.empty()) {
                         result.pop_back();
-                        result.push_back(U8(' '));
                     }
 
                     invoke_complete_callback();
