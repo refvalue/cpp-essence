@@ -55,7 +55,7 @@ namespace essence {
         [[noreturn]] ES_API(CPPESSENCE) static void throw_nested(
             E&& ex, std::int32_t indent = default_nested_exception_indent) try {
             std::throw_with_nested(std::forward<E>(ex));
-        } catch (std::exception&) {
+        } catch (...) {
             flatten_and_throw(std::current_exception(), indent);
         }
 
