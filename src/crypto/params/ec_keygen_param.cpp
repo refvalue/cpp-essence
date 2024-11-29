@@ -27,9 +27,12 @@
 #include "error_extensions.hpp"
 #include "exception.hpp"
 
+#include <exception>
+
 namespace essence::crypto {
-    void* ec_keygen_param::generate_key_blob() const {
-        return throw_nested_and_flatten(source_code_aware_runtime_error{U8("Curve Name"), curve_name},
-            [this] { return evp_pkey_q_keygen(U8("EC"), curve_name.c_str()).release(); });
+    void* ec_keygen_param::generate_key_blob() const try {
+        return evp_pkey_q_keygen(U8("EC"), curve_name.c_str()).release();
+    } catch (const std::exception&) {
+        aggregate_error::throw_nested(source_code_aware_runtime_error{U8("Curve Name"), curve_name});
     }
 } // namespace essence::crypto

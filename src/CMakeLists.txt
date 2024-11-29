@@ -129,7 +129,6 @@ target_sources(
     ${ES_PUBLIC_INCLUDE_DIR}/essence/hashing.hpp
     ${ES_PUBLIC_INCLUDE_DIR}/essence/json.hpp
     ${ES_PUBLIC_INCLUDE_DIR}/essence/json_compat.hpp
-    ${ES_PUBLIC_INCLUDE_DIR}/essence/json_extensions.hpp
     ${ES_PUBLIC_INCLUDE_DIR}/essence/managed_handle.hpp
     ${ES_PUBLIC_INCLUDE_DIR}/essence/native_handle.hpp
     ${ES_PUBLIC_INCLUDE_DIR}/essence/noncopyable.hpp
@@ -137,7 +136,6 @@ target_sources(
     ${ES_PUBLIC_INCLUDE_DIR}/essence/optional.hpp
     ${ES_PUBLIC_INCLUDE_DIR}/essence/range.hpp
     ${ES_PUBLIC_INCLUDE_DIR}/essence/rect.hpp
-    ${ES_PUBLIC_INCLUDE_DIR}/essence/reflection.hpp
     ${ES_PUBLIC_INCLUDE_DIR}/essence/scope.hpp
     ${ES_PUBLIC_INCLUDE_DIR}/essence/source_location.hpp
     ${ES_PUBLIC_INCLUDE_DIR}/essence/span.hpp

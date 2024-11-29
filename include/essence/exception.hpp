@@ -26,13 +26,11 @@
 #include "abi/vector.hpp"
 #include "compat.hpp"
 
-#include <concepts>
 #include <cstddef>
 #include <cstdint>
 #include <optional>
 #include <stdexcept>
 #include <string_view>
-#include <type_traits>
 #include <utility>
 
 namespace essence {
@@ -52,6 +50,14 @@ namespace essence {
         [[nodiscard]] ES_API(CPPESSENCE) std::size_t size() const noexcept;
         [[noreturn]] ES_API(CPPESSENCE) static void flatten_and_throw(
             const std::exception_ptr& root, std::int32_t indent = default_nested_exception_indent);
+
+        template <typename E>
+        [[noreturn]] ES_API(CPPESSENCE) static void throw_nested(
+            E&& ex, std::int32_t indent = default_nested_exception_indent) try {
+            std::throw_with_nested(std::forward<E>(ex));
+        } catch (std::exception&) {
+            flatten_and_throw(std::current_exception(), indent);
+        }
 
         template <typename E, bool Reverse = false>
         std::optional<E> extract() const {
@@ -92,20 +98,4 @@ namespace essence {
     ES_API(CPPESSENCE)
     abi::string serialize_nested_exceptions(
         const std::exception_ptr& root, std::int32_t indent = default_nested_exception_indent);
-
-#if ES_HAS_CXX20
-    template <typename E, std::invocable Callable>
-#else
-    template <typename E, typename Callable, std::enable_if_t<std::is_invocable_v<Callable>>* = nullptr>
-#endif
-    decltype(auto) throw_nested_and_flatten(
-        E&& ex, Callable&& callable, std::int32_t indent = default_nested_exception_indent) try {
-        try {
-            return std::forward<Callable>(callable)();
-        } catch (...) {
-            std::throw_with_nested(std::forward<E>(ex));
-        }
-    } catch (const std::exception&) {
-        aggregate_error::flatten_and_throw(std::current_exception(), indent);
-    }
 } // namespace essence

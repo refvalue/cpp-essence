@@ -138,14 +138,17 @@ namespace essence::net {
 
             auto tuple = std::forward_as_tuple(std::forward<T>(message));
 
-            return throw_nested_and_flatten(
-                source_code_aware_runtime_error{U8("Error"), U8("Failed to commit the message."), U8("Entity"),
-                    meta::get_literal_string_t<decayed_type,
-                        meta::identifier_param{
-                            .shortened = true,
-                        }>(),
-                    U8("Raw Message"), message_content},
-                [&] { return std::apply(handler, std::move(tuple)); });
+            try {
+                return std::apply(handler, std::move(tuple));
+            } catch (const std::exception& ex) {
+                aggregate_error::throw_nested(
+                    source_code_aware_runtime_error{U8("Error"), U8("Failed to commit the message."), U8("Entity"),
+                        meta::get_literal_string_t<decayed_type,
+                            meta::identifier_param{
+                                .shortened = true,
+                            }>(),
+                        U8("Raw Message"), message_content});
+            }
         }
 
     private:

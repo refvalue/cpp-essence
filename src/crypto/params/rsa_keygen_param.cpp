@@ -27,9 +27,12 @@
 #include "error_extensions.hpp"
 #include "exception.hpp"
 
+#include <exception>
+
 namespace essence::crypto {
-    void* rsa_keygen_param::generate_key_blob() const {
-        return throw_nested_and_flatten(source_code_aware_runtime_error{U8("Key Bits"), key_bits},
-            [this] { return evp_pkey_q_keygen(U8("RSA"), key_bits).release(); });
+    void* rsa_keygen_param::generate_key_blob() const try {
+        return evp_pkey_q_keygen(U8("RSA"), key_bits).release();
+    } catch (const std::exception&) {
+        aggregate_error::throw_nested(source_code_aware_runtime_error{U8("Key Bits"), key_bits});
     }
 } // namespace essence::crypto

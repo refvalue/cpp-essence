@@ -164,47 +164,44 @@ namespace essence::net {
     private:
         abi::json commit_bytes_impl(http_method method, const uri& relative_uri,
             std::optional<std::pair<std::string_view, std::span<const std::byte>>> content_type_and_bytes,
-            const http_header_handler& header_handler) {
-            return throw_nested_and_flatten(
-                net_error_impl{U8("HTTP Method"), to_string(method), U8("Base URI"), base_uri_.str(),
-                    U8("Relative URI"), relative_uri.str(), U8("Content Type"),
-                    content_type_and_bytes ? content_type_and_bytes->first : U8("Unknown")},
-                [&] {
-                    web::http::http_request request{map_http_method(method)};
-                    http_headers_proxy headers{request.headers()};
-                    uri absolute_uri{internal::to_utf8_string(web::uri_builder{make_cpprest_uri(base_uri_)}
-                                                                  .append(make_cpprest_uri(relative_uri))
-                                                                  .to_string())};
+            const http_header_handler& header_handler) try {
+            web::http::http_request request{map_http_method(method)};
+            http_headers_proxy headers{request.headers()};
+            uri absolute_uri{internal::to_utf8_string(
+                web::uri_builder{make_cpprest_uri(base_uri_)}.append(make_cpprest_uri(relative_uri)).to_string())};
 
-                    request.set_request_uri(make_cpprest_uri(relative_uri));
+            request.set_request_uri(make_cpprest_uri(relative_uri));
 
-                    if (const auto content_type_and_input_stream =
-                            [&]() -> std::optional<std::pair<std::string_view, concurrency::streams::istream>> {
-                            if (!content_type_and_bytes) {
-                                return std::nullopt;
-                            }
-
-                            auto&& [content_type, bytes] = *content_type_and_bytes;
-                            auto input_stream            = concurrency::streams::bytestream::open_istream(
-                                std::vector<std::uint8_t>{reinterpret_cast<const std::uint8_t*>(bytes.data()),
-                                               reinterpret_cast<const std::uint8_t*>(bytes.data()) + bytes.size()});
-
-                            return std::pair{content_type, input_stream};
-                        }()) {
-                        request.set_body(content_type_and_input_stream->second,
-                            internal::to_native_string(content_type_and_input_stream->first));
+            if (const auto content_type_and_input_stream =
+                    [&]() -> std::optional<std::pair<std::string_view, concurrency::streams::istream>> {
+                    if (!content_type_and_bytes) {
+                        return std::nullopt;
                     }
 
-                    invoke_optional(header_handler, absolute_uri, headers);
-                    set_progress_handlers(request,
-                        {
-                            .on_progress   = on_progress_.to_nothrow_function(),
-                            .on_percentage = on_percentage_.to_nothrow_function(),
-                        },
-                        upload_content_size_, download_content_size_);
+                    auto&& [content_type, bytes] = *content_type_and_bytes;
+                    auto input_stream            = concurrency::streams::bytestream::open_istream(
+                        std::vector<std::uint8_t>{reinterpret_cast<const std::uint8_t*>(bytes.data()),
+                                       reinterpret_cast<const std::uint8_t*>(bytes.data()) + bytes.size()});
 
-                    return extract_json(download_content_size_, client_.request(request)).get();
-                });
+                    return std::pair{content_type, input_stream};
+                }()) {
+                request.set_body(content_type_and_input_stream->second,
+                    internal::to_native_string(content_type_and_input_stream->first));
+            }
+
+            invoke_optional(header_handler, absolute_uri, headers);
+            set_progress_handlers(request,
+                {
+                    .on_progress   = on_progress_.to_nothrow_function(),
+                    .on_percentage = on_percentage_.to_nothrow_function(),
+                },
+                upload_content_size_, download_content_size_);
+
+            return extract_json(download_content_size_, client_.request(request)).get();
+        } catch (const std::exception&) {
+            aggregate_error::throw_nested(net_error_impl{U8("HTTP Method"), to_string(method), U8("Base URI"),
+                base_uri_.str(), U8("Relative URI"), relative_uri.str(), U8("Content Type"),
+                content_type_and_bytes ? content_type_and_bytes->first : U8("Unknown")});
         }
 
         uri base_uri_;
@@ -268,20 +265,20 @@ namespace essence::net {
     }
 
     abi::vector<std::byte> download_file(const uri& absolute_uri, const http_client_config& config,
-        const http_progress_handlers& progress_handlers, const http_header_handler& header_handler) {
-        return throw_nested_and_flatten(net_error_impl{U8("Absolute URI"), absolute_uri.str()}, [&] {
-            web::http::client::http_client_config native_config;
-            web::http::client::http_client client{make_cpprest_uri(absolute_uri), config.assign_to(native_config)};
+        const http_progress_handlers& progress_handlers, const http_header_handler& header_handler) try {
+        web::http::client::http_client_config native_config;
+        web::http::client::http_client client{make_cpprest_uri(absolute_uri), config.assign_to(native_config)};
 
-            web::http::http_request request{web::http::methods::GET};
-            http_headers_proxy headers{request.headers()};
-            const atomic_optional<std::uint64_t> upload_content_size;
-            atomic_optional<std::uint64_t> download_content_size;
+        web::http::http_request request{web::http::methods::GET};
+        http_headers_proxy headers{request.headers()};
+        const atomic_optional<std::uint64_t> upload_content_size;
+        atomic_optional<std::uint64_t> download_content_size;
 
-            invoke_optional(header_handler, absolute_uri, headers);
-            set_progress_handlers(request, progress_handlers, upload_content_size, download_content_size);
+        invoke_optional(header_handler, absolute_uri, headers);
+        set_progress_handlers(request, progress_handlers, upload_content_size, download_content_size);
 
-            return extract_body(download_content_size, client.request(request)).get();
-        });
+        return extract_body(download_content_size, client.request(request)).get();
+    } catch (const std::exception&) {
+        aggregate_error::throw_nested(net_error_impl{U8("Absolute URI"), absolute_uri.str()});
     }
 } // namespace essence::net
