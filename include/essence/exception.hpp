@@ -52,8 +52,7 @@ namespace essence {
             const std::exception_ptr& root, std::int32_t indent = default_nested_exception_indent);
 
         template <typename E>
-        [[noreturn]] ES_API(CPPESSENCE) static void throw_nested(
-            E&& ex, std::int32_t indent = default_nested_exception_indent) try {
+        [[noreturn]] static void throw_nested(E&& ex, std::int32_t indent = default_nested_exception_indent) try {
             std::throw_with_nested(std::forward<E>(ex));
         } catch (const std::exception&) {
             flatten_and_throw(std::current_exception(), indent);
