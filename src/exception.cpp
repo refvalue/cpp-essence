@@ -77,7 +77,7 @@ namespace essence {
                     }
 
                     result.append(format(
-                        U8("{}{}\n"), std::string(static_cast<std::size_t>(indent) * level, U8(' ')), ex.what()));
+                        U8("{}{}\n"), std::string(static_cast<std::size_t>(indent) * level, U8('-')), ex.what()));
 
                     try {
                         std::rethrow_if_nested(ex);
@@ -139,9 +139,7 @@ namespace essence {
 
         flatten_nested_exceptions(
             root, indent, [&](const std::exception_ptr& ex) { exceptions.emplace_back(ex); },
-            [&](const abi::string& result) {
-                throw aggregate_error{std::move(exceptions), result};
-            });
+            [&](const abi::string& result) { throw aggregate_error{std::move(exceptions), result}; });
 
         throw;
     }

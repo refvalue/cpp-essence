@@ -70,7 +70,8 @@ namespace essence {
      *        of the source file name, the line number, the column number and can be constructed with
      *        the same arguments as those passed to the essence::format function.
      */
-    struct source_code_aware_runtime_error : std::runtime_error {
+    class source_code_aware_runtime_error : public std::runtime_error {
+    public:
         template <typename... Args>
         explicit source_code_aware_runtime_error(logging_string_view hint, Args&&... args)
             : source_code_aware_runtime_error{hint.location, hint.str, std::forward<Args>(args)...} {}
@@ -79,7 +80,7 @@ namespace essence {
         explicit source_code_aware_runtime_error(const source_location& location, Args&&... args)
             : runtime_error{[&] {
                   static constexpr auto format_array =
-                      detail::make_format_str<sizeof...(Args) + 2 + (sizeof...(Args) == 1)>();
+                      detail::make_format_str<sizeof...(Args) + (sizeof...(Args) == 1)>();
                   static constexpr std::string_view format_str{format_array.data()};
 
                   // Explicitly converts to std::string_view if the argument is convertible.
@@ -91,17 +92,19 @@ namespace essence {
                       }
                   };
 
-                  // Removes the directory part from the file name to provide a simplified output.
-                  const std::string_view file_name{location.file_name()};
-                  const auto file_name_without_directory = file_name.substr(file_name.find_last_of(U8(R"(/\)")) + 1);
-
                   if constexpr (sizeof...(Args) == 1) {
-                      return format(format_str, U8("File"), file_name_without_directory, U8("Message"),
-                          converter(std::forward<Args>(args))...);
+                      return format(format_str, U8("Message"), converter(std::forward<Args>(args))...);
                   } else {
-                      return format(
-                          format_str, U8("File"), file_name_without_directory, converter(std::forward<Args>(args))...);
+                      return format(format_str, converter(std::forward<Args>(args))...);
                   }
-              }()} {}
+              }()},
+              location_{location} {}
+
+        [[nodiscard]] const source_location& location() const noexcept {
+            return location_;
+        }
+
+    private:
+        source_location location_;
     };
 } // namespace essence
