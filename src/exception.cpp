@@ -97,9 +97,10 @@ namespace essence {
                 });
 
                 if (!recursive) {
-                    // Removes the redundant '\n'.
+                    // Removes the redundant '\n' and adds a space.
                     if (!result.empty()) {
                         result.pop_back();
+                        result.push_back(U8(' '));
                     }
 
                     invoke_complete_callback();

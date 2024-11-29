@@ -34,7 +34,7 @@
 #include <utility>
 
 namespace essence {
-    inline constexpr std::int32_t default_nested_exception_indent = 4;
+    inline constexpr std::int32_t default_nested_exception_indent = 2;
 
     class aggregate_error : public std::runtime_error {
     public:
