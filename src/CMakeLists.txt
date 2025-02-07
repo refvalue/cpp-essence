@@ -1,93 +1,54 @@
-﻿set(target_version 0.1.0)
-set(target_name cpp-essence)
-set(target_name_header_only cpp-essence-header-only)
-set(package_name CppEssence)
-set(package_name_header_only CppEssenceHeaderOnly)
+﻿set(target_name cpp-essence)
 
 add_library(${target_name} SHARED)
-add_library(${target_name_header_only} INTERFACE)
+list(APPEND ES_PACKAGING_TARGETS ${target_name})
+set(ES_PACKAGING_TARGETS ${ES_PACKAGING_TARGETS} PARENT_SCOPE)
 
 file(
-    GLOB meta_sources
+    GLOB_RECURSE miu_sources
     CONFIGURE_DEPENDS
-    ${ES_PUBLIC_INCLUDE_DIR}/essence/meta/*.hpp
-    ${ES_PUBLIC_INCLUDE_DIR}/essence/meta/detail/*.hpp
-    ${ES_PUBLIC_INCLUDE_DIR}/essence/meta/detail/nested/*.hpp
-    ${ES_PUBLIC_INCLUDE_DIR}/essence/meta/runtime/*.hpp
+    *.ixx
 )
 
 file(
-    GLOB private_sources
+    GLOB_RECURSE internal_piu_sources
     CONFIGURE_DEPENDS
-    ${ES_PUBLIC_INCLUDE_DIR}/essence/*.hpp
-    ${ES_PUBLIC_INCLUDE_DIR}/essence/abi/*.hpp
-    ${ES_PUBLIC_INCLUDE_DIR}/essence/cli/*.hpp
-    ${ES_PUBLIC_INCLUDE_DIR}/essence/crypto/*.hpp
-    ${ES_PUBLIC_INCLUDE_DIR}/essence/crypto/abstract/*.hpp
-    ${ES_PUBLIC_INCLUDE_DIR}/essence/crypto/params/*.hpp
-    ${ES_PUBLIC_INCLUDE_DIR}/essence/globalization/*.hpp
-    ${ES_PUBLIC_INCLUDE_DIR}/essence/globalization/abstract/*.hpp
-    ${ES_PUBLIC_INCLUDE_DIR}/essence/imaging/*.hpp
-    ${ES_PUBLIC_INCLUDE_DIR}/essence/io/*.hpp
-    ${ES_PUBLIC_INCLUDE_DIR}/essence/io/abstract/*.hpp
-    ${ES_PUBLIC_INCLUDE_DIR}/essence/memory/*.hpp
+    *.cxx
+)
+
+file(
+    GLOB_RECURSE private_sources
+    CONFIGURE_DEPENDS
     *.cpp
-    abi/*.cpp
-    cli/*.cpp
-    crypto/*.hpp
-    crypto/*.cpp
-    crypto/params/*.hpp
-    crypto/params/*.cpp
-    globalization/*.hpp
-    globalization/*.cpp
-    imaging/*.hpp
-    imaging/*.cpp
-    io/*.hpp
-    io/*.cpp
-    io/abstract/*.hpp
 )
 
-list(
-    APPEND private_sources
-    ${meta_sources}
-)
+macro(es_filter_sources pattern)
+    list(
+        FILTER private_sources
+        EXCLUDE REGEX "${pattern}"
+    )
+
+    list(
+        FILTER internal_piu_sources
+        EXCLUDE REGEX "${pattern}"
+    )
+
+    list(
+        FILTER miu_sources
+        EXCLUDE REGEX "${pattern}"
+    )
+endmacro()
+
+# Excludes compat and JNI sources which is an independent target.
+es_filter_sources([=[^.*/(jni|compat)/.*(.ixx|.cxx|.cpp)$]=])
 
 # Excludes all sources depending on <thread>, <atomic> when using Emscripten.
 if(EMSCRIPTEN)
-    list(
-        FILTER private_sources
-        EXCLUDE REGEX "^.*(thread|delegate|interruptable_timer|atomic_readable_buffer)(.hpp|.cpp)$"
-    )
-
-    list(
-        FILTER private_sources
-        EXCLUDE REGEX "^.*/params/.*(.hpp|.cpp)$"
-    )
-
-    list(
-        FILTER private_sources
-        EXCLUDE REGEX "^.*/crypto/.*(asymm|pubkey).*(.hpp|.cpp)$"
-    )
-elseif(ES_WITH_NET)
-    file(
-        GLOB private_net_sources
-        CONFIGURE_DEPENDS
-        ${ES_PUBLIC_INCLUDE_DIR}/essence/net/*.hpp
-        net/*.hpp
-        net/*.cpp
-    )
-
-    list(
-        APPEND private_sources
-        ${private_net_sources}
-    )
+    es_filter_sources([=[^((.*(thread|delegate|interruptable_timer|atomic_readable_buffer)|.*/params/.*|.*/crypto/.*(asymm|pubkey).*))(.ixx|.cxx|.cpp)$]=])
 endif()
 
-if(ANDROID)
-    list(
-        FILTER private_sources
-        EXCLUDE REGEX "^.*(sse_).*(.hpp|.cpp)$"
-    )
+if(NOT ES_WITH_NET)
+    es_filter_sources([=[^.*/net/.*(.ixx|.cxx|.cpp)$]=])
 endif()
 
 if(NOT ANDROID OR NOT ES_WITH_NET)
@@ -98,53 +59,17 @@ if(NOT ANDROID OR NOT ES_WITH_NET)
 endif()
 
 include(ESUtil)
+es_dump_list(miu_sources)
+es_dump_list(internal_piu_sources)
 es_dump_list(private_sources)
 
 target_sources(
     ${target_name}
-    PRIVATE ${private_sources}
-)
-
-target_sources(
-    ${target_name_header_only} INTERFACE
-    FILE_SET HEADERS
-    BASE_DIRS ${ES_PUBLIC_INCLUDE_DIR}
-    FILES
-    ${meta_sources}
-    ${ES_PUBLIC_INCLUDE_DIR}/essence/memory/atomic_readable_buffer.hpp
-    ${ES_PUBLIC_INCLUDE_DIR}/essence/memory/nonuniform_grid_buffer.hpp
-    ${ES_PUBLIC_INCLUDE_DIR}/essence/argb_color.hpp
-    ${ES_PUBLIC_INCLUDE_DIR}/essence/array.hpp
-    ${ES_PUBLIC_INCLUDE_DIR}/essence/basic_string.hpp
-    ${ES_PUBLIC_INCLUDE_DIR}/essence/boolean.hpp
-    ${ES_PUBLIC_INCLUDE_DIR}/essence/char.hpp
-    ${ES_PUBLIC_INCLUDE_DIR}/essence/char8_t_remediation.hpp
-    ${ES_PUBLIC_INCLUDE_DIR}/essence/compat.hpp
-    ${ES_PUBLIC_INCLUDE_DIR}/essence/data_view.hpp
-    ${ES_PUBLIC_INCLUDE_DIR}/essence/delegate.hpp
-    ${ES_PUBLIC_INCLUDE_DIR}/essence/error_extensions.hpp
-    ${ES_PUBLIC_INCLUDE_DIR}/essence/flags.hpp
-    ${ES_PUBLIC_INCLUDE_DIR}/essence/format_remediation.hpp
-    ${ES_PUBLIC_INCLUDE_DIR}/essence/functional.hpp
-    ${ES_PUBLIC_INCLUDE_DIR}/essence/hashing.hpp
-    ${ES_PUBLIC_INCLUDE_DIR}/essence/json.hpp
-    ${ES_PUBLIC_INCLUDE_DIR}/essence/json_compat.hpp
-    ${ES_PUBLIC_INCLUDE_DIR}/essence/managed_handle.hpp
-    ${ES_PUBLIC_INCLUDE_DIR}/essence/native_handle.hpp
-    ${ES_PUBLIC_INCLUDE_DIR}/essence/noncopyable.hpp
-    ${ES_PUBLIC_INCLUDE_DIR}/essence/numeric_conversion.hpp
-    ${ES_PUBLIC_INCLUDE_DIR}/essence/optional.hpp
-    ${ES_PUBLIC_INCLUDE_DIR}/essence/range.hpp
-    ${ES_PUBLIC_INCLUDE_DIR}/essence/rect.hpp
-    ${ES_PUBLIC_INCLUDE_DIR}/essence/scope.hpp
-    ${ES_PUBLIC_INCLUDE_DIR}/essence/source_location.hpp
-    ${ES_PUBLIC_INCLUDE_DIR}/essence/span.hpp
-    ${ES_PUBLIC_INCLUDE_DIR}/essence/string.hpp
-    ${ES_PUBLIC_INCLUDE_DIR}/essence/type_identity.hpp
-    ${ES_PUBLIC_INCLUDE_DIR}/essence/type_list.hpp
-    ${ES_PUBLIC_INCLUDE_DIR}/essence/type_traits.hpp
-    ${ES_PUBLIC_INCLUDE_DIR}/essence/yuv_color.hpp
-    ${ES_PUBLIC_INCLUDE_DIR}/essence/zstring_view.hpp
+    PUBLIC
+    FILE_SET CXX_MODULES
+    FILES ${miu_sources} ${internal_piu_sources}
+    PRIVATE
+    ${private_sources}
 )
 
 if(NOT "${ES_TOOLCHAIN_TARGET_NAME}" STREQUAL "")
@@ -163,7 +88,7 @@ target_include_directories(
     $<BUILD_INTERFACE:${ES_PUBLIC_INCLUDE_DIR}>
     $<INSTALL_INTERFACE:include>
     PRIVATE
-    ${ES_PUBLIC_INCLUDE_DIR}/essence
+    ${ES_PUBLIC_INCLUDE_DIR}
 )
 
 target_compile_definitions(
@@ -179,19 +104,12 @@ target_compile_definitions(
     ES_IS_CPPESSENCE_IMPL=1
 )
 
-target_compile_definitions(
-    ${target_name_header_only}
-    INTERFACE
-    CPP_ESSENCE_HEADER_ONLY=1
-    _TURN_OFF_PLATFORM_STRING=1 # For cpprestsdk.
-    $<$<BOOL:${ES_HAVE_STD_FORMAT}>:CPP_ESSENCE_USE_STD_FORMAT=1>
-)
-
 target_link_libraries(
     ${target_name}
     PUBLIC
     fmt::fmt
     spdlog::spdlog
+    nlohmann_json::nlohmann_json
     PRIVATE
     OpenSSL::SSL
     OpenSSL::Crypto
@@ -249,28 +167,13 @@ es_target_version_definitions(
     TARGETS ${target_name}
     PUBLIC
     PREFIX CPP_ESSENCE
-    VERSION ${target_version}
+    VERSION ${ES_PROJECT_VERSION}
 )
 
-es_target_version_definitions(
-    TARGETS ${target_name_header_only}
-    INTERFACE
-    PREFIX CPP_ESSENCE
-    VERSION ${target_version}
-)
-
-target_link_libraries(
-    ${target_name_header_only}
-    INTERFACE
-    fmt::fmt-header-only
-    spdlog::spdlog_header_only
-)
-
-set_target_properties(
+target_compile_features(
     ${target_name}
-    PROPERTIES
-    CXX_STANDARD 20
-    CXX_STANDARD_REQUIRED ON
+    PRIVATE
+    cxx_std_23
 )
 
 if(NOT CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
@@ -296,8 +199,6 @@ if(NOT CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
     endif()
 endif()
 
-include(ESPackaging)
-
 set_property(
     TARGET ${target_name}
     PROPERTY ES_INSTALL_FILES
@@ -321,20 +222,4 @@ set_property(
     ${CMAKE_SOURCE_DIR}/cmake/config/user_globalization.hpp.in
     ${CMAKE_SOURCE_DIR}/cmake/config/user_globalization.cpp.in
     DESTINATIONS cmake cmake/config
-)
-
-es_make_install_package(
-    TARGET_NAME ${target_name}
-    PACKAGE_NAME ${package_name}
-    TARGET_VERSION ${target_version}
-    PATH_VARS CMAKE_INSTALL_PREFIX
-)
-
-es_make_install_package(
-    TARGET_NAME ${target_name_header_only}
-    PACKAGE_NAME ${package_name_header_only}
-    TARGET_VERSION ${target_version}
-    FILE_SET_HEADERS
-    INCLUDE_DIR include-header-only
-    PATH_VARS CMAKE_INSTALL_PREFIX
 )

@@ -20,11 +20,12 @@
  * THE SOFTWARE.
  */
 
-#include "jni/iterator.hpp"
+module;
 
-#include "error_extensions.hpp"
+#include <essence/char8_t_remediation.hpp>
 
-#include <jni/jvm.hpp>
+module essence.jni;
+import essence.basic;
 
 namespace essence::jni {
     jobject_array_iterator::jobject_array_iterator() noexcept

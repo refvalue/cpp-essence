@@ -20,20 +20,14 @@
  * THE SOFTWARE.
  */
 
-#include "crypto/chunk_processor.hpp"
+module;
 
-#include "char8_t_remediation.hpp"
-#include "error_extensions.hpp"
-#include "inout_buffer_pair.hpp"
-#include "memory.hpp"
-#include "memory/swapping_buffer.hpp"
-#include "rational.hpp"
+#include <essence/char8_t_remediation.hpp>
 
-#include <algorithm>
-#include <memory>
-#include <ranges>
-#include <type_traits>
-#include <vector>
+module essence.crypto;
+import :inout_buffer_pair;
+import essence.basic;
+import essence.memory;
 
 namespace essence::crypto {
     namespace {

@@ -20,17 +20,11 @@
  * THE SOFTWARE.
  */
 
-#include "exception.hpp"
+module;
 
-#include "char8_t_remediation.hpp"
-#include "format_remediation.hpp"
-#include "functional.hpp"
+#include <essence/char8_t_remediation.hpp>
 
-#include <stdexcept>
-#include <string>
-#include <tuple>
-
-#include <spdlog/spdlog.h>
+module essence.basic;
 
 namespace essence {
     namespace {

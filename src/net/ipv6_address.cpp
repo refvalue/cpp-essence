@@ -20,13 +20,11 @@
  * THE SOFTWARE.
  */
 
-#include "net/ipv6_address.hpp"
+module;
 
-#include "char8_t_remediation.hpp"
-#include "numeric_conversion.hpp"
+#include <essence/char8_t_remediation.hpp>
 
-#include <ranges>
-#include <span>
+module essence.net;
 
 namespace essence::net {
     static constexpr std::int32_t digit_base     = 16;

@@ -20,23 +20,13 @@
  * THE SOFTWARE.
  */
 
-#include <array>
-#include <cstdint>
-#include <iostream>
-#include <ranges>
-#include <string>
-#include <type_traits>
-#include <utility>
-#include <vector>
-
 #include <essence/char8_t_remediation.hpp>
-#include <essence/meta/fingerprint.hpp>
-#include <essence/meta/literal_string.hpp>
-#include <essence/meta/runtime/boolean.hpp>
-#include <essence/meta/runtime/enum.hpp>
-#include <essence/meta/runtime/json_serializer.hpp>
 
 #include <gtest/gtest.h>
+
+import essence.basic;
+import essence.meta;
+import std;
 
 #define MAKE_TEST(name) TEST(meta_test, name)
 
@@ -146,7 +136,7 @@ MAKE_TEST(boolean) {
     EXPECT_TRUE(meta::runtime::from_string<bool>(U8("true")));
     EXPECT_TRUE(meta::runtime::from_string<bool>(U8("false")));
     EXPECT_EQ(*meta::runtime::from_string<bool>(U8("true")), true);
-    EXPECT_EQ(meta::runtime::from_string<bool>(U8("false")), false);
+    EXPECT_EQ(*meta::runtime::from_string<bool>(U8("false")), false);
 
     EXPECT_EQ(meta::runtime::to_string(true), U8("true"));
     EXPECT_EQ(meta::runtime::to_string(false), U8("false"));

@@ -20,23 +20,23 @@
  * THE SOFTWARE.
  */
 
-
-#include <utility>
-
-#include <spdlog/spdlog.h>
+export module essence.globalization:spdlog_extensions;
+import :globalized_arg;
+import essence.basic;
+import std;
 
 namespace spdlog::detail {
-    inline constexpr auto spdlog_info_func = []<typename... Args>(
-                                                 Args&&... args) { spdlog::info(std::forward<Args>(args)...); };
+    constexpr auto spdlog_info_func = []<typename... Args>(
+                                          Args&&... args) { spdlog::info(std::forward<Args>(args)...); };
 
-    inline constexpr auto spdlog_trace_func = []<typename... Args>(
-                                                  Args&&... args) { spdlog::trace(std::forward<Args>(args)...); };
+    constexpr auto spdlog_trace_func = []<typename... Args>(
+                                           Args&&... args) { spdlog::trace(std::forward<Args>(args)...); };
 
-    inline constexpr auto spdlog_warn_func = []<typename... Args>(
-                                                 Args&&... args) { spdlog::warn(std::forward<Args>(args)...); };
+    constexpr auto spdlog_warn_func = []<typename... Args>(
+                                          Args&&... args) { spdlog::warn(std::forward<Args>(args)...); };
 
-    inline constexpr auto spdlog_error_func = []<typename... Args>(
-                                                  Args&&... args) { spdlog::error(std::forward<Args>(args)...); };
+    constexpr auto spdlog_error_func = []<typename... Args>(
+                                           Args&&... args) { spdlog::error(std::forward<Args>(args)...); };
 
     template <auto LogArgsFunc, typename... Args>
     void glog_args(const std::locale& locale, format_string_t<essence::globalization::globalized_arg_t<Args>...> fmt,

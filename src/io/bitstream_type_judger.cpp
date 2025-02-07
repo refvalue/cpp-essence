@@ -20,21 +20,12 @@
  * THE SOFTWARE.
  */
 
-#include "io/bitstream_type_judger.hpp"
+module;
 
-#include "char8_t_remediation.hpp"
-#include "error_extensions.hpp"
-#include "string.hpp"
+#include <essence/char8_t_remediation.hpp>
 
-#include <algorithm>
-#include <exception>
-#include <filesystem>
-#include <fstream>
-#include <numeric>
-#include <ranges>
-#include <unordered_map>
-#include <utility>
-#include <vector>
+module essence.io;
+import essence.basic;
 
 namespace essence::io {
     namespace {

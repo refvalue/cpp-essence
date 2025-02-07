@@ -18,17 +18,9 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#include "io/stdio_watcher.hpp"
+module;
 
-#include "char8_t_remediation.hpp"
-#include "delegate.hpp"
-#include "error_extensions.hpp"
-#include "managed_handle.hpp"
-#include "native_handle.hpp"
-
-#include <array>
-#include <cstdint>
-#include <thread>
+#include <cstdio>
 
 #ifdef _WIN32
 #include <fcntl.h>
@@ -50,6 +42,11 @@
 #define _close  close
 #define _read   read
 #endif
+
+#include <essence/char8_t_remediation.hpp>
+
+module essence.io;
+import essence.basic;
 
 namespace essence::io {
     namespace {

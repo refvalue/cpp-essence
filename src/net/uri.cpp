@@ -20,11 +20,11 @@
  * THE SOFTWARE.
  */
 
-#include "net/uri.hpp"
-
-#include "encoding.hpp"
+module;
 
 #include <cpprest/uri.h>
+
+module essence.net;
 
 namespace essence::net {
     class uri::impl {

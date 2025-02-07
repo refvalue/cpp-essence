@@ -20,22 +20,18 @@
  * THE SOFTWARE.
  */
 
-#include "net/sse_server.hpp"
+module;
 
-#include "delegate.hpp"
-#include "encoding.hpp"
-#include "net/cors.hpp"
-#include "sse_types.hpp"
-#include "util.hpp"
-
-#include <cstdint>
-#include <functional>
-#include <optional>
-#include <stop_token>
-#include <utility>
+#include <essence/char8_t_remediation.hpp>
 
 #include <cpprest/http_listener.h>
 #include <cpprest/producerconsumerstream.h>
+
+module essence.net;
+import :cors;
+import :sse_field_prefixes;
+import :util;
+import essence.basic;
 
 namespace essence::net {
     namespace {
@@ -100,9 +96,9 @@ namespace essence::net {
                 // Puts the last event ID if not empty.
                 if (!message.last_event_id.empty()) {
                     static_cast<void>(rw_buffer
-                                          .putn_nocopy(sse_field_prefixes::last_event_id.data(),
-                                              sse_field_prefixes::last_event_id.size())
-                                          .wait());
+                            .putn_nocopy(
+                                sse_field_prefixes::last_event_id.data(), sse_field_prefixes::last_event_id.size())
+                            .wait());
                     static_cast<void>(
                         rw_buffer.putn_nocopy(message.last_event_id.c_str(), message.last_event_id.size()).wait());
                     put_new_line();

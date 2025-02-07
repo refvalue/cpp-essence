@@ -20,9 +20,7 @@
  * THE SOFTWARE.
  */
 
-#include "jni/local_ref.hpp"
-
-#include "jni/jvm.hpp"
+module essence.jni;
 
 namespace essence::jni {
     local_ref::local_ref() noexcept : ref_{} {}

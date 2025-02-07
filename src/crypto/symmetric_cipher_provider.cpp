@@ -20,16 +20,11 @@
  * THE SOFTWARE.
  */
 
-#include "crypto/symmetric_cipher_provider.hpp"
-
-#include "crypto/digest.hpp"
-
-#include <algorithm>
-#include <array>
-#include <concepts>
-#include <ranges>
+module;
 
 #include <openssl/evp.h>
+
+module essence.crypto;
 
 namespace essence::crypto {
     namespace {

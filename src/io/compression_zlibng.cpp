@@ -20,19 +20,21 @@
  * THE SOFTWARE.
  */
 
-#include "char8_t_remediation.hpp"
-#include "compat.hpp"
-#include "compression_routines.hpp"
-#include "error_extensions.hpp"
-#include "source_location.hpp"
+module;
 
-#include <cstdint>
+#include <essence/char8_t_remediation.hpp>
+#include <essence/compat.hpp>
 
 #include <zlib.h>
 
+module essence.io;
+import :compression_routines;
+import essence.basic;
+import std;
+
 namespace essence::io {
     namespace {
-        void check_error(std::int32_t code, const source_location& location = source_location::current()) {
+        void check_error(std::int32_t code, const std::source_location& location = std::source_location::current()) {
             if (code != Z_OK) {
                 throw source_code_aware_runtime_error{location, U8("Code"), code, U8("Message"), zError(code)};
             }

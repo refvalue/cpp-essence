@@ -20,26 +20,14 @@
  * THE SOFTWARE.
  */
 
-#include "cli/arg_parser.hpp"
+module;
 
-#include "char8_t_remediation.hpp"
-#include "cli/option.hpp"
-#include "common_tokens.hpp"
-#include "delegate.hpp"
-#include "environment.hpp"
-#include "format_remediation.hpp"
-#include "generator.hpp"
-#include "range.hpp"
-#include "string.hpp"
+#include <essence/char8_t_remediation.hpp>
 
-#include <array>
-#include <cstddef>
-#include <exception>
-#include <ranges>
-#include <tuple>
-#include <unordered_map>
-#include <unordered_set>
-#include <utility>
+module essence.cli;
+import :common_tokens;
+import essence.basic;
+import essence.meta;
 
 namespace essence::cli {
     namespace {
@@ -157,7 +145,7 @@ namespace essence::cli {
             // Shows the help content and terminates the program.
             if (result_.contains(help_option.bound_name())) {
                 show_help();
-                std::exit(EXIT_SUCCESS);
+                std::exit(0);
             }
 
             if ((success_ = index <= args_.size())) {

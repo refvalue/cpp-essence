@@ -1,9 +1,14 @@
 ﻿# CMakeList.txt : Top-level CMake project file, do global configuration
 # and include sub-projects here.
 #
-cmake_minimum_required(VERSION 3.25)
+cmake_minimum_required(VERSION 3.30)
 
-project(cpp-essence C CXX)
+# Set experimental flag to enable `import std` support from CMake.
+# This must be enabled before C++ language support.
+set(CMAKE_EXPERIMENTAL_CXX_IMPORT_STD "0e5b6991-d74f-4b3d-a41c-cf096e0b2508")
+set(CMAKE_CXX_MODULE_STD ON)
+
+project(cpp-essence CXX)
 
 option(ES_WITH_NET "Whether to include the net support." ON)
 option(ES_WITH_JNI "Whether to include JNI support." ON)
@@ -29,6 +34,7 @@ set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+
 set(ES_PUBLIC_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 if(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
@@ -56,15 +62,13 @@ include(CTest)
 include(FeatureTests.cmake)
 include(Dependencies.cmake)
 
-add_subdirectory(src)
+set(ES_PACKAGING_TARGETS "")
+set(ES_PROJECT_VERSION 0.2.0)
 
-if(EMSCRIPTEN)
-    add_subdirectory(src/port/wasm)
-endif()
+add_subdirectory(src)
 
 if(ES_WITH_JNI OR ANDROID)
     add_subdirectory(src/jni)
-    add_subdirectory(src/port/jni)
 endif()
 
 if(ES_WITH_TESTS)
@@ -78,3 +82,14 @@ endif()
 if(ES_WITH_TESTS)
     add_subdirectory(lang)
 endif()
+
+include(ESPackaging)
+
+message(STATUS "ES_PACKAGING_TARGETS: ${ES_PACKAGING_TARGETS}")
+
+es_make_install_package(
+    TARGETS ${ES_PACKAGING_TARGETS}
+    PACKAGE_NAME CppEssence
+    VERSION 0.2.0
+    PATH_VARS CMAKE_INSTALL_PREFIX
+)

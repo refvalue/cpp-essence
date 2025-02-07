@@ -1,9 +1,5 @@
 module;
 
-#include <locale>
-#include <string_view>
-#include <utility>
-
 #if @ES_WITH_EXPORTS@
 #include <essence/compat.hpp>
 #endif
@@ -11,8 +7,9 @@ module;
 export module @ES_USER_NAME@;
 import essence.basic;
 import essence.globalization;
+import std;
 
-namespace @ES_USER_NAMESPACE@ {
+export namespace @ES_USER_NAMESPACE@ {
 #if @ES_WITH_EXPORTS@
     ES_API(@ES_USER_NAME@) const essence::globalization::abstract::translator& get_bounded_translator();
 #else

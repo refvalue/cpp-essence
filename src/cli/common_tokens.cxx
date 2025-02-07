@@ -20,11 +20,13 @@
  * THE SOFTWARE.
  */
 
-#pragma once
+module;
 
-#include "char8_t_remediation.hpp"
+#include <essence/char8_t_remediation.hpp>
 
-#include <string_view>
+module essence.cli:common_tokens;
+import essence.basic;
+import std;
 
 namespace essence::cli {
     struct common_tokens {

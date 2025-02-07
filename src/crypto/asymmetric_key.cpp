@@ -20,19 +20,16 @@
  * THE SOFTWARE.
  */
 
-#include "crypto/asymmetric_key.hpp"
+module;
 
-#include "char8_t_remediation.hpp"
-#include "error.hpp"
-#include "util.hpp"
-
-#include <algorithm>
-#include <concepts>
-#include <optional>
-#include <utility>
+#include <essence/char8_t_remediation.hpp>
 
 #include <openssl/evp.h>
 #include <openssl/pem.h>
+
+module essence.crypto;
+import :error;
+import :util;
 
 extern "C" {
 int evp_keymgmt_util_has(EVP_PKEY* pk, int selection);

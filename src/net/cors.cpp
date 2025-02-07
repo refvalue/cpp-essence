@@ -20,9 +20,11 @@
  * THE SOFTWARE.
  */
 
-#include "net/cors.hpp"
+module;
 
 #include <cpprest/http_msg.h>
+
+module essence.net;
 
 namespace essence::net {
     void make_cors_any(web::http::http_response& response) {

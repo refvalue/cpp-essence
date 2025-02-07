@@ -20,10 +20,9 @@
  * THE SOFTWARE.
  */
 
-#include "io/compresser.hpp"
-
-#include "abstract/writable_buffer.hpp"
-#include "compression_routines.hpp"
+module essence.io;
+import :abstract.writable_buffer;
+import :compression_routines;
 
 namespace essence::io {
     class compresser::impl {
@@ -89,5 +88,4 @@ namespace essence::io {
     abi::string compresser::inverse_as_string(std::span<const std::byte> buffer) const {
         return impl_->inverse_as_string(buffer);
     }
-
 } // namespace essence::io

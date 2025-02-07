@@ -20,28 +20,15 @@
  * THE SOFTWARE.
  */
 
-#include <array>
-#include <ranges>
-#include <streambuf>
-#include <string>
-#include <string_view>
-#include <utility>
-#include <vector>
-
-#include <essence/abi/vector.hpp>
 #include <essence/char8_t_remediation.hpp>
-#include <essence/crypto/chunk_processor.hpp>
-#include <essence/crypto/digest.hpp>
-#include <essence/crypto/file_validation.hpp>
-#include <essence/crypto/ostream.hpp>
-#include <essence/crypto/symmetric_cipher_provider.hpp>
-#include <essence/format_remediation.hpp>
-#include <essence/io/fs_operator.hpp>
-#include <essence/io/spanstream.hpp>
-#include <essence/meta/runtime/enum.hpp>
-#include <essence/zstring_view.hpp>
 
 #include <gtest/gtest.h>
+
+import essence.basic;
+import essence.io;
+import essence.crypto;
+import essence.meta;
+import std;
 
 using namespace essence;
 using namespace essence::io;
@@ -53,7 +40,9 @@ MAKE_TEST(file_validation) {
     static constexpr std::string_view str{U8("Hello world!")};
     const auto file_name = format(U8("{}.txt"), test_info_->name());
 
-    { get_native_fs_operator().open_write(file_name)->write(str.data(), str.size()); }
+    {
+        get_native_fs_operator().open_write(file_name)->write(str.data(), str.size());
+    }
 
     auto pairs       = meta::runtime::get_enum_names<digest_mode>();
     auto valid_modes = pairs | std::views::values | std::views::filter([](const auto& inner) {
@@ -198,6 +187,4 @@ MAKE_TEST(symmetric_cipher_chunked) {
     EXPECT_STREQ(str.c_str(), buffer.c_str());
 }
 
-MAKE_TEST(pubkey_cipher) {
-
-}
+MAKE_TEST(pubkey_cipher) {}

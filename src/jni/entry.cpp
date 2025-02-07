@@ -20,15 +20,13 @@
  * THE SOFTWARE.
  */
 
-#include "jni/entry.hpp"
+module;
 
-#include "char8_t_remediation.hpp"
-#include "jni/jvm.hpp"
-#include "jni/reflector.hpp"
+#include <essence/char8_t_remediation.hpp>
 
-#include <exception>
+#include <jni.h>
 
-#include <spdlog/spdlog.h>
+module essence.jni;
 
 namespace essence::jni {
     void jvm_main();

@@ -20,11 +20,11 @@
  * THE SOFTWARE.
  */
 
-#include "net/http_headers_proxy.hpp"
-
-#include "encoding.hpp"
+module;
 
 #include <cpprest/http_headers.h>
+
+module essence.net;
 
 namespace essence::net {
     http_headers_proxy::http_headers_proxy(web::http::http_headers& ref) : ref_{ref} {}

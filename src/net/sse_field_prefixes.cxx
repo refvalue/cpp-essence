@@ -20,11 +20,13 @@
  * THE SOFTWARE.
  */
 
-#pragma once
+module;
 
-#include "char8_t_remediation.hpp"
+#include <essence/char8_t_remediation.hpp>
 
-#include <string_view>
+module essence.net:sse_field_prefixes;
+import essence.basic;
+import std;
 
 namespace essence::net {
     struct sse_field_prefixes {

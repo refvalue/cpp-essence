@@ -20,13 +20,8 @@
  * THE SOFTWARE.
  */
 
-module;
-
-#include <cstddef>
-#include <memory>
-#include <ranges>
-
-module essence.io:abstract_writable_buffer;
+module essence.io:abstract.writable_buffer;
+import std;
 
 namespace essence::io::abstract {
     class writable_buffer {

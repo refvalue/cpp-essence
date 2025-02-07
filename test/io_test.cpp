@@ -18,15 +18,13 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#include <iostream>
-#include <string>
-#include <string_view>
-#include <thread>
-
 #include <essence/char8_t_remediation.hpp>
-#include <essence/io/stdio_watcher.hpp>
 
 #include <gtest/gtest.h>
+
+import essence.basic;
+import essence.io;
+import std;
 
 using namespace essence;
 using namespace essence::io;

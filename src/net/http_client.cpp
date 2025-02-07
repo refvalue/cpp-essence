@@ -20,26 +20,15 @@
  * THE SOFTWARE.
  */
 
-#include "net/http_client.hpp"
+module;
 
-#include "char8_t_remediation.hpp"
-#include "delegate.hpp"
-#include "encoding.hpp"
-#include "error_extensions.hpp"
-#include "exception.hpp"
-#include "functional.hpp"
-#include "net/download.hpp"
-#include "net_error_impl.hpp"
-#include "range.hpp"
-#include "util.hpp"
-
-#include <atomic>
-#include <optional>
-#include <string>
-#include <utility>
-#include <vector>
+#include <essence/char8_t_remediation.hpp>
 
 #include <cpprest/http_client.h>
+
+module essence.net;
+import :net_error_impl;
+import :util;
 
 namespace essence::net {
     namespace {

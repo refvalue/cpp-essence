@@ -20,16 +20,8 @@
  * THE SOFTWARE.
  */
 
-#include "thread.hpp"
-
-#include "abi/memory.hpp"
-
-#include <atomic>
-#include <charconv>
-#include <future>
-#include <mutex>
-#include <sstream>
-#include <thread>
+module essence.basic;
+import :abi.memory;
 
 namespace essence {
     abi::string serialize_thread_id() {

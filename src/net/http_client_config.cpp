@@ -20,13 +20,11 @@
  * THE SOFTWARE.
  */
 
-#include "net/http_client_config.hpp"
-
-#include "encoding.hpp"
-
-#include <chrono>
+module;
 
 #include <cpprest/http_client.h>
+
+module essence.net;
 
 namespace essence::net {
     http_client_config http_client_config::get_default() {

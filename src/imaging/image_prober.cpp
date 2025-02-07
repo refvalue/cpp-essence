@@ -20,24 +20,14 @@
  * THE SOFTWARE.
  */
 
-#include "imaging/image_prober.hpp"
+module;
 
-#include "char8_t_remediation.hpp"
-#include "error_extensions.hpp"
-#include "extractors.hpp"
-#include "io/bitstream_type_judger.hpp"
-#include "string.hpp"
+#include <essence/char8_t_remediation.hpp>
 
-#include <array>
-#include <concepts>
-#include <exception>
-#include <filesystem>
-#include <fstream>
-#include <ranges>
-#include <type_traits>
-#include <unordered_map>
-#include <utility>
-#include <vector>
+module essence.imaging;
+import :extractors;
+import essence.basic;
+import essence.io;
 
 namespace essence::imaging {
     namespace {

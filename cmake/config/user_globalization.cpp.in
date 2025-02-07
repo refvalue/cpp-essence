@@ -1,14 +1,9 @@
-#include "user_globalization_@ES_USER_NAME@.hpp"
-
-#if ES_IS_CPPESSENCE_IMPL
-#include "globalization/translator.hpp"
-#include "io/fs_operator.hpp"
-#else
-#include <essence/globalization/translator.hpp>
-#include <essence/io/fs_operator.hpp>
-#endif
+module;
 
 #include <cmrc/cmrc.hpp>
+
+module @ES_USER_NAME@;
+import essence.io;
 
 CMRC_DECLARE(@ES_USER_NAMESPACE@);
 

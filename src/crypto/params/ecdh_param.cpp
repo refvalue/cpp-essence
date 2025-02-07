@@ -20,21 +20,21 @@
  * THE SOFTWARE.
  */
 
-#include "crypto/params/ecdh_param.hpp"
+module;
 
-#include "../util.hpp"
-#include "char8_t_remediation.hpp"
-#include "pubkey_param_impl.hpp"
-#include "zstring_view.hpp"
-
-#include <array>
-#include <utility>
+#include <essence/char8_t_remediation.hpp>
 
 #include <openssl/ec.h>
 
+module essence.crypto;
+import :params.pubkey_param_impl;
+import :util;
+import essence.basic;
+
 namespace essence::crypto {
     ecdh_param::ecdh_param(std::shared_ptr<void> context)
-        : impl_{std::make_unique<pubkey_param_impl>(std::array{zstring_view{U8("ECDH")}}, std::move(context))} {}
+        : opaque_{new pubkey_param_impl{std::array{zstring_view{U8("ECDH")}}, std::move(context)},
+              pubkey_param_impl_deleter} {}
 
     ecdh_param::ecdh_param(ecdh_param&&) noexcept = default;
 
@@ -43,39 +43,40 @@ namespace essence::crypto {
     ecdh_param& ecdh_param::operator=(ecdh_param&&) noexcept = default;
 
     dh_cofactor_mode ecdh_param::cofactor_mode() const {
-        return static_cast<dh_cofactor_mode>(EVP_PKEY_CTX_get_ecdh_cofactor_mode(impl_->context()));
+        return static_cast<dh_cofactor_mode>(EVP_PKEY_CTX_get_ecdh_cofactor_mode(get_impl(opaque_).context()));
     }
 
     dh_kdf_type ecdh_param::kdf_mode() const {
-        return static_cast<dh_kdf_type>(EVP_PKEY_CTX_get_ecdh_kdf_type(impl_->context()));
+        return static_cast<dh_kdf_type>(EVP_PKEY_CTX_get_ecdh_kdf_type(get_impl(opaque_).context()));
     }
 
     digest_mode ecdh_param::kdf_digest_mode() const {
-        return make_digest_mode(evp_pkey_ctx_get_value(&EVP_PKEY_CTX_get_ecdh_kdf_md, impl_->context()));
+        return make_digest_mode(evp_pkey_ctx_get_value(&EVP_PKEY_CTX_get_ecdh_kdf_md, get_impl(opaque_).context()));
     }
 
     std::int32_t ecdh_param::kdf_digest_outlen() const {
-        return evp_pkey_ctx_get_value(&EVP_PKEY_CTX_get_ecdh_kdf_outlen, impl_->context());
+        return evp_pkey_ctx_get_value(&EVP_PKEY_CTX_get_ecdh_kdf_outlen, get_impl(opaque_).context());
     }
 
     void ecdh_param::set_cofactor_mode(dh_cofactor_mode value) const {
         evp_pkey_ctx_set_value(
-            &EVP_PKEY_CTX_set_ecdh_cofactor_mode, impl_->context(), static_cast<std::int32_t>(value));
+            &EVP_PKEY_CTX_set_ecdh_cofactor_mode, get_impl(opaque_).context(), static_cast<std::int32_t>(value));
     }
 
     void ecdh_param::set_kdf_type(dh_kdf_type value) const {
-        evp_pkey_ctx_set_value(&EVP_PKEY_CTX_set_ecdh_kdf_type, impl_->context(), static_cast<std::int32_t>(value));
+        evp_pkey_ctx_set_value(
+            &EVP_PKEY_CTX_set_ecdh_kdf_type, get_impl(opaque_).context(), static_cast<std::int32_t>(value));
     }
 
     void ecdh_param::set_kdf_digest_mode(digest_mode value) const {
-        evp_pkey_ctx_set_value(&EVP_PKEY_CTX_set_ecdh_kdf_md, impl_->context(), make_digest_routine(value));
+        evp_pkey_ctx_set_value(&EVP_PKEY_CTX_set_ecdh_kdf_md, get_impl(opaque_).context(), make_digest_routine(value));
     }
 
     void ecdh_param::set_kdf_digest_outlen(std::int32_t value) const {
-        evp_pkey_ctx_set_value(&EVP_PKEY_CTX_set_ecdh_kdf_outlen, impl_->context(), value);
+        evp_pkey_ctx_set_value(&EVP_PKEY_CTX_set_ecdh_kdf_outlen, get_impl(opaque_).context(), value);
     }
 
     void ecdh_param::set_kdf_ukm(std::span<const std::byte> value) const {
-        evp_pkey_ctx_set_buffer(&EVP_PKEY_CTX_set0_ecdh_kdf_ukm, impl_->context(), value);
+        evp_pkey_ctx_set_buffer(&EVP_PKEY_CTX_set0_ecdh_kdf_ukm, get_impl(opaque_).context(), value);
     }
 } // namespace essence::crypto

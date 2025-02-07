@@ -20,16 +20,15 @@
  * THE SOFTWARE.
  */
 
-#include "char8_t_remediation.hpp"
-#include "chunk_processing_helper.hpp"
-#include "cipher_error_builder.hpp"
-#include "crypto/chunk_processor.hpp"
+module;
 
-#include <cstdint>
-#include <memory>
-#include <type_traits>
+#include <essence/char8_t_remediation.hpp>
 
 #include <openssl/evp.h>
+
+module essence.crypto;
+import :chunk_processing_helper;
+import :cipher_error_builder;
 
 extern "C" void evp_encode_ctx_set_flags(EVP_ENCODE_CTX* ctx, unsigned int flags);
 

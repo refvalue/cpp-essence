@@ -20,16 +20,15 @@
  * THE SOFTWARE.
  */
 
-#include "crypto/pubkey_cipher_provider.hpp"
+module;
 
-#include "char8_t_remediation.hpp"
-#include "cipher_error_builder.hpp"
-#include "crypto/digest.hpp"
-#include "util.hpp"
-
-#include <cstdint>
+#include <essence/char8_t_remediation.hpp>
 
 #include <openssl/evp.h>
+
+module essence.crypto;
+import :cipher_error_builder;
+import :util;
 
 namespace essence::crypto {
     namespace {

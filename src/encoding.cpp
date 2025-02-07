@@ -20,44 +20,35 @@
  * THE SOFTWARE.
  */
 
-#include "encoding.hpp"
+module;
 
-#include "char.hpp"
-#include "char8_t_remediation.hpp"
-
-#include <array>
-#include <concepts>
-#include <cstddef>
+#include <climits>
 
 #ifdef __UCLIBC__
 #include <cuchar>
+#elif __has_include(<cuchar> )
+#include <cuchar>
+#else
+#include <uchar.h>
+#endif
+
+module essence.basic;
 
 namespace essence {
     namespace {
+#ifdef __UCLIBC__
         constexpr auto c16rtomb_impl = [](char* s, char16_t c16, std::mbstate_t* ps) -> std::size_t { return -1; };
         constexpr auto mbrtoc16_impl = [](char16_t* pc16, const char* s, std::size_t n,
                                            std::mbstate_t* ps) -> std::size_t { return -1; };
-    } // namespace
-} // namespace essence
 #elif __has_include(<cuchar> )
-#include <cuchar>
-
-namespace essence {
-    namespace {
         constexpr auto&& c16rtomb_impl = c16rtomb;
         constexpr auto&& mbrtoc16_impl = mbrtoc16;
-    } // namespace
-} // namespace essence
 #else
-#include <uchar.h>
-
-namespace essence {
-    namespace {
         constexpr auto&& c16rtomb_impl = ::c16rtomb;
         constexpr auto&& mbrtoc16_impl = ::mbrtoc16;
+#endif
     } // namespace
 } // namespace essence
-#endif
 
 namespace essence {
     namespace {

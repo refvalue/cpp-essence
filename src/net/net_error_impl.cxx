@@ -20,12 +20,10 @@
  * THE SOFTWARE.
  */
 
-#pragma once
-
-#include "error_extensions.hpp"
-#include "net/net_error.hpp"
-
-#include <utility>
+module essence.net:net_error_impl;
+import :net_error;
+import essence.basic;
+import std;
 
 namespace essence::net {
     struct net_error_impl final : source_code_aware_runtime_error, net_error {

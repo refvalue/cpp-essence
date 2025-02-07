@@ -20,7 +20,8 @@
  * THE SOFTWARE.
  */
 
-#include "abi/memory.hpp"
+module essence.basic;
+import std;
 
 void* es_alloc(std::size_t size) noexcept {
     return ::operator new(size);

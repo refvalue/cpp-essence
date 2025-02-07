@@ -20,23 +20,23 @@
  * THE SOFTWARE.
  */
 
-#include "crypto/params/rsa_param.hpp"
+module;
 
-#include "../util.hpp"
-#include "char8_t_remediation.hpp"
-#include "pubkey_param_impl.hpp"
-
-#include <array>
-#include <cstdint>
-#include <utility>
+#include <essence/char8_t_remediation.hpp>
 
 #include <openssl/rsa.h>
 
+module essence.crypto;
+import :params.pubkey_param_impl;
+import :util;
+import essence.basic;
+
 namespace essence::crypto {
     rsa_param::rsa_param(std::shared_ptr<void> context)
-        : impl_{std::make_unique<pubkey_param_impl>(
-            std::array{zstring_view{U8("RSA")}, zstring_view{U8("RSA2")}, zstring_view{U8("RSA-PSS")}},
-            std::move(context))} {}
+        : opaque_{new pubkey_param_impl{
+                      std::array{zstring_view{U8("RSA")}, zstring_view{U8("RSA2")}, zstring_view{U8("RSA-PSS")}},
+                      std::move(context)},
+              pubkey_param_impl_deleter} {}
 
     rsa_param::rsa_param(rsa_param&&) noexcept = default;
 
@@ -45,39 +45,42 @@ namespace essence::crypto {
     rsa_param& rsa_param::operator=(rsa_param&&) noexcept = default;
 
     rsa_padding_mode rsa_param::padding_mode() const {
-        return static_cast<rsa_padding_mode>(evp_pkey_ctx_get_value(&EVP_PKEY_CTX_get_rsa_padding, impl_->context()));
+        return static_cast<rsa_padding_mode>(
+            evp_pkey_ctx_get_value(&EVP_PKEY_CTX_get_rsa_padding, get_impl(opaque_).context()));
     }
 
     rsa_pss_saltlen rsa_param::pss_saltlen() const {
         return static_cast<rsa_pss_saltlen>(
-            evp_pkey_ctx_get_value(&EVP_PKEY_CTX_get_rsa_pss_saltlen, impl_->context()));
+            evp_pkey_ctx_get_value(&EVP_PKEY_CTX_get_rsa_pss_saltlen, get_impl(opaque_).context()));
     }
 
     digest_mode rsa_param::mgf1_digest_mode() const {
-        return make_digest_mode(evp_pkey_ctx_get_value(&EVP_PKEY_CTX_get_rsa_mgf1_md, impl_->context()));
+        return make_digest_mode(evp_pkey_ctx_get_value(&EVP_PKEY_CTX_get_rsa_mgf1_md, get_impl(opaque_).context()));
     }
 
     digest_mode rsa_param::oaep_digest_mode() const {
-        return make_digest_mode(evp_pkey_ctx_get_value(&EVP_PKEY_CTX_get_rsa_oaep_md, impl_->context()));
+        return make_digest_mode(evp_pkey_ctx_get_value(&EVP_PKEY_CTX_get_rsa_oaep_md, get_impl(opaque_).context()));
     }
 
     void rsa_param::set_padding_mode(rsa_padding_mode value) const {
-        evp_pkey_ctx_set_value(&EVP_PKEY_CTX_set_rsa_padding, impl_->context(), static_cast<std::int32_t>(value));
+        evp_pkey_ctx_set_value(
+            &EVP_PKEY_CTX_set_rsa_padding, get_impl(opaque_).context(), static_cast<std::int32_t>(value));
     }
 
     void rsa_param::set_pss_saltlen(rsa_pss_saltlen value) const {
-        evp_pkey_ctx_set_value(&EVP_PKEY_CTX_set_rsa_pss_saltlen, impl_->context(), static_cast<std::int32_t>(value));
+        evp_pkey_ctx_set_value(
+            &EVP_PKEY_CTX_set_rsa_pss_saltlen, get_impl(opaque_).context(), static_cast<std::int32_t>(value));
     }
 
     void rsa_param::set_mgf1_digest_mode(digest_mode value) const {
-        evp_pkey_ctx_set_value(&EVP_PKEY_CTX_set_rsa_mgf1_md, impl_->context(), make_digest_routine(value));
+        evp_pkey_ctx_set_value(&EVP_PKEY_CTX_set_rsa_mgf1_md, get_impl(opaque_).context(), make_digest_routine(value));
     }
 
     void rsa_param::set_oaep_digest_mode(digest_mode value) const {
-        evp_pkey_ctx_set_value(&EVP_PKEY_CTX_set_rsa_oaep_md, impl_->context(), make_digest_routine(value));
+        evp_pkey_ctx_set_value(&EVP_PKEY_CTX_set_rsa_oaep_md, get_impl(opaque_).context(), make_digest_routine(value));
     }
 
     void rsa_param::set_oaep_label(std::span<const std::byte> value) const {
-        evp_pkey_ctx_set_buffer(&EVP_PKEY_CTX_set0_rsa_oaep_label, impl_->context(), value);
+        evp_pkey_ctx_set_buffer(&EVP_PKEY_CTX_set0_rsa_oaep_label, get_impl(opaque_).context(), value);
     }
 } // namespace essence::crypto

@@ -20,18 +20,13 @@
  * THE SOFTWARE.
  */
 
-#include <exception>
-#include <filesystem>
-#include <fstream>
-
-#include <essence/abi/json.hpp>
 #include <essence/char8_t_remediation.hpp>
-#include <essence/cli/arg_parser.hpp>
-#include <essence/error_extensions.hpp>
-#include <essence/globalization/compiler.hpp>
-#include <essence/string.hpp>
 
-#include <spdlog/spdlog.h>
+import essence.basic;
+import essence.cli;
+import essence.globalization;
+import essence.serialization;
+import std;
 
 namespace essence::tooling {
     namespace {

@@ -20,15 +20,10 @@
  * THE SOFTWARE.
  */
 
-module;
-
-#include <cstddef>
-#include <memory>
-#include <span>
-
 module essence.crypto:inout_buffer_pair;
-import :abstract_chunk_processor;
+import :abstract.chunk_processor;
 import essence.basic;
+import std;
 
 namespace essence::crypto {
     std::size_t calculate_output_buffer_size(const abstract::chunk_processor& processor) {

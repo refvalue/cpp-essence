@@ -20,13 +20,9 @@
  * THE SOFTWARE.
  */
 
-module;
-
-#include <span>
-#include <vector>
-
-module essence.imaging;
+module essence.imaging:extractors;
 import :abstract.image_header_extractor;
+import std;
 
 namespace essence::imaging {
     namespace {

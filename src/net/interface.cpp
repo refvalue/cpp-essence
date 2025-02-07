@@ -20,7 +20,7 @@
  * THE SOFTWARE.
  */
 
-#include "net/interface.hpp"
+module essence.net;
 
 namespace essence::net {
     abi::vector<interface_address_info> get_interfaces_addresses() {

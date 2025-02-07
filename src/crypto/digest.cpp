@@ -20,24 +20,17 @@
  * THE SOFTWARE.
  */
 
-#include "crypto/digest.hpp"
+module;
 
-#include "char8_t_remediation.hpp"
-#include "error_extensions.hpp"
-#include "util.hpp"
-
-#include <algorithm>
-#include <array>
-#include <concepts>
-#include <cstdint>
-#include <filesystem>
-#include <fstream>
-#include <utility>
+#include <essence/char8_t_remediation.hpp>
 
 #include <openssl/crypto.h>
 #include <openssl/evp.h>
 #include <openssl/hmac.h>
 #include <openssl/sha.h>
+
+module essence.crypto;
+import :util;
 
 namespace essence::crypto {
     namespace {

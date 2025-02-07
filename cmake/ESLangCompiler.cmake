@@ -31,7 +31,7 @@ function(es_add_lang_resources target_name)
     endif()
 
     set(options PUBLIC INTERFACE PRIVATE)
-    set(one_value_args NAME ROOT_DIRECTORY NAMESPACE)
+    set(one_value_args NAME ROOT_DIRECTORY NAMESPACE RESULT_VARIABLE_LANG_TARGET_NAME)
     set(multi_value_args "")
     cmake_parse_arguments(PARSE_ARGV 1 ARG "${options}" "${one_value_args}" "${multi_value_args}")
     es_ensure_parameters(es_execute_process ARG NAME ROOT_DIRECTORY NAMESPACE)
@@ -40,6 +40,10 @@ function(es_add_lang_resources target_name)
     set(output_dir ${CMAKE_BINARY_DIR}/_deps/lang/${target_name})
     set(glob_pattern ${ARG_ROOT_DIRECTORY}/*.json)
     set(header_access_level PRIVATE)
+
+    if(ARG_RESULT_VARIABLE_LANG_TARGET_NAME)
+        set(${ARG_RESULT_VARIABLE_LANG_TARGET_NAME} ${cmrc_target_name} PARENT_SCOPE)
+    endif()
 
     if(ARG_PUBLIC)
         set(header_access_level PUBLIC)
@@ -98,26 +102,38 @@ function(es_add_lang_resources target_name)
     set(ES_USER_NAME ${ARG_NAME})
     set(ES_USER_NAMESPACE ${ARG_NAMESPACE})
 
-    set(header_file ${output_dir}/user_globalization_${ES_USER_NAME}.hpp)
-    set(source_file ${output_dir}/user_globalization_${ES_USER_NAME}.cpp)
+    set(base_dir ${output_dir})
+    set(miu_source_file ${base_dir}/user_globalization_${ES_USER_NAME}.ixx)
+    set(private_source_file ${base_dir}/user_globalization_${ES_USER_NAME}.cpp)
 
     configure_file(
-        ${_es_lang_compiler_absolute_current_dir}/config/user_globalization.hpp.in
-        ${header_file}
+        ${_es_lang_compiler_absolute_current_dir}/config/user_globalization.ixx.in
+        ${miu_source_file}
         @ONLY
     )
 
     configure_file(
         ${_es_lang_compiler_absolute_current_dir}/config/user_globalization.cpp.in
-        ${source_file}
+        ${private_source_file}
         @ONLY
     )
 
+    get_target_property(target_type ${target_name} TYPE)
+
+    if("${target_type}" STREQUAL "EXECUTABLE")
+        set(cxx_modules_access PRIVATE)
+    elseif()
+        set(cxx_modules_access PUBLIC)
+    endif()
+
     target_sources(
         ${target_name}
+        ${cxx_modules_access}
+        FILE_SET CXX_MODULES
+        FILES ${miu_source_file}
+        BASE_DIRS ${base_dir}
         PRIVATE
-        ${header_file}
-        ${source_file}
+        ${private_source_file}
     )
 
     if(ES_WITH_EXPORTS)

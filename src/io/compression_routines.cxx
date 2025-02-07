@@ -23,21 +23,16 @@
 module;
 
 #ifdef EMSCRIPTEN
-#include "compat.hpp"
+#include <essence/compat.hpp>
 #endif
 
-#include "char8_t_remediation.hpp"
-
-#include <cstddef>
-#include <cstdint>
-#include <functional>
-#include <span>
-#include <unordered_map>
+#include <essence/char8_t_remediation.hpp>
 
 module essence.io:compression_routines;
 import :common_types;
-import :abstract_writable_buffer;
+import :abstract.writable_buffer;
 import essence.basic;
+import std;
 
 namespace essence::io {
     struct compression_routines {

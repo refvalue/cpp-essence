@@ -20,13 +20,11 @@
  * THE SOFTWARE.
  */
 
-#include "net/ipv4_address.hpp"
+module;
 
-#include "char8_t_remediation.hpp"
-#include "format_remediation.hpp"
-#include "numeric_conversion.hpp"
+#include <essence/char8_t_remediation.hpp>
 
-#include <ranges>
+module essence.net;
 
 namespace essence::net {
     std::optional<ipv4_address> parse_ipv4_address(std::string_view str) {

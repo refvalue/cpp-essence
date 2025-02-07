@@ -293,3 +293,19 @@ function(es_add_to_env)
         endif()
     endif()
 endfunction()
+
+function(es_get_all_targets directory result)
+    get_property(target_names DIRECTORY "${directory}" PROPERTY BUILDSYSTEM_TARGETS)
+
+    foreach(item IN LISTS target_names)
+        list(APPEND ${result} ${item})
+    endforeach()
+
+    get_property(subdirs DIRECTORY "${directory}" PROPERTY SUBDIRECTORIES)
+
+    foreach(item IN LISTS subdirs)
+        get_all_targets("${item}" ${result})
+    endforeach()
+
+    set(${result} ${${result}} PARENT_SCOPE)
+endfunction()

@@ -20,22 +20,13 @@
  * THE SOFTWARE.
  */
 
-#include "crypto/ostream.hpp"
-
-#include "inout_buffer_pair.hpp"
-#include "io/fs_operator.hpp"
-
-#include <cstddef>
-#include <cstdint>
-#include <filesystem>
-#include <fstream>
-#include <memory>
-#include <optional>
-#include <span>
-#include <streambuf>
-#include <utility>
+module;
 
 #include <openssl/evp.h>
+
+module essence.crypto;
+import :inout_buffer_pair;
+import essence.io;
 
 namespace essence::crypto {
     namespace {

@@ -20,26 +20,14 @@
  * THE SOFTWARE.
  */
 
-#include "globalization/compiler.hpp"
+module;
 
-#include "abi/json.hpp"
-#include "abi/string.hpp"
-#include "abi/vector.hpp"
-#include "char8_t_remediation.hpp"
-#include "common_constants.hpp"
-#include "crypto/digest.hpp"
-#include "error_extensions.hpp"
+#include <essence/char8_t_remediation.hpp>
 
-#include <algorithm>
-#include <cstddef>
-#include <cstdint>
-#include <exception>
-#include <filesystem>
-#include <fstream>
-#include <ranges>
-#include <span>
-#include <string_view>
-#include <utility>
+module essence.globalization;
+import :common_constants;
+import essence.crypto;
+import essence.serialization;
 
 namespace essence::globalization {
     namespace {

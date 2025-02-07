@@ -20,14 +20,13 @@
  * THE SOFTWARE.
  */
 
-#include "cli/option.hpp"
+module;
 
-#include "cli/abstract/option.hpp"
-#include "common_tokens.hpp"
-#include "delegate.hpp"
+#include <essence/char8_t_remediation.hpp>
 
-#include <array>
-#include <unordered_set>
+module essence.cli;
+import :common_tokens;
+import essence.basic;
 
 namespace essence::cli {
     namespace {

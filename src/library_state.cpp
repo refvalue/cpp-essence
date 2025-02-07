@@ -20,7 +20,7 @@
  * THE SOFTWARE.
  */
 
-#include "library_state.hpp"
+module essence.basic;
 
 namespace essence {
 #if defined(__ANDROID__) || !defined(CPP_ESSENCE_HAS_NET) || !CPP_ESSENCE_HAS_NET

@@ -20,28 +20,16 @@
  * THE SOFTWARE.
  */
 
-#include "net/sse_client.hpp"
+module;
 
-#include "char8_t_remediation.hpp"
-#include "delegate.hpp"
-#include "format_remediation.hpp"
-#include "sse_types.hpp"
-#include "string.hpp"
-#include "util.hpp"
-
-#include <algorithm>
-#include <array>
-#include <atomic>
-#include <chrono>
-#include <condition_variable>
-#include <exception>
-#include <functional>
-#include <mutex>
-#include <optional>
-#include <string_view>
-#include <thread>
+#include <essence/char8_t_remediation.hpp>
 
 #include <cpprest/http_client.h>
+
+module essence.net;
+import :sse_field_prefixes;
+import :util;
+import essence.basic;
 
 namespace essence::net {
     namespace {

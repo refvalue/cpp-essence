@@ -20,12 +20,8 @@
  * THE SOFTWARE.
  */
 
-#pragma once
-
-#include <array>
-#include <cstddef>
-#include <string>
-#include <string_view>
+export module essence.basic:char8_t_remediation;
+import std;
 
 #if __cpp_char8_t >= 201811L
 namespace essence::detail {
@@ -53,7 +49,7 @@ namespace essence::detail {
     char8_t_string_literal(const char8_t (&)[N]) -> char8_t_string_literal<N>;
 
     template <char8_t_string_literal Literal, std::size_t... Is>
-    inline constexpr char as_char_array_v[sizeof...(Is)]{static_cast<char>(Literal.sequence[Is])...};
+    constexpr char as_char_array_v[sizeof...(Is)]{static_cast<char>(Literal.sequence[Is])...};
 
     template <char8_t_string_literal Literal, std::size_t... Is>
     constexpr const char (&make_as_char_array(std::index_sequence<Is...>) noexcept)[sizeof...(Is)] {
@@ -61,9 +57,9 @@ namespace essence::detail {
     }
 } // namespace essence::detail
 
-namespace essence {
+export namespace essence {
     template <detail::char8_t_string_literal Literal>
-    inline constexpr decltype(auto) as_char_v = []() -> decltype(auto) {
+    constexpr decltype(auto) as_char_v = []() -> decltype(auto) {
         if constexpr (Literal.char_literal) {
             return static_cast<char>(Literal.sequence.front());
         } else {
@@ -84,20 +80,20 @@ namespace essence {
 #else
 #define U8(x) u8##x
 
-namespace essence {
-    inline std::string from_u8string(std::string_view str) {
+export namespace essence {
+    std::string from_u8string(std::string_view str) {
         return std::string{str};
     }
 
-    inline std::string from_u8string(std::string&& str) noexcept {
+    std::string from_u8string(std::string&& str) noexcept {
         return std::move(str);
     }
 
-    inline std::string to_u8string(std::string_view str) {
+    std::string to_u8string(std::string_view str) {
         return std::string{str};
     }
 
-    inline std::string to_u8string(std::string&& str) noexcept {
+    std::string to_u8string(std::string&& str) noexcept {
         return std::move(str);
     }
 } // namespace essence

@@ -20,14 +20,12 @@
  * THE SOFTWARE.
  */
 
-#include <string>
-#include <string_view>
-
-#include <essence/abi/vector.hpp>
 #include <essence/char8_t_remediation.hpp>
-#include <essence/encoding.hpp>
 
 #include <gtest/gtest.h>
+
+import essence.basic;
+import std;
 
 using namespace essence;
 

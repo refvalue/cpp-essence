@@ -20,26 +20,12 @@
  * THE SOFTWARE.
  */
 
-#include "globalization/translator.hpp"
+module;
 
-#include "char8_t_remediation.hpp"
-#include "common_constants.hpp"
-#include "error_extensions.hpp"
-#include "globalization/abstract/translator.hpp"
-#include "io/abstract/virtual_fs_operator.hpp"
-#include "io/fs_operator.hpp"
-#include "string.hpp"
+#include <essence/char8_t_remediation.hpp>
 
-#include <atomic>
-#include <cstddef>
-#include <exception>
-#include <filesystem>
-#include <fstream>
-#include <type_traits>
-#include <unordered_map>
-#include <utility>
-
-#include <spdlog/spdlog.h>
+module essence.globalization;
+import :common_constants;
 
 namespace essence::globalization {
     namespace {

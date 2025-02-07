@@ -20,9 +20,11 @@
  * THE SOFTWARE.
  */
 
-#include "crypto/symmetric_cipher_util.hpp"
+module;
 
 #include <openssl/evp.h>
+
+module essence.crypto;
 
 namespace essence::crypto {
     abi::vector<abi::string> get_all_symmetric_cipher_names() {
@@ -49,4 +51,4 @@ namespace essence::crypto {
 
         return std::nullopt;
     }
-}
+} // namespace essence::crypto

@@ -20,18 +20,15 @@
  * THE SOFTWARE.
  */
 
-#include <optional>
-#include <span>
-#include <string>
-#include <string_view>
-#include <utility>
-#include <vector>
-
 #include <essence/char8_t_remediation.hpp>
-#include <essence/io/spanstream.hpp>
-#include <essence/json_compat.hpp>
 
 #include <gtest/gtest.h>
+
+import essence.basic;
+import essence.io;
+import essence.meta;
+import essence.serialization;
+import std;
 
 using namespace essence;
 

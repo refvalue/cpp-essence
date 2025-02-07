@@ -74,6 +74,20 @@ if(CMAKE_CROSSCOMPILING AND NOT EMSCRIPTEN)
 endif()
 
 es_make_install_third_party_library(
+    nlohmann_json
+    REQUIRED
+    ${runtime_args}
+    PARALLEL_BUILD
+    SYNC_BUILD_TYPE
+    GENERATOR ${CMAKE_GENERATOR}
+    CMAKE_ARGS
+    -DJSON_BuildTests=OFF
+    ${extra_cmake_args}
+    SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/third-party/json
+    INSTALL_DIR ${CMAKE_INSTALL_PREFIX}
+)
+
+es_make_install_third_party_library(
     fmt
     REQUIRED
     ${runtime_args}

@@ -20,22 +20,7 @@
  * THE SOFTWARE.
  */
 
-#include "environment.hpp"
-
-#include "char8_t_remediation.hpp"
-#include "format_remediation.hpp"
-
-#ifdef _WIN32
-#include "encoding.hpp"
-
-#include <algorithm>
-#include <memory>
-#endif
-
-#include <cstddef>
-#include <cstdlib>
-#include <filesystem>
-#include <mutex>
+module;
 
 #ifdef _WIN32
 #ifndef WIN32_LEAN_AND_MEAN
@@ -54,7 +39,9 @@
 #include <shellapi.h>
 #endif
 
-#include <spdlog/spdlog.h>
+#include <essence/char8_t_remediation.hpp>
+
+module essence.basic;
 
 namespace essence {
     namespace {

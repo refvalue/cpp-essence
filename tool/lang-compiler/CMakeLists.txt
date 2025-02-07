@@ -1,11 +1,12 @@
 ﻿set(target_name cpp-essence-lang-compiler)
 
-add_executable(${target_name} ${headers_and_sources})
+add_executable(${target_name})
+list(APPEND ES_PACKAGING_TARGETS ${target_name})
+set(ES_PACKAGING_TARGETS ${ES_PACKAGING_TARGETS} PARENT_SCOPE)
 
 file(
     GLOB private_sources
     CONFIGURE_DEPENDS
-    *.hpp
     *.cpp
 )
 
@@ -22,11 +23,10 @@ if(NOT "${ES_TOOLCHAIN_TARGET_NAME}" STREQUAL "")
     )
 endif()
 
-set_target_properties(
+target_compile_features(
     ${target_name}
-    PROPERTIES
-    CXX_STANDARD 20
-    CXX_STANDARD_REQUIRED ON
+    PRIVATE
+    cxx_std_23
 )
 
 target_link_libraries(
@@ -52,9 +52,3 @@ if(NOT CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
         atomic
     )
 endif()
-
-include(ESPackaging)
-
-es_make_install_package(
-    TARGET_NAME ${target_name}
-)

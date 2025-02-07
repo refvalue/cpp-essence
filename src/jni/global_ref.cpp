@@ -20,9 +20,7 @@
  * THE SOFTWARE.
  */
 
-#include "jni/global_ref.hpp"
-
-#include "jni/jvm.hpp"
+module essence.jni;
 
 namespace essence::jni {
     global_ref::global_ref() noexcept : ref_{} {}

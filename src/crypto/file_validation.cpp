@@ -20,19 +20,12 @@
  * THE SOFTWARE.
  */
 
-#include "crypto/file_validation.hpp"
+module;
 
-#include "char8_t_remediation.hpp"
-#include "crypto/digest.hpp"
-#include "error_extensions.hpp"
-#include "string.hpp"
+#include <essence/char8_t_remediation.hpp>
 
-#include <array>
-#include <cstddef>
-#include <filesystem>
-#include <fstream>
-#include <iterator>
-#include <string>
+module essence.crypto;
+import essence.basic;
 
 namespace essence::crypto {
     namespace {

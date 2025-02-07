@@ -20,10 +20,13 @@
  * THE SOFTWARE.
  */
 
-#include "crypto/params/x448_keygen_param.hpp"
+module;
 
-#include "../util.hpp"
-#include "char8_t_remediation.hpp"
+#include <essence/char8_t_remediation.hpp>
+
+module essence.crypto;
+import :util;
+import essence.basic;
 
 namespace essence::crypto {
     void* x448_keygen_param::generate_key_blob() {

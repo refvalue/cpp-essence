@@ -22,16 +22,11 @@
 
 module;
 
-#include "char8_t_remediation.hpp"
-
-#include <cstddef>
-#include <cstdint>
-#include <functional>
-#include <span>
-#include <string_view>
+#include <essence/char8_t_remediation.hpp>
 
 module essence.crypto:chunk_processing_helper;
 import essence.basic;
+import std;
 
 namespace essence::crypto {
     template <typename T, typename R = std::int32_t>

@@ -20,16 +20,14 @@
  * THE SOFTWARE.
  */
 
-#include <array>
-#include <span>
-#include <string>
-#include <string_view>
-
-#include <essence/abi/string.hpp>
-#include <essence/cli/arg_parser.hpp>
-#include <essence/cli/option.hpp>
+#include <essence/char8_t_remediation.hpp>
 
 #include <gtest/gtest.h>
+
+import essence.basic;
+import essence.cli;
+import std;
+import essence.unit_test.lang;
 
 using namespace essence;
 

@@ -1,20 +1,34 @@
-set(target_version 0.1.0)
 set(target_name cpp-essence-jni-support)
-set(package_name CppEssenceJniSupport)
 
 add_library(${target_name})
+list(APPEND ES_PACKAGING_TARGETS ${target_name})
+set(ES_PACKAGING_TARGETS ${ES_PACKAGING_TARGETS} PARENT_SCOPE)
+
+file(
+    GLOB miu_sources
+    CONFIGURE_DEPENDS
+    *.ixx
+)
+
+file(
+    GLOB internal_piu_sources
+    CONFIGURE_DEPENDS
+    *.cxx
+)
 
 file(
     GLOB private_sources
     CONFIGURE_DEPENDS
-    ${ES_PUBLIC_INCLUDE_DIR}/essence/jni/*.hpp
-    *.hpp
     *.cpp
 )
 
 target_sources(
     ${target_name}
-    PRIVATE ${private_sources}
+    PUBLIC
+    FILE_SET CXX_MODULES
+    FILES ${miu_sources} ${internal_piu_sources}
+    PRIVATE
+    ${private_sources}
 )
 
 message(STATUS "ES_TOOLCHAIN_TARGET_NAME: ${ES_TOOLCHAIN_TARGET_NAME}")
@@ -33,7 +47,7 @@ target_include_directories(
     $<BUILD_INTERFACE:${ES_PUBLIC_INCLUDE_DIR}>
     $<INSTALL_INTERFACE:include>
     PRIVATE
-    ${ES_PUBLIC_INCLUDE_DIR}/essence
+    ${ES_PUBLIC_INCLUDE_DIR}
     ${JNI_INCLUDE_DIRS}
 )
 
@@ -47,11 +61,10 @@ target_link_libraries(
     ${JNI_LIBRARIES}
 )
 
-set_target_properties(
+target_compile_features(
     ${target_name}
-    PROPERTIES
-    CXX_STANDARD 20
-    CXX_STANDARD_REQUIRED ON
+    PRIVATE
+    cxx_std_23
 )
 
 if(NOT CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
@@ -66,12 +79,3 @@ if(NOT CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
         CXX_VISIBILITY_PRESET hidden
     )
 endif()
-
-include(ESPackaging)
-
-es_make_install_package(
-    TARGET_NAME ${target_name}
-    PACKAGE_NAME ${package_name}
-    TARGET_VERSION ${target_version}
-    PATH_VARS CMAKE_INSTALL_PREFIX
-)

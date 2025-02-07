@@ -20,21 +20,18 @@
  * THE SOFTWARE.
  */
 
-#include "jni/reflector.hpp"
+module;
 
-#include "cache_key.hpp"
-#include "error_extensions.hpp"
-#include "jni/jvm.hpp"
-#include "jni/local_ref.hpp"
-#include "meta/identifier.hpp"
+#include <essence/char8_t_remediation.hpp>
 
-#include <string_view>
-#include <unordered_map>
-#include <variant>
+#include <jni.h>
 
-#if __has_include(<version> )
-#include <version>
-#endif
+module essence.jni;
+import :cache_key;
+import :jvm;
+import :local_ref;
+import essence.basic;
+import essence.meta;
 
 namespace essence::jni {
     class reflector::impl {

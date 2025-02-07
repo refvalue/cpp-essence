@@ -20,12 +20,13 @@
  * THE SOFTWARE.
  */
 
-#include "char8_t_remediation.hpp"
-#include "compat.hpp"
+module;
 
-#include <locale>
+#include <essence/char8_t_remediation.hpp>
+#include <essence/compat.hpp>
 
-#include <spdlog/spdlog.h>
+module essence.basic;
+import std;
 
 #ifdef __UCLIBC__
 extern "C" {

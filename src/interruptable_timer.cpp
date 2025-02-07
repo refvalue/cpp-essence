@@ -20,16 +20,7 @@
  * THE SOFTWARE.
  */
 
-#include "interruptable_timer.hpp"
-
-#include "format_remediation.hpp"
-
-#include <atomic>
-#include <chrono>
-#include <condition_variable>
-#include <mutex>
-#include <thread>
-#include <utility>
+module essence.basic;
 
 namespace essence {
     namespace {
@@ -52,8 +43,8 @@ namespace essence {
     class interruptable_timer::impl {
     public:
         impl()
-            : stop_pending_{false}, worker_thread_{[this] { timer_routine(); }}, idle_running_{true}, idle_pending_{true},
-              timer_running_{false} {}
+            : stop_pending_{false}, worker_thread_{[this] { timer_routine(); }}, idle_running_{true},
+              idle_pending_{true}, timer_running_{false} {}
 
         ~impl() {
             change_state(nullptr, false, false);

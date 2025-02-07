@@ -39,14 +39,10 @@ function(es_install_include_dirs target_name)
 endfunction()
 
 function(es_install_files target_name)
-    set(options INTERFACE)
-    set(one_value_args "")
-    set(multi_value_args "")
-    cmake_parse_arguments(PARSE_ARGV 1 ARG "${options}" "${one_value_args}" "${multi_value_args}")
-
     set(property_name ES_INSTALL_FILES)
+    get_target_property(target_type ${target_name} TYPE)
 
-    if(ARG_INTERFACE)
+    if("${target_type}" STREQUAL "INTERFACE_LIBRARY")
         string(PREPEND property_name "INTERFACE_")
     endif()
 
@@ -90,53 +86,89 @@ function(es_install_files target_name)
     endforeach()
 endfunction()
 
-function(es_make_install_package)
-    set(options INTERFACE FILE_SET_HEADERS EXECUTABLE)
-    set(one_value_args TARGET_NAME PACKAGE_NAME TARGET_VERSION INCLUDE_DIR)
-    set(multi_value_args PATH_VARS)
+function(es_set_target_versions)
+    set(options "")
+    set(one_value_args VERSION RESULT_VARIABLE_HAS_LIBRARY RESULT_VARIABLE_LIBRARY_TARGETS RESULT_VARIABLE_NON_LIBRARY_TARGETS)
+    set(multi_value_args TARGETS)
     cmake_parse_arguments(PARSE_ARGV 0 ARG "${options}" "${one_value_args}" "${multi_value_args}")
-
-    get_target_property(target_type ${ARG_TARGET_NAME} TYPE)
-    message(STATUS "[${CMAKE_CURRENT_FUNCTION}][target_type] ${target_type}")
-
-    if("${target_type}" STREQUAL "EXECUTABLE")
-        set(target_executable TRUE)
-        set(additional_ensuring_parameters "")
-    else()
-        set(target_executable FALSE)
-        set(additional_ensuring_parameters PACKAGE_NAME TARGET_VERSION)
-    endif()
-
-    es_ensure_parameters(es_make_install_package ARG TARGET_NAME ${additional_ensuring_parameters})
+    es_ensure_parameters(es_make_install_package ARG TARGETS VERSION)
 
     # A target version may be 1.2.3 and a so version may be 1 respectively.
-    if("${ARG_TARGET_VERSION}" MATCHES [=[^([0-9]+)(\.[0-9]+)?(\.[0-9]+)?$]=])
+    if("${ARG_VERSION}" MATCHES [=[^([0-9]+)(\.[0-9]+)?(\.[0-9]+)?$]=])
         set(so_version ${CMAKE_MATCH_1})
-    elseif(NOT target_executable)
-        message(FATAL_ERROR "Invalid TARGET_VERSION: ${ARG_TARGET_VERSION}")
+    else()
+        message(FATAL_ERROR "Invalid VERSION: ${ARG_VERSION}")
     endif()
 
-    message(STATUS "[${CMAKE_CURRENT_FUNCTION}][ARG_TARGET_VERSION] ${ARG_TARGET_VERSION}")
+    message(STATUS "[${CMAKE_CURRENT_FUNCTION}][ARG_VERSION] ${ARG_VERSION}")
     message(STATUS "[${CMAKE_CURRENT_FUNCTION}][so_version] ${so_version}")
 
-    if(NOT ARG_INTERFACE AND NOT target_executable)
-        set_target_properties(${ARG_TARGET_NAME}
+    if(ARG_RESULT_VARIABLE_HAS_LIBRARY)
+        set(${ARG_RESULT_VARIABLE_HAS_LIBRARY} FALSE PARENT_SCOPE)
+    endif()
+
+    set(library_targets "")
+
+    foreach(item IN LISTS ARG_TARGETS)
+        get_target_property(target_type ${item} TYPE)
+
+        if(ARG_RESULT_VARIABLE_HAS_LIBRARY AND NOT "${target_type}" STREQUAL "EXECUTABLE")
+            list(APPEND library_targets ${item})
+            set(${ARG_RESULT_VARIABLE_HAS_LIBRARY} TRUE PARENT_SCOPE)
+        endif()
+
+        if("${target_type}" STREQUAL "SHARED_LIBRARY")
+            set_target_properties(
+                ${item}
+                PROPERTIES
+                VERSION ${ARG_VERSION}
+                SOVERSION ${so_version}
+            )
+        endif()
+
+        set_target_properties(
+            ${item}
             PROPERTIES
-            VERSION ${ARG_TARGET_VERSION}
-            SOVERSION ${so_version}
-            INTERFACE_${ARG_PACKAGE_NAME}_MAJOR_VERSION ${so_version}
+            INTERFACE_${item}_MAJOR_VERSION ${so_version}
         )
 
         set_property(
-            TARGET ${ARG_TARGET_NAME}
+            TARGET ${item}
             APPEND PROPERTY
-            COMPATIBLE_INTERFACE_STRING ${ARG_PACKAGE_NAME}_MAJOR_VERSION
+            COMPATIBLE_INTERFACE_STRING ${item}_MAJOR_VERSION
         )
+    endforeach()
+
+    if(ARG_RESULT_VARIABLE_LIBRARY_TARGETS)
+        set(${ARG_RESULT_VARIABLE_LIBRARY_TARGETS} ${library_targets} PARENT_SCOPE)
     endif()
 
-    if(target_executable)
-        set(export_targets "")
-    else()
+    if(ARG_RESULT_VARIABLE_NON_LIBRARY_TARGETS)
+        list(REMOVE_ITEM ARG_TARGETS ${library_targets})
+        set(${ARG_RESULT_VARIABLE_NON_LIBRARY_TARGETS} ${ARG_TARGETS} PARENT_SCOPE)
+    endif()
+endfunction()
+
+function(es_make_install_package)
+    set(options "")
+    set(one_value_args PACKAGE_NAME VERSION INCLUDE_DIR)
+    set(multi_value_args TARGETS PATH_VARS)
+    cmake_parse_arguments(PARSE_ARGV 0 ARG "${options}" "${one_value_args}" "${multi_value_args}")
+    es_ensure_parameters(es_make_install_package ARG TARGETS VERSION)
+
+    es_set_target_versions(
+        TARGETS ${ARG_TARGETS}
+        VERSION ${ARG_VERSION}
+        RESULT_VARIABLE_HAS_LIBRARY has_library_target
+        RESULT_VARIABLE_LIBRARY_TARGETS library_targets
+        RESULT_VARIABLE_NON_LIBRARY_TARGETS non_library_targets
+    )
+
+    if(has_library_target)
+        es_ensure_parameters(es_make_install_package ARG PACKAGE_NAME)
+    endif()
+
+    if(has_library_target)
         include(CMakePackageConfigHelpers)
 
         set(package_config_file ${ARG_PACKAGE_NAME}Config.cmake)
@@ -152,60 +184,70 @@ function(es_make_install_package)
 
         write_basic_package_version_file(
             ${CMAKE_CURRENT_BINARY_DIR}/${package_version_file}
-            VERSION ${ARG_TARGET_VERSION}
+            VERSION ${ARG_VERSION}
             COMPATIBILITY AnyNewerVersion
         )
 
         set(package_targets ${ARG_PACKAGE_NAME}Targets)
-
-        if(ARG_INCLUDE_DIR)
-            set(include_dir ${ARG_INCLUDE_DIR})
-        else()
-            set(include_dir include)
-        endif()
-
-        set(export_targets EXPORT ${package_targets})
     endif()
 
-    # Exports the target.
-    if(ARG_FILE_SET_HEADERS)
-        install(
-            TARGETS ${ARG_TARGET_NAME}
-            ${export_targets}
-            FILE_SET HEADERS
-            DESTINATION ${include_dir}
-        )
+    if(ARG_INCLUDE_DIR)
+        set(include_dir ${ARG_INCLUDE_DIR})
     else()
-        install(
-            TARGETS ${ARG_TARGET_NAME}
-            ${export_targets}
-            LIBRARY DESTINATION lib
-            ARCHIVE DESTINATION lib
-            RUNTIME DESTINATION bin
-            INCLUDES DESTINATION ${include_dir}
-        )
-
-        es_install_include_dirs(${ARG_TARGET_NAME})
+        set(include_dir include)
     endif()
 
-    es_install_files(${ARG_TARGET_NAME} ${ARGN})
+    set(miu_dir lib/miu)
+    install(CODE "file(MAKE_DIRECTORY \"${CMAKE_INSTALL_PREFIX}/${include_dir}\")")
+
+
+    # Exports library targets.
+    install(
+        TARGETS ${library_targets}
+        EXPORT ${package_targets}
+        LIBRARY DESTINATION lib
+        ARCHIVE DESTINATION lib
+        RUNTIME DESTINATION bin
+        INCLUDES DESTINATION ${include_dir}
+
+        FILE_SET HEADERS
+        DESTINATION ${include_dir}
+
+        FILE_SET CXX_MODULES
+        DESTINATION ${miu_dir}
+    )
+
+    # Exports non-library targets.
+    install(
+        TARGETS ${non_library_targets}
+        LIBRARY DESTINATION lib
+        ARCHIVE DESTINATION lib
+        RUNTIME DESTINATION bin
+        INCLUDES DESTINATION ${include_dir}
+    )
+
+    foreach(item IN LISTS ARG_TARGETS)
+        es_install_include_dirs(${item})
+        es_install_files(${item} ${ARGN})
+    endforeach()
 
     # Installs runtime dependencies if vcpkg is enabled.
     if("${CMAKE_TOOLCHAIN_FILE}" MATCHES [=[vcpkg\.cmake$]=])
         message(STATUS "vcpkg is enabled; therefore use x_vcpkg_install_local_dependencies.")
         x_vcpkg_install_local_dependencies(
-            TARGETS ${ARG_TARGET_NAME}
+            TARGETS ${ARG_TARGETS}
             DESTINATION bin
         )
     endif()
 
-    if(NOT target_executable)
+    if(has_library_target)
         # Installs the package targets file.
         install(
             EXPORT ${package_targets}
             FILE ${package_targets}.cmake
             NAMESPACE ${ARG_PACKAGE_NAME}::
             DESTINATION ${package_config_dir}
+            CXX_MODULES_DIRECTORY ${miu_dir}
         )
 
         # Installs the config file and the version file of the package.
@@ -215,6 +257,24 @@ function(es_make_install_package)
             ${CMAKE_CURRENT_BINARY_DIR}/${package_version_file}
             DESTINATION ${package_config_dir}
             COMPONENT Devel
+        )
+
+        # Deletes non-miu sources that have been exported by the installation system.
+        install(
+            CODE " \
+            file(GLOB non_miu_sources \"\${CMAKE_INSTALL_PREFIX}/${miu_dir}/*.cpp\" \"\${CMAKE_INSTALL_PREFIX}/${miu_dir}/*.cxx\")\n \
+            message(STATUS \"non_miu_sources: \${non_miu_sources}\")\n \
+            file(REMOVE \${non_miu_sources})"
+        )
+
+        # Removes the non-miu sources from the target script file.
+        install(
+            CODE " \
+            set(script_file \"\${CMAKE_INSTALL_PREFIX}/lib/cmake/${ARG_PACKAGE_NAME}/${package_targets}.cmake\")\n \
+            message(STATUS \"script_file: \${script_file}\")\n \
+            file(READ \"\${script_file}\" target_script)\n \
+            string(REGEX REPLACE [=[\"\\\${_IMPORT_PREFIX}/[^\"]*\\.(cpp|cxx)\"]=] \"\" target_script \"\${target_script}\")\n \
+            file(WRITE \"\${script_file}\" \"\${target_script}\")"
         )
     endif()
 endfunction()

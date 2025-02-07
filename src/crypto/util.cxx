@@ -22,31 +22,18 @@
 
 module;
 
-#include "char8_t_remediation.hpp"
-
-#include <algorithm>
-#include <array>
-#include <concepts>
-#include <cstddef>
-#include <cstdint>
-#include <cstdio>
-#include <functional>
-#include <memory>
-#include <source_location>
-#include <span>
-#include <tuple>
-#include <type_traits>
-#include <utility>
+#include <essence/char8_t_remediation.hpp>
 
 #include <openssl/buffer.h>
 #include <openssl/crypto.h>
 #include <openssl/evp.h>
 
 module essence.crypto:util;
-import :abstract_chunk_processor;
+import :abstract.chunk_processor;
 import :common_types;
 import :error;
 import essence.basic;
+import std;
 
 namespace essence::crypto {
     using bio_unique_ptr   = std::unique_ptr<BIO, void (*)(BIO*)>;

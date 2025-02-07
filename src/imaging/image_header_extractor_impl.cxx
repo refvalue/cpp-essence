@@ -20,15 +20,8 @@
  * THE SOFTWARE.
  */
 
-#pragma once
-
-#include <algorithm>
-#include <array>
-#include <concepts>
-#include <cstddef>
-#include <istream>
-#include <span>
-#include <string_view>
+module essence.imaging:image_header_extractor_impl;
+import std;
 
 namespace essence::imaging {
     /**

@@ -20,17 +20,14 @@
  * THE SOFTWARE.
  */
 
-#include "jni/util.hpp"
+module;
 
-#include "char8_t_remediation.hpp"
-#include "encoding.hpp"
-#include "jni/jvm.hpp"
-#include "meta/literal_string.hpp"
-#include "scope.hpp"
-#include "type_list.hpp"
+#include <essence/char8_t_remediation.hpp>
 
-#include <algorithm>
-#include <cstdarg>
+#include <jni.h>
+
+module essence.jni;
+import essence.meta;
 
 namespace essence::jni {
     namespace {

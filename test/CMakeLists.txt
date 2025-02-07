@@ -2,6 +2,8 @@
 set(target_name cpp-essence-test)
 
 add_executable(${target_name} ${headers_and_sources})
+list(APPEND ES_PACKAGING_TARGETS ${target_name})
+set(ES_PACKAGING_TARGETS ${ES_PACKAGING_TARGETS} PARENT_SCOPE)
 
 file(
     GLOB private_sources
@@ -23,11 +25,10 @@ if(NOT "${ES_TOOLCHAIN_TARGET_NAME}" STREQUAL "")
     )
 endif()
 
-set_target_properties(
+target_compile_features(
     ${target_name}
-    PROPERTIES
-    CXX_STANDARD 20
-    CXX_STANDARD_REQUIRED ON
+    PRIVATE
+    cxx_std_23
 )
 
 if(EMSCRIPTEN)
@@ -68,12 +69,6 @@ else()
         )
     endif()
 endif()
-
-include(ESPackaging)
-
-es_make_install_package(
-    TARGET_NAME ${target_name}
-)
 
 include(GoogleTest)
 gtest_discover_tests(${target_name})

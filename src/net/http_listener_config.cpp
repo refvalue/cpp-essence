@@ -20,11 +20,11 @@
  * THE SOFTWARE.
  */
 
-#include "net/http_listener_config.hpp"
-
-#include <chrono>
+module;
 
 #include <cpprest/http_listener.h>
+
+module essence.net;
 
 namespace essence::net {
     http_listener_config http_listener_config::get_default() {

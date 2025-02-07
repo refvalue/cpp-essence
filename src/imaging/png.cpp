@@ -20,20 +20,18 @@
  * THE SOFTWARE.
  */
 
-#include "abi/string.hpp"
-#include "char8_t_remediation.hpp"
-#include "compat.hpp"
-#include "extractors.hpp"
-#include "image_header_extractor_impl.hpp"
-#include "imaging/image_general_header.hpp"
-#include "io/abstract/bitstream_type_hint.hpp"
+module;
 
-#include <array>
-#include <cstddef>
-#include <cstdint>
-#include <limits>
-#include <optional>
-#include <span>
+#include <essence/char8_t_remediation.hpp>
+#include <essence/compat.hpp>
+
+module essence.imaging;
+import :extractors;
+import :image_header_extractor_impl;
+import :image_general_header;
+import essence.basic;
+import essence.io;
+import std;
 
 namespace essence::imaging {
     namespace {

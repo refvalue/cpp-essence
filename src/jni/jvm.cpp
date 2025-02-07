@@ -20,20 +20,19 @@
  * THE SOFTWARE.
  */
 
-#include "jni/jvm.hpp"
+module;
 
-#include "error_extensions.hpp"
-#include "thread.hpp"
+#include <essence/char8_t_remediation.hpp>
 
-#include <array>
-#include <atomic>
-#include <forward_list>
-#include <mutex>
+#include <jni.h>
+
+module essence.jni;
+import essence.basic;
 
 namespace essence::jni {
     namespace {
         /// Some JNI functions may contain parameters that are void** or JNIEnv** across different JNI versions.
-        /// We provides an adapter here to support auto-casting.
+        /// We provide an adapter here to support auto-casting.
         /// </summary>
         struct env_adapter {
             JNIEnv* env{};
@@ -61,8 +60,7 @@ namespace essence::jni {
             env_adapter adapter;
 
             if (const auto iter = std::ranges::find_if(
-                    available_versions,
-                    [&](std::int32_t inner) { return vm->GetEnv(adapter, inner) == JNI_OK; });
+                    available_versions, [&](std::int32_t inner) { return vm->GetEnv(adapter, inner) == JNI_OK; });
                 iter != available_versions.end()) {
                 const auto result = std::make_shared<jvm_context>(jvm_context{vm, *iter});
 

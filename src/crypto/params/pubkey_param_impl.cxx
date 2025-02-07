@@ -22,16 +22,13 @@
 
 module;
 
-#include "char8_t_remediation.hpp"
-
-#include <algorithm>
-#include <memory>
-#include <span>
+#include <essence/char8_t_remediation.hpp>
 
 #include <openssl/evp.h>
 
-module essence.crypto:params_pubkey_param_impl;
+module essence.crypto:params.pubkey_param_impl;
 import essence.basic;
+import std;
 
 namespace essence::crypto {
     class pubkey_param_impl {
@@ -52,4 +49,15 @@ namespace essence::crypto {
     private:
         std::shared_ptr<EVP_PKEY_CTX> context_;
     };
+
+    constexpr auto pubkey_param_impl_deleter = [](void* inner) {
+        if (auto impl = static_cast<pubkey_param_impl*>(inner)) {
+            delete impl;
+        }
+    };
+
+    template <typename Deleter>
+    pubkey_param_impl& get_impl(const std::unique_ptr<void, Deleter>& opaque) noexcept {
+        return *static_cast<pubkey_param_impl*>(opaque.get());
+    }
 } // namespace essence::crypto

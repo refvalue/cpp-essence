@@ -20,15 +20,7 @@
  * THE SOFTWARE.
  */
 
-#include "char8_t_remediation.hpp"
-#include "io/fs_operator.hpp"
-
-#include <concepts>
-#include <filesystem>
-#include <fstream>
-#include <memory>
-#include <string_view>
-#include <system_error>
+module essence.io;
 
 namespace essence::io {
     namespace {

@@ -22,14 +22,11 @@
 
 module;
 
-#include "char8_t_remediation.hpp"
-
-#include <array>
-#include <cstdint>
-#include <string_view>
+#include <essence/char8_t_remediation.hpp>
 
 module essence.globalization:common_constants;
 import essence.basic;
+import std;
 
 namespace essence::globalization {
     struct common_constants {

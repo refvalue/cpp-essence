@@ -20,9 +20,7 @@
  * THE SOFTWARE.
  */
 
-#include "string.hpp"
-
-#include <ranges>
+module essence.basic;
 
 namespace essence {
     abi::string to_lower(std::string_view str) {

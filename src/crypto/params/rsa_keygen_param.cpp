@@ -20,14 +20,13 @@
  * THE SOFTWARE.
  */
 
-#include "crypto/params/rsa_keygen_param.hpp"
+module;
 
-#include "../util.hpp"
-#include "char8_t_remediation.hpp"
-#include "error_extensions.hpp"
-#include "exception.hpp"
+#include <essence/char8_t_remediation.hpp>
 
-#include <exception>
+module essence.crypto;
+import :util;
+import essence.basic;
 
 namespace essence::crypto {
     void* rsa_keygen_param::generate_key_blob() const try {

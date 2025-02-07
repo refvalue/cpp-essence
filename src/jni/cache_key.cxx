@@ -20,16 +20,13 @@
  * THE SOFTWARE.
  */
 
-#pragma once
-
-#include "hashing.hpp"
-
-#include <compare>
-#include <concepts>
-#include <functional>
-#include <type_traits>
+module;
 
 #include <jni.h>
+
+module essence.jni:cache_key;
+import essence.basic;
+import std;
 
 namespace essence::jni {
     struct cache_key {
