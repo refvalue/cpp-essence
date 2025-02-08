@@ -23,51 +23,31 @@
 export module essence.basic:char8_t_remediation;
 import std;
 
-#if __cpp_char8_t >= 201811L
-namespace essence::detail {
-    template <std::size_t N>
-    struct char8_t_string_literal {
-        static constexpr std::size_t size = N;
+#if __cpp_char8_t >= 202207L
+export namespace essence {
+    template <std::size_t N, bool CharLiteral>
+    struct char_string_literal {
+        static constexpr auto size         = N;
+        static constexpr auto char_literal = CharLiteral;
 
-        bool char_literal;
-        std::array<char8_t, N> sequence;
-
-        constexpr char8_t_string_literal(char8_t ch) noexcept // NOLINT(*-explicit-constructor)
-            : char_literal{true}, sequence{ch} {}
-
-        template <std::size_t... Is>
-        constexpr char8_t_string_literal(const char8_t (&sequence)[N], std::index_sequence<Is...>) noexcept
-            : char_literal{}, sequence{sequence[Is]...} {}
-
-        constexpr char8_t_string_literal(const char8_t (&sequence)[N]) noexcept // NOLINT(*-explicit-constructor)
-            : char8_t_string_literal{sequence, std::make_index_sequence<N>{}} {}
+        char data[N];
     };
 
-    char8_t_string_literal(char8_t) -> char8_t_string_literal<1>;
+    char_string_literal(char8_t) -> char_string_literal<1, true>;
 
     template <std::size_t N>
-    char8_t_string_literal(const char8_t (&)[N]) -> char8_t_string_literal<N>;
+    char_string_literal(const char8_t (&)[N]) -> char_string_literal<N, false>;
 
-    template <char8_t_string_literal Literal, std::size_t... Is>
-    constexpr char as_char_array_v[sizeof...(Is)]{static_cast<char>(Literal.sequence[Is])...};
-
-    template <char8_t_string_literal Literal, std::size_t... Is>
-    constexpr const char (&make_as_char_array(std::index_sequence<Is...>) noexcept)[sizeof...(Is)] {
-        return as_char_array_v<Literal, Is...>;
-    }
-} // namespace essence::detail
-
-export namespace essence {
-    template <detail::char8_t_string_literal Literal>
-    constexpr decltype(auto) as_char_v = []() -> decltype(auto) {
+    template <char_string_literal Literal>
+    constexpr decltype(auto) as_char_v =
+        []() -> std::conditional_t<Literal.char_literal, char, const char (&)[Literal.size]> {
         if constexpr (Literal.char_literal) {
-            return static_cast<char>(Literal.sequence.front());
+            return Literal.data[0];
         } else {
-            return detail::make_as_char_array<Literal>(std::make_index_sequence<decltype(Literal)::size>{});
+            return Literal.data;
         }
-    }();
-
-#define U8(x) (essence::as_char_v<(u8##x)>)
+    }
+    ();
 
     inline std::string from_u8string(std::u8string_view str) {
         return {str.begin(), str.end()};
@@ -78,23 +58,5 @@ export namespace essence {
     }
 } // namespace essence
 #else
-#define U8(x) u8##x
-
-export namespace essence {
-    std::string from_u8string(std::string_view str) {
-        return std::string{str};
-    }
-
-    std::string from_u8string(std::string&& str) noexcept {
-        return std::move(str);
-    }
-
-    std::string to_u8string(std::string_view str) {
-        return std::string{str};
-    }
-
-    std::string to_u8string(std::string&& str) noexcept {
-        return std::move(str);
-    }
-} // namespace essence
+#error "C++23 standard P2513R4: `DR20 char8_t Compatibility and Portability Fix` must be supported."
 #endif

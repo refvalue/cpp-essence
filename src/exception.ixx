@@ -55,7 +55,7 @@ export namespace essence {
         }
 
         template <typename E, bool Reverse = false>
-        std::optional<E> extract() const {
+        [[nodiscard]] std::optional<E> extract() const {
             auto iter = [this] {
                 if constexpr (Reverse) {
                     return rbegin();

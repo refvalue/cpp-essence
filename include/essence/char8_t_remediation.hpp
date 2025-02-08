@@ -22,8 +22,8 @@
 
 #pragma once
 
-#if __cpp_char8_t >= 201811L
-#define U8(x) (essence::as_char_v<(u8##x)>)
+#if __cpp_char8_t >= 202207L
+#define U8(x) (essence::as_char_v<essence::char_string_literal{u8##x}>)
 #else
-#define U8(x) u8##x
+#error "C++23 standard P2513R4: `DR20 char8_t Compatibility and Portability Fix` must be supported."
 #endif

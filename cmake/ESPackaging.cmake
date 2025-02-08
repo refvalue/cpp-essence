@@ -262,7 +262,7 @@ function(es_make_install_package)
         # Deletes non-miu sources that have been exported by the installation system.
         install(
             CODE " \
-            file(GLOB non_miu_sources \"\${CMAKE_INSTALL_PREFIX}/${miu_dir}/*.cpp\" \"\${CMAKE_INSTALL_PREFIX}/${miu_dir}/*.cxx\")\n \
+            file(GLOB_RECURSE non_miu_sources \"\${CMAKE_INSTALL_PREFIX}/${miu_dir}/*.cpp\" \"\${CMAKE_INSTALL_PREFIX}/${miu_dir}/*.cxx\")\n \
             message(STATUS \"non_miu_sources: \${non_miu_sources}\")\n \
             file(REMOVE \${non_miu_sources})"
         )
