@@ -71,7 +71,7 @@ namespace essence::crypto {
                           return context;
                       }
 
-                      throw source_code_aware_runtime_error{U8("Failed to allocate the base64 encoding context.")};
+                      throw formatted_runtime_error{U8("Failed to allocate the base64 encoding context.")};
                   }()},
                   helper_{[]() -> const auto& {
                       if constexpr (Encoder) {

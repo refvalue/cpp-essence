@@ -20,19 +20,25 @@
  * THE SOFTWARE.
  */
 
-module;
-
-#include <essence/compat.hpp>
-
-export module essence.globalization:compiler;
-import :abstract.compiler;
+export module essence.i18n:localized_arg;
+import :simple_messages;
 import essence.basic;
 import std;
 
-export namespace essence::globalization {
-    /**
-     * @brief Creates a default compiler.
-     * @return The default compiler.
-     */
-    ES_API(CPPESSENCE) abstract::compiler make_default_compiler();
-} // namespace essence::globalization
+export namespace essence::i18n {
+    template <typename T>
+    using localized_arg_t = std::conditional_t<std::convertible_to<T, std::string_view>, abi::string, T>;
+
+    template <typename T>
+    decltype(auto) make_localized_arg(const std::locale& locale, T&& arg) {
+        if constexpr (std::convertible_to<T, std::string_view>) {
+            if (std::has_facet<simple_messages>(locale)) {
+                return std::use_facet<simple_messages>(locale).get(std::forward<T>(arg));
+            }
+
+            return abi::string{std::string_view{std::forward<T>(arg)}};
+        } else {
+            return std::forward<T>(arg);
+        }
+    }
+} // namespace essence::i18n

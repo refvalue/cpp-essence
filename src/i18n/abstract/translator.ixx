@@ -20,12 +20,12 @@
  * THE SOFTWARE.
  */
 
-export module essence.globalization:abstract.translator;
+export module essence.i18n:abstract.translator;
 import essence.basic;
 import essence.io;
 import std;
 
-export namespace essence::globalization::abstract {
+export namespace essence::i18n::abstract {
     /**
      * @brief A translator for retrieving texts in multi-languages.
      */

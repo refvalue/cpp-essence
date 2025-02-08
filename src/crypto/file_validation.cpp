@@ -73,7 +73,7 @@ namespace essence::crypto {
 
             stream.write(reinterpret_cast<const char*>(digest.c_str()), static_cast<std::streamsize>(digest.size()));
         } else {
-            throw source_code_aware_runtime_error{U8("Path"), path, U8("Digest Path"),
+            throw formatted_runtime_error{U8("Path"), path, U8("Digest Path"),
                 from_u8string(digest_path.u8string()), U8("Message"), U8("Failed to create the validation file.")};
         }
     }

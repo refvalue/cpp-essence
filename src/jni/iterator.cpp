@@ -37,8 +37,8 @@ namespace essence::jni {
     jobject_array_iterator::jobject_array_iterator(jobjectArray array, jsize index)
         : env_{jvm::instance().ensure_env()},
           size_{array ? env_->GetArrayLength(array)
-                      : throw source_code_aware_runtime_error{U8("The array must be non-null.")}},
-          index_{index < size_ ? index : throw source_code_aware_runtime_error{U8("The index is out of range.")}},
+                      : throw formatted_runtime_error{U8("The array must be non-null.")}},
+          index_{index < size_ ? index : throw formatted_runtime_error{U8("The index is out of range.")}},
           array_{array} {}
 
     jobject_array_iterator::jobject_array_iterator(const jobject_array_iterator&) = default;

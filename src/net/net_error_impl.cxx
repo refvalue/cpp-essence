@@ -26,10 +26,10 @@ import essence.basic;
 import std;
 
 namespace essence::net {
-    struct net_error_impl final : source_code_aware_runtime_error, net_error {
+    struct net_error_impl final : formatted_runtime_error, net_error {
         template <typename... Args>
         explicit net_error_impl(logging_string_view hint, Args&&... args)
-            : source_code_aware_runtime_error{hint, std::forward<Args>(args)...},
-              net_error{source_code_aware_runtime_error::what()} {}
+            : formatted_runtime_error{hint, std::forward<Args>(args)...},
+              net_error{formatted_runtime_error::what()} {}
     };
 } // namespace essence::net

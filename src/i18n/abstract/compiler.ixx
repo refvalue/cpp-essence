@@ -20,12 +20,12 @@
  * THE SOFTWARE.
  */
 
-export module essence.globalization:abstract.compiler;
+export module essence.i18n:abstract.compiler;
 import essence.basic;
 import essence.serialization;
 import std;
 
-export namespace essence::globalization::abstract {
+export namespace essence::i18n::abstract {
     /**
      * @brief A compiler to translate globalized texts into particular binary sequences.
      */

@@ -40,7 +40,7 @@ namespace essence::io {
             if (ZSTD_isError(content_size)) {
                 const auto code = ZSTD_getErrorCode(content_size);
 
-                throw source_code_aware_runtime_error{
+                throw formatted_runtime_error{
                     location, U8("Code"), static_cast<std::int32_t>(code), U8("Message"), ZSTD_getErrorString(code)};
             }
 

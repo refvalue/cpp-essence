@@ -218,7 +218,9 @@ set_property(
     ${CMAKE_SOURCE_DIR}/cmake/RV1109Toolchain.cmake
     ${CMAKE_SOURCE_DIR}/cmake/RV3588Toolchain.cmake
     |
-    ${CMAKE_SOURCE_DIR}/cmake/config/user_globalization.cpp.in
-    ${CMAKE_SOURCE_DIR}/cmake/config/user_globalization.ixx.in
-    DESTINATIONS cmake cmake/config
+    ${CMAKE_SOURCE_DIR}/cmake/config/user_i18n.cpp.in
+    ${CMAKE_SOURCE_DIR}/cmake/config/user_i18n.ixx.in
+    |
+    ${CMAKE_SOURCE_DIR}/cmake/py/patch_exported_modular_target.py
+    DESTINATIONS cmake cmake/config cmake/py
 )

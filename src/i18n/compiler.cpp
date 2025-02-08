@@ -24,12 +24,12 @@ module;
 
 #include <essence/char8_t_remediation.hpp>
 
-module essence.globalization;
+module essence.i18n;
 import :common_constants;
 import essence.crypto;
 import essence.serialization;
 
-namespace essence::globalization {
+namespace essence::i18n {
     namespace {
         auto get_key_value_pairs(const decltype(std::declval<const abi::json>().items())& items) {
             return items | std::views::filter([](const auto& inner) { return inner.value().is_string(); })
@@ -50,7 +50,7 @@ namespace essence::globalization {
                     stream.exceptions(std::ios::badbit | std::ios::failbit);
                     stream.open(std::filesystem::path{to_u8string(path)}, std::ios::out | std::ios::binary);
                 } catch (const std::exception& ex) {
-                    throw source_code_aware_runtime_error{U8("Language File"), path, U8("Message"),
+                    throw formatted_runtime_error{U8("Language File"), path, U8("Message"),
                         U8("Failed to create the language file."), U8("Internal"), ex.what()};
                 }
 

@@ -70,7 +70,7 @@ namespace essence::net {
                     auto size_read = buffer.getn(reinterpret_cast<std::uint8_t*>(result.data()), result.size()).get();
 
                     if (result.size() != size_read) {
-                        throw source_code_aware_runtime_error{U8("Expected Size"), result.size(), U8("Size Read"),
+                        throw formatted_runtime_error{U8("Expected Size"), result.size(), U8("Size Read"),
                             size_read, U8("HTTP Download Error"),
                             U8("The expected size is unequal to the size read (in bytes).")};
                     }
@@ -85,7 +85,7 @@ namespace essence::net {
                 auto json = abi::json::parse(bytes, nullptr, false, true);
 
                 if (json.is_discarded()) {
-                    throw source_code_aware_runtime_error{
+                    throw formatted_runtime_error{
                         U8("HTTP Content Error"), U8("The server returns an invalid JSON.")};
                 }
 

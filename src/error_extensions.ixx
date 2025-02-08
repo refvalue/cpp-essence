@@ -65,14 +65,14 @@ export namespace essence {
      *        of the source file name, the line number, the column number and can be constructed with
      *        the same arguments as those passed to the essence::format function.
      */
-    class source_code_aware_runtime_error : public std::runtime_error {
+    class formatted_runtime_error : public std::runtime_error {
     public:
         template <typename... Args>
-        explicit source_code_aware_runtime_error(logging_string_view hint, Args&&... args)
-            : source_code_aware_runtime_error{hint.location, hint.str, std::forward<Args>(args)...} {}
+        explicit formatted_runtime_error(logging_string_view hint, Args&&... args)
+            : formatted_runtime_error{hint.location, hint.str, std::forward<Args>(args)...} {}
 
         template <typename... Args>
-        explicit source_code_aware_runtime_error(const std::source_location& location, Args&&... args)
+        explicit formatted_runtime_error(const std::source_location& location, Args&&... args)
             : runtime_error{[&] {
                   static constexpr auto format_array =
                       detail::make_format_str<sizeof...(Args) + (sizeof...(Args) == 1)>();

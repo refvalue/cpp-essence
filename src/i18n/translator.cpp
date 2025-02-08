@@ -24,10 +24,10 @@ module;
 
 #include <essence/char8_t_remediation.hpp>
 
-module essence.globalization;
+module essence.i18n;
 import :common_constants;
 
-namespace essence::globalization {
+namespace essence::i18n {
     namespace {
         /**
          * @brief A translator whose working directory and language are immutable for thread safety.
@@ -44,7 +44,7 @@ namespace essence::globalization {
                 auto path_str = from_u8string(path.generic_u8string());
 
                 if (!fs_operator_.exists(path_str)) {
-                    throw source_code_aware_runtime_error{
+                    throw formatted_runtime_error{
                         U8("Language File"), path_str, U8("Message"), U8("The language file does not exist.")};
                 }
 
@@ -81,7 +81,7 @@ namespace essence::globalization {
         private:
             void parse_language_file(std::string_view path) {
                 auto raise_error = [&]<typename... Args>(Args&&... args) {
-                    throw source_code_aware_runtime_error{
+                    throw formatted_runtime_error{
                         U8("Language File"), path, U8("Message"), std::forward<Args>(args)...};
                 };
 

@@ -20,14 +20,26 @@
  * THE SOFTWARE.
  */
 
-export module essence.globalization;
+module;
 
-export import :abstract.compiler;
-export import :abstract.translator;
+#include <essence/compat.hpp>
 
-export import :compiler;
-export import :format_extensions;
-export import :globalized_arg;
-export import :simple_messages;
-export import :spdlog_extensions;
-export import :translator;
+export module essence.i18n:translator;
+import :abstract.translator;
+import essence.io;
+import std;
+
+export namespace essence::i18n {
+    /**
+     * @brief Creates a globalization translator based on the native file system.
+     * @return The translator.
+     */
+    ES_API(CPPESSENCE) abstract::translator make_translator();
+
+    /**
+     * @brief Creates a globalization translator based on a user-specified file system implementation.
+     * @param fs_operator The virtual filesystem operator.
+     * @return The translator.
+     */
+    ES_API(CPPESSENCE) abstract::translator make_translator(io::abstract::virtual_fs_operator fs_operator);
+} // namespace essence::globalization

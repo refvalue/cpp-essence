@@ -20,25 +20,32 @@
  * THE SOFTWARE.
  */
 
-export module essence.globalization:globalized_arg;
-import :simple_messages;
+module;
+
+#include <essence/char8_t_remediation.hpp>
+
+module essence.i18n:common_constants;
 import essence.basic;
 import std;
 
-export namespace essence::globalization {
-    template <typename T>
-    using globalized_arg_t = std::conditional_t<std::convertible_to<T, std::string_view>, abi::string, T>;
+namespace essence::i18n {
+    struct common_constants {
+        static constexpr std::string_view default_working_folder{U8("lang")};
+        static constexpr std::string_view default_language{U8("en-US")};
+        static constexpr std::string_view language_file_extension{U8(".lang")};
 
-    template <typename T>
-    decltype(auto) make_globalized_arg(const std::locale& locale, T&& arg) {
-        if constexpr (std::convertible_to<T, std::string_view>) {
-            if (std::has_facet<simple_messages>(locale)) {
-                return std::use_facet<simple_messages>(locale).get(std::forward<T>(arg));
-            }
+        static constexpr char language_key_value_delimiter{U8('\x1E')};
+        static constexpr char language_key_value_terminator{U8('\x1F')};
 
-            return abi::string{std::string_view{std::forward<T>(arg)}};
-        } else {
-            return std::forward<T>(arg);
-        }
-    }
+        static constexpr std::array language_file_magic_flag{
+            U8('M'), U8('I'), U8('S'), U8('C'), U8(' '), U8('L'), U8('A'), U8('N'), U8('G')};
+
+        static constexpr std::array<std::uint8_t, 2> language_file_version{0x1, 0x0};
+
+        static constexpr auto language_file_version_number =
+            (static_cast<std::uint32_t>(language_file_version.front()) << 16) + language_file_version.back();
+
+        // Ensures that the size of the magic flag is always greater than the size of the version.
+        static_assert(language_file_version.size() <= language_file_magic_flag.size());
+    };
 } // namespace essence::globalization

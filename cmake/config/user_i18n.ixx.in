@@ -6,20 +6,20 @@ module;
 
 export module @ES_USER_NAME@;
 import essence.basic;
-import essence.globalization;
+import essence.i18n;
 import std;
 
 export namespace @ES_USER_NAMESPACE@ {
 #if @ES_WITH_EXPORTS@
-    ES_API(@ES_USER_NAME@) const essence::globalization::abstract::translator& get_bounded_translator();
+    ES_API(@ES_USER_NAME@) const essence::i18n::abstract::translator& get_bounded_translator();
 #else
-    const essence::globalization::abstract::translator& get_bounded_translator();
+    const essence::i18n::abstract::translator& get_bounded_translator();
 #endif
 
     inline const std::locale& get_bounded_locale() {
-        class messages_by_translator : public essence::globalization::simple_messages {
+        class messages_by_translator : public essence::i18n::simple_messages {
         public:
-            explicit messages_by_translator(essence::globalization::abstract::translator translator)
+            explicit messages_by_translator(essence::i18n::abstract::translator translator)
                 : translator_{std::move(translator)} {}
 
         private:
@@ -27,7 +27,7 @@ export namespace @ES_USER_NAMESPACE@ {
                 return translator_.get_text(name);
             }
 
-            essence::globalization::abstract::translator translator_;
+            essence::i18n::abstract::translator translator_;
         };
 
         static const std::locale locale{std::locale{}, new messages_by_translator{get_bounded_translator()}};

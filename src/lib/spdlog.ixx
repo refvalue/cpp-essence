@@ -44,6 +44,7 @@ export namespace spdlog {
     using spdlog::get_level;
     using spdlog::info;
     using spdlog::logger;
+    using spdlog::memory_buf_t;
     using spdlog::pattern_formatter;
     using spdlog::set_automatic_registration;
     using spdlog::set_default_logger;
@@ -51,9 +52,14 @@ export namespace spdlog {
     using spdlog::set_formatter;
     using spdlog::set_level;
     using spdlog::set_pattern;
+    using spdlog::sink_ptr;
     using spdlog::trace;
     using spdlog::warn;
 } // namespace spdlog
+
+export namespace spdlog::details {
+    using details::log_msg;
+}
 
 export namespace spdlog::sinks {
     using sinks::callback_sink;

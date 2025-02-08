@@ -57,7 +57,7 @@ namespace essence::jni {
                         .first->second);
             }
 
-            throw source_code_aware_runtime_error{
+            throw formatted_runtime_error{
                 U8("Failed to find the class."), U8("Class Key"), key, U8("Name"), name};
         }
 
@@ -105,13 +105,13 @@ namespace essence::jni {
                     return std::get<T>(cache_.insert_or_assign(make_cache_key<T>(key), id).first->second);
                 }
 
-                throw source_code_aware_runtime_error{U8("Class Key"), class_key, U8("jclass"),
+                throw formatted_runtime_error{U8("Class Key"), class_key, U8("jclass"),
                     reinterpret_cast<std::uintptr_t>(clazz.get()), U8("Category"),
                     meta::get_literal_string_t<CategoryTag, meta::identifier_param{.shortened = true}>(), U8("Name"),
                     name, U8("Signature"), signature, U8("Message"), U8("Failed to find the signature.")};
             }
 
-            throw source_code_aware_runtime_error{
+            throw formatted_runtime_error{
                 U8("Class Key"), class_key, U8("Message"), U8("Failed to find the class.")};
         }
 

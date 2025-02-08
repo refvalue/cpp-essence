@@ -1,6 +1,9 @@
 include_guard()
 include(${CMAKE_CURRENT_LIST_DIR}/ESUtil.cmake)
 
+# CMAKE_CURRENT_LIST_DIR will change within functions (with a dynamic scope).
+set(_es_packaging_absolute_current_dir ${CMAKE_CURRENT_LIST_DIR})
+
 define_property(
     TARGET
     PROPERTY ES_INSTALL_FILES
@@ -267,14 +270,11 @@ function(es_make_install_package)
             file(REMOVE \${non_miu_sources})"
         )
 
-        # Removes the non-miu sources from the target script file.
+        # Removes the non-miu sources and links from the target script file.
         install(
             CODE " \
             set(script_file \"\${CMAKE_INSTALL_PREFIX}/lib/cmake/${ARG_PACKAGE_NAME}/${package_targets}.cmake\")\n \
-            message(STATUS \"script_file: \${script_file}\")\n \
-            file(READ \"\${script_file}\" target_script)\n \
-            string(REGEX REPLACE [=[\"\\\${_IMPORT_PREFIX}/[^\"]*\\.(cpp|cxx)\"]=] \"\" target_script \"\${target_script}\")\n \
-            file(WRITE \"\${script_file}\" \"\${target_script}\")"
+            execute_process(COMMAND python3 \"${_es_packaging_absolute_current_dir}/py/patch_exported_modular_target.py\" \"\${script_file}\")"
         )
     endif()
 endfunction()

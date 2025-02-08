@@ -132,20 +132,20 @@ namespace essence::io {
 #else
             if (_pipe(pipe_handles.data()) == -1) {
 #endif
-                throw source_code_aware_runtime_error{U8("Failed to create a pipe for stdio redirection.")};
+                throw formatted_runtime_error{U8("Failed to create a pipe for stdio redirection.")};
             }
 
             pipe_read_.reset(pipe_handles.front());
             pipe_write_.reset(pipe_handles.back());
 
             if (_dup2(pipe_write_.get(), current_stdio_descriptor()) == -1) {
-                throw source_code_aware_runtime_error{U8("Failed to redirect the stdio buffer to the pipe.")};
+                throw formatted_runtime_error{U8("Failed to redirect the stdio buffer to the pipe.")};
             }
 
 #ifdef _WIN32
             if (!SetStdHandle(mode_ == stdio_watcher_mode::output ? STD_OUTPUT_HANDLE : STD_ERROR_HANDLE,
                     reinterpret_cast<HANDLE>(_get_osfhandle(pipe_write_.get())))) {
-                throw source_code_aware_runtime_error{U8("Failed to redirect the underlying Win32 standard handle.")};
+                throw formatted_runtime_error{U8("Failed to redirect the underlying Win32 standard handle.")};
             }
 #endif
         }

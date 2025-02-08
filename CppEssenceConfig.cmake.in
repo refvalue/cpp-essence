@@ -3,6 +3,13 @@
 include(CMakeFindDependencyMacro)
 
 find_dependency(
+    nlohmann_json
+    REQUIRED
+    HINTS @PACKAGE_CMAKE_INSTALL_PREFIX@
+    NO_DEFAULT_PATH
+)
+
+find_dependency(
     spdlog
     REQUIRED
     HINTS @PACKAGE_CMAKE_INSTALL_PREFIX@

@@ -65,7 +65,7 @@ namespace essence::io {
               hints_{hints.begin(), hints.end()} {
 
             if (hints_.empty()) {
-                throw source_code_aware_runtime_error{U8("The input type hints cannot be empty.")};
+                throw formatted_runtime_error{U8("The input type hints cannot be empty.")};
             }
 
             init_max_signature_size<true>();
@@ -84,7 +84,7 @@ namespace essence::io {
                 stream.exceptions(std::ios::badbit);
                 stream.open(std::filesystem::path{to_u8string(path)}, std::ios::in | std::ios::binary);
             } catch (const std::exception& ex) {
-                throw source_code_aware_runtime_error{
+                throw formatted_runtime_error{
                     U8("File"), path, U8("Message"), U8("Failed to open the file."), U8("Internal"), ex.what()};
             }
 

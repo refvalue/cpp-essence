@@ -106,7 +106,7 @@ export namespace essence::net {
                     try {
                         return raw_response.template get<typename traits_type::response_type>();
                     } catch (...) {
-                        std::throw_with_nested(source_code_aware_runtime_error{
+                        std::throw_with_nested(formatted_runtime_error{
                             U8("Raw Response"), raw_response.dump(default_nested_exception_indent)});
                     }
                 }();
@@ -136,7 +136,7 @@ export namespace essence::net {
                 return std::apply(handler, std::move(tuple));
             } catch (const std::exception& ex) {
                 aggregate_error::throw_nested(
-                    source_code_aware_runtime_error{U8("Error"), U8("Failed to commit the message."), U8("Entity"),
+                    formatted_runtime_error{U8("Error"), U8("Failed to commit the message."), U8("Entity"),
                         meta::get_literal_string_t<decayed_type,
                             meta::identifier_param{
                                 .shortened = true,

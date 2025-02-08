@@ -31,21 +31,21 @@ namespace essence::crypto {
         /**
          * @brief The algorithm ID.
          */
-        const void* id;
+        const void* id{};
 
         /**
          * @brief The length of an initialization vector.
          */
-        std::size_t iv_length;
+        std::size_t iv_length{};
 
         /**
          * @brief The length of a key.
          */
-        std::size_t key_length;
+        std::size_t key_length{};
 
         /**
          * @brief The block size.
          */
-        std::size_t block_size;
+        std::size_t block_size{};
     };
 } // namespace essence::crypto

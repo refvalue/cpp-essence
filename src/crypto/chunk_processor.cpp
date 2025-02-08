@@ -43,7 +43,7 @@ namespace essence::crypto {
         public:
             explicit chain_processor(std::span<abstract::chunk_processor> processors)
                 : buffer_pair_{processors.size() < 2
-                                   ? throw source_code_aware_runtime_error{U8(
+                                   ? throw formatted_runtime_error{U8(
                                          "At least two processors are required to be chained together.")}
                                    : calculate_max_buffer_size(processors)},
                   finalization_buffer_{make_unique_array<std::byte>(buffer_pair_.buffer->size())},
@@ -51,7 +51,7 @@ namespace essence::crypto {
                 if (std::ranges::adjacent_find(
                         processors, std::not_equal_to{}, [](const auto& inner) { return inner.transformer(); })
                     != processors.end()) {
-                    throw source_code_aware_runtime_error{
+                    throw formatted_runtime_error{
                         U8("All processors must be either transformers or inverse transformers at the same time.")};
                 }
 

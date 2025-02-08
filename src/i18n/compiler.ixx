@@ -20,26 +20,19 @@
  * THE SOFTWARE.
  */
 
-export module essence.globalization:simple_messages;
+module;
+
+#include <essence/compat.hpp>
+
+export module essence.i18n:compiler;
+import :abstract.compiler;
 import essence.basic;
 import std;
 
-export namespace essence::globalization {
+export namespace essence::i18n {
     /**
-     * @brief An implementation of the std::locale::facet which encapsulates
-     *        retrieval of strings via the user-defined do_get function.
+     * @brief Creates a default compiler.
+     * @return The default compiler.
      */
-    class simple_messages : public std::locale::facet {
-    public:
-        inline static std::locale::id id;
-
-        explicit simple_messages(std::size_t refs = 0) : facet{refs} {}
-
-        [[nodiscard]] abi::string get(std::string_view name) const {
-            return do_get(name);
-        }
-
-    protected:
-        [[nodiscard]] virtual abi::string do_get(std::string_view name) const = 0;
-    };
+    ES_API(CPPESSENCE) abstract::compiler make_default_compiler();
 } // namespace essence::globalization

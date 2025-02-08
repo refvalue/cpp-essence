@@ -70,7 +70,7 @@ namespace essence::imaging {
                 stream.exceptions(std::ios::badbit);
                 stream.open(std::filesystem::path{to_u8string(path)}, std::ios::in | std::ios::binary);
             } catch (const std::exception& ex) {
-                throw source_code_aware_runtime_error{
+                throw formatted_runtime_error{
                     U8("File"), path, U8("Message"), U8("Failed to open the image file."), U8("Internal"), ex.what()};
             }
 

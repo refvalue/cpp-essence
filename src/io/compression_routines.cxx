@@ -55,7 +55,7 @@ namespace essence::io {
             return iter->second;
         }
 
-        throw source_code_aware_runtime_error{U8("Invalid compression mode.")};
+        throw formatted_runtime_error{U8("Invalid compression mode.")};
     }
 
     void add_compression_routines(compression_mode mode, const compression_routines& routines) {

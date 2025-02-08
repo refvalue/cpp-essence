@@ -20,32 +20,26 @@
  * THE SOFTWARE.
  */
 
-module;
-
-#include <essence/char8_t_remediation.hpp>
-
-module essence.globalization:common_constants;
+export module essence.i18n:simple_messages;
 import essence.basic;
 import std;
 
-namespace essence::globalization {
-    struct common_constants {
-        static constexpr std::string_view default_working_folder{U8("lang")};
-        static constexpr std::string_view default_language{U8("en-US")};
-        static constexpr std::string_view language_file_extension{U8(".lang")};
+export namespace essence::i18n {
+    /**
+     * @brief An implementation of the std::locale::facet which encapsulates
+     *        retrieval of strings via the user-defined do_get function.
+     */
+    class simple_messages : public std::locale::facet {
+    public:
+        inline static std::locale::id id;
 
-        static constexpr char language_key_value_delimiter{U8('\x1E')};
-        static constexpr char language_key_value_terminator{U8('\x1F')};
+        explicit simple_messages(std::size_t refs = 0) : facet{refs} {}
 
-        static constexpr std::array language_file_magic_flag{
-            U8('M'), U8('I'), U8('S'), U8('C'), U8(' '), U8('L'), U8('A'), U8('N'), U8('G')};
+        [[nodiscard]] abi::string get(std::string_view name) const {
+            return do_get(name);
+        }
 
-        static constexpr std::array<std::uint8_t, 2> language_file_version{0x1, 0x0};
-
-        static constexpr auto language_file_version_number =
-            (static_cast<std::uint32_t>(language_file_version.front()) << 16) + language_file_version.back();
-
-        // Ensures that the size of the magic flag is always greater than the size of the version.
-        static_assert(language_file_version.size() <= language_file_magic_flag.size());
+    protected:
+        [[nodiscard]] virtual abi::string do_get(std::string_view name) const = 0;
     };
 } // namespace essence::globalization

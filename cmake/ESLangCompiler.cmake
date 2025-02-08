@@ -90,17 +90,17 @@ function(es_add_lang_resources target_name)
     set(ES_USER_NAMESPACE ${ARG_NAMESPACE})
 
     set(base_dir ${output_dir})
-    set(miu_source_file ${base_dir}/user_globalization_${ES_USER_NAME}.ixx)
-    set(private_source_file ${base_dir}/user_globalization_${ES_USER_NAME}.cpp)
+    set(miu_source_file ${base_dir}/user_i18n_${ES_USER_NAME}.ixx)
+    set(private_source_file ${base_dir}/user_i18n_${ES_USER_NAME}.cpp)
 
     configure_file(
-        ${_es_lang_compiler_absolute_current_dir}/config/user_globalization.ixx.in
+        ${_es_lang_compiler_absolute_current_dir}/config/user_i18n.ixx.in
         ${miu_source_file}
         @ONLY
     )
 
     configure_file(
-        ${_es_lang_compiler_absolute_current_dir}/config/user_globalization.cpp.in
+        ${_es_lang_compiler_absolute_current_dir}/config/user_i18n.cpp.in
         ${private_source_file}
         @ONLY
     )

@@ -8,8 +8,8 @@ import essence.io;
 CMRC_DECLARE(@ES_USER_NAMESPACE@);
 
 namespace @ES_USER_NAMESPACE@ {
-    const essence::globalization::abstract::translator& get_bounded_translator() {
-        static const auto translator = essence::globalization::make_translator(
+    const essence::i18n::abstract::translator& get_bounded_translator() {
+        static const auto translator = essence::i18n::make_translator(
             essence::io::make_cmrc_fs_operator(cmrc::@ES_USER_NAMESPACE@::get_filesystem()));
 
         return translator;

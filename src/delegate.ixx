@@ -133,7 +133,7 @@ export namespace essence {
                 auto result = try_invoke(std::forward<Equivalents>(args)...);
 
                 if (!result) {
-                    throw source_code_aware_runtime_error{
+                    throw formatted_runtime_error{
                         U8("A delegate with a return value cannot be invoked, within which no subscriber exists.")};
                 }
 

@@ -156,7 +156,7 @@ namespace essence::crypto {
     public:
         explicit impl(void* blob)
             : blob_{blob ? static_cast<EVP_PKEY*>(blob)
-                         : throw source_code_aware_runtime_error{U8("The blob must be non-null.")}} {}
+                         : throw formatted_runtime_error{U8("The blob must be non-null.")}} {}
 
         [[nodiscard]] EVP_PKEY* blob() const noexcept {
             return blob_.get();

@@ -24,14 +24,14 @@
 
 import essence.basic;
 import essence.cli;
-import essence.globalization;
+import essence.i18n;
 import essence.serialization;
 import std;
 
 namespace essence::tooling {
     namespace {
         void compile_json_file(const std::filesystem::path& input_path, const std::filesystem::path& output_path) {
-            using namespace essence::globalization;
+            using namespace essence::i18n;
 
             spdlog::info(U8("Compiling {} to {}..."), from_u8string(input_path.u8string()),
                 from_u8string(output_path.u8string()));
@@ -46,7 +46,7 @@ namespace essence::tooling {
 
                     return abi::json::parse(stream, nullptr, true);
                 } catch (const std::exception& ex) {
-                    throw source_code_aware_runtime_error{U8("Path"), from_u8string(input_path.u8string()),
+                    throw formatted_runtime_error{U8("Path"), from_u8string(input_path.u8string()),
                         U8("Message"), U8("Failed to open the JSON file."), U8("Internal"), ex.what()};
                 }
             }();

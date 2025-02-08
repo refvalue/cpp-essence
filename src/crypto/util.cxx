@@ -58,7 +58,7 @@ namespace essence::crypto {
             return static_cast<digest_mode>(std::distance(digest_routines.begin(), iter));
         }
 
-        throw source_code_aware_runtime_error{U8("Invalid digest routine.")};
+        throw formatted_runtime_error{U8("Invalid digest routine.")};
     }
 
     bio_unique_ptr make_memory_bio_unique() {
@@ -80,7 +80,7 @@ namespace essence::crypto {
 
     std::span<const std::byte> get_memory_bio_buffer(BIO* bio) {
         if (bio == nullptr) {
-            throw source_code_aware_runtime_error{U8("The BIO must be non-null")};
+            throw formatted_runtime_error{U8("The BIO must be non-null")};
         }
 
         BUF_MEM* memory{};
@@ -111,7 +111,7 @@ namespace essence::crypto {
             return make_file_bio_unique(file);
         }
 
-        throw source_code_aware_runtime_error{
+        throw formatted_runtime_error{
             U8("Path"), path, U8("Mode"), mode, U8("Message"), U8("Failed to create a FILE.")};
     }
 
@@ -139,7 +139,7 @@ namespace essence::crypto {
 
     std::shared_ptr<EVP_PKEY_CTX> make_evp_pkey_ctx_shared(EVP_PKEY* pkey) {
         if (pkey == nullptr) {
-            throw source_code_aware_runtime_error{U8("The pkey must be non-null")};
+            throw formatted_runtime_error{U8("The pkey must be non-null")};
         }
 
         if (std::shared_ptr<EVP_PKEY_CTX> result{
