@@ -1,12 +1,6 @@
 @PACKAGE_INIT@
 
 include(CMakeFindDependencyMacro)
-find_dependency(
-    fmt
-    REQUIRED
-    HINTS @PACKAGE_CMAKE_INSTALL_PREFIX@
-    NO_DEFAULT_PATH
-)
 
 find_dependency(
     spdlog

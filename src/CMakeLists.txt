@@ -107,7 +107,6 @@ target_compile_definitions(
 target_link_libraries(
     ${target_name}
     PUBLIC
-    fmt::fmt
     spdlog::spdlog
     nlohmann_json::nlohmann_json
     PRIVATE
@@ -219,7 +218,7 @@ set_property(
     ${CMAKE_SOURCE_DIR}/cmake/RV1109Toolchain.cmake
     ${CMAKE_SOURCE_DIR}/cmake/RV3588Toolchain.cmake
     |
-    ${CMAKE_SOURCE_DIR}/cmake/config/user_globalization.hpp.in
     ${CMAKE_SOURCE_DIR}/cmake/config/user_globalization.cpp.in
+    ${CMAKE_SOURCE_DIR}/cmake/config/user_globalization.ixx.in
     DESTINATIONS cmake cmake/config
 )

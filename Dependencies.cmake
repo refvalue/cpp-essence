@@ -87,25 +87,10 @@ es_make_install_third_party_library(
     INSTALL_DIR ${CMAKE_INSTALL_PREFIX}
 )
 
-es_make_install_third_party_library(
-    fmt
-    REQUIRED
-    ${runtime_args}
-    PARALLEL_BUILD
-    SYNC_BUILD_TYPE
-    GENERATOR ${CMAKE_GENERATOR}
-    CMAKE_ARGS
-    -DFMT_TEST=OFF
-    -DCMAKE_POSITION_INDEPENDENT_CODE=ON
-    ${extra_cmake_args}
-    SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/third-party/fmt
-    INSTALL_DIR ${CMAKE_INSTALL_PREFIX}
-)
-
 if(ES_HAVE_STD_FORMAT)
     set(spdlog_extra_args -DSPDLOG_USE_STD_FORMAT=ON)
 else()
-    set(spdlog_extra_args -DSPDLOG_FMT_EXTERNAL=ON)
+    message(FATAL_ERROR "std::format must be supported when compiling this library.")
 endif()
 
 es_make_install_third_party_library(

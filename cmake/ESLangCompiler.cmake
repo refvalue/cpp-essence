@@ -30,7 +30,7 @@ function(es_add_lang_resources target_name)
         message(FATAL_ERROR "The variable ES_LANG_COMPILER_EXECUTABLE does not exist. Please invoke es_deploy_lang_compiler first.")
     endif()
 
-    set(options PUBLIC INTERFACE PRIVATE)
+    set(options "")
     set(one_value_args NAME ROOT_DIRECTORY NAMESPACE RESULT_VARIABLE_LANG_TARGET_NAME)
     set(multi_value_args "")
     cmake_parse_arguments(PARSE_ARGV 1 ARG "${options}" "${one_value_args}" "${multi_value_args}")
@@ -39,22 +39,9 @@ function(es_add_lang_resources target_name)
     set(cmrc_target_name ${target_name}-lang-resources)
     set(output_dir ${CMAKE_BINARY_DIR}/_deps/lang/${target_name})
     set(glob_pattern ${ARG_ROOT_DIRECTORY}/*.json)
-    set(header_access_level PRIVATE)
 
     if(ARG_RESULT_VARIABLE_LANG_TARGET_NAME)
         set(${ARG_RESULT_VARIABLE_LANG_TARGET_NAME} ${cmrc_target_name} PARENT_SCOPE)
-    endif()
-
-    if(ARG_PUBLIC)
-        set(header_access_level PUBLIC)
-    endif()
-
-    if(ARG_INTERFACE)
-        set(header_access_level INTERFACE)
-    endif()
-
-    if(ARG_PRIVATE)
-        set(header_access_level PRIVATE)
     endif()
 
     file(
@@ -92,7 +79,7 @@ function(es_add_lang_resources target_name)
 
     get_target_property(target_type ${target_name} TYPE)
 
-    if(target_type STREQUAL "SHARED_LIBRARY")
+    if("${target_type}" STREQUAL "SHARED_LIBRARY")
         set(ES_WITH_EXPORTS 1)
     else()
         set(ES_WITH_EXPORTS 0)
@@ -118,8 +105,6 @@ function(es_add_lang_resources target_name)
         @ONLY
     )
 
-    get_target_property(target_type ${target_name} TYPE)
-
     if("${target_type}" STREQUAL "EXECUTABLE")
         set(cxx_modules_access PRIVATE)
     elseif()
@@ -143,12 +128,6 @@ function(es_add_lang_resources target_name)
             ES_IS_${ARG_NAME}_IMPL=1
         )
     endif()
-
-    target_include_directories(
-        ${target_name}
-        ${header_access_level}
-        ${output_dir}
-    )
 
     target_link_libraries(
         ${target_name}

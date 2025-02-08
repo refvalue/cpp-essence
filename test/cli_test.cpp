@@ -26,8 +26,8 @@
 
 import essence.basic;
 import essence.cli;
-import std;
 import essence.unit_test.lang;
+import std;
 
 using namespace essence;
 
