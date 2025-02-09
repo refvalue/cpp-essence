@@ -39,13 +39,13 @@ namespace spdlog::i18n::detail {
                                            Args&&... args) { spdlog::error(std::forward<Args>(args)...); };
 
     template <auto LogArgsFunc, typename... Args>
-    void glog_args(
+    void log_args(
         const std::locale& locale, format_string_t<essence::i18n::localized_arg_t<Args>...> fmt, Args&&... args) {
         LogArgsFunc(fmt, essence::i18n::make_localized_arg(locale, std::forward<Args>(args))...);
     }
 
     template <auto LogOneFunc, typename T>
-    void glog_one(const std::locale& locale, const T& msg) {
+    void log_one(const std::locale& locale, const T& msg) {
         LogOneFunc(essence::i18n::make_localized_arg(locale, msg));
     }
 } // namespace spdlog::i18n::detail
@@ -53,12 +53,12 @@ namespace spdlog::i18n::detail {
 export namespace spdlog::i18n {
     template <typename T>
     void info(const std::locale& locale, const T& msg) {
-        detail::glog_one<detail::spdlog_info_func>(locale, msg);
+        detail::log_one<detail::spdlog_info_func>(locale, msg);
     }
 
     template <typename... Args>
     void info(const std::locale& locale, format_string_t<essence::i18n::localized_arg_t<Args>...> fmt, Args&&... args) {
-        detail::glog_args<detail::spdlog_info_func>(locale, fmt, std::forward<Args>(args)...);
+        detail::log_args<detail::spdlog_info_func>(locale, fmt, std::forward<Args>(args)...);
     }
 
     template <typename T>
@@ -73,13 +73,13 @@ export namespace spdlog::i18n {
 
     template <typename T>
     void trace(const std::locale& locale, const T& msg) {
-        detail::glog_one<detail::spdlog_trace_func>(locale, msg);
+        detail::log_one<detail::spdlog_trace_func>(locale, msg);
     }
 
     template <typename... Args>
     void trace(
         const std::locale& locale, format_string_t<essence::i18n::localized_arg_t<Args>...> fmt, Args&&... args) {
-        detail::glog_args<detail::spdlog_trace_func>(locale, fmt, std::forward<Args>(args)...);
+        detail::log_args<detail::spdlog_trace_func>(locale, fmt, std::forward<Args>(args)...);
     }
 
     template <typename T>
@@ -94,12 +94,12 @@ export namespace spdlog::i18n {
 
     template <typename T>
     void warn(const std::locale& locale, const T& msg) {
-        detail::glog_one<detail::spdlog_warn_func>(locale, msg);
+        detail::log_one<detail::spdlog_warn_func>(locale, msg);
     }
 
     template <typename... Args>
     void warn(const std::locale& locale, format_string_t<essence::i18n::localized_arg_t<Args>...> fmt, Args&&... args) {
-        detail::glog_args<detail::spdlog_warn_func>(locale, fmt, std::forward<Args>(args)...);
+        detail::log_args<detail::spdlog_warn_func>(locale, fmt, std::forward<Args>(args)...);
     }
 
     template <typename T>
@@ -114,13 +114,13 @@ export namespace spdlog::i18n {
 
     template <typename T>
     void error(const std::locale& locale, const T& msg) {
-        detail::glog_one<detail::spdlog_error_func>(locale, msg);
+        detail::log_one<detail::spdlog_error_func>(locale, msg);
     }
 
     template <typename... Args>
     void error(
         const std::locale& locale, format_string_t<essence::i18n::localized_arg_t<Args>...> fmt, Args&&... args) {
-        detail::glog_args<detail::spdlog_error_func>(locale, fmt, std::forward<Args>(args)...);
+        detail::log_args<detail::spdlog_error_func>(locale, fmt, std::forward<Args>(args)...);
     }
 
     template <typename T>

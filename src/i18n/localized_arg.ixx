@@ -32,11 +32,13 @@ export namespace essence::i18n {
     template <typename T>
     decltype(auto) make_localized_arg(const std::locale& locale, T&& arg) {
         if constexpr (std::convertible_to<T, std::string_view>) {
+            std::string_view str{std::forward<T>(arg)};
+
             if (std::has_facet<simple_messages>(locale)) {
-                return std::use_facet<simple_messages>(locale).get(std::forward<T>(arg));
+                return std::use_facet<simple_messages>(locale).get(str);
             }
 
-            return abi::string{std::string_view{std::forward<T>(arg)}};
+            return abi::string{str};
         } else {
             return std::forward<T>(arg);
         }
