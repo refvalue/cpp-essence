@@ -68,7 +68,7 @@ namespace essence::crypto {
         return get_error_string(get_last_error_code());
     }
 
-    struct crypto_error : formatted_runtime_error {
+    struct crypto_error final : formatted_runtime_error {
         template <typename... Args>
         explicit crypto_error(logging_string_view hint, Args&&... args)
             : crypto_error{hint.location, hint.str, std::forward<Args>(args)...} {}
@@ -80,7 +80,6 @@ namespace essence::crypto {
 
         template <typename... Args>
         explicit crypto_error(const std::source_location& location, Args&&... args)
-            : formatted_runtime_error{
-                  location, std::forward<Args>(args)..., U8("Internal"), get_last_error_string()} {}
+            : formatted_runtime_error{location, std::forward<Args>(args)..., U8("Internal"), get_last_error_string()} {}
     };
 } // namespace essence::crypto

@@ -83,18 +83,4 @@ export namespace essence::crypto {
      */
     ES_API(CPPESSENCE)
     abstract::chunk_processor chain_chunk_processors(std::span<abstract::chunk_processor> processors);
-
-    /**
-     * @brief Chains multiple chunk processor together sequentially and returns a new single chunk processor.
-     * @tparam Args The types of given chunk processors.
-     * @param args The processors to be chained.
-     * @return The new single chunk processors.
-     */
-    template <typename... Args>
-        requires(std::same_as<std::decay_t<Args>, abstract::chunk_processor> && ...)
-    abstract::chunk_processor chain_chunk_processors(Args&&... args) {
-        std::array processors{std::move(args)...};
-
-        return chain_chunk_processors(processors);
-    }
 } // namespace essence::crypto

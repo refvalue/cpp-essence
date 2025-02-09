@@ -48,7 +48,14 @@ export namespace essence::meta::detail {
         };
 
         if (prefix_size == std::string_view::npos) {
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable : 4297)
+#endif
             return param.ensure_correctness ? throw : make_result(str);
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
         }
 
         const auto extra_size = param.extra_size_func(str, prefix_size);

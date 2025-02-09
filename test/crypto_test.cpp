@@ -164,9 +164,9 @@ MAKE_TEST(symmetric_cipher_chunked) {
     const auto file_name = format(U8("{}.txt"), test_info_->name());
     {
         ispanstream input_stream{str};
-        ostream encryption_stream{file_name,
-            chain_chunk_processors(make_symmetric_cipher_chunk_processor(name, cipher_padding_mode::pkcs7, key, iv),
-                make_base64_encoder())};
+        ostream encryption_stream{
+            file_name, (make_symmetric_cipher_chunk_processor(name, cipher_padding_mode::pkcs7, key, iv),
+                           make_base64_encoder(), make_chain)};
 
         std::ranges::copy(std::istreambuf_iterator{input_stream}, std::istreambuf_iterator<char>{},
             std::ostreambuf_iterator{encryption_stream});
@@ -177,8 +177,8 @@ MAKE_TEST(symmetric_cipher_chunked) {
     {
         const auto input_stream = get_native_fs_operator().open_read(file_name);
         ostream decryption_stream{std::make_shared<ospanstream>(buffer),
-            chain_chunk_processors(make_base64_decoder(),
-                make_symmetric_cipher_chunk_processor(name, cipher_padding_mode::pkcs7, key, iv, false))};
+            (make_base64_decoder(),
+                make_symmetric_cipher_chunk_processor(name, cipher_padding_mode::pkcs7, key, iv, false), make_chain)};
 
         std::ranges::copy(std::istreambuf_iterator{*input_stream}, std::istreambuf_iterator<char>{},
             std::ostreambuf_iterator{decryption_stream});

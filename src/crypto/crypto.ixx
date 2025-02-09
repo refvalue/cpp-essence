@@ -37,6 +37,7 @@ export import :params.x25519_keygen_param;
 
 export import :asymmetric_key;
 export import :chunk_processor;
+export import :chunk_processor_chainer;
 export import :common_types;
 export import :digest;
 export import :file_validation;

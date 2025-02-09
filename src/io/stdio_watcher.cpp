@@ -102,7 +102,7 @@ namespace essence::io {
         }
 
 #ifdef _WIN32
-        std::uint32_t current_std_handle_type() const noexcept {
+        [[nodiscard]] std::uint32_t current_std_handle_type() const noexcept {
             return mode_ == stdio_watcher_mode::output ? STD_OUTPUT_HANDLE : STD_ERROR_HANDLE;
         }
 #endif
