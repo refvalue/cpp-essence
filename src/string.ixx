@@ -134,7 +134,6 @@ export namespace essence {
         return trim_right(trim_left(str, group), group);
     }
 
-#if !defined(CPP_ESSENCE_HEADER_ONLY) || !CPP_ESSENCE_HEADER_ONLY
     /**
      * @brief Lowercases a string.
      * @param str The string.
@@ -149,6 +148,4 @@ export namespace essence {
      *
      */
     ES_API(CPPESSENCE) abi::string to_upper(std::string_view str);
-#endif
-
 } // namespace essence

@@ -58,7 +58,7 @@ export namespace essence::abi {
         constexpr uniform_allocator(uniform_allocator&&) noexcept = default;
 
         template <typename U>
-        constexpr uniform_allocator(const uniform_allocator<U>&) noexcept {}
+        constexpr explicit uniform_allocator(const uniform_allocator<U>&) noexcept {}
 
         ~uniform_allocator() = default;
 

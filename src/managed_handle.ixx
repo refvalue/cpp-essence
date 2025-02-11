@@ -88,7 +88,7 @@ export namespace essence {
          * @brief Gets the stored handle.
          * @return The stored handle.
          */
-        native_type get() const noexcept {
+        [[nodiscard]] native_type get() const noexcept {
             return value_.get();
         }
 

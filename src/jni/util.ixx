@@ -66,10 +66,9 @@ export namespace essence::jni {
 
         if (convert_to_boolean(transformer)) {
             jobject_array_proxy proxy{array};
-            auto intermediate =
-                proxy | std::views::common | std::views::transform(std::forward<Transformer>(transformer));
 
-            return result_type{intermediate.begin(), intermediate.end()};
+            return proxy | std::views::common | std::views::transform(std::forward<Transformer>(transformer))
+                 | std::ranges::to<result_type>();
         }
 
         return result_type{};

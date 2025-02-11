@@ -24,14 +24,10 @@ module essence.basic;
 
 namespace essence {
     abi::string to_lower(std::string_view str) {
-        auto lower = str | std::views::transform(&to_lower<char>);
-
-        return {lower.begin(), lower.end()};
+        return str | std::views::transform(&to_lower<char>) | std::ranges::to<abi::string>();
     }
 
     abi::string to_upper(std::string_view str) {
-        auto upper = str | std::views::transform(&to_upper<char>);
-
-        return {upper.begin(), upper.end()};
+        return str | std::views::transform(&to_upper<char>) | std::ranges::to<abi::string>();
     }
 } // namespace essence
