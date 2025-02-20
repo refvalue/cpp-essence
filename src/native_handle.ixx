@@ -28,10 +28,7 @@ export namespace essence {
     concept handle_stroage_type = std::integral<T> && sizeof(T) >= sizeof(std::uintptr_t);
 
     template <auto Callable, typename T>
-    concept handle_validator_type = requires {
-        requires std::integral<T>;
-        { Callable } -> std::predicate<T>;
-    };
+    concept handle_validator_type = std::integral<T> && std::predicate<decltype(Callable), T>;
 
     template <std::integral T>
     T make_pointer_number(const void* pointer) noexcept {
