@@ -19,6 +19,6 @@
 [submodule "third-party/doxygen-awesome-css"]
 	path = third-party/doxygen-awesome-css
 	url = https://github.com/jothepro/doxygen-awesome-css
-[submodule "third-party/json"]
-	path = third-party/json
-	url = https://github.com/nlohmann/json.git
+[submodule "third-party/nlohmann-json"]
+	path = third-party/nlohmann-json
+	url = https://github.com/refvalue/nlohmann-json.git
