@@ -47,6 +47,7 @@ export namespace nlohmann::json_abi_v3_11_3::detail {
     using detail::iter_impl;
     using detail::json_sax_dom_callback_parser;
     using detail::json_sax_dom_parser;
+    using detail::little_endianness;
     using detail::parse_error;
     using detail::parser;
     using detail::priority_tag;

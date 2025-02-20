@@ -134,7 +134,7 @@ export namespace essence::net {
 
             try {
                 return std::apply(handler, std::move(tuple));
-            } catch (const std::exception& ex) {
+            } catch (const std::exception&) {
                 aggregate_error::throw_nested(
                     formatted_runtime_error{U8("Error"), U8("Failed to commit the message."), U8("Entity"),
                         meta::get_literal_string_t<decayed_type,

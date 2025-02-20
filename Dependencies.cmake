@@ -83,7 +83,7 @@ es_make_install_third_party_library(
     CMAKE_ARGS
     -DJSON_BuildTests=OFF
     ${extra_cmake_args}
-    SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/third-party/json
+    SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/third-party/nlohmann-json
     INSTALL_DIR ${CMAKE_INSTALL_PREFIX}
 )
 

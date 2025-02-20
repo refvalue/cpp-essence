@@ -40,7 +40,7 @@ export namespace essence::serialization::detail {
 
     template <typename T>
     concept primitive_json_serializable =
-        (json_compatible_type<T> || std::ranges::forward_range<T>) && !std::is_enum_v<T>;
+        (json_compatible_type<T> || std::ranges::forward_range<T>) && !std::is_enum_v<T> && !std_optional<T>;
 
     template <typename T>
     concept non_iterable_object_json_serializable =

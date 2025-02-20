@@ -47,7 +47,7 @@ namespace essence::i18n {
                 std::ofstream stream;
 
                 try {
-                    stream.exceptions(std::ios::badbit | std::ios::failbit);
+                    stream.exceptions(std::ios_base::badbit | std::ios_base::failbit);
                     stream.open(std::filesystem::path{to_u8string(path)}, std::ios::out | std::ios::binary);
                 } catch (const std::exception& ex) {
                     throw formatted_runtime_error{U8("Language File"), path, U8("Message"),
@@ -102,4 +102,4 @@ namespace essence::i18n {
     abstract::compiler make_default_compiler() {
         return abstract::compiler{default_compiler{}};
     }
-} // namespace essence::globalization
+} // namespace essence::i18n
