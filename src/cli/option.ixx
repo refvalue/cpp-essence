@@ -288,11 +288,11 @@ export namespace essence::cli {
 
         void validate_range(const element_type& value, bool& success) const {
             if (success = valid_values_.empty() ? true : valid_values_.contains(value); !success) {
-                auto joint = join_with(valid_value_strs_, delimiter);
+                const auto values = join_with(valid_value_strs_, delimiter) | std::ranges::to<abi::string>();
 
                 raise_error(U8("The value was out of range."));
                 raise_error(U8("One of the following values is allowed:"));
-                raise_error(abi::string{joint.begin(), joint.end()});
+                raise_error(values);
             }
         }
 
