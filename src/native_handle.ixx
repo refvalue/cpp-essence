@@ -66,22 +66,22 @@ export namespace essence {
          */
         template <typename U>
             requires std::is_pointer_v<U>
-        basic_native_handle(U value) noexcept
-            : value_{make_pointer_number<T>(value)} {} // NOLINT(*-explicit-constructor)
+        basic_native_handle(U value) noexcept // NOLINT(*-explicit-constructor)
+            : value_{make_pointer_number<T>(value)} {}
 
         /**
          * @brief Constructs the object from a mapped number.
          * @param value The mapped number.
          */
-        constexpr basic_native_handle(Mapped value) noexcept
-            : value_{static_cast<T>(value)} {} // NOLINT(*-explicit-constructor)
+        constexpr basic_native_handle(Mapped value) noexcept // NOLINT(*-explicit-constructor)
+            : value_{static_cast<T>(value)} {}
 
         constexpr bool operator==(const basic_native_handle&) const noexcept  = default;
         constexpr auto operator<=>(const basic_native_handle&) const noexcept = default;
 
         /**
          * @brief Checks whether the stored value is a valid handle.
-         * @remark Assmues zero or negative one is invalid by default.
+         * @remark Assumes zero or negative one is invalid by default.
          */
         explicit constexpr operator bool() const noexcept {
             return Validator(static_cast<Mapped>(value_));
