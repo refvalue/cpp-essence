@@ -50,42 +50,42 @@ export namespace essence::internal {
 
 export namespace essence {
     /**
-     * @brief Converts a native string to a UTF-8 string.
+     * Converts a native string to a UTF-8 string.
      * @param str The native string.
      * @return The UTF-8 string.
      */
     ES_API(CPPESSENCE) abi::string to_utf8_string(nstring_view str);
 
     /**
-     * @brief Converts a UTF-16 string to a UTF-8 string.
+     * Converts a UTF-16 string to a UTF-8 string.
      * @param str The UTF-16 string.
      * @return The UTF-8 string.
      */
     ES_API(CPPESSENCE) abi::string to_utf8_string(std::u16string_view str);
 
     /**
-     * @brief Converts a UTF-16 string literal (aka. a range of std::uint16_t-s) to a UTF-8 string.
+     * Converts a UTF-16 string literal (aka. a range of std::uint16_t-s) to a UTF-8 string.
      * @param literal The UTF-16 string literal in a range of std::uint16_t-s.
      * @return The UTF-8 string.
      */
     ES_API(CPPESSENCE) abi::string to_utf8_string(std::span<const std::uint16_t> literal);
 
     /**
-     * @brief Converts a UTF-8 string to a native string.
+     * Converts a UTF-8 string to a native string.
      * @param utf8_str The UTF-8 string.
      * @return The native string.
      */
     ES_API(CPPESSENCE) abi::nstring to_native_string(std::string_view utf8_str);
 
     /**
-     * @brief Converts a UTF-8 string to a UTF-16 string.
+     * Converts a UTF-8 string to a UTF-16 string.
      * @param utf8_str The UTF-8 string.
      * @return The UTF-16 string.
      */
     ES_API(CPPESSENCE) abi::u16string to_utf16_string(std::string_view utf8_str);
 
     /**
-     * @brief Converts a UTF-8 string to a UTF-16 string literal (aka. a range of std::uint16_t-s).
+     * Converts a UTF-8 string to a UTF-16 string literal (aka. a range of std::uint16_t-s).
      * @param utf8_str The UTF-8 string.
      * @return The UTF-16 string literal in a range of std::uint16_t-s.
      */

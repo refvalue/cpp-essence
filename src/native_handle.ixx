@@ -36,7 +36,7 @@ export namespace essence {
     }
 
     /**
-     * @brief Checks whether the stored value is a valid handle (assuming zero or negative one is invalid).
+     * Checks whether the stored value is a valid handle (assuming zero or negative one is invalid).
      * @tparam T The integral type.
      * @param value The integer to store the handle value.
      * @return true if the value is valid; otherwise false.
@@ -47,7 +47,7 @@ export namespace essence {
     }
 
     /**
-     * @brief Stores a platform-dependent handle.
+     * Stores a platform-dependent handle.
      * @tparam T The underlying storage type.
      * @tparam Mapped The integral type to map the T value to (default T).
      * @tparam Validator A callable object to validate the handle.
@@ -60,7 +60,7 @@ export namespace essence {
         constexpr basic_native_handle(std::nullptr_t = nullptr) noexcept : value_{} {} // NOLINT(*-explicit-constructor)
 
         /**
-         * @brief Constructs the object from a pointer.
+         * Constructs the object from a pointer.
          * @tparam U The pointer type.
          * @param value The pointer value.
          */
@@ -70,7 +70,7 @@ export namespace essence {
             : value_{make_pointer_number<T>(value)} {}
 
         /**
-         * @brief Constructs the object from a mapped number.
+         * Constructs the object from a mapped number.
          * @param value The mapped number.
          */
         constexpr basic_native_handle(Mapped value) noexcept // NOLINT(*-explicit-constructor)
@@ -80,7 +80,7 @@ export namespace essence {
         constexpr auto operator<=>(const basic_native_handle&) const noexcept = default;
 
         /**
-         * @brief Checks whether the stored value is a valid handle.
+         * Checks whether the stored value is a valid handle.
          * @remark Assumes zero or negative one is invalid by default.
          */
         explicit constexpr operator bool() const noexcept {
@@ -88,7 +88,7 @@ export namespace essence {
         }
 
         /**
-         * @brief Converts to a pointer.
+         * Converts to a pointer.
          * @tparam U The pointer type.
          */
         template <typename U>
@@ -98,7 +98,7 @@ export namespace essence {
         }
 
         /**
-         * @brief Converts to a mapped number.
+         * Converts to a mapped number.
          */
         constexpr operator Mapped() const noexcept { // NOLINT(*-explicit-constructor)
             return static_cast<Mapped>(value_);

@@ -31,12 +31,12 @@ import std;
 
 export namespace essence::io {
     /**
-     * @brief A general compresser.
+     * A general compresser.
      */
     class compresser {
     public:
         /**
-         * @brief Creates an instance.
+         * Creates an instance.
          * @param mode The compression mode.
          */
         ES_API(CPPESSENCE) explicit compresser(compression_mode mode);
@@ -46,7 +46,7 @@ export namespace essence::io {
         ES_API(CPPESSENCE) compresser& operator=(compresser&&) noexcept;
 
         /**
-         * @brief Compresses a byte buffer.
+         * Compresses a byte buffer.
          * @param buffer The buffer.
          * @param level The compression level.
          * @return The compressed data.
@@ -55,7 +55,7 @@ export namespace essence::io {
             std::span<const std::byte> buffer, std::int32_t level) const;
 
         /**
-         * @brief Compresses a byte buffer as a string.
+         * Compresses a byte buffer as a string.
          * @param buffer The buffer.
          * @param level The compression level.
          * @return The compressed data as a string.
@@ -64,7 +64,7 @@ export namespace essence::io {
             as_string(std::span<const std::byte> buffer, std::int32_t level) const;
 
         /**
-         * @brief Decompress a byte buffer.
+         * Decompress a byte buffer.
          * @param buffer The buffer.
          * @return The decompressed data.
          */
@@ -72,14 +72,14 @@ export namespace essence::io {
             std::span<const std::byte> buffer) const;
 
         /**
-         * @brief Decompresses a byte buffer as a string.
+         * Decompresses a byte buffer as a string.
          * @param buffer The buffer.
          * @return The decompressed data.
          */
         [[nodiscard]] ES_API(CPPESSENCE) abi::string inverse_as_string(std::span<const std::byte> buffer) const;
 
         /**
-         * @brief Compresses a byte buffer.
+         * Compresses a byte buffer.
          * @tparam Range The type of the range.
          * @param level The compression level.
          * @return The compressed data.
@@ -90,7 +90,7 @@ export namespace essence::io {
         }
 
         /**
-         * @brief Compresses a byte buffer as a string.
+         * Compresses a byte buffer as a string.
          * @tparam Range The type of the range.
          * @param level The compression level.
          * @return The compressed data as a string.
@@ -101,7 +101,7 @@ export namespace essence::io {
         }
 
         /**
-         * @brief Decompress a byte buffer.
+         * Decompress a byte buffer.
          * @tparam Range The type of the range.
          * @return The decompressed data.
          */
@@ -111,7 +111,7 @@ export namespace essence::io {
         }
 
         /**
-         * @brief Decompresses a byte buffer as a string.
+         * Decompresses a byte buffer as a string.
          * @tparam Range The type of the range.
          * @return The decompressed data.
          */

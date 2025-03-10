@@ -25,7 +25,7 @@ import std;
 
 export namespace essence {
     /**
-     * @brief A fixed memory buffer, in which data are arranged within nonuniform grid cells.
+     * A fixed memory buffer, in which data are arranged within nonuniform grid cells.
      * @tparam T The type of one single cell.
      * @tparam Rows The number of rows.
      * @tparam ComponentCells The numbers of the cells of all components across one single row.
@@ -50,7 +50,7 @@ export namespace essence {
         nonuniform_grid_buffer() : buffer_{} {}
 
         /**
-         * @brief Gets the component as a mutable cell span.
+         * Gets the component as a mutable cell span.
          * @tparam Row The index of the row.
          * @tparam I The index of the component.
          * @return The mutable cell span.
@@ -64,7 +64,7 @@ export namespace essence {
         }
 
         /**
-         * @brief Gets the component as a const cell span.
+         * Gets the component as a const cell span.
          * @tparam Row The index of the row.
          * @tparam I The index of the component.
          * @return The const cell span.
@@ -78,7 +78,7 @@ export namespace essence {
         }
 
         /**
-         * @brief Sets the data of a component.
+         * Sets the data of a component.
          * @tparam Row The index of the row.
          * @tparam I The index of the component.
          * @param data The byte data to assign.
@@ -92,7 +92,7 @@ export namespace essence {
         }
 
         /**
-         * @brief Sets the data of a component.
+         * Sets the data of a component.
          * @tparam Row The index of the row.
          * @tparam I The index of the component.
          * @param data The data in T units to assign.
@@ -104,7 +104,7 @@ export namespace essence {
         }
 
         /**
-         * @brief Gets the underlying buffer as a mutable byte span.
+         * Gets the underlying buffer as a mutable byte span.
          * @return The mutable byte span.
          */
         std::span<std::byte, byte_stride * Rows> underlying_buffer() noexcept {
@@ -112,7 +112,7 @@ export namespace essence {
         }
 
         /**
-         * @brief Gets the underlying buffer as a const byte span.
+         * Gets the underlying buffer as a const byte span.
          * @return The const byte span.
          */
         std::span<const std::byte, byte_stride * Rows> underlying_buffer() const noexcept {

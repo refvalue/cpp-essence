@@ -30,17 +30,17 @@ import std;
 
 export namespace essence::meta {
     /**
-     * @brief A string representing the boolean true.
+     * A string representing the boolean true.
      */
     ES_API(CPPESSENCE) constexpr auto true_string = get_literal_string_v<bool, true>();
 
     /**
-     * @brief A string representing the boolean false.
+     * A string representing the boolean false.
      */
     ES_API(CPPESSENCE) constexpr auto false_string = get_literal_string_v<bool, false>();
 
     /**
-     * @brief Gets the name of a boolean as a std::string_view at compile-time.
+     * Gets the name of a boolean as a std::string_view at compile-time.
      * @param value The boolean.
      * @return The name of the boolean.
      */
@@ -53,7 +53,7 @@ export namespace essence::meta {
     }
 
     /**
-     * @brief Parses a boolean from a string at compile-time.
+     * Parses a boolean from a string at compile-time.
      * @tparam T The type of the enumeration.
      * @param name The name of the boolean.
      * @return The boolean, or std::nullopt if failed.

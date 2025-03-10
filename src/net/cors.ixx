@@ -32,7 +32,7 @@ export namespace web::http {
 
 export namespace essence::net {
     /**
-     * @brief Makes an HTTP response support CORS from any origin.
+     * Makes an HTTP response support CORS from any origin.
      * @param response The response.
      */
     ES_API(CPPESSENCE) void make_cors_any(web::http::http_response& response);

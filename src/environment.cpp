@@ -22,6 +22,8 @@
 
 module;
 
+#include <essence/char8_t_remediation.hpp>
+
 #ifdef _WIN32
 #ifndef WIN32_LEAN_AND_MEAN
 #define WIN32_LEAN_AND_MEAN
@@ -37,9 +39,10 @@ module;
 
 #include <Windows.h>
 #include <shellapi.h>
+#else
+#include <dlfcn.h>
+#include <unistd.h>
 #endif
-
-#include <essence/char8_t_remediation.hpp>
 
 module essence.basic;
 
@@ -93,8 +96,19 @@ namespace essence {
                 CloseHandle(pi.hProcess);
             }
         }
-#elif defined(EMSCRIPTEN)
-        abi::vector<abi::string> command_line_args;
+
+        abi::string get_module_path(std::uint32_t flags, const void* name_or_address) {
+            if (HMODULE module; GetModuleHandleExW(flags, static_cast<const wchar_t*>(name_or_address), &module)) {
+                std::wstring path(MAX_PATH, L'\0');
+
+                path.resize(GetModuleFileNameW(module, path.data(), static_cast<DWORD>(path.size())));
+                path.shrink_to_fit();
+
+                return to_utf8_string(path);
+            }
+
+            return {};
+        }
 #else
         char** raw_argv;
         std::size_t raw_argc;
@@ -121,8 +135,53 @@ namespace essence {
                 }
             }
         } force_init;
+
+        std::filesystem::path get_module_full_path(std::string_view filename) {
+            std::ifstream stream{format(U8("/proc/{}/maps"), getpid()), std::ios_base::in};
+            std::string line;
+
+            while (std::getline(stream, line)) {
+                const auto components = line | std::views::split(U8(' '))
+                                      | std::views::transform([](const auto& inner) {
+                                            return std::filesystem::path{inner.begin(), inner.end()};
+                                        })
+                                      | std::views::filter([](const auto& inner) { return inner.is_absolute(); })
+                                      | std::ranges::to<std::vector>();
+
+                if (!components.empty() && components.back().filename() == filename) {
+                    return components.back();
+                }
+            }
+
+            return {};
+        }
 #endif
     } // namespace
+
+    abi::string get_executable_path() {
+#ifdef _WIN32
+        return get_module_path(GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT, nullptr);
+#else
+        return {};
+#endif
+    }
+
+    abi::string get_module_path(const void* address) {
+#ifdef _WIN32
+        return get_module_path(
+            GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS | GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT, address);
+#else
+        if (Dl_info info{}; dladdr(address, &info)) {
+            if (std::filesystem::path path{info.dli_fname}; path.is_relative()) {
+                return abi::to_abi_string(get_module_full_path(path.string()).general_string());
+            }
+
+            return info.dli_fname;
+        }
+#endif
+
+        return {};
+    }
 
     abi::vector<abi::string> get_command_line_args() {
         return command_line_args;

@@ -32,7 +32,7 @@ import std;
 
 export namespace essence::jni {
     /**
-     * @brief A Java VM runtime context.
+     * A Java VM runtime context.
      */
     struct jvm_context {
         JavaVM* vm;
@@ -40,7 +40,7 @@ export namespace essence::jni {
     };
 
     /**
-     * @brief Manages a Java VM.
+     * Manages a Java VM.
      */
     class jvm {
     public:

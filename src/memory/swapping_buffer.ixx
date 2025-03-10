@@ -26,19 +26,19 @@ import std;
 
 export namespace essence::memory {
     /**
-     * @brief A general state machine for foreground and background buffer swapping.
+     * A general state machine for foreground and background buffer swapping.
      * @tparam T The type of element of the buffer.
      */
     template <typename T>
     class swapping_buffer {
     public:
         /**
-         * @brief Creates an instance.
+         * Creates an instance.
          */
         swapping_buffer() noexcept : swapping_{} {}
 
         /**
-         * @brief Creates an instance.
+         * Creates an instance.
          * @param swapped_out The output buffer when the state is swapped.
          * @param unswapped_out The output buffer when the state is unswapped.
          */
@@ -54,7 +54,7 @@ export namespace essence::memory {
         }
 
         /**
-         * @brief Sets the outputs.
+         * Sets the outputs.
          * @param swapped_out The output buffer when the state is swapped.
          * @param unswapped_out The output buffer when the state is unswapped.
          * @param input The input buffer.
@@ -66,7 +66,7 @@ export namespace essence::memory {
         }
 
         /**
-         * @brief Set temporary outputs which is scoped in the current context.
+         * Set temporary outputs which is scoped in the current context.
          *        The output buffers will be restored when the return RAII token is out of scope.
          * @param swapped_out The output buffer when the state is swapped.
          * @param unswapped_out The output buffer when the state is unswapped.
@@ -86,7 +86,7 @@ export namespace essence::memory {
         };
 
         /**
-         * @brief Swaps the buffers.
+         * Swaps the buffers.
          */
         void swap() noexcept {
             current_in_ = current_out_;
@@ -99,7 +99,7 @@ export namespace essence::memory {
         }
 
         /**
-         * @brief Gets the current input buffer.
+         * Gets the current input buffer.
          * @return The input buffer.
          */
         [[nodiscard]] std::span<const T> in() const noexcept {
@@ -107,7 +107,7 @@ export namespace essence::memory {
         }
 
         /**
-         * @brief Gets the lvalue reference to the current output buffer, which is replaceable with a subspan.
+         * Gets the lvalue reference to the current output buffer, which is replaceable with a subspan.
          * @return The lvalue reference to the output buffer.
          */
         [[nodiscard]] std::span<T>& out() noexcept {
@@ -115,7 +115,7 @@ export namespace essence::memory {
         }
 
         /**
-         * @brief Gets the original output buffer.
+         * Gets the original output buffer.
          * @return The output buffer.
          */
         [[nodiscard]] std::span<T> original_out() const noexcept {

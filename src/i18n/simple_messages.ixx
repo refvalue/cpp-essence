@@ -26,7 +26,7 @@ import std;
 
 export namespace essence::i18n {
     /**
-     * @brief An implementation of the std::locale::facet which encapsulates
+     * An implementation of the std::locale::facet which encapsulates
      *        retrieval of strings via the user-defined do_get function.
      */
     class simple_messages : public std::locale::facet {

@@ -26,7 +26,7 @@ import std;
 
 export namespace essence::meta {
     /**
-     * @brief Splits a literal string with a set of delimiters.
+     * Splits a literal string with a set of delimiters.
      * @tparam S The literal string.
      * @tparam Delimiter The delimiters.
      */
@@ -54,7 +54,7 @@ export namespace essence::meta {
     };
 
     /**
-     * @brief Splits a literal string with a set of delimiters.
+     * Splits a literal string with a set of delimiters.
      * @tparam S The literal string.
      * @tparam Delimiter The delimiters.
      */
@@ -62,7 +62,7 @@ export namespace essence::meta {
     constexpr auto&& split_of_v = split_of<S, Delimiter>::value;
 
     /**
-     * @brief Splits a literal string with a delimiter.
+     * Splits a literal string with a delimiter.
      * @tparam S The literal string.
      * @tparam Delimiter The delimiter.
      */
@@ -99,7 +99,7 @@ export namespace essence::meta {
     };
 
     /**
-     * @brief Splits a literal string with a delimiter.
+     * Splits a literal string with a delimiter.
      * @tparam S The literal string.
      * @tparam Delimiter The delimiter.
      */
@@ -107,7 +107,7 @@ export namespace essence::meta {
     constexpr auto&& split_v = split<S, Delimiter>::value;
 
     /**
-     * @brief Removes a character from a literal string.
+     * Removes a character from a literal string.
      * @tparam S The literal string.
      * @tparam C The character.
      */
@@ -138,7 +138,7 @@ export namespace essence::meta {
     };
 
     /**
-     * @brief Removes a character from a literal string.
+     * Removes a character from a literal string.
      * @tparam S The literal string.
      * @tparam C The character.
      */
@@ -146,7 +146,7 @@ export namespace essence::meta {
     constexpr auto&& remove_char_v = remove_char<S, C>::value;
 
     /**
-     * @brief Removes a substring from a literal string.
+     * Removes a substring from a literal string.
      * @tparam S The literal string.
      * @tparam Removal The substring.
      */
@@ -162,7 +162,7 @@ export namespace essence::meta {
     };
 
     /**
-     * @brief Removes a substring from a literal string.
+     * Removes a substring from a literal string.
      * @tparam S The literal string.
      * @tparam Removal The substring.
      */

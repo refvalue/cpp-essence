@@ -31,7 +31,7 @@ import std;
 
 export namespace essence::cli::abstract {
     /**
-     * @brief A CLI option, i.e. --xxx=yyy.
+     * A CLI option, i.e. --xxx=yyy.
      * @tparam T The data type of the option.
      */
     class option {

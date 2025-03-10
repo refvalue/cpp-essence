@@ -33,7 +33,7 @@ import std;
 
 export namespace essence::net {
     /**
-     * @brief A http client operating on Server-Sent Events.
+     * A http client operating on Server-Sent Events.
      * @remark https://html.spec.whatwg.org/multipage/server-sent-events.html#server-sent-events
      */
     class sse_client {
@@ -45,24 +45,24 @@ export namespace essence::net {
         ES_API(CPPESSENCE) sse_client& operator=(sse_client&&) noexcept;
 
         /**
-         * @brief Connects to the SSE service and starts consuming messages.
+         * Connects to the SSE service and starts consuming messages.
          * @param relative_uri The relative uri.
          */
         ES_API(CPPESSENCE) void connect(const uri& relative_uri) const;
 
         /**
-         * @brief Closes the connection.
+         * Closes the connection.
          */
         ES_API(CPPESSENCE) void close() const;
 
         /**
-         * @brief Registers a message callback.
+         * Registers a message callback.
          * @param handler The message callback.
          */
         ES_API(CPPESSENCE) void on_message(const sse_message_handler& handler) const;
 
         /**
-         * @brief Registers an error callback.
+         * Registers an error callback.
          * @param handler The error callback.
          */
         ES_API(CPPESSENCE) void on_error(const error_handler& handler) const;

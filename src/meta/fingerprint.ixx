@@ -27,12 +27,12 @@ import std;
 
 export namespace essence::meta {
     /**
-     * @brief A unique identifier of a type, i.e. a fingerprint.
+     * A unique identifier of a type, i.e. a fingerprint.
      */
     class fingerprint {
     public:
         /**
-         * @brief Create a fingerprint for a type.
+         * Create a fingerprint for a type.
          * @tparam T The type.
          */
         template <typename T>
@@ -42,7 +42,7 @@ export namespace essence::meta {
         constexpr auto operator<=>(const fingerprint&) const noexcept = default;
 
         /**
-         * @brief Gets the name of the type.
+         * Gets the name of the type.
          * @return The name of the type.
          */
         [[nodiscard]] constexpr const char* name() const noexcept {
@@ -50,7 +50,7 @@ export namespace essence::meta {
         }
 
         /**
-         * @brief Gets the friendly name of the type.
+         * Gets the friendly name of the type.
          * @return The friendly name of the type if exists; otherwise the ordinary name.
          */
         [[nodiscard]] constexpr const char* friendly_name() const noexcept {

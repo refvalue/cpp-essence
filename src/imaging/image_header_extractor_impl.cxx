@@ -25,7 +25,7 @@ import std;
 
 namespace essence::imaging {
     /**
-     * @brief A helper class template to implement a concrete image header extractor.
+     * A helper class template to implement a concrete image header extractor.
      * @tparam Signature A byte array of the signature to locate the beginning of the content.
      * @tparam NeededSize The needed size of the content to be fetched.
      * @tparam BytesToBeSkipped The count of bytes to be skipped before searching for the signature.

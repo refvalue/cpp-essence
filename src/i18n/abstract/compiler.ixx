@@ -27,7 +27,7 @@ import std;
 
 export namespace essence::i18n::abstract {
     /**
-     * @brief A compiler to translate globalized texts into particular binary sequences.
+     * A compiler to translate globalized texts into particular binary sequences.
      */
     class compiler {
     public:
@@ -36,7 +36,7 @@ export namespace essence::i18n::abstract {
         explicit compiler(T&& value) : wrapper_{std::make_shared<wrapper<T>>(std::forward<T>(value))} {}
 
         /**
-         * @brief Gets the version of the compiler.
+         * Gets the version of the compiler.
          * @return The version.
          */
         [[nodiscard]] std::uint32_t version() const {
@@ -44,7 +44,7 @@ export namespace essence::i18n::abstract {
         }
 
         /**
-         * @brief Compiles a JSON value into a language file.
+         * Compiles a JSON value into a language file.
          * @param json The JSON value.
          * @param path The path of the file.
          */
@@ -53,7 +53,7 @@ export namespace essence::i18n::abstract {
         }
 
         /**
-         * @brief Compiles a JSON value into a byte array.
+         * Compiles a JSON value into a byte array.
          * @param json The JSON value.
          * @return The byte array.
          */
@@ -62,7 +62,7 @@ export namespace essence::i18n::abstract {
         }
 
         /**
-         * @brief Compiles a JSON value into a base64 string.
+         * Compiles a JSON value into a base64 string.
          * @param json The JSON value.
          * @return The base64 string.
          */

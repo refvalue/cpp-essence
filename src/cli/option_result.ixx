@@ -28,16 +28,16 @@ import std;
 
 export namespace essence::cli {
     /**
-     * @brief The raw parsed result of a CLI option.
+     * The raw parsed result of a CLI option.
      */
     struct option_result {
         /**
-         * @brief The corresponding CLI option.
+         * The corresponding CLI option.
          */
         abstract::option option;
 
         /**
-         * @brief The raw parsed value.
+         * The raw parsed value.
          */
         std::optional<abi::string> raw_value;
     };

@@ -31,7 +31,7 @@ import std;
 
 export namespace essence {
     /**
-     * @brief A safe buffer that can be atomically replaced and read.
+     * A safe buffer that can be atomically replaced and read.
      * @tparam T The element type of the buffer.
      */
     template <std::default_initializable T>
@@ -40,7 +40,7 @@ export namespace essence {
         using allocator_traits_type = std::allocator_traits<std::pmr::polymorphic_allocator<T>>;
 
         /**
-         * @brief Constructs the object with a PMR resource.
+         * Constructs the object with a PMR resource.
          * @param resource The PMR resource.
          */
         explicit atomic_readable_buffer(std::pmr::memory_resource* resource = std::pmr::new_delete_resource())
@@ -49,14 +49,14 @@ export namespace essence {
         }
 
         /**
-         * @brief Resets the buffer.
+         * Resets the buffer.
          */
         void reset() {
             update(std::array<T, 0>{});
         }
 
         /**
-         * @brief Updated the entire buffer.
+         * Updated the entire buffer.
          * @tparam Range The type of the input range.
          * @param range The input range.
          */
@@ -83,7 +83,7 @@ export namespace essence {
         }
 
         /**
-         * @brief Retrieves the current buffer.
+         * Retrieves the current buffer.
          * @return The current buffer.
          */
         std::pair<std::shared_ptr<T>, std::size_t> get() const {

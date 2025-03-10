@@ -27,7 +27,7 @@ import std;
 
 export namespace essence::meta {
     /**
-     * @brief A literal type of collection of chars.
+     * A literal type of collection of chars.
      * @tparam N The number of chars.
      */
     template <std::size_t N>

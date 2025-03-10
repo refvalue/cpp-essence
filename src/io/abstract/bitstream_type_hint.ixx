@@ -26,7 +26,7 @@ import std;
 
 export namespace essence::io::abstract {
     /**
-     * @brief Hints the type of bitstream.
+     * Hints the type of bitstream.
      */
     class bitstream_type_hint {
     public:
@@ -35,7 +35,7 @@ export namespace essence::io::abstract {
         explicit bitstream_type_hint(T&& value) : wrapper_{std::make_shared<wrapper<T>>(std::forward<T>(value))} {}
 
         /**
-         * @brief Gets the name of the type.
+         * Gets the name of the type.
          * @return The name of the type.
          */
         [[nodiscard]] abi::string name() const {
@@ -43,7 +43,7 @@ export namespace essence::io::abstract {
         }
 
         /**
-         * @brief Gets the file extensions of the type.
+         * Gets the file extensions of the type.
          * @return The file extensions.
          */
         [[nodiscard]] std::span<const abi::string> file_extensions() const {
@@ -51,7 +51,7 @@ export namespace essence::io::abstract {
         }
 
         /**
-         * @brief Gets the size of the leading signature.
+         * Gets the size of the leading signature.
          * @return The size of the leading signature.
          */
         [[nodiscard]] std::size_t leading_signature_size() const {
@@ -59,7 +59,7 @@ export namespace essence::io::abstract {
         }
 
         /**
-         * @brief Gets the leading byte signature of the type.
+         * Gets the leading byte signature of the type.
          * @return The byte signature.
          */
         [[nodiscard]] std::span<const std::byte> leading_signature() const {
@@ -67,7 +67,7 @@ export namespace essence::io::abstract {
         }
 
         /**
-         * @brief Gets the leading byte signature of the type as a string.
+         * Gets the leading byte signature of the type as a string.
          * @return The leading byte signature as a string.
          */
         [[nodiscard]] std::string_view leading_signature_str() const {
@@ -75,7 +75,7 @@ export namespace essence::io::abstract {
         }
 
         /**
-         * @brief Gets the size of the trailing signature.
+         * Gets the size of the trailing signature.
          * @return The size of the trailing signature.
          */
         [[nodiscard]] std::size_t trailing_signature_size() const {
@@ -83,7 +83,7 @@ export namespace essence::io::abstract {
         }
 
         /**
-         * @brief Gets the trailing byte signature of the type.
+         * Gets the trailing byte signature of the type.
          * @return The trailing byte signature.
          */
         [[nodiscard]] std::span<const std::byte> trailing_signature() const {
@@ -91,7 +91,7 @@ export namespace essence::io::abstract {
         }
 
         /**
-         * @brief Gets the trailing byte signature of the type as a string.
+         * Gets the trailing byte signature of the type as a string.
          * @return The trailing byte signature as a string.
          */
         [[nodiscard]] std::string_view trailing_signature_str() const {

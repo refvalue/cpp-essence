@@ -26,7 +26,7 @@ import std;
 
 export namespace essence::net {
     /**
-     * @brief A message describing a server-sent event.
+     * A message describing a server-sent event.
      */
     struct sse_message {
         abi::vector<abi::string> data;

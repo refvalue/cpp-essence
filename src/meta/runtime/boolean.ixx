@@ -26,7 +26,7 @@ import std;
 
 export namespace essence::meta::runtime {
     /**
-     * @brief Gets the name of a boolean.
+     * Gets the name of a boolean.
      * @tparam T The type of the boolean.
      * @param value The boolean.
      * @return The name of the boolean.
@@ -37,7 +37,7 @@ export namespace essence::meta::runtime {
     }
 
     /**
-     * @brief Parses a boolean from a string.
+     * Parses a boolean from a string.
      * @tparam T The type of the boolean.
      * @param name The name of the boolean.
      * @return The boolean, or std::nullopt if failed.

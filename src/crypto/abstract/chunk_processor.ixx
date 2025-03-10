@@ -26,7 +26,7 @@ import std;
 
 export namespace essence::crypto::abstract {
     /**
-     * @brief Provides a uniform interface for processing crypto chunks.
+     * Provides a uniform interface for processing crypto chunks.
      * @remark This interface always keeps uniquely referenced.
      */
     class chunk_processor {
@@ -36,7 +36,7 @@ export namespace essence::crypto::abstract {
         explicit chunk_processor(T&& value) : wrapper_{std::make_unique<wrapper<T>>(std::forward<T>(value))} {}
 
         /**
-         * @brief Indicates whether this is a forward transformer.
+         * Indicates whether this is a forward transformer.
          * @return True if this is a forward transformer; false if an inverse transformer.
          */
         [[nodiscard]] bool transformer() const {
@@ -44,7 +44,7 @@ export namespace essence::crypto::abstract {
         }
 
         /**
-         * @brief Gets the name of the cipher.
+         * Gets the name of the cipher.
          * @return The name of the cipher.
          */
         [[nodiscard]] abi::string cipher_name() const {
@@ -52,7 +52,7 @@ export namespace essence::crypto::abstract {
         }
 
         /**
-         * @brief Gets the size of the input buffer.
+         * Gets the size of the input buffer.
          * @return The size of the input buffer.
          */
         [[nodiscard]] std::size_t buffer_size() const {
@@ -60,7 +60,7 @@ export namespace essence::crypto::abstract {
         }
 
         /**
-         * @brief Gets the extra size of the output buffer.
+         * Gets the extra size of the output buffer.
          * @return The extra size of the output buffer.
          */
         [[nodiscard]] std::size_t extra_size() const {
@@ -68,7 +68,7 @@ export namespace essence::crypto::abstract {
         }
 
         /**
-         * @brief Gets the factor to be multiplied to the input buffer size and the result is the size of the output
+         * Gets the factor to be multiplied to the input buffer size and the result is the size of the output
          *        buffer.
          * @return The factor described as a rational number.
          */
@@ -77,14 +77,14 @@ export namespace essence::crypto::abstract {
         }
 
         /**
-         * @brief Initializes the processor.
+         * Initializes the processor.
          */
         void init() const {
             wrapper_->init();
         }
 
         /**
-         * @brief Processes a memory chunk.
+         * Processes a memory chunk.
          * @param input The input chunk.
          * @param output The output chunk, which may be replaced with a subspan of the given span.
          */
@@ -93,7 +93,7 @@ export namespace essence::crypto::abstract {
         }
 
         /**
-         * @brief Gets the final chunk.
+         * Gets the final chunk.
          * @param output The output chunk, which may be replaced with a subspan of the given span.
          */
         void finalize(std::span<std::byte>& output) const {

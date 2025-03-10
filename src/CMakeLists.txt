@@ -22,6 +22,16 @@ file(
     *.cpp
 )
 
+if(WIN32)
+    set(platform_suffix win32)
+elseif(APPLE)
+    set(platform_suffix macos)
+elseif(UNIX)
+    set(platform_suffix linux)
+else()
+    message(FATAL_ERROR "Unsupported platform.")
+endif()
+
 macro(es_filter_sources pattern)
     list(
         FILTER private_sources

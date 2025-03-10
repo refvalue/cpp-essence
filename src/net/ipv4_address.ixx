@@ -30,7 +30,7 @@ import std;
 
 export namespace essence::net {
     /**
-     * @brief Represents an IPv4 address.
+     * Represents an IPv4 address.
      */
     class ipv4_address {
     public:
@@ -39,12 +39,12 @@ export namespace essence::net {
         using value_type = std::array<std::uint8_t, value_size>;
 
         /**
-         * @brief Creates an instance.
+         * Creates an instance.
          */
         constexpr ipv4_address() noexcept : value_{} {}
 
         /**
-         * @brief Creates an instance from an initializer list.
+         * Creates an instance from an initializer list.
          * @param address The IPv4 address.
          */
         constexpr ipv4_address(std::initializer_list<std::uint8_t> address) noexcept
@@ -52,7 +52,7 @@ export namespace essence::net {
                   std::span<const std::uint8_t, value_size>{address.begin(), std::min(address.size(), value_size)}} {}
 
         /**
-         * @brief Creates an instance from a 4-byte array.
+         * Creates an instance from a 4-byte array.
          * @param address The IPv4 address.
          */
         constexpr explicit ipv4_address(std::span<const std::uint8_t, value_size> address) noexcept : ipv4_address{} {
@@ -60,7 +60,7 @@ export namespace essence::net {
         }
 
         /**
-         * @brief Creates an instance from a 32-bit unsigned integer.
+         * Creates an instance from a 32-bit unsigned integer.
          * @param address The IPv4 address.
          */
         constexpr explicit ipv4_address(std::uint32_t address) noexcept
@@ -70,14 +70,14 @@ export namespace essence::net {
         constexpr auto operator<=>(const ipv4_address&) const noexcept = default;
 
         /**
-         * @brief Converts to a 32-bit unsigned integer.
+         * Converts to a 32-bit unsigned integer.
          */
         constexpr explicit operator std::uint32_t() const noexcept {
             return (value_[0] << 24) + (value_[1] << 16) + (value_[2] << 8) + value_[3];
         }
 
         /**
-         * @brief Gets the underlying array.
+         * Gets the underlying array.
          * @return The underlying array.
          */
         [[nodiscard]] constexpr value_type& get() noexcept {
@@ -85,7 +85,7 @@ export namespace essence::net {
         }
 
         /**
-         * @brief Gets the underlying array.
+         * Gets the underlying array.
          * @return The underlying array.
          */
         [[nodiscard]] constexpr const value_type& get() const noexcept {
@@ -97,14 +97,14 @@ export namespace essence::net {
     };
 
     /**
-     * @brief Convert a string to an IPv4 address.
+     * Convert a string to an IPv4 address.
      * @param str The string.
      * @return The IPv4 address if succeeds; otherwise std::nullopt.
      */
     ES_API(CPPESSENCE) std::optional<ipv4_address> parse_ipv4_address(std::string_view str);
 
     /**
-     * @brief Convert a string to an IPv4 address.
+     * Convert a string to an IPv4 address.
      * @tparam T The type of the ipv4_address class.
      * @param str The string.
      * @return The IPv4 address if succeeds; otherwise std::nullopt.
@@ -115,7 +115,7 @@ export namespace essence::net {
     }
 
     /**
-     * @brief Converts an IPv4 address to a string.
+     * Converts an IPv4 address to a string.
      * @param address The IPv4 address.
      * @return The string.
      */

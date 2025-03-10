@@ -80,7 +80,7 @@ export namespace essence {
     };
 
     /**
-     * @brief Finds a substring within a given string in the specified searching mode.
+     * Finds a substring within a given string in the specified searching mode.
      * @tparam Mode The searching mode.
      * @param source The source string.
      * @param keyword The keyword to search in the source.
@@ -102,7 +102,7 @@ export namespace essence {
     }
 
     /**
-     * @brief Advances the index by analyzing the keyword in the specified searching mode.
+     * Advances the index by analyzing the keyword in the specified searching mode.
      * @tparam Mode The searching mode.
      * @param index The source index.
      * @param keyword The keyword to be analyzed.

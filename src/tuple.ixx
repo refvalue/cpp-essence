@@ -25,7 +25,7 @@ import std;
 
 export namespace essence {
     /**
-     * @brief Filters a tuple given a predicate.
+     * Filters a tuple given a predicate.
      * @tparam GetTuple A constant callable to return the tuple.
      * @tparam Predicate The predicate.
      */
@@ -53,7 +53,7 @@ export namespace essence {
     };
 
     /**
-     * @brief Filters a tuple given a predicate.
+     * Filters a tuple given a predicate.
      * @tparam GetTuple A constant callable to return the tuple.
      * @tparam Predicate The predicate.
      */
@@ -61,7 +61,7 @@ export namespace essence {
     constexpr auto filter_tuple_v = filter_tuple<GetTuple, Predicate>::value;
 
     /**
-     * @brief Tests whether a tuple element satisfies the given conditions and returns the first index.
+     * Tests whether a tuple element satisfies the given conditions and returns the first index.
      * @tparam Ts The types of elements.
      * @tparam Callable The type of the predicate.
      * @param tuple The tuple.

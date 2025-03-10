@@ -34,14 +34,14 @@ import std;
 
 export namespace essence::cli {
     /**
-     * @brief A parser to handle the command line arguments.
+     * A parser to handle the command line arguments.
      */
     class arg_parser {
     public:
         using parse_result_type = abi::map<abi::string, option_result, std::less<>>;
 
         /**
-         * @brief Creates an instance.
+         * Creates an instance.
          */
         ES_API(CPPESSENCE) arg_parser();
         ES_API(CPPESSENCE) arg_parser(arg_parser&&) noexcept;
@@ -49,72 +49,72 @@ export namespace essence::cli {
         ES_API(CPPESSENCE) arg_parser& operator=(arg_parser&&) noexcept;
 
         /**
-         * @brief Checks whether the previous parsing operation succeeds.
+         * Checks whether the previous parsing operation succeeds.
          * @return True if succeeds; otherwise false.
          */
         ES_API(CPPESSENCE) explicit operator bool() const noexcept;
 
         /**
-         * @brief Gets the added options.
+         * Gets the added options.
          * @return The added options.
          */
         [[nodiscard]] ES_API(CPPESSENCE) std::span<const abstract::option> options() const noexcept;
 
         /**
-         * @brief Gets the cached result after parsing.
+         * Gets the cached result after parsing.
          * @return The cached result as a map, or an empty map if not exists.
          */
         [[nodiscard]] ES_API(CPPESSENCE) const parse_result_type& cached_result() const noexcept;
 
         /**
-         * @brief Gets the unmatched arguments after parsing.
+         * Gets the unmatched arguments after parsing.
          * @return The unmatched arguments.
          */
         [[nodiscard]] ES_API(CPPESSENCE) std::span<const abi::string> unmatched_args() const noexcept;
 
         /**
-         * @brief Adds a new  option.
+         * Adds a new  option.
          * @param option The CLI option.
          */
         ES_API(CPPESSENCE) void add_option(abstract::option option) const; // NOLINT(*-use-nodiscard)
 
         /**
-         * @brief Parses the startup command line arguments.
+         * Parses the startup command line arguments.
          */
         ES_API(CPPESSENCE) void parse() const;
 
         /**
-         * @brief Parses the input command line arguments.
+         * Parses the input command line arguments.
          * @param argc The count of the arguments.
          * @param argv The array of the arguments.
          */
         ES_API(CPPESSENCE) void parse(std::int32_t argc, char* argv[]) const;
 
         /**
-         * @brief Parses the input command line arguments.
+         * Parses the input command line arguments.
          * @param args The arguments.
          */
         ES_API(CPPESSENCE) void parse(std::span<const abi::string> args) const;
 
         /**
-         * @brief Prints the help string.
+         * Prints the help string.
          */
         ES_API(CPPESSENCE) void show_help() const;
 
         /**
-         * @brief Subscribes an event to be invoked when an error occurs.
+         * Subscribes an event to be invoked when an error occurs.
          * @param handler The handler.
          */
         ES_API(CPPESSENCE) void on_error(const output_handler& handler) const;
 
         /**
-         * @brief Subscribes an event to be invoked when a normal output is ready.
+         * Subscribes an event to be invoked when a normal output is ready.
          * @param handler The handler.
          */
         ES_API(CPPESSENCE) void on_output(const output_handler& handler) const;
 
         /**
-         * @brief Fill a data model with the parsed result.
+         * Fill a data model with the parsed result.
          * @tparam T The type of the model.
          * @return The filled model.
          */

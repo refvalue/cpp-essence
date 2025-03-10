@@ -35,7 +35,7 @@ export namespace essence {
     using std::wformat_string;
 
     /**
-     * @brief Formats a group of arguments with a format string to a std::basic_string<>.
+     * Formats a group of arguments with a format string to a std::basic_string<>.
      * @tparam S The concrete type of the std::basic_string<>.
      * @tparam Args The types of the arguments.
      * @param fmt The format string.
@@ -55,7 +55,7 @@ export namespace essence {
     }
 
     /**
-     * @brief Formats a group of arguments with a format string to a std::basic_string<>.
+     * Formats a group of arguments with a format string to a std::basic_string<>.
      * @tparam S The concrete type of the std::basic_string<>.
      * @tparam Args The types of the arguments.
      * @param locale The user-specified locale.
@@ -85,5 +85,3 @@ struct std::formatter<essence::basic_zstring_view<CharT, Traits>, CharT>
             std::basic_string_view<CharT, Traits>{str}, ctx);
     }
 };
-
-#undef ES_FMT_NS

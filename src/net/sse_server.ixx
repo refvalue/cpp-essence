@@ -33,7 +33,7 @@ import std;
 
 export namespace essence::net {
     /**
-     * @brief An HTTP server that implements Server-Sent Events.
+     * An HTTP server that implements Server-Sent Events.
      */
     class sse_server {
     public:
@@ -44,23 +44,23 @@ export namespace essence::net {
         ES_API(CPPESSENCE) sse_server& operator=(sse_server&&) noexcept;
 
         /**
-         * @brief Starts accepting requests.
+         * Starts accepting requests.
          */
         ES_API(CPPESSENCE) void open() const;
 
         /**
-         * @brief Closes all connections that invalidates all sse_connection objects.
+         * Closes all connections that invalidates all sse_connection objects.
          */
         ES_API(CPPESSENCE) void close() const;
 
         /**
-         * @brief Registers a callback for handling an SSE connection.
+         * Registers a callback for handling an SSE connection.
          * @param handler The callback.
          */
         ES_API(CPPESSENCE) void on_connection(const sse_connection_handler& handler) const;
 
         /**
-         * @brief Registers an error callback.
+         * Registers an error callback.
          * @param handler The error callback.
          */
         ES_API(CPPESSENCE) void on_error(const error_handler& handler) const;

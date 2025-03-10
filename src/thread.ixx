@@ -30,19 +30,19 @@ import std;
 
 export namespace essence {
     /**
-     * @brief Serializes the current thread ID to a string.
+     * Serializes the current thread ID to a string.
      * @return The string.
      */
     ES_API(CPPESSENCE) abi::string serialize_thread_id();
 
     /**
-     * @brief Converts the current thread ID to a decimal.
+     * Converts the current thread ID to a decimal.
      * @return The decimal and zero if the source is invalid.
      */
     ES_API(CPPESSENCE) std::uint64_t decimalize_thread_id_or_zero();
 
     /**
-     * @brief Iterates a numeric range in parallel.
+     * Iterates a numeric range in parallel.
      *        The exceptions will be transferred to the calling thread.
      * @param start The start index.
      * @param end The end index.
@@ -54,7 +54,7 @@ export namespace essence {
         const std::function<void(std::size_t index, std::size_t thread_index, bool& exit)>& handler);
 
     /**
-     * @brief Iterates a std::span<T> in parallel.
+     * Iterates a std::span<T> in parallel.
      *        The exceptions will be transferred to the calling thread.
      * @tparam T The element type.
      * @param span The std::span<T>.

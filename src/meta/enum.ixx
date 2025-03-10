@@ -28,7 +28,7 @@ import std;
 
 export namespace essence::meta {
     /**
-     * @brief Gets the numeric range of an enumeration for searching its valid values, supporting ADL
+     * Gets the numeric range of an enumeration for searching its valid values, supporting ADL
      *        (Argument-Dependent Lookup).
      * @tparam T The type of the enumeration.
      * @return The searching range.
@@ -39,7 +39,7 @@ export namespace essence::meta {
     };
 
     /**
-     * @brief Gets the pairs of names and values of an enumeration.
+     * Gets the pairs of names and values of an enumeration.
      * @tparam T The type of the enumeration.
      * @tparam Short Whether to get a short name (without a namespace).
      * @return A coroutine generator to yield the values.

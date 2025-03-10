@@ -61,7 +61,7 @@ export namespace essence {
     };
 
     /**
-     * @brief An exception class derived from std::runtime_error that provides source code information
+     * An exception class derived from std::runtime_error that provides source code information
      *        of the source file name, the line number, the column number and can be constructed with
      *        the same arguments as those passed to the essence::format function.
      */

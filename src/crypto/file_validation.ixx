@@ -30,7 +30,7 @@ import std;
 
 export namespace essence::crypto {
     /**
-     * @brief Creates a validation file with the specified digest mode.
+     * Creates a validation file with the specified digest mode.
      * @param mode The digest mode.
      * @param path The path of the file.
      * @remark The validation file is something like a.txt.sha512.
@@ -38,7 +38,7 @@ export namespace essence::crypto {
     ES_API(CPPESSENCE) void make_validation_file(digest_mode mode, std::string_view path);
 
     /**
-     * @brief Validates a file with the specified digest mode and the existing validation file on the disk.
+     * Validates a file with the specified digest mode and the existing validation file on the disk.
      * @param mode The digest mode.
      * @param path The path of the file.
      * @return true if the file is valid; otherwise false.

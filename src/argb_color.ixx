@@ -25,7 +25,7 @@ import std;
 
 export namespace essence {
     /**
-     * @brief Describes a ARGB color.
+     * Describes a ARGB color.
      */
     struct alignas(std::uint32_t) argb_color {
         std::uint8_t r{};
@@ -34,7 +34,7 @@ export namespace essence {
         std::uint8_t alpha{0xFF};
 
         /**
-         * @brief Converts a 32-bit unsigned integer.
+         * Converts a 32-bit unsigned integer.
          */
         constexpr explicit operator std::uint32_t() const noexcept {
             return (static_cast<std::uint32_t>(alpha) << 24) + (static_cast<std::uint32_t>(b) << 16)
@@ -42,7 +42,7 @@ export namespace essence {
         }
 
         /**
-         * @brief Normalizes the data to a new range.
+         * Normalizes the data to a new range.
          * @tparam T The type of the data in the new range.
          * @param min The lower bound.
          * @param max The upper bound.
@@ -67,7 +67,7 @@ export namespace essence {
     };
 
     /**
-     * @brief Constructs an ARGB color from a 32-bit unsigned integer.
+     * Constructs an ARGB color from a 32-bit unsigned integer.
      * @param color The color in a 32-bit unsigned integer.
      * @return ARGB color.
      */
@@ -81,7 +81,7 @@ export namespace essence {
     }
 
     /**
-     * @brief Common predefined colors.
+     * Common predefined colors.
      * @remark http://www.flounder.com/csharp_color_table.htm
      */
     struct argb_colors {

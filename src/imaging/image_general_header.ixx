@@ -25,31 +25,31 @@ import std;
 
 export namespace essence::imaging {
     /**
-     * @brief The general header of all image formats.
+     * The general header of all image formats.
      */
     struct image_general_header {
         /**
-         * @brief The width in pixels.
+         * The width in pixels.
          */
         std::int32_t width{};
 
         /**
-         * @brief The height in pixels.
+         * The height in pixels.
          */
         std::int32_t height{};
 
         /**
-         * @brief The size in bytes.
+         * The size in bytes.
          */
         std::size_t bytes{};
 
         /**
-         * @brief The bits per pixel.
+         * The bits per pixel.
          */
         std::int32_t bits_per_pixel{};
 
         /**
-         * @brief The count of channels.
+         * The count of channels.
          */
         std::int32_t channels{};
     };

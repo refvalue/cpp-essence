@@ -28,7 +28,7 @@ import std;
 
 export namespace essence::net::abstract {
     /**
-     * @brief An interface: manages an SSE connection and its lifetime.
+     * An interface: manages an SSE connection and its lifetime.
      */
     class sse_connection {
     public:
@@ -39,7 +39,7 @@ export namespace essence::net::abstract {
         explicit sse_connection(T&& value) : wrapper_{std::make_shared<wrapper<T>>(std::forward<T>(value))} {}
 
         /**
-         * @brief Checks whether the internal operation has been canceled and if true
+         * Checks whether the internal operation has been canceled and if true
                   the user must stop all invocations to this object.
          * @return true if the internal operation has been canceled; otherwise false.
          */
@@ -48,7 +48,7 @@ export namespace essence::net::abstract {
         }
 
         /**
-         * @brief Gets the request URI.
+         * Gets the request URI.
          * @return The URI.
          */
         [[nodiscard]] uri request_uri() const {
@@ -56,7 +56,7 @@ export namespace essence::net::abstract {
         }
 
         /**
-         * @brief Gets the remote address.
+         * Gets the remote address.
          * @return The remote address.
          */
         [[nodiscard]] abi::string remote_address() const {
@@ -64,28 +64,28 @@ export namespace essence::net::abstract {
         }
 
         /**
-         * @brief Sends a message to the client.
+         * Sends a message to the client.
          */
         void send_message(const sse_message& message) const {
             wrapper_->send_message(message);
         }
 
         /**
-         * @brief Keep alive and raise an error when the network is disconnected.
+         * Keep alive and raise an error when the network is disconnected.
          */
         void tick() const {
             wrapper_->tick();
         }
 
         /**
-         * @brief Closes the connection.
+         * Closes the connection.
          */
         void close() const {
             wrapper_->close();
         }
 
         /**
-         * @brief Gets the underlying pointer.
+         * Gets the underlying pointer.
          * @return The underlying pointer.
          */
         [[nodiscard]] void* underlying_ptr() const {

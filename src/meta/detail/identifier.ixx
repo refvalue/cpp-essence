@@ -44,7 +44,7 @@ import std;
 
 export namespace essence::meta::detail {
     /**
-     * @brief Gets the literal string of a type.
+     * Gets the literal string of a type.
      * @tparam T The type.
      * @tparam Param The parameter for parsing the identifier.
      * @return The literal string.
@@ -59,7 +59,7 @@ export namespace essence::meta::detail {
     }
 
     /**
-     * @brief Gets the literal string of a literal value attached to a concrete type.
+     * Gets the literal string of a literal value attached to a concrete type.
      * @tparam Value The literal value.
      * @tparam T The type, to which the literal value is attached.
      * @tparam Param The parameter for parsing the identifier.
@@ -76,7 +76,7 @@ export namespace essence::meta::detail {
     }
 
     /**
-     * @brief Gets the short literal string of a type (without a namespace).
+     * Gets the short literal string of a type (without a namespace).
      * @tparam T The type.
      * @tparam Param The parameter for parsing the identifier.
      * @return The short literal string.
@@ -92,7 +92,7 @@ export namespace essence::meta::detail {
     }
 
     /**
-     * @brief Gets the short literal string of a literal value attached to a concrete type without a namespace.
+     * Gets the short literal string of a literal value attached to a concrete type without a namespace.
      * @tparam Value The literal value.
      * @tparam T The type, to which the literal value is attached.
      * @tparam Param The parameter for parsing the identifier.
@@ -110,7 +110,7 @@ export namespace essence::meta::detail {
     }
 
     /**
-     * @brief Gets the friendly name of a function without arguments.
+     * Gets the friendly name of a function without arguments.
      * @tparam Value The function pointer.
      * @tparam Param The parameter for parsing the identifier.
      * @return The friendly name.
@@ -128,7 +128,7 @@ export namespace essence::meta::detail {
     }
 
     /**
-     * @brief Gets the short friendly name of a function without arguments (and with the namespace part trimmed).
+     * Gets the short friendly name of a function without arguments (and with the namespace part trimmed).
      * @tparam Value The function pointer.
      * @tparam Param The parameter for parsing the identifier.
      * @return The short friendly name.

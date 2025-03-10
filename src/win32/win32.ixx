@@ -20,42 +20,6 @@
  * THE SOFTWARE.
  */
 
-module;
+export module essence.win32;
 
-#include <essence/char8_t_remediation.hpp>
-
-module essence.net;
-
-namespace essence::net {
-    std::optional<ipv4_address> parse_ipv4_address(std::string_view str) {
-        const auto adapter = std::views::split(str, U8('.')) | std::views::transform([](const auto& inner) {
-            auto component = inner | std::views::common | std::ranges::to<std::string>();
-
-            return essence::from_string<std::uint8_t>(component);
-        }) | std::views::take(ipv4_address::value_size);
-
-        auto result = std::make_optional<ipv4_address>();
-        auto iter   = result->get().begin();
-
-        for (auto&& item : adapter) {
-            if (!item) {
-                break;
-            }
-
-            (*iter++) = *item;
-        }
-
-        // Checks an illegal IPv4 address.
-        if (iter != result->get().end()) {
-            result.reset();
-        }
-
-        return result;
-    }
-
-    abi::string to_string(const ipv4_address& address) {
-        auto&& array = address.get();
-
-        return format_as<abi::string>(U8("{}.{}.{}.{}"), array[0], array[1], array[2], array[3]);
-    }
-} // namespace essence::net
+export import :registry;

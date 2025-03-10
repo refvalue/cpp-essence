@@ -28,7 +28,7 @@ import std;
 
 export namespace essence::meta::runtime {
     /**
-     * @brief Gets the pairs of names and values of an enumeration.
+     * Gets the pairs of names and values of an enumeration.
      * @tparam T The type of the enumeration.
      * @tparam Tag The tag for extra features.
      * @param short_name Whether to get a short name (without a namespace).
@@ -76,7 +76,7 @@ export namespace essence::meta::runtime {
     }
 
     /**
-     * @brief Gets the pairs of names and values of an enumeration.
+     * Gets the pairs of names and values of an enumeration.
      * @tparam T The type of the enumeration.
      * @tparam Tag The tag for extra features.
      * @param short_name Whether to get a short name (without a namespace).
@@ -106,7 +106,7 @@ export namespace essence::meta::runtime {
     }
 
     /**
-     * @brief Gets the name of an enumeration.
+     * Gets the name of an enumeration.
      * @tparam T The type of the enumeration.
      * @param value The enumeration.
      * @return The name of the enumeration, or an empty string if not found.
@@ -132,7 +132,7 @@ export namespace essence::meta::runtime {
     }
 
     /**
-     * @brief Parses an enumeration from a string.
+     * Parses an enumeration from a string.
      * @tparam T The type of the enumeration.
      * @param name The name of the enumeration.
      * @return The enumeration or std::nullopt if failed.

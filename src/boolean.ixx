@@ -25,7 +25,7 @@ import std;
 
 export namespace essence {
     /**
-     * @brief Converts a value to a boolean with a non-boolean-convertible value to be true.
+     * Converts a value to a boolean with a non-boolean-convertible value to be true.
      * @tparam T The type of the value.
      * @param value The value.
      * @return The boolean.

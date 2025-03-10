@@ -25,7 +25,7 @@ import :literal_string;
 
 export namespace essence::meta {
     /**
-     * @brief A constant type which contains a literal string as its non-type template argument.
+     * A constant type which contains a literal string as its non-type template argument.
      * @tparam S The literal string.
      */
     template <literal_string S>
@@ -34,7 +34,7 @@ export namespace essence::meta {
     };
 
     /**
-     * @brief A constant type which contains a literal string as its non-type template argument.
+     * A constant type which contains a literal string as its non-type template argument.
      * @tparam S The literal string.
      */
     template <literal_string S>

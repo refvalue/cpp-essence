@@ -29,7 +29,7 @@ export module essence.basic:library_state;
 export namespace essence {
     struct library_state {
         /**
-         * @brief Checks whether the net library is available.
+         * Checks whether the net library is available.
          * @return True if available; otherwise false.
          */
         ES_API(CPPESSENCE) static bool is_net_available() noexcept;

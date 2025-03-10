@@ -31,13 +31,13 @@ import std;
 
 export namespace essence::i18n {
     /**
-     * @brief Creates a globalization translator based on the native file system.
+     * Creates a globalization translator based on the native file system.
      * @return The translator.
      */
     ES_API(CPPESSENCE) abstract::translator make_translator();
 
     /**
-     * @brief Creates a globalization translator based on a user-specified file system implementation.
+     * Creates a globalization translator based on a user-specified file system implementation.
      * @param fs_operator The virtual filesystem operator.
      * @return The translator.
      */

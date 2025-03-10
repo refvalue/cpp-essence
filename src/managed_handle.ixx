@@ -32,7 +32,7 @@ export namespace essence {
         || (std::is_pointer_v<T> && (std::invocable<Callable, T> || std::invocable<Callable, T*>) );
 
     /**
-     * @brief Manages a platform-dependent handle.
+     * Manages a platform-dependent handle.
      * @tparam Mapped The integral type to map the T value to (default T).
      * @tparam Shared true to use std::shared_ptr; otherwise std::unique_ptr.
      * @tparam T The underlying storage type.
@@ -51,7 +51,7 @@ export namespace essence {
             : value_{nullptr, &basic_managed_handle::delete_handle} {}
 
         /**
-         * @brief Constructs the object from a pointer.
+         * Constructs the object from a pointer.
          * @tparam U The pointer type.
          * @param value The pointer value.
          */
@@ -61,7 +61,7 @@ export namespace essence {
             : value_{reinterpret_cast<void*>(make_pointer_number<T>(value)), &basic_managed_handle::delete_handle} {}
 
         /**
-         * @brief Constructs the object from a mapped number.
+         * Constructs the object from a mapped number.
          * @param value The mapped number.
          */
         explicit basic_managed_handle(Mapped value)
@@ -73,7 +73,7 @@ export namespace essence {
         basic_managed_handle& operator=(basic_managed_handle&&) noexcept = default;
 
         /**
-         * @brief Checks whether the stored value is a valid handle.
+         * Checks whether the stored value is a valid handle.
          * @remark Assumes zero or negative one is invalid by default.
          */
         explicit operator bool() const noexcept {
@@ -85,7 +85,7 @@ export namespace essence {
         }
 
         /**
-         * @brief Gets the stored handle.
+         * Gets the stored handle.
          * @return The stored handle.
          */
         [[nodiscard]] native_type get() const noexcept {
@@ -93,14 +93,14 @@ export namespace essence {
         }
 
         /**
-         * @brief Deletes the handle and resets the value.
+         * Deletes the handle and resets the value.
          */
         void reset() noexcept {
             value_.reset();
         }
 
         /**
-         * @brief Resets the object with a pointer.
+         * Resets the object with a pointer.
          * @tparam U The pointer type.
          * @param value The pointer value.
          */
@@ -116,7 +116,7 @@ export namespace essence {
         }
 
         /**
-         * @brief Resets the object with a mapped number.
+         * Resets the object with a mapped number.
          * @param value The mapped number.
          */
         void reset(Mapped value) noexcept {
@@ -128,7 +128,7 @@ export namespace essence {
         }
 
         /**
-         * @brief Swaps the handle value with another one.
+         * Swaps the handle value with another one.
          * @param other The other object.
          */
         void swap(basic_managed_handle& other) noexcept {

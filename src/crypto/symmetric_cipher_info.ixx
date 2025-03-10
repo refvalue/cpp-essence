@@ -25,26 +25,26 @@ import std;
 
 namespace essence::crypto {
     /**
-     * @brief Information about a symmetric cipher.
+     * Information about a symmetric cipher.
      */
     struct symmetric_cipher_info {
         /**
-         * @brief The algorithm ID.
+         * The algorithm ID.
          */
         const void* id{};
 
         /**
-         * @brief The length of an initialization vector.
+         * The length of an initialization vector.
          */
         std::size_t iv_length{};
 
         /**
-         * @brief The length of a key.
+         * The length of a key.
          */
         std::size_t key_length{};
 
         /**
-         * @brief The block size.
+         * The block size.
          */
         std::size_t block_size{};
     };

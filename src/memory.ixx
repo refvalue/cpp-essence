@@ -28,7 +28,7 @@ export namespace essence {
     using unique_array = std::unique_ptr<std::span<T>, std::function<void(std::span<T>*)>>;
 
     /**
-     * @brief Creates a unique array as a std::span<T>.
+     * Creates a unique array as a std::span<T>.
      * @tparam T The element type.
      * @param size The size of the array.
      * @return A std::unique_ptr<std::span<T>> object.

@@ -26,16 +26,16 @@ import std;
 
 export namespace essence::cli {
     /**
-     * @brief The validation result from parsing a CLI option.
+     * The validation result from parsing a CLI option.
      */
     struct validation_result {
         /**
-         * @brief Whether the validation succeeds.
+         * Whether the validation succeeds.
          */
         bool success{true};
 
         /**
-         * @brief The error message.
+         * The error message.
          */
         abi::string error;
     };

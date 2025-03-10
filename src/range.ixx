@@ -26,7 +26,7 @@ import std;
 
 namespace essence::detail {
     /**
-     * @brief Gets the type of range value.
+     * Gets the type of range value.
      * @tparam Range The type of the range.
      * @return A type_identity<T> object where the T is std::ranges::range_value_t<Range>.
      * @remark This trick works around non-satisfaction of the concepts of std::ranges::range_value_t<>.
@@ -37,7 +37,7 @@ namespace essence::detail {
     }
 
     /**
-     * @brief Gets the type of non-ranged value.
+     * Gets the type of non-ranged value.
      * @tparam T The type of the value.
      * @return A type_identity<T> object.
      * @remark This trick works around non-satisfaction of the concepts of std::ranges::range_value_t<>.
@@ -62,7 +62,7 @@ export namespace essence {
     };
 
     /**
-     * @brief Gets the type of range value, or the type itself if the type is non-ranged.
+     * Gets the type of range value, or the type itself if the type is non-ranged.
      * @tparam T The type.
      */
     template <typename T>
@@ -71,7 +71,7 @@ export namespace essence {
     };
 
     /**
-     * @brief Gets the type of range value, or the type itself if the type is non-ranged.
+     * Gets the type of range value, or the type itself if the type is non-ranged.
      * @tparam T The type.
      */
     template <typename T>
@@ -96,7 +96,7 @@ export namespace essence {
     }
 
     /**
-     * @brief Joins a range of items with a delimiter.
+     * Joins a range of items with a delimiter.
      * @tparam Range The type of the range.
      * @tparam Delimiter The type of the delimiter.
      * @param range The range.

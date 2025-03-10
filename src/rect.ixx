@@ -115,25 +115,25 @@ export namespace essence {
     };
 
     /**
-     * @brief Indicates which rectangle to base the ratio calculation on.
+     * Indicates which rectangle to base the ratio calculation on.
      */
     enum class rect_ratio_base {
         /**
-         * @brief The left operand.
+         * The left operand.
          */
         left,
         /**
-         * @brief The right operand.
+         * The right operand.
          */
         right,
         /**
-         * @brief The smaller rectangle.
+         * The smaller rectangle.
          */
         smaller,
     };
 
     /**
-     * @brief Illustrates a rectangle.
+     * Illustrates a rectangle.
      * @tparam Number The numeric type of the member variables.
      */
     template <typename Number>
@@ -159,7 +159,7 @@ export namespace essence {
         }
 
         /**
-         * @brief Converts to a compatible rectangle that contains member variables left, top, right, bottom.
+         * Converts to a compatible rectangle that contains member variables left, top, right, bottom.
          * @tparam T The type of the compatible rectangle.
          */
         template <typename T>
@@ -176,7 +176,7 @@ export namespace essence {
         }
 
         /**
-         * @brief Converts to an equivalent rectangle that contains member variables x, y, width, height.
+         * Converts to an equivalent rectangle that contains member variables x, y, width, height.
          * @tparam T The type of the equivalent rectangle.
          */
         template <typename T>
@@ -193,7 +193,7 @@ export namespace essence {
         }
 
         /**
-         * @brief Retrieves the width-height pair.
+         * Retrieves the width-height pair.
          * @tparam T The type of the pair that contains member variables width and height.
          * @return The weight-height pair.
          */
@@ -206,7 +206,7 @@ export namespace essence {
         }
 
         /**
-         * @brief Sets the width and height from a width-height pair.
+         * Sets the width and height from a width-height pair.
          * @tparam T The type of the pair that contains member variables width and height.
          * @param pair The weight-height pair.
          */
@@ -217,7 +217,7 @@ export namespace essence {
         }
 
         /**
-         * @brief Checks whether the area of the rectangle is zero (i.e. collapsed to a zero-dimensional point).
+         * Checks whether the area of the rectangle is zero (i.e. collapsed to a zero-dimensional point).
          * @return True if the area is zero; otherwise false.
          */
         [[nodiscard]] constexpr bool collapsed() const noexcept {
@@ -225,7 +225,7 @@ export namespace essence {
         }
 
         /**
-         * @brief Makes a rectangle from a compatible rectangle that contains member variables x, y, width, height.
+         * Makes a rectangle from a compatible rectangle that contains member variables x, y, width, height.
          * @tparam T The type of the compatible rectangle.
          * @param bottom_right_rect The compatible rectangle.
          * @return The rectangle.
@@ -241,7 +241,7 @@ export namespace essence {
         }
 
         /**
-         * @brief Makes a rectangle from an equivalent rectangle that contains member variables x, y, bottom, right.
+         * Makes a rectangle from an equivalent rectangle that contains member variables x, y, bottom, right.
          * @tparam T The type of the equivalent rectangle.
          * @param equivalent_rect The equivalent rectangle。
          * @return The rectangle.
@@ -258,7 +258,7 @@ export namespace essence {
     };
 
     /**
-     * @brief Checks if one rectangle intersects with another rectangle.
+     * Checks if one rectangle intersects with another rectangle.
      * @tparam T The numeric type of the member variables.
      * @param left The first rectangle.
      * @param right The second rectangle.
@@ -272,7 +272,7 @@ export namespace essence {
     }
 
     /**
-     * @brief Calculates the overlapped area of two rectangles.
+     * Calculates the overlapped area of two rectangles.
      * @tparam T The numeric type of the member variables.
      * @param left The first rectangle.
      * @param right The second rectangle.
@@ -288,7 +288,7 @@ export namespace essence {
     }
 
     /**
-     * @brief Calculates the ratio of the overlapped area.
+     * Calculates the ratio of the overlapped area.
      * @tparam T The numeric type of the member variables.
      * @param left The first rectangle.
      * @param right The second rectangle.

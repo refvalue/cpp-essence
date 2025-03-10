@@ -30,7 +30,7 @@ import :common_constants;
 namespace essence::i18n {
     namespace {
         /**
-         * @brief A translator whose working directory and language are immutable for thread safety.
+         * A translator whose working directory and language are immutable for thread safety.
          */
         class immutable_translator {
         public:
@@ -135,7 +135,7 @@ namespace essence::i18n {
         };
 
         /**
-         * @brief A thread-safe implementation of the default translator without locks.
+         * A thread-safe implementation of the default translator without locks.
          */
         class default_translator {
         public:

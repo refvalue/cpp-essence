@@ -32,7 +32,7 @@ import std;
 
 export namespace essence::meta::detail {
     /**
-     * @brief Some tokens of the C++ programming language.
+     * Some tokens of the C++ programming language.
      */
     struct language_tokens {
         ES_API(CPPESSENCE) static constexpr literal_string reference { U8("&") };

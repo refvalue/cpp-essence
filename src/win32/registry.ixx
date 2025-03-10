@@ -20,19 +20,4 @@
  * THE SOFTWARE.
  */
 
-module;
-
-#include <essence/compat.hpp>
-
-export module essence.i18n:compiler;
-import :abstract.compiler;
-import essence.basic;
-import std;
-
-export namespace essence::i18n {
-    /**
-     * Creates a default compiler.
-     * @return The default compiler.
-     */
-    ES_API(CPPESSENCE) abstract::compiler make_default_compiler();
-} // namespace essence::globalization
+export module essence.win32:registry;

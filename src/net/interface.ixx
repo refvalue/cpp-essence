@@ -30,7 +30,7 @@ import essence.basic;
 
 export namespace essence::net {
     /**
-     * @brief Gets the addresses of all interfaces.
+     * Gets the addresses of all interfaces.
      * @return The vector of addresses.
      */
     ES_API(CPPESSENCE) abi::vector<interface_address_info> get_interfaces_addresses();

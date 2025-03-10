@@ -30,7 +30,7 @@ import std;
 
 export namespace essence::meta {
     /**
-     * @brief Gets the names of the direct data members of a class.
+     * Gets the names of the direct data members of a class.
      * @tparam T The type of the class.
      * @return A coroutine generator to yield the values.
      */

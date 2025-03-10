@@ -30,30 +30,30 @@ import std;
 
 export namespace essence::meta::runtime {
     /**
-     * @brief Information of a direct data member of a class.
+     * Information of a direct data member of a class.
      * @tparam T The type of the enclosing class.
      */
     template <typename T>
         requires std::is_class_v<T>
     struct data_member_info {
         /**
-         * @brief The type of the enclosing class.
+         * The type of the enclosing class.
          */
         using enclosing_type = T;
 
         /**
-         * @brief The name of the type of the enclosing class.
+         * The name of the type of the enclosing class.
          */
         inline static const std::string enclosing_type_name{get_literal_string_t<T>()};
 
 
         /**
-         * @brief The original name of the data member without a conversion of the naming convention.
+         * The original name of the data member without a conversion of the naming convention.
          */
         std::string raw_name;
 
         /**
-         * @brief The name of the data member.
+         * The name of the data member.
          */
         std::string name;
     };
@@ -75,7 +75,7 @@ export namespace essence::meta::runtime {
     }
 
     /**
-     * @brief Gets the list of information of direct data members of a class.
+     * Gets the list of information of direct data members of a class.
      * @tparam Convention The naming convention to be converted to.
      * @tparam T The type of the class.
      * @return The list of information of direct data members.
@@ -97,7 +97,7 @@ export namespace essence::meta::runtime {
     }
 
     /**
-     * @brief Enumerates direct data members of a class.
+     * Enumerates direct data members of a class.
      * @tparam Convention The naming convention to be converted to.
      * @tparam T The type of the class.
      * @tparam Callable The type of callable to process each item.

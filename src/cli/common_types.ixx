@@ -25,7 +25,7 @@ import std;
 
 export namespace essence::cli {
     /**
-     * @brief A handler to provide a message to be output to the console or any other target.
+     * A handler to provide a message to be output to the console or any other target.
      */
     using output_handler = std::function<void(std::string_view message)>;
 } // namespace essence::cli

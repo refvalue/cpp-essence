@@ -34,13 +34,13 @@ import std;
 
 export namespace essence::cli {
     /**
-     * @brief Creates a base internal implementation of a CLI option class.
+     * Creates a base internal implementation of a CLI option class.
      * @return The base implementation.
      */
     ES_API(CPPESSENCE) abstract::option make_base_option();
 
     /**
-     * @brief A CLI option, i.e. --xxx=yyy.
+     * A CLI option, i.e. --xxx=yyy.
      * @tparam T The data type of the option.
      */
     template <std::default_initializable T>
@@ -58,7 +58,7 @@ export namespace essence::cli {
         static constexpr meta::fingerprint type_id{std::type_identity<T>{}};
 
         /**
-         * @brief Creates an instance.
+         * Creates an instance.
          */
         option() : base_{make_base_option()} {
             // Makes default values for an enumeration.

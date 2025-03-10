@@ -33,7 +33,7 @@ import std;
 
 export namespace essence::net {
     /**
-     * @brief Downloads a file from an HTTP server.
+     * Downloads a file from an HTTP server.
      * @param absolute_uri The absolute URI.
      * @param header_handler The handler to process HTTP headers.
      * @return The downloaded data.
@@ -42,7 +42,7 @@ export namespace essence::net {
     abi::vector<std::byte> download_file(const uri& absolute_uri, const http_header_handler& header_handler = {});
 
     /**
-     * @brief Downloads a file from an HTTP server.
+     * Downloads a file from an HTTP server.
      * @param absolute_uri The absolute URI.
      * @param config The HTTP configuration.
      * @param header_handler The handler to process HTTP headers.
@@ -53,7 +53,7 @@ export namespace essence::net {
         const uri& absolute_uri, const http_client_config& config, const http_header_handler& header_handler = {});
 
     /**
-     * @brief Downloads a file from an HTTP server.
+     * Downloads a file from an HTTP server.
      * @param absolute_uri The absolute URI.
      * @param progress_handlers The handlers to process both byte and percentage progresses.
      * @param header_handler The handler to process HTTP headers.
@@ -64,7 +64,7 @@ export namespace essence::net {
         const http_header_handler& header_handler = {});
 
     /**
-     * @brief Downloads a file from an HTTP server.
+     * Downloads a file from an HTTP server.
      * @param absolute_uri The absolute URI.
      * @param config The HTTP configuration.
      * @param progress_handlers The handlers to process both byte and percentage progresses.

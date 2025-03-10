@@ -62,7 +62,7 @@ namespace essence::detail {
 
 export namespace essence {
     /**
-     * @brief Converts a string to an integer.
+     * Converts a string to an integer.
      * @tparam T The type of the integer.
      * @param str The string.
      * @param base The base of the integer.
@@ -74,7 +74,7 @@ export namespace essence {
     }
 
     /**
-     * @brief Converts a string to an integer.
+     * Converts a string to an integer.
      * @tparam T The type of the floating-point number.
      * @param str The string.
      * @param format The format of the floating-point number.
@@ -86,7 +86,7 @@ export namespace essence {
     }
 
     /**
-     * @brief Converts an integer to a string.
+     * Converts an integer to a string.
      * @tparam S The return type based on std::basic_string<>.
      * @tparam T The type of the integer.
      * @param number The integer.
@@ -99,7 +99,7 @@ export namespace essence {
     }
 
     /**
-     * @brief Converts a floating-point number to a string.
+     * Converts a floating-point number to a string.
      * @tparam S The return type based on std::basic_string<>.
      * @tparam T The type of the floating-point number.
      * @param number The floating-point number.
@@ -111,7 +111,7 @@ export namespace essence {
     }
 
     /**
-     * @brief Converts a floating-point number to a string.
+     * Converts a floating-point number to a string.
      * @tparam S The return type based on std::basic_string<>.
      * @tparam T The type of the floating-point number.
      * @param number The floating-point number.
@@ -124,7 +124,7 @@ export namespace essence {
     }
 
     /**
-     * @brief Converts a floating-point number to a string.
+     * Converts a floating-point number to a string.
      * @tparam S The return type based on std::basic_string<>.
      * @tparam T The type of the floating-point number.
      * @param number The floating-point number.

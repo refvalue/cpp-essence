@@ -32,7 +32,7 @@ export namespace essence::crypto {
     constexpr use_private_tag use_private{};
 
     /**
-     * @brief The available padding modes of a symmetric cipher.
+     * The available padding modes of a symmetric cipher.
      */
     enum class cipher_padding_mode {
         none,
@@ -40,7 +40,7 @@ export namespace essence::crypto {
     };
 
     /**
-     * @brief The available digest algorithms.
+     * The available digest algorithms.
      */
     enum class digest_mode {
         sha1,
@@ -111,7 +111,7 @@ export namespace essence::crypto {
     };
 
     /**
-     * @brief The types of an asymmetric key.
+     * The types of an asymmetric key.
      */
     enum class asymmetric_key_type {
         pub,

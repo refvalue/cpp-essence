@@ -31,17 +31,17 @@ import std;
 
 export namespace essence::imaging {
     /**
-     * @brief Probes the type of image file and extracts fundamental information about it.
+     * Probes the type of image file and extracts fundamental information about it.
      */
     class image_prober {
     public:
         /**
-         * @brief Creates an instance from builtin image header extractors.
+         * Creates an instance from builtin image header extractors.
          */
         ES_API(CPPESSENCE) image_prober();
 
         /**
-         * @brief Creates an instance from builtin and additional image header extractors.
+         * Creates an instance from builtin and additional image header extractors.
          * @param extra_extractors The extra extractors.
          */
         ES_API(CPPESSENCE) explicit image_prober(std::span<const abstract::image_header_extractor> extra_extractors);
@@ -51,13 +51,13 @@ export namespace essence::imaging {
         ES_API(CPPESSENCE) image_prober& operator=(image_prober&&) noexcept;
 
         /**
-         * @brief Gets the extractors.
+         * Gets the extractors.
          * @return The extractors.
          */
         [[nodiscard]] ES_API(CPPESSENCE) std::span<const abstract::image_header_extractor> extractors() const noexcept;
 
         /**
-         * @brief Extracts the general image header from a file.
+         * Extracts the general image header from a file.
          * @param path The file path.
          * @return The image header if succeeds; otherwise std::nullopt.
          */
@@ -65,14 +65,14 @@ export namespace essence::imaging {
             std::string_view path) const;
 
         /**
-         * @brief Extracts the general image header from a standard input stream.
+         * Extracts the general image header from a standard input stream.
          * @param stream The input stream.
          * @return The image header if succeeds; otherwise std::nullopt.
          */
         [[nodiscard]] ES_API(CPPESSENCE) std::optional<image_general_header> extract_header(std::istream& stream) const;
 
         /**
-         * @brief Extracts the general image header from a memory buffer.
+         * Extracts the general image header from a memory buffer.
          * @param buffer The memory buffer.
          * @return The image header if succeeds; otherwise std::nullopt.
          */

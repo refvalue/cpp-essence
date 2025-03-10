@@ -133,7 +133,7 @@ namespace essence::net {
 
     private:
         /**
-         * @brief Implements the timeout mechanism.
+         * Implements the timeout mechanism.
          */
         void deadline_control(const pplx::cancellation_token& token) {
             std::unique_lock lock{mutex_};

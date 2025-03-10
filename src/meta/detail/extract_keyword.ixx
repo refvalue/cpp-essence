@@ -27,7 +27,7 @@ import std;
 
 export namespace essence::meta::detail {
     /**
-     * @brief Extracts a substring by parsing a keyword from a literal string.
+     * Extracts a substring by parsing a keyword from a literal string.
      * @tparam Mode The searching mode.
      * @param str The literal string.
      * @param keyword The keyword to be searched for.

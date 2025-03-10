@@ -30,12 +30,12 @@ import std;
 
 export namespace essence::io {
     /**
-     * @brief Provides an ability to identify the exact type of bitstream.
+     * Provides an ability to identify the exact type of bitstream.
      */
     class bitstream_type_judger {
     public:
         /**
-         * @brief Creates an instance from well-defined type hints.
+         * Creates an instance from well-defined type hints.
          * @param hints The type hints.
          */
         ES_API(CPPESSENCE) explicit bitstream_type_judger(std::span<const abstract::bitstream_type_hint> hints);
@@ -45,13 +45,13 @@ export namespace essence::io {
         ES_API(CPPESSENCE) bitstream_type_judger& operator=(bitstream_type_judger&&) noexcept;
 
         /**
-         * @brief Gets the type hints.
+         * Gets the type hints.
          * @return Type hints.
          */
         [[nodiscard]] ES_API(CPPESSENCE) std::span<const abstract::bitstream_type_hint> hints() const noexcept;
 
         /**
-         * @brief Identifies the type of the bitstream from a file.
+         * Identifies the type of the bitstream from a file.
          * @param path The file path.
          * @return The corresponding type hint, or std::nullopt if not found.
          */
@@ -59,7 +59,7 @@ export namespace essence::io {
             std::string_view path) const;
 
         /**
-         * @brief Identifies the type of the bitstream from a standard input stream.
+         * Identifies the type of the bitstream from a standard input stream.
          * @param stream The input stream.
          * @return The corresponding type hint, or std::nullopt if not found.
          */
@@ -67,7 +67,7 @@ export namespace essence::io {
             std::istream& stream) const;
 
         /**
-         * @brief Identifies the type of the bitstream from a memory buffer.
+         * Identifies the type of the bitstream from a memory buffer.
          * @param buffer The memory buffer.
          * @return The corresponding type hint, or std::nullopt if not found.
          */

@@ -439,7 +439,7 @@ export namespace essence::meta::detail {
     ES_MAKE_DATA_MEMBER_BINDINGS(0, m1);
 
     /**
-     * @brief Gets a tuple with bindings to the direct data members of an object.
+     * Gets a tuple with bindings to the direct data members of an object.
      * @tparam T The type of the object.
      * @param obj The object.
      * @return The tuple with bindings.
@@ -450,7 +450,7 @@ export namespace essence::meta::detail {
     }
 
     /**
-     * @brief Makes a tuple of pointers to the direct data members of an object.
+     * Makes a tuple of pointers to the direct data members of an object.
      * @tparam T The type of the object.
      * @param obj The object.
      * @return The tuple of pointers.

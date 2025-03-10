@@ -33,7 +33,7 @@ import std;
 
 export namespace essence::serialization {
     /**
-     * @brief Stashes the current 'enum_to_string' and 'naming_convention' configurations during the serialization.
+     * Stashes the current 'enum_to_string' and 'naming_convention' configurations during the serialization.
      */
     struct json_serializer_base {
         static bool& get_enum_to_string_ref() noexcept {
@@ -55,7 +55,7 @@ export namespace essence::serialization {
     };
 
     /**
-     * @brief A JSON serializer by using the meta reflection implementation in this project.
+     * A JSON serializer by using the meta reflection implementation in this project.
      * @tparam T The type of the value.
      */
     template <typename T, typename = void>
@@ -71,7 +71,7 @@ export namespace essence::serialization {
         }
 
         /**
-         * @brief Serializes a primitive value to a JSON value.
+         * Serializes a primitive value to a JSON value.
          * @tparam BasicJson The type of the JSON.
          * @tparam U A type placeholder to support overload resolution.
          * @param json The JSON value.
@@ -83,7 +83,7 @@ export namespace essence::serialization {
         }
 
         /**
-         * @brief Deserializes a JSON value to a primitive value.
+         * Deserializes a JSON value to a primitive value.
          * @tparam BasicJson The type of the JSON.
          * @tparam U A type placeholder to support overload resolution.
          * @param json The JSON value.
@@ -95,7 +95,7 @@ export namespace essence::serialization {
         }
 
         /**
-         * @brief Serializes a std::optional<> value to a JSON value.
+         * Serializes a std::optional<> value to a JSON value.
          * @tparam BasicJson The type of the JSON.
          * @tparam U A type placeholder to support overload resolution.
          * @param json The JSON value.
@@ -111,7 +111,7 @@ export namespace essence::serialization {
         }
 
         /**
-         * @brief Deserializes a JSON value to a std::optional<> value.
+         * Deserializes a JSON value to a std::optional<> value.
          * @tparam BasicJson The type of the JSON.
          * @tparam U A type placeholder to support overload resolution.
          * @param json The JSON value.
@@ -130,7 +130,7 @@ export namespace essence::serialization {
         }
 
         /**
-         * @brief Serializes a non-iterable class object to a JSON value.
+         * Serializes a non-iterable class object to a JSON value.
          * @tparam BasicJson The type of the JSON.
          * @tparam U A type placeholder to support overload resolution.
          * @param json The JSON value.
@@ -162,7 +162,7 @@ export namespace essence::serialization {
         }
 
         /**
-         * @brief Deserializes a JSON value to a non-iterable class object.
+         * Deserializes a JSON value to a non-iterable class object.
          * @tparam BasicJson The type of the JSON.
          * @tparam U A type placeholder to support overload resolution.
          * @param json The JSON value.
@@ -186,7 +186,7 @@ export namespace essence::serialization {
         }
 
         /**
-         * @brief Serializes an enumeration value to a JSON value.
+         * Serializes an enumeration value to a JSON value.
          * @tparam BasicJson The type of the JSON.
          * @tparam U A type placeholder to support overload resolution.
          * @param json The JSON value.
@@ -203,7 +203,7 @@ export namespace essence::serialization {
         }
 
         /**
-         * @brief Deserializes a JSON value to an enumeration value.
+         * Deserializes a JSON value to an enumeration value.
          * @tparam BasicJson The type of the JSON.
          * @tparam U A type placeholder to support overload resolution.
          * @param json The JSON value.

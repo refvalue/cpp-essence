@@ -26,7 +26,7 @@ import std;
 
 export namespace essence {
     /**
-     * @brief Describes a YUV color.
+     * Describes a YUV color.
      */
     struct alignas(std::uint32_t) yuv_color {
         std::uint8_t y{};
@@ -35,7 +35,7 @@ export namespace essence {
     };
 
     /**
-     * @brief Constructs a YUV color from an ARGB color.
+     * Constructs a YUV color from an ARGB color.
      * @param color The RGB color omitting the alpha channel.
      * @return The YUV color.
      */

@@ -31,7 +31,7 @@ import std;
 
 export namespace essence::io {
     /**
-     * @brief Makes a CMRC file system operator.
+     * Makes a CMRC file system operator.
      * @tparam T The concrete type of the CMRC file system object.
      * @param fs The CMRC file system object.
      * @return The CMRC file system operator.
@@ -43,7 +43,7 @@ export namespace essence::io {
     }
 
     /**
-     * @brief Gets the native file system operator.
+     * Gets the native file system operator.
      * @return The native file system operator.
      */
     ES_API(CPPESSENCE) const abstract::virtual_fs_operator& get_native_fs_operator();

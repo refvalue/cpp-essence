@@ -27,7 +27,7 @@ import std;
 
 export namespace essence::i18n::abstract {
     /**
-     * @brief A translator for retrieving texts in multi-languages.
+     * A translator for retrieving texts in multi-languages.
      */
     class translator {
     public:
@@ -36,7 +36,7 @@ export namespace essence::i18n::abstract {
         explicit translator(T&& value) : wrapper_{std::make_shared<wrapper<T>>(std::forward<T>(value))} {}
 
         /**
-         * @brief Gets the version of the translator.
+         * Gets the version of the translator.
          * @return The version.
          */
         [[nodiscard]] std::uint32_t version() const {
@@ -44,7 +44,7 @@ export namespace essence::i18n::abstract {
         }
 
         /**
-         * @brief Gets the underlying virtual filesystem operator.
+         * Gets the underlying virtual filesystem operator.
          * @return The virtual filesystem operator.
          */
         [[nodiscard]] io::abstract::virtual_fs_operator virtual_fs() const {
@@ -52,7 +52,7 @@ export namespace essence::i18n::abstract {
         }
 
         /**
-         * @brief Sets the underlying virtual filesystem operator.
+         * Sets the underlying virtual filesystem operator.
          * @param fs_operator The virtual filesystem operator.
          */
         void set_virtual_fs(io::abstract::virtual_fs_operator fs_operator) const {
@@ -60,7 +60,7 @@ export namespace essence::i18n::abstract {
         }
 
         /**
-         * @brief Gets the working directory.
+         * Gets the working directory.
          * @return The working directory.
          */
         [[nodiscard]] abi::string working_directory() const {
@@ -68,7 +68,7 @@ export namespace essence::i18n::abstract {
         }
 
         /**
-         * @brief Sets the working directory.
+         * Sets the working directory.
          * @param directory The working directory.
          */
         void set_working_directory(std::string_view directory) const {
@@ -76,7 +76,7 @@ export namespace essence::i18n::abstract {
         }
 
         /**
-         * @brief Gets the current language.
+         * Gets the current language.
          * @return The current language.
          */
         [[nodiscard]] abi::string language() const {
@@ -84,7 +84,7 @@ export namespace essence::i18n::abstract {
         }
 
         /**
-         * @brief Sets the current language.
+         * Sets the current language.
          * @param name The current language.
          */
         void set_language(std::string_view name) const {
@@ -92,7 +92,7 @@ export namespace essence::i18n::abstract {
         }
 
         /**
-         * @brief Gets a text in the current language.
+         * Gets a text in the current language.
          * @param name The unique name of the text.
          * @return The text or the name if not exists.
          */

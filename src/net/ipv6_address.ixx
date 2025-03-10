@@ -30,14 +30,14 @@ import std;
 
 export namespace essence::net {
     /**
-     * @brief Represents an IPv6 address.
+     * Represents an IPv6 address.
      */
     class ipv6_address {
     public:
         static constexpr std::size_t value_size        = 16;
         static constexpr std::size_t value_group_count = value_size / 2;
         /**
-         * @brief On linux systems, the length of a stringified zone ID must be
+         * On linux systems, the length of a stringified zone ID must be
          *        not longer than 16 bytes including the null-terminating character.
          *        On Windows, the zone ID must be a decimal natural number.
          * @see https://elixir.bootlin.com/linux/v5.6/source/include/uapi/linux/if.h#L33
@@ -48,12 +48,12 @@ export namespace essence::net {
         using zone_id_type = std::array<char, max_zone_id_size>;
 
         /**
-         * @brief Creates an instance.
+         * Creates an instance.
          */
         constexpr ipv6_address() noexcept : value_{}, zone_id_{} {}
 
         /**
-         * @brief Creates an instance from an initializer list.
+         * Creates an instance from an initializer list.
          * @param address The IPv6 address.
          * @param zone_id  The zone ID of the scoped address.
          */
@@ -63,7 +63,7 @@ export namespace essence::net {
                   zone_id} {}
 
         /**
-         * @brief Creates an instance from a 16-byte array.
+         * Creates an instance from a 16-byte array.
          * @param address The IPv6 address.
          * @param zone_id The zone ID of the scoped address.
          */
@@ -77,7 +77,7 @@ export namespace essence::net {
         constexpr auto operator<=>(const ipv6_address&) const noexcept = default;
 
         /**
-         * @brief Gets the underlying array.
+         * Gets the underlying array.
          * @return The underlying array.
          */
         [[nodiscard]] constexpr value_type& get() noexcept {
@@ -85,7 +85,7 @@ export namespace essence::net {
         }
 
         /**
-         * @brief Gets the underlying array.
+         * Gets the underlying array.
          * @return The underlying array.
          */
         [[nodiscard]] constexpr const value_type& get() const noexcept {
@@ -93,7 +93,7 @@ export namespace essence::net {
         }
 
         /**
-         * @brief Gets the zone ID.
+         * Gets the zone ID.
          * @return The zone ID.
          */
         [[nodiscard]] constexpr const char* zone_id() const noexcept {
@@ -101,7 +101,7 @@ export namespace essence::net {
         }
 
         /**
-         * @brief Sets the zone ID.
+         * Sets the zone ID.
          * @param zone_id The zone ID.
          */
         constexpr void set_zone_id(std::string_view zone_id) noexcept {
@@ -114,14 +114,14 @@ export namespace essence::net {
     };
 
     /**
-     * @brief Convert a string to an IPv6 address.
+     * Convert a string to an IPv6 address.
      * @param str The string.
      * @return The IPv6 address if succeeds; otherwise std::nullopt.
      */
     ES_API(CPPESSENCE) std::optional<ipv6_address> parse_ipv6_address(std::string_view str);
 
     /**
-     * @brief Convert a string to an IPv6 address.
+     * Convert a string to an IPv6 address.
      * @tparam T The type of the ipv6_address class.
      * @param str The string.
      * @return The IPv6 address if succeeds; otherwise std::nullopt.
@@ -132,7 +132,7 @@ export namespace essence::net {
     }
 
     /**
-     * @brief Converts an IPv6 address to a string.
+     * Converts an IPv6 address to a string.
      * @param address The IPv6 address.
      * @return The string.
      */

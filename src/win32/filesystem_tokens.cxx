@@ -24,38 +24,20 @@ module;
 
 #include <essence/char8_t_remediation.hpp>
 
-module essence.net;
+module essence.win32:filesystem_tokens;
+import essence.basic;
+import std;
 
-namespace essence::net {
-    std::optional<ipv4_address> parse_ipv4_address(std::string_view str) {
-        const auto adapter = std::views::split(str, U8('.')) | std::views::transform([](const auto& inner) {
-            auto component = inner | std::views::common | std::ranges::to<std::string>();
+namespace essence::win {
+    struct filesystem_tokens {
+        static constexpr char generic_separator              = U8('/');
+        static constexpr char preferred_separator            = U8('\\');
+        static constexpr char command_line_separator         = U8(' ');
+        static constexpr char quotation_mark                 = U8('\"');
+        static constexpr wchar_t command_line_separator_wide = L' ';
 
-            return essence::from_string<std::uint8_t>(component);
-        }) | std::views::take(ipv4_address::value_size);
-
-        auto result = std::make_optional<ipv4_address>();
-        auto iter   = result->get().begin();
-
-        for (auto&& item : adapter) {
-            if (!item) {
-                break;
-            }
-
-            (*iter++) = *item;
-        }
-
-        // Checks an illegal IPv4 address.
-        if (iter != result->get().end()) {
-            result.reset();
-        }
-
-        return result;
-    }
-
-    abi::string to_string(const ipv4_address& address) {
-        auto&& array = address.get();
-
-        return format_as<abi::string>(U8("{}.{}.{}.{}"), array[0], array[1], array[2], array[3]);
-    }
-} // namespace essence::net
+        static constexpr std::string_view escaped_quotation_mark{U8("\\\"")};
+        static constexpr std::string_view command_line_special_group{U8(" \"")};
+        static constexpr std::string_view preferred_separator_group{&preferred_separator, 1U};
+    };
+} // namespace essence::win

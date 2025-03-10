@@ -31,13 +31,26 @@ import std;
 
 export namespace essence {
     /**
-     * @brief Gets the command-line arguments.
+     * Gets the executable path.
+     * @return The executable path.
+     */
+    ES_API(CPPESSENCE) abi::string get_executable_path();
+
+    /**
+     * Gets the module (shared object or dynamic library) path by the address of a symbol that belongs to that module.
+     * @param address The address of a symbol.
+     * @return The path of the module or an empty string if failed.
+     */
+    ES_API(CPPESSENCE) abi::string get_module_path(const void* address);
+
+    /**
+     * Gets the command-line arguments.
      * @return The command-line arguments.
      */
     ES_API(CPPESSENCE) abi::vector<abi::string> get_command_line_args();
 
     /**
-     * @brief Schedules deleting a directory when the application exits. The operation cannot be cancelled.
+     * Schedules deleting a directory when the application exits. The operation cannot be cancelled.
      * @param path The path.
      */
     ES_API(CPPESSENCE) void delete_directory_at_exit(std::string_view path);

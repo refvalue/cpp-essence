@@ -36,7 +36,7 @@ import std;
 
 export namespace essence::net {
     /**
-     * @brief An HTTP client for JSON input and output.
+     * An HTTP client for JSON input and output.
      */
     class http_client : public http_client_abstract<http_client> {
     public:

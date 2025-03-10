@@ -32,20 +32,20 @@ import std;
 
 export namespace essence::crypto {
     /**
-     * @brief Creates a chunk processor for Base64 encoding.
+     * Creates a chunk processor for Base64 encoding.
      * @param newlines Whether to append a newline every 64 characters to satisfy the requirements of the PEM format.
      * @return The chunk processor.
      */
     ES_API(CPPESSENCE) abstract::chunk_processor make_base64_encoder(bool newlines = false);
 
     /**
-     * @brief Creates a chunk processor for Base64 decoding.
+     * Creates a chunk processor for Base64 decoding.
      * @return The chunk processor.
      */
     ES_API(CPPESSENCE) abstract::chunk_processor make_base64_decoder();
 
     /**
-     * @brief Creates a chunk processor for a symmetric cipher.
+     * Creates a chunk processor for a symmetric cipher.
      * @param cipher_name The name of the cipher.
      * @param padding_mode The padding mode.
      * @param key The symmetric key.
@@ -59,7 +59,7 @@ export namespace essence::crypto {
         bool encryption = true);
 
     /**
-     * @brief Creates a chunk processor for a symmetric cipher.
+     * Creates a chunk processor for a symmetric cipher.
      * @tparam KeyRange The type of the key range.
      * @tparam IVRange The type of the IV range.
      * @param cipher_name The name of the cipher.
@@ -77,7 +77,7 @@ export namespace essence::crypto {
     }
 
     /**
-     * @brief Chains multiple chunk processor together sequentially and returns a new single chunk processor.
+     * Chains multiple chunk processor together sequentially and returns a new single chunk processor.
      * @param processors The processors to be chained.
      * @return The new single chunk processors.
      */

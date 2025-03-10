@@ -25,7 +25,7 @@ import std;
 
 export namespace essence {
     /**
-     * @brief Checks if an object is similar to essence::rational.
+     * Checks if an object is similar to essence::rational.
      */
     template <typename T>
     concept similar_rational = requires(std::int64_t a, std::int64_t b) {
@@ -42,7 +42,7 @@ export namespace essence {
     };
 
     /**
-     * @brief Represents a rational number consisting of its corresponding numerator and denominator.
+     * Represents a rational number consisting of its corresponding numerator and denominator.
      */
     struct rational {
         std::int64_t numerator{};
@@ -76,7 +76,7 @@ export namespace essence {
         rational& operator=(rational&&) noexcept = default;
 
         /**
-         * @brief Converts to a similar object.
+         * Converts to a similar object.
          * @tparam T The type of the similar object.
          */
         template <typename T>
@@ -86,7 +86,7 @@ export namespace essence {
         }
 
         /**
-         * @brief Converts to a floating-point number.
+         * Converts to a floating-point number.
          * @tparam T The type of the floating-point number.
          */
         template <std::floating_point T>
@@ -111,7 +111,7 @@ export namespace essence {
         }
 
         /**
-         * @brief Gets the reciprocal of the rational.
+         * Gets the reciprocal of the rational.
          * @return The reciprocal.
          */
         [[nodiscard]] constexpr rational reciprocal() const noexcept {
@@ -170,7 +170,7 @@ export namespace essence {
     };
 
     /**
-     * @brief Gets the nearest integer larger than the given rational.
+     * Gets the nearest integer larger than the given rational.
      * @param number The rational.
      * @return The nearest larger integer.
      */

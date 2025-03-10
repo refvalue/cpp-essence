@@ -27,7 +27,7 @@ import std;
 
 export namespace essence::imaging::abstract {
     /**
-     * @brief Extracts a general image header from image file data.
+     * Extracts a general image header from image file data.
      */
     class image_header_extractor {
     public:
@@ -36,7 +36,7 @@ export namespace essence::imaging::abstract {
         explicit image_header_extractor(T&& value) : wrapper_{std::make_shared<wrapper<T>>(std::forward<T>(value))} {}
 
         /**
-         * @brief Gets the underlying type hint.
+         * Gets the underlying type hint.
          * @return The type hint.
          */
         [[nodiscard]] io::abstract::bitstream_type_hint hint() const {
@@ -44,7 +44,7 @@ export namespace essence::imaging::abstract {
         }
 
         /**
-         * @brief Extracts the general image header from a standard input stream.
+         * Extracts the general image header from a standard input stream.
          * @param stream The input stream.
          * @return The image header if succeeds; otherwise std::nullopt.
          */
@@ -53,7 +53,7 @@ export namespace essence::imaging::abstract {
         }
 
         /**
-         * @brief Extracts the general image header from a memory buffer.
+         * Extracts the general image header from a memory buffer.
          * @param buffer The memory buffer.
          * @return The image header if succeeds; otherwise std::nullopt.
          */

@@ -27,7 +27,7 @@ import std;
 
 export namespace essence::i18n {
     /**
-     * @brief Formats a group of arguments with a format string.
+     * Formats a group of arguments with a format string.
      *        All string-view-like arguments are translated to corresponding localized texts if available.
      * @tparam Args The types of the arguments.
      * @param locale The user-specified locale.
@@ -41,7 +41,7 @@ export namespace essence::i18n {
     }
 
     /**
-     * @brief Formats a group of arguments with a format string.
+     * Formats a group of arguments with a format string.
      *        All string-view-like arguments are translated to corresponding localized texts if available.
      *        The current global locale is used.
      * @tparam Args The types of the arguments.
@@ -55,7 +55,7 @@ export namespace essence::i18n {
     }
 
     /**
-     * @brief Formats a group of arguments with a format string to a std::basic_string<>.
+     * Formats a group of arguments with a format string to a std::basic_string<>.
      *        All string-view-like arguments are translated to corresponding localized texts if available.
      * @tparam S The concrete type of the std::basic_string<>.
      * @tparam Args The types of the arguments.
@@ -74,7 +74,7 @@ export namespace essence::i18n {
     }
 
     /**
-     * @brief Formats a group of arguments with a format string to a std::basic_string<>.
+     * Formats a group of arguments with a format string to a std::basic_string<>.
      *        All string-view-like arguments are translated to corresponding localized texts if available.
      *        The current global locale is used.
      * @tparam S The concrete type of the std::basic_string<>.

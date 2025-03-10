@@ -25,7 +25,7 @@ import std;
 
 export namespace essence::io::abstract {
     /**
-     * @brief Provides an ability to operator files on a virtual file system defined by the user.
+     * Provides an ability to operator files on a virtual file system defined by the user.
      */
     class virtual_fs_operator {
     public:
@@ -34,7 +34,7 @@ export namespace essence::io::abstract {
         explicit virtual_fs_operator(T&& value) : wrapper_{std::make_shared<wrapper<T>>(std::forward<T>(value))} {}
 
         /**
-         * @brief Checks whether a file exists.
+         * Checks whether a file exists.
          * @param path The path of the file.
          * @return True if the file exists; otherwise false.
          */
@@ -43,7 +43,7 @@ export namespace essence::io::abstract {
         }
 
         /**
-         * @brief Checks whether a path names a regular file.
+         * Checks whether a path names a regular file.
          * @param path The path.
          * @return True if the path names a regular file; otherwise false.
          */
@@ -52,7 +52,7 @@ export namespace essence::io::abstract {
         }
 
         /**
-         * @brief Checks whether a path names a directory.
+         * Checks whether a path names a directory.
          * @param path The path.
          * @return True if the path names a directory; otherwise false.
          */
@@ -61,7 +61,7 @@ export namespace essence::io::abstract {
         }
 
         /**
-         * @brief Opens a file in read-write mode.
+         * Opens a file in read-write mode.
          * @param path The path of the file.
          * @param mode The open mode.
          * @return A std::iostream to read or write the file.
@@ -72,7 +72,7 @@ export namespace essence::io::abstract {
         }
 
         /**
-         * @brief Opens a file in read-only mode.
+         * Opens a file in read-only mode.
          * @param path The path of the file.
          * @param mode The open mode.
          * @return A std::istream to read the file.
@@ -83,7 +83,7 @@ export namespace essence::io::abstract {
         }
 
         /**
-         * @brief Opens a file in write-only mode.
+         * Opens a file in write-only mode.
          * @param path The path of the file.
          * @param mode The open mode.
          * @return A std::istream to write the file.

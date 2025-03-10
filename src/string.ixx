@@ -36,7 +36,7 @@ export namespace essence {
     constexpr std::string_view ascii_blank_chars{U8(" \t")};
 
     /**
-     * @brief A hash function for const char*, std::string_view and std::string.
+     * A hash function for const char*, std::string_view and std::string.
      */
     struct string_hash {
         using hash_type      = std::hash<std::string_view>;
@@ -56,7 +56,7 @@ export namespace essence {
     };
 
     /**
-     * @brief A case-insensitive hash function for const char*, std::string_view and std::string.
+     * A case-insensitive hash function for const char*, std::string_view and std::string.
      */
     struct icase_string_hash {
         using is_transparent = void;
@@ -79,7 +79,7 @@ export namespace essence {
     };
 
     /**
-     * @brief A case-insensitive equality comparer for two strings.
+     * A case-insensitive equality comparer for two strings.
      */
     struct icase_string_comparer {
         constexpr bool operator()(std::string_view left, std::string_view right) const {
@@ -90,7 +90,7 @@ export namespace essence {
     };
 
     /**
-     * @brief Checks whether the first string is lexicographically less than the second string,
+     * Checks whether the first string is lexicographically less than the second string,
               in a case-insensitive way.
      */
     struct icase_lexicographical_compare {
@@ -101,7 +101,7 @@ export namespace essence {
     };
 
     /**
-     * @brief Removes a group of characters from the beginning of a string.
+     * Removes a group of characters from the beginning of a string.
      * @param str The string.
      * @param group The group of characters.
      * @return The result.
@@ -115,7 +115,7 @@ export namespace essence {
     }
 
     /**
-     * @brief Removes a group of characters from the end of a string.
+     * Removes a group of characters from the end of a string.
      * @param str The string.
      * @param group The group of characters.
      * @return The result.
@@ -125,7 +125,7 @@ export namespace essence {
     }
 
     /**
-     * @brief Removes a group of characters from the beginning and the end of a string.
+     * Removes a group of characters from the beginning and the end of a string.
      * @param str The string.
      * @param group The group of characters.
      * @return The result.
@@ -135,14 +135,14 @@ export namespace essence {
     }
 
     /**
-     * @brief Lowercases a string.
+     * Lowercases a string.
      * @param str The string.
      * @return The result.
      */
     ES_API(CPPESSENCE) abi::string to_lower(std::string_view str);
 
     /**
-     * @brief Capitalizes a string.
+     * Capitalizes a string.
      * @param str The string.
      * @return The result.
      *

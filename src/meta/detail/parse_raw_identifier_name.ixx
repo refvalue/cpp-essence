@@ -38,7 +38,7 @@ import std;
 
 export namespace essence::meta::detail {
     /**
-     * @brief Gets a short identifier name from a raw name.
+     * Gets a short identifier name from a raw name.
      * @param raw_name The raw name.
      * @return The short identifier name.
      */
@@ -48,7 +48,7 @@ export namespace essence::meta::detail {
     }
 
     /**
-     * @brief Trims the prefix of the signature of a helper function and returns the remaining part.
+     * Trims the prefix of the signature of a helper function and returns the remaining part.
      * @param prefix The prefix to be trimmed away.
      * @param signature The signature of the helper function.
      * @param param The parameter for parsing the identifier.

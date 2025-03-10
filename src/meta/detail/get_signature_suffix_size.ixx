@@ -28,7 +28,7 @@ import std;
 
 export namespace essence::meta::detail {
     /**
-     * @brief Gets the size of the suffix after the significant part within a function signature.
+     * Gets the size of the suffix after the significant part within a function signature.
      * @param signature The function signature.
      * @return The size of the suffix.
      */

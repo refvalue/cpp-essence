@@ -47,7 +47,7 @@ export namespace essence::meta::detail {
 #endif
 
     /**
-     * @brief Parses a function signature into a friendly function name.
+     * Parses a function signature into a friendly function name.
      * @param signature The signature.
      * @return The function name.
      */

@@ -27,7 +27,7 @@ import std;
 
 export namespace essence::meta::detail {
     /**
-     * @brief Parses the raw name of a data member into a pure name.
+     * Parses the raw name of a data member into a pure name.
      * @param raw_name The raw name of the data member.
      * @return The name of the data member.
      */

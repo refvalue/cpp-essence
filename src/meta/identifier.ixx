@@ -26,7 +26,7 @@ import std;
 
 export namespace essence::meta {
     /**
-     * @brief Gets the literal string of a type.
+     * Gets the literal string of a type.
      * @tparam T The type.
      * @tparam Param The parameter for parsing the identifier.
      * @return The literal string.
@@ -41,7 +41,7 @@ export namespace essence::meta {
     }
 
     /**
-     * @brief Gets the literal string of a literal value attached to a concrete type.
+     * Gets the literal string of a literal value attached to a concrete type.
      * @tparam T The type, to which the literal value is attached.
      * @tparam Value The literal value, e.g. an enumeration or a function pointer.
      * @tparam Param The parameter for parsing the identifier.
@@ -57,7 +57,7 @@ export namespace essence::meta {
     };
 
     /**
-     * @brief Gets the friendly name of a function without arguments.
+     * Gets the friendly name of a function without arguments.
      * @tparam Value The function pointer.
      * @tparam Param The parameter for parsing the identifier.
      * @return The friendly name.

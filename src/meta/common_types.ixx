@@ -24,26 +24,26 @@ export module essence.meta:common_types;
 
 export namespace essence::meta {
     /**
-     * @brief The available naming conventions.
+     * The available naming conventions.
      */
     enum class naming_convention {
         /**
-         * @brief Leaves unchanged.
+         * Leaves unchanged.
          */
         none = 0,
 
         /**
-         * @brief The camel case.
+         * The camel case.
          */
         camel_case,
 
         /**
-         * @brief The pascal case.
+         * The pascal case.
          */
         pascal_case,
 
         /**
-         * @brief The snake case.
+         * The snake case.
          */
         snake_case,
 

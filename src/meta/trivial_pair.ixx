@@ -24,7 +24,7 @@ export module essence.meta:trivial_pair;
 
 export namespace essence::meta {
     /**
-     * @brief A pair, which is trivially constructible and consists of two values.
+     * A pair, which is trivially constructible and consists of two values.
      * @tparam T The type of the first value.
      * @tparam U The type of the second value.
      */
@@ -34,12 +34,12 @@ export namespace essence::meta {
         using second_type = U;
 
         /**
-         * @brief The first value.
+         * The first value.
          */
         T first;
 
         /**
-         * @brief The second value.
+         * The second value.
          */
         U second;
     };
