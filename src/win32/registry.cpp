@@ -161,7 +161,7 @@ namespace essence::win32 {
     }
 
     void set_registry(std::string_view path, std::string_view name, std::span<const std::string> values) {
-        auto multi_sz = join_with(values | std::views::transform(&to_native_string), std::array{L'\0'})
+        auto multi_sz = values | std::views::transform(&to_native_string) | std::views::join_with(std::array{L'\0'})
                       | std::ranges::to<std::wstring>();
 
         multi_sz.append(2, L'\0');
@@ -200,4 +200,4 @@ namespace essence::win32 {
         check_registry_error(RegDeleteKeyValueW(key, sub_key.c_str(), to_native_string(name).c_str()), U8("Key"), path,
             U8("Name"), name, U8("Message"), U8("Failed to delete the registry value."));
     }
-} // namespace essence::win
+} // namespace essence::win32

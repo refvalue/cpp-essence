@@ -134,7 +134,7 @@ export namespace essence::cli {
                 hints.append(type_id.friendly_name());
                 hints.push_back(keyword_pattern.back());
             } else {
-                auto joint = join_with(valid_value_strs_, delimiter);
+                auto joint = valid_value_strs_ | std::views::join_with(delimiter);
 
                 hints.assign(joint.begin(), joint.end());
             }
@@ -225,7 +225,7 @@ export namespace essence::cli {
             // If T is a range, creates a comma-separated string with its elements.
             if constexpr (!std_basic_string<T> && extendable_contiguous_range<T>) {
                 auto strs  = (*default_value_) | std::views::transform(&option::to_element_string);
-                auto joint = join_with(strs, delimiter);
+                auto joint = strs | std::views::join_with(delimiter);
 
                 default_value_str_.emplace(joint.begin(), joint.end());
             } else {
@@ -288,7 +288,8 @@ export namespace essence::cli {
 
         void validate_range(const element_type& value, bool& success) const {
             if (success = valid_values_.empty() ? true : valid_values_.contains(value); !success) {
-                const auto values = join_with(valid_value_strs_, delimiter) | std::ranges::to<abi::string>();
+                const auto values =
+                    valid_value_strs_ | std::views::join_with(delimiter) | std::ranges::to<abi::string>();
 
                 raise_error(U8("The value was out of range."));
                 raise_error(U8("One of the following values is allowed:"));

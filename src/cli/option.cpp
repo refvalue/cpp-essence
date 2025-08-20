@@ -112,7 +112,7 @@ namespace essence::cli {
             }
 
             [[nodiscard]] abi::string name_hints() const {
-                return join_with(aliases_, std::string_view{U8(",")}) | std::ranges::to<abi::string>();
+                return aliases_ | std::views::join_with(std::string_view{U8(",")}) | std::ranges::to<abi::string>();
             }
 
             [[nodiscard]] static abi::string value_hints() {
