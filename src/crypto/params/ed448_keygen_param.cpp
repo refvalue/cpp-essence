@@ -30,6 +30,6 @@ import essence.basic;
 
 namespace essence::crypto {
     void* ed448_keygen_param::generate_key_blob() {
-        return evp_pkey_q_keygen(U8("ED448")).release();
+        return evp_pkey_q_keygen("ED448").release();
     }
 } // namespace essence::crypto

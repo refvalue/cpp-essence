@@ -30,14 +30,14 @@ import std;
 
 namespace essence::win32 {
     struct filesystem_tokens {
-        static constexpr char generic_separator              = U8('/');
-        static constexpr char preferred_separator            = U8('\\');
-        static constexpr char command_line_separator         = U8(' ');
-        static constexpr char quotation_mark                 = U8('\"');
+        static constexpr char generic_separator              = '/';
+        static constexpr char preferred_separator            = '\\';
+        static constexpr char command_line_separator         = ' ';
+        static constexpr char quotation_mark                 = '\"';
         static constexpr wchar_t command_line_separator_wide = L' ';
 
-        static constexpr std::string_view escaped_quotation_mark{U8("\\\"")};
-        static constexpr std::string_view command_line_special_group{U8(" \"")};
+        static constexpr std::string_view escaped_quotation_mark{"\\\""};
+        static constexpr std::string_view command_line_special_group{" \""};
         static constexpr std::string_view preferred_separator_group{&preferred_separator, 1U};
     };
-} // namespace essence::win
+} // namespace essence::win32

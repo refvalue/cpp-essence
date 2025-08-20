@@ -50,9 +50,9 @@ namespace essence::crypto {
         EVP_PKEY* load_key_impl(Tag, BIO* bio, const password_request_handler& handler) {
             static constexpr auto pair = [] {
                 if constexpr (std::same_as<Tag, use_public_tag>) {
-                    return std::pair{U8("Public Key"), &PEM_read_bio_PUBKEY};
+                    return std::pair{"Public Key", &PEM_read_bio_PUBKEY};
                 } else {
-                    return std::pair{U8("Private Key"), &PEM_read_bio_PrivateKey};
+                    return std::pair{"Private Key", &PEM_read_bio_PrivateKey};
                 }
             }();
 
@@ -83,14 +83,14 @@ namespace essence::crypto {
                 return result;
             }
 
-            throw crypto_error{U8("Category"), pair.first, U8("Message"), U8("Failed to load the key from the BIO.")};
+            throw crypto_error{"Category", pair.first, "Message", "Failed to load the key from the BIO."};
         }
 
         template <typename Tag>
         void save_key_impl(
             Tag, BIO* bio, const EVP_PKEY* blob, conditional_encrypted_key_info<Tag> encrypted_key_info) {
             static constexpr std::string_view category{
-                std::same_as<Tag, use_public_tag> ? U8("Public Key") : U8("Private Key")};
+                std::same_as<Tag, use_public_tag> ? "Public Key" : "Private Key"};
 
             // The write routines return 1 for success or 0 for failure.
             if (auto code =
@@ -108,18 +108,18 @@ namespace essence::crypto {
                                     static_cast<std::int32_t>(encrypted_key_info->password.size()), nullptr, nullptr);
                             }
 
-                            throw crypto_error{U8("Category"), category, U8("Cipher"), encrypted_key_info->cipher_name,
-                                U8("Message"), U8("Failed to find the symmetric cipher.")};
+                            throw crypto_error{"Category", category, "Cipher", encrypted_key_info->cipher_name,
+                                "Message", "Failed to find the symmetric cipher."};
                         }
                     }();
                 code != 1) {
-                throw crypto_error{U8("Category"), category, U8("Message"), U8("Failed to save the key into the BIO.")};
+                throw crypto_error{"Category", category, "Message", "Failed to save the key into the BIO."};
             }
         }
 
         template <typename Tag>
         EVP_PKEY* load_key(Tag tag, zstring_view path, const password_request_handler& handler) {
-            const auto bio = make_file_bio_unique(path, U8("rb"));
+            const auto bio = make_file_bio_unique(path, "rb");
 
             return load_key_impl(tag, bio.get(), handler);
         }
@@ -134,7 +134,7 @@ namespace essence::crypto {
         template <typename Tag>
         void save_key(
             Tag tag, zstring_view path, const EVP_PKEY* blob, conditional_encrypted_key_info<Tag> cipher_info = {}) {
-            const auto bio = make_file_bio_unique(path, U8("wb"));
+            const auto bio = make_file_bio_unique(path, "wb");
 
             save_key_impl(tag, bio.get(), blob, cipher_info);
         }
@@ -155,8 +155,8 @@ namespace essence::crypto {
     class asymmetric_key::impl {
     public:
         explicit impl(void* blob)
-            : blob_{blob ? static_cast<EVP_PKEY*>(blob)
-                         : throw formatted_runtime_error{U8("The blob must be non-null.")}} {}
+            : blob_{blob ? static_cast<EVP_PKEY*>(blob) : throw formatted_runtime_error{"The blob must be non-null."}} {
+        }
 
         [[nodiscard]] EVP_PKEY* blob() const noexcept {
             return blob_.get();

@@ -26,6 +26,7 @@ module;
 
 module essence.io;
 import essence.basic;
+import std;
 
 namespace essence::io {
     namespace {
@@ -65,7 +66,7 @@ namespace essence::io {
               hints_{hints.begin(), hints.end()} {
 
             if (hints_.empty()) {
-                throw formatted_runtime_error{U8("The input type hints cannot be empty.")};
+                throw formatted_runtime_error{"The input type hints cannot be empty."};
             }
 
             init_max_signature_size<true>();
@@ -85,7 +86,7 @@ namespace essence::io {
                 stream.open(std::filesystem::path{to_u8string(path)}, std::ios::in | std::ios::binary);
             } catch (const std::exception& ex) {
                 throw formatted_runtime_error{
-                    U8("File"), path, U8("Message"), U8("Failed to open the file."), U8("Internal"), ex.what()};
+                    "File", path, "Message", "Failed to open the file.", "Internal", ex.what()};
             }
 
             return identify(stream);

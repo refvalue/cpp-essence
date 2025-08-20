@@ -30,6 +30,6 @@ import essence.basic;
 
 namespace essence::crypto {
     void* sm2_keygen_param::generate_key_blob() {
-        return evp_pkey_q_keygen(U8("SM2")).release();
+        return evp_pkey_q_keygen("SM2").release();
     }
 } // namespace essence::crypto

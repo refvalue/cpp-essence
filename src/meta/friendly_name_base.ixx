@@ -48,121 +48,121 @@ export namespace essence::meta {
 
     template <>
     struct friendly_name<std::int8_t> {
-        static constexpr std::string_view value{U8("int8")};
+        static constexpr std::string_view value{"int8"};
     };
 
     template <>
     struct friendly_name<std::int16_t> {
-        static constexpr std::string_view value{U8("int16")};
+        static constexpr std::string_view value{"int16"};
     };
 
     template <>
     struct friendly_name<std::int32_t> {
-        static constexpr std::string_view value{U8("int32")};
+        static constexpr std::string_view value{"int32"};
     };
 
     template <>
     struct friendly_name<std::int64_t> {
-        static constexpr std::string_view value{U8("int64")};
+        static constexpr std::string_view value{"int64"};
     };
 
     template <>
     struct friendly_name<std::uint8_t> {
-        static constexpr std::string_view value{U8("uint8")};
+        static constexpr std::string_view value{"uint8"};
     };
 
     template <>
     struct friendly_name<std::uint16_t> {
-        static constexpr std::string_view value{U8("uint16")};
+        static constexpr std::string_view value{"uint16"};
     };
 
     template <>
     struct friendly_name<std::uint32_t> {
-        static constexpr std::string_view value{U8("uint32")};
+        static constexpr std::string_view value{"uint32"};
     };
 
     template <>
     struct friendly_name<std::uint64_t> {
-        static constexpr std::string_view value{U8("uint64")};
+        static constexpr std::string_view value{"uint64"};
     };
 
     template <>
     struct friendly_name<float> {
-        static constexpr std::string_view value{U8("float")};
+        static constexpr std::string_view value{"float"};
     };
 
     template <>
     struct friendly_name<double> {
-        static constexpr std::string_view value{U8("double")};
+        static constexpr std::string_view value{"double"};
     };
 
     template <>
     struct friendly_name<long double> {
-        static constexpr std::string_view value{U8("long double")};
+        static constexpr std::string_view value{"long double"};
     };
 
     template <>
     struct friendly_name<bool> {
-        static constexpr std::string_view value{U8("boolean")};
+        static constexpr std::string_view value{"boolean"};
     };
 
     template <>
     struct friendly_name<std::byte> {
-        static constexpr std::string_view value{U8("byte")};
+        static constexpr std::string_view value{"byte"};
     };
 
     template <>
     struct friendly_name<char> {
-        static constexpr std::string_view value{U8("char")};
+        static constexpr std::string_view value{"char"};
     };
 
     template <>
     struct friendly_name<wchar_t> {
-        static constexpr std::string_view value{U8("wchar")};
+        static constexpr std::string_view value{"wchar"};
     };
 
     template <>
     struct friendly_name<char8_t> {
-        static constexpr std::string_view value{U8("u8char")};
+        static constexpr std::string_view value{"u8char"};
     };
 
     template <>
     struct friendly_name<char16_t> {
-        static constexpr std::string_view value{U8("u16char")};
+        static constexpr std::string_view value{"u16char"};
     };
 
     template <>
     struct friendly_name<char32_t> {
-        static constexpr std::string_view value{U8("u32char")};
+        static constexpr std::string_view value{"u32char"};
     };
 
     template <std_basic_string T>
         requires std::same_as<typename T::value_type, char>
     struct friendly_name<T> {
-        static constexpr std::string_view value{U8("string")};
+        static constexpr std::string_view value{"string"};
     };
 
     template <std_basic_string T>
         requires std::same_as<typename T::value_type, wchar_t>
     struct friendly_name<T> {
-        static constexpr std::string_view value{U8("wstring")};
+        static constexpr std::string_view value{"wstring"};
     };
 
     template <std_basic_string T>
         requires std::same_as<typename T::value_type, char8_t>
     struct friendly_name<T> {
-        static constexpr std::string_view value{U8("u8string")};
+        static constexpr std::string_view value{"u8string"};
     };
 
     template <std_basic_string T>
         requires std::same_as<typename T::value_type, char16_t>
     struct friendly_name<T> {
-        static constexpr std::string_view value{U8("u16string")};
+        static constexpr std::string_view value{"u16string"};
     };
 
     template <std_basic_string T>
         requires std::same_as<typename T::value_type, char32_t>
     struct friendly_name<T> {
-        static constexpr std::string_view value{U8("u32string")};
+        static constexpr std::string_view value{"u32string"};
     };
 } // namespace essence::meta

@@ -32,8 +32,8 @@ import std;
 namespace essence::detail {
     template <std::size_t N>
     consteval auto make_format_str() noexcept {
-        constexpr std::string_view part1{U8("[{}] ")};
-        constexpr std::string_view part2{U8("{} ")};
+        constexpr std::string_view part1{"[{}] "};
+        constexpr std::string_view part2{"{} "};
         constexpr std::size_t size = ((part1.size() + part2.size()) * (N / 2) + (N % 2 == 0 ? 0 : part1.size())) + 1;
 
         std::array<char, size> result{};
@@ -88,7 +88,7 @@ export namespace essence {
                   };
 
                   if constexpr (sizeof...(Args) == 1) {
-                      return format(format_str, U8("Message"), converter(std::forward<Args>(args))...);
+                      return format(format_str, "Message", converter(std::forward<Args>(args))...);
                   } else {
                       return format(format_str, converter(std::forward<Args>(args))...);
                   }

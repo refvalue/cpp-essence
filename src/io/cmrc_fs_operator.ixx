@@ -51,7 +51,7 @@ export namespace essence::io {
 
         static std::unique_ptr<std::iostream> open(
             [[maybe_unused]] std::string_view path, [[maybe_unused]] std::ios_base::openmode mode) {
-            throw formatted_runtime_error{U8("This CMRC file is read-only and cannot be opened as std::iostream.")};
+            throw formatted_runtime_error{"This CMRC file is read-only and cannot be opened as std::iostream."};
         }
 
         [[nodiscard]] std::unique_ptr<std::istream> open_read(
@@ -64,7 +64,7 @@ export namespace essence::io {
 
         static std::unique_ptr<std::ostream> open_write(
             [[maybe_unused]] std::string_view path, [[maybe_unused]] std::ios_base::openmode mode) {
-            throw formatted_runtime_error{U8("This CMRC file is read-only and cannot be opened as std::ostream.")};
+            throw formatted_runtime_error{"This CMRC file is read-only and cannot be opened as std::ostream."};
         }
 
     private:

@@ -58,7 +58,7 @@ namespace essence::crypto {
             return static_cast<digest_mode>(std::distance(digest_routines.begin(), iter));
         }
 
-        throw formatted_runtime_error{U8("Invalid digest routine.")};
+        throw formatted_runtime_error{"Invalid digest routine."};
     }
 
     bio_unique_ptr make_memory_bio_unique() {
@@ -66,7 +66,7 @@ namespace essence::crypto {
             return result;
         }
 
-        throw crypto_error{U8("Failed to create a BIO based on a memory stream.")};
+        throw crypto_error{"Failed to create a BIO based on a memory stream."};
     }
 
     bio_unique_ptr make_memory_bio_unique(std::span<const std::byte> buffer) {
@@ -75,12 +75,12 @@ namespace essence::crypto {
             return result;
         }
 
-        throw crypto_error{U8("Failed to create a memory BIO from the fixed buffer.")};
+        throw crypto_error{"Failed to create a memory BIO from the fixed buffer."};
     }
 
     std::span<const std::byte> get_memory_bio_buffer(BIO* bio) {
         if (bio == nullptr) {
-            throw formatted_runtime_error{U8("The BIO must be non-null")};
+            throw formatted_runtime_error{"The BIO must be non-null"};
         }
 
         BUF_MEM* memory{};
@@ -89,7 +89,7 @@ namespace essence::crypto {
             return {reinterpret_cast<const std::byte*>(memory->data), memory->length};
         }
 
-        throw crypto_error{U8("Failed to get the underlying buffer of the BIO.")};
+        throw crypto_error{"Failed to get the underlying buffer of the BIO."};
     }
 
     bio_unique_ptr make_file_bio_unique(FILE* file, bool auto_close = true) {
@@ -97,7 +97,7 @@ namespace essence::crypto {
             return result;
         }
 
-        throw crypto_error{U8("Failed to create a FILE BIO.")};
+        throw crypto_error{"Failed to create a FILE BIO."};
     }
 
     bio_unique_ptr make_file_bio_unique(zstring_view path, zstring_view mode) {
@@ -111,8 +111,7 @@ namespace essence::crypto {
             return make_file_bio_unique(file);
         }
 
-        throw formatted_runtime_error{
-            U8("Path"), path, U8("Mode"), mode, U8("Message"), U8("Failed to create a FILE.")};
+        throw formatted_runtime_error{"Path", path, "Mode", mode, "Message", "Failed to create a FILE."};
     }
 
     asn1_object_ptr make_cipher_oid_unique(zstring_view cipher_name) {
@@ -121,11 +120,11 @@ namespace essence::crypto {
                 return result;
             }
 
-            throw crypto_error{U8("Cipher"), cipher_name, U8("Message"),
-                U8("Failed to create an OID representing the symmetric cipher.")};
+            throw crypto_error{
+                "Cipher", cipher_name, "Message", "Failed to create an OID representing the symmetric cipher."};
         }
 
-        throw crypto_error{U8("Cipher"), cipher_name, U8("Message"), U8("Cannot find the symmetric cipher.")};
+        throw crypto_error{"Cipher", cipher_name, "Message", "Cannot find the symmetric cipher."};
     }
 
     evp_pkey_ctx_ptr make_evp_pkey_ctx_unique(zstring_view cipher_name) {
@@ -134,12 +133,12 @@ namespace essence::crypto {
             return result;
         }
 
-        throw crypto_error{U8("Cipher"), cipher_name, U8("Message"), U8("Failed to create a EVP_PKEY_CTX.")};
+        throw crypto_error{"Cipher", cipher_name, "Message", "Failed to create a EVP_PKEY_CTX."};
     }
 
     std::shared_ptr<EVP_PKEY_CTX> make_evp_pkey_ctx_shared(EVP_PKEY* pkey) {
         if (pkey == nullptr) {
-            throw formatted_runtime_error{U8("The pkey must be non-null")};
+            throw formatted_runtime_error{"The pkey must be non-null"};
         }
 
         if (std::shared_ptr<EVP_PKEY_CTX> result{
@@ -147,13 +146,13 @@ namespace essence::crypto {
             return result;
         }
 
-        throw crypto_error{U8("Failed to create a EVP_PKEY_CTX from the existing pkey.")};
+        throw crypto_error{"Failed to create a EVP_PKEY_CTX from the existing pkey."};
     }
 
     void evp_pkey_ctx_operate_value_impl(
         const std::function<std::int32_t()>& handler, const std::source_location& location) {
         if (handler && handler() <= 0) {
-            throw crypto_error{location, U8("Failed to get/set the property value of the EVP_PKEY_CTX.")};
+            throw crypto_error{location, "Failed to get/set the property value of the EVP_PKEY_CTX."};
         }
     }
 
@@ -178,8 +177,7 @@ namespace essence::crypto {
             return evp_pkey_ptr{blob, &EVP_PKEY_free};
         }
 
-        throw crypto_error{
-            U8("Cipher Name"), cipher_name, U8("Message"), U8("Failed to generate an asymmetric key pair.")};
+        throw crypto_error{"Cipher Name", cipher_name, "Message", "Failed to generate an asymmetric key pair."};
     }
 
     template <std::default_initializable T>

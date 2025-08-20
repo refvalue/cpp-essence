@@ -59,9 +59,9 @@ export namespace essence::meta::detail {
 #ifdef _MSC_VER
         const auto keyword = prefix;
 #elif defined(__llvm__) && defined(__clang__)
-        const std::string_view keyword{param.type ? U8("[T = ") : U8("[Value = ")};
+        const std::string_view keyword{param.type ? "[T = " : "[Value = "};
 #elif defined(__GNUC__)
-        const std::string_view keyword{param.type ? U8("[with T = ") : U8("[with auto Value = ")};
+        const std::string_view keyword{param.type ? "[with T = " : "[with auto Value = "};
 #else
 #error "Unsupported compiler."
 #endif

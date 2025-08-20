@@ -36,7 +36,7 @@ namespace essence::io {
     namespace {
         void check_error(std::int32_t code, const std::source_location& location = std::source_location::current()) {
             if (code != Z_OK) {
-                throw formatted_runtime_error{location, U8("Code"), code, U8("Message"), zError(code)};
+                throw formatted_runtime_error{location, "Code", code, "Message", zError(code)};
             }
         }
 

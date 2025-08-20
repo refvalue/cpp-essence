@@ -45,13 +45,12 @@ namespace essence::i18n {
 
                 if (!fs_operator_.exists(path_str)) {
                     throw formatted_runtime_error{
-                        U8("Language File"), path_str, U8("Message"), U8("The language file does not exist.")};
+                        "Language File", path_str, "Message", "The language file does not exist."};
                 }
 
                 parse_language_file(path_str);
 
-                spdlog::info(
-                    U8("Successfully loaded {} entries from the language file: {}."), entries_.size(), path_str);
+                spdlog::info("Successfully loaded {} entries from the language file: {}.", entries_.size(), path_str);
             }
 
             static std::uint32_t version() noexcept {
@@ -81,8 +80,7 @@ namespace essence::i18n {
         private:
             void parse_language_file(std::string_view path) {
                 auto raise_error = [&]<typename... Args>(Args&&... args) {
-                    throw formatted_runtime_error{
-                        U8("Language File"), path, U8("Message"), std::forward<Args>(args)...};
+                    throw formatted_runtime_error{"Language File", path, "Message", std::forward<Args>(args)...};
                 };
 
                 // Attempts to open the language file and handles the possible errors.
@@ -90,7 +88,7 @@ namespace essence::i18n {
                     try {
                         return fs_operator_.open_read(path, std::ios::in | std::ios::binary);
                     } catch (const std::exception& ex) {
-                        raise_error(U8("Failed to open the language file."), U8("Internal"), ex.what());
+                        raise_error("Failed to open the language file.", "Internal", ex.what());
                         throw;
                     }
                 }();
@@ -100,7 +98,7 @@ namespace essence::i18n {
                 // Analyzes the header.
                 if (stream->read(magic_flag.data(), magic_flag.size()).gcount() < magic_flag.size()
                     || magic_flag != common_constants::language_file_magic_flag) {
-                    raise_error(U8("Invalid magic flag."));
+                    raise_error("Invalid magic flag.");
                 }
 
                 thread_local std::remove_const_t<decltype(common_constants::language_file_version)> version{};
@@ -109,7 +107,7 @@ namespace essence::i18n {
                 if (stream->read(reinterpret_cast<char*>(version.data()), version.size()).gcount()
                         < sizeof(common_constants::language_file_version)
                     || version != common_constants::language_file_version) {
-                    raise_error(U8("Invalid file version."));
+                    raise_error("Invalid file version.");
                 }
 
                 abi::string chunk;
@@ -169,7 +167,7 @@ namespace essence::i18n {
 
             [[maybe_unused]] void set_language(std::string_view name) {
                 update(current()->virtual_fs(), current()->working_directory(), name);
-                spdlog::info(U8("Switched to {}."), name);
+                spdlog::info("Switched to {}.", name);
             }
 
             [[nodiscard]] [[maybe_unused]] abi::string get_text(std::string_view name) const {
@@ -199,4 +197,4 @@ namespace essence::i18n {
     abstract::translator make_translator(io::abstract::virtual_fs_operator fs_operator) {
         return abstract::translator{default_translator{std::move(fs_operator)}};
     }
-} // namespace essence::globalization
+} // namespace essence::i18n

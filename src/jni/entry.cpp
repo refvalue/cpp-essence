@@ -34,7 +34,7 @@ namespace essence::jni {
 
     jint do_jni_on_load(JavaVM* vm, void*) try {
         if (auto context = jvm::instance().init(vm)) {
-            spdlog::info(U8("C++ Essence Java VM Version: {:08x}."), context->version);
+            spdlog::info("C++ Essence Java VM Version: {:08x}.", context->version);
             jvm_main();
 
             return context->version;
@@ -48,7 +48,7 @@ namespace essence::jni {
     }
 
     void do_jni_on_unload(JavaVM* vm, void*) try {
-        spdlog::info(U8("Unloading C++ Essence Java VM..."));
+        spdlog::info("Unloading C++ Essence Java VM...");
         jvm_exit();
         jvm::instance().clear_entries();
         reflector::instance().clear();

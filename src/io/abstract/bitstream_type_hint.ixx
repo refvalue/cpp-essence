@@ -42,7 +42,7 @@ export namespace essence::io::abstract {
          * Gets the name of the type.
          * @return The name of the type.
          */
-        ES_API(CPPESSENCE) [[nodiscard]] abi::string name() const {
+        [[nodiscard]] ES_API(CPPESSENCE) abi::string name() const {
             return wrapper_->name();
         }
 
@@ -50,7 +50,7 @@ export namespace essence::io::abstract {
          * Gets the file extensions of the type.
          * @return The file extensions.
          */
-        ES_API(CPPESSENCE) [[nodiscard]] std::span<const abi::string> file_extensions() const {
+        [[nodiscard]] ES_API(CPPESSENCE) std::span<const abi::string> file_extensions() const {
             return wrapper_->file_extensions();
         }
 
@@ -58,7 +58,7 @@ export namespace essence::io::abstract {
          * Gets the size of the leading signature.
          * @return The size of the leading signature.
          */
-        ES_API(CPPESSENCE) [[nodiscard]] std::size_t leading_signature_size() const {
+        [[nodiscard]] ES_API(CPPESSENCE) std::size_t leading_signature_size() const {
             return wrapper_->leading_signature_size();
         }
 
@@ -66,7 +66,7 @@ export namespace essence::io::abstract {
          * Gets the leading byte signature of the type.
          * @return The byte signature.
          */
-        ES_API(CPPESSENCE) [[nodiscard]] std::span<const std::byte> leading_signature() const {
+        [[nodiscard]] ES_API(CPPESSENCE) std::span<const std::byte> leading_signature() const {
             return wrapper_->leading_signature();
         }
 
@@ -74,7 +74,7 @@ export namespace essence::io::abstract {
          * Gets the leading byte signature of the type as a string.
          * @return The leading byte signature as a string.
          */
-        ES_API(CPPESSENCE) [[nodiscard]] std::string_view leading_signature_str() const {
+        [[nodiscard]] ES_API(CPPESSENCE) std::string_view leading_signature_str() const {
             return wrapper_->leading_signature_str();
         }
 
@@ -82,7 +82,7 @@ export namespace essence::io::abstract {
          * Gets the size of the trailing signature.
          * @return The size of the trailing signature.
          */
-        ES_API(CPPESSENCE) [[nodiscard]] std::size_t trailing_signature_size() const {
+        [[nodiscard]] ES_API(CPPESSENCE) std::size_t trailing_signature_size() const {
             return wrapper_->trailing_signature_size();
         }
 
@@ -90,7 +90,7 @@ export namespace essence::io::abstract {
          * Gets the trailing byte signature of the type.
          * @return The trailing byte signature.
          */
-        ES_API(CPPESSENCE) [[nodiscard]] std::span<const std::byte> trailing_signature() const {
+        [[nodiscard]] ES_API(CPPESSENCE) std::span<const std::byte> trailing_signature() const {
             return wrapper_->trailing_signature();
         }
 
@@ -98,7 +98,7 @@ export namespace essence::io::abstract {
          * Gets the trailing byte signature of the type as a string.
          * @return The trailing byte signature as a string.
          */
-        ES_API(CPPESSENCE) [[nodiscard]] std::string_view trailing_signature_str() const {
+        [[nodiscard]] ES_API(CPPESSENCE) std::string_view trailing_signature_str() const {
             return wrapper_->trailing_signature_str();
         }
 

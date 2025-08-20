@@ -299,13 +299,13 @@ namespace essence::jni {
             const local_ref_ex class_ex{env->GetObjectClass(ex.get()), true};
 
             if (const auto method_get_message =
-                    env->GetMethodID(class_ex.get(), U8("getMessage"), U8("()Ljava/lang/String;"))) {
+                    env->GetMethodID(class_ex.get(), "getMessage", "()Ljava/lang/String;")) {
                 return from_string(
                     local_ref_ex{reinterpret_cast<jstring>(env->CallObjectMethod(ex.get(), method_get_message)), true}
                         .get());
             }
 
-            return U8("Unknown Java exception.");
+            return "Unknown Java exception.";
         }
 
         return std::nullopt;

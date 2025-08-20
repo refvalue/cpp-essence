@@ -33,7 +33,7 @@ import :hashing;
 import std;
 
 export namespace essence {
-    ES_API(CPPESSENCE) constexpr std::string_view ascii_blank_chars{U8(" \t")};
+    ES_API(CPPESSENCE) constexpr std::string_view ascii_blank_chars{" \t"};
 
     /**
      * A hash function for const char*, std::string_view and std::string.

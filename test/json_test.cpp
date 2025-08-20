@@ -41,19 +41,19 @@ namespace {
 
         EXPECT_FALSE(json.is_discarded());
 
-        EXPECT_TRUE(json.contains(U8("name")));
-        EXPECT_TRUE(json.contains(U8("sex")));
-        EXPECT_TRUE(json.contains(U8("age")));
-        EXPECT_TRUE(json.contains(U8("data")));
-        EXPECT_EQ(json[U8("data")].size(), 2);
-        EXPECT_TRUE(json[U8("data")][0].contains(U8("friend")));
-        EXPECT_TRUE(json[U8("data")][1].contains(U8("friend")));
+        EXPECT_TRUE(json.contains("name"));
+        EXPECT_TRUE(json.contains("sex"));
+        EXPECT_TRUE(json.contains("age"));
+        EXPECT_TRUE(json.contains("data"));
+        EXPECT_EQ(json["data"].size(), 2);
+        EXPECT_TRUE(json["data"][0].contains("friend"));
+        EXPECT_TRUE(json["data"][1].contains("friend"));
 
-        EXPECT_EQ(json[U8("name")], U8("testing"));
-        EXPECT_EQ(json[U8("sex")], U8("female"));
-        EXPECT_EQ(json[U8("age")], 18);
-        EXPECT_EQ(json[U8("data")][0][U8("friend")], U8("Sam"));
-        EXPECT_EQ(json[U8("data")][1][U8("friend")], U8("John"));
+        EXPECT_EQ(json["name"], "testing");
+        EXPECT_EQ(json["sex"], "female");
+        EXPECT_EQ(json["age"], 18);
+        EXPECT_EQ(json["data"][0]["friend"], "Sam");
+        EXPECT_EQ(json["data"][1]["friend"], "John");
     }
 } // namespace
 
@@ -111,9 +111,9 @@ MAKE_TEST(serialization) {
         .location = location_type::travel,
         .items =
             {
-                {.name = U8("bob"), .nullable = std::nullopt},
-                {.name = U8("alice"), .nullable = U8("tag = remote")},
-                {.name = U8("john"), .nullable = U8("tag = hybrid")},
+                {.name = "bob", .nullable = std::nullopt},
+                {.name = "alice", .nullable = "tag = remote"},
+                {.name = "john", .nullable = "tag = hybrid"},
             },
     });
 
@@ -121,16 +121,16 @@ MAKE_TEST(serialization) {
 
     EXPECT_EQ(obj.location, location_type::travel);
     EXPECT_EQ(obj.items.size(), 3);
-    EXPECT_EQ(obj.items[0].name, U8("bob"));
-    EXPECT_EQ(obj.items[1].name, U8("alice"));
-    EXPECT_EQ(obj.items[2].name, U8("john"));
+    EXPECT_EQ(obj.items[0].name, "bob");
+    EXPECT_EQ(obj.items[1].name, "alice");
+    EXPECT_EQ(obj.items[2].name, "john");
 
     EXPECT_FALSE(obj.items[0].nullable);
     EXPECT_TRUE(obj.items[1].nullable);
     EXPECT_TRUE(obj.items[2].nullable);
 
-    EXPECT_EQ(*obj.items[1].nullable, U8("tag = remote"));
-    EXPECT_EQ(*obj.items[2].nullable, U8("tag = hybrid"));
+    EXPECT_EQ(*obj.items[1].nullable, "tag = remote");
+    EXPECT_EQ(*obj.items[2].nullable, "tag = hybrid");
 }
 
 MAKE_TEST(naming_convention) {
@@ -163,48 +163,48 @@ MAKE_TEST(naming_convention) {
     static_assert(json_serializable<qux>);
 
     const json json_foo(foo{
-        .game_over   = U8("Weather"),
+        .game_over   = "Weather",
         .geared_up   = 1,
         .standing_by = true,
     });
 
     const json json_bar(bar{
-        .hello_world     = U8("Meteorology"),
+        .hello_world     = "Meteorology",
         .rust_and_cpp    = 2,
         .java_and_csharp = true,
     });
 
     const json json_qux(qux{
-        .atlantic_ocean = U8("West"),
+        .atlantic_ocean = "West",
         .pacific_ocean  = 3,
         .indian_ocean   = true,
     });
 
-    ASSERT_TRUE(json_foo.contains(U8("gameOver")));
-    ASSERT_TRUE(json_foo.contains(U8("gearedUp")));
-    ASSERT_TRUE(json_foo.contains(U8("standingBy")));
+    ASSERT_TRUE(json_foo.contains("gameOver"));
+    ASSERT_TRUE(json_foo.contains("gearedUp"));
+    ASSERT_TRUE(json_foo.contains("standingBy"));
 
-    ASSERT_TRUE(json_bar.contains(U8("HelloWorld")));
-    ASSERT_TRUE(json_bar.contains(U8("RustAndCpp")));
-    ASSERT_TRUE(json_bar.contains(U8("JavaAndCsharp")));
+    ASSERT_TRUE(json_bar.contains("HelloWorld"));
+    ASSERT_TRUE(json_bar.contains("RustAndCpp"));
+    ASSERT_TRUE(json_bar.contains("JavaAndCsharp"));
 
-    ASSERT_TRUE(json_qux.contains(U8("atlantic_ocean")));
-    ASSERT_TRUE(json_qux.contains(U8("pacific_ocean")));
-    ASSERT_TRUE(json_qux.contains(U8("indian_ocean")));
+    ASSERT_TRUE(json_qux.contains("atlantic_ocean"));
+    ASSERT_TRUE(json_qux.contains("pacific_ocean"));
+    ASSERT_TRUE(json_qux.contains("indian_ocean"));
 
     const auto obj_foo = json_foo.get<foo>();
     const auto obj_bar = json_bar.get<bar>();
     const auto obj_qux = json_qux.get<qux>();
 
-    EXPECT_EQ(obj_foo.game_over, U8("Weather"));
+    EXPECT_EQ(obj_foo.game_over, "Weather");
     EXPECT_EQ(obj_foo.geared_up, 1);
     EXPECT_EQ(obj_foo.standing_by, true);
 
-    EXPECT_EQ(obj_bar.hello_world, U8("Meteorology"));
+    EXPECT_EQ(obj_bar.hello_world, "Meteorology");
     EXPECT_EQ(obj_bar.rust_and_cpp, 2);
     EXPECT_EQ(obj_bar.java_and_csharp, true);
 
-    EXPECT_EQ(obj_qux.atlantic_ocean, U8("West"));
+    EXPECT_EQ(obj_qux.atlantic_ocean, "West");
     EXPECT_EQ(obj_qux.pacific_ocean, 3);
     EXPECT_EQ(obj_qux.indian_ocean, true);
 }
@@ -235,12 +235,12 @@ MAKE_TEST(enum_to_string) {
 
     const json json(foo{});
 
-    EXPECT_EQ(json[U8("Root")], U8("SecondItem"));
+    EXPECT_EQ(json["Root"], "SecondItem");
 
-    EXPECT_EQ(json[U8("Catalogs")].size(), 3);
-    EXPECT_EQ(json[U8("Catalogs")][0], U8("FirstItem"));
-    EXPECT_EQ(json[U8("Catalogs")][1], U8("SecondItem"));
-    EXPECT_EQ(json[U8("Catalogs")][2], U8("ThirdItem"));
+    EXPECT_EQ(json["Catalogs"].size(), 3);
+    EXPECT_EQ(json["Catalogs"][0], "FirstItem");
+    EXPECT_EQ(json["Catalogs"][1], "SecondItem");
+    EXPECT_EQ(json["Catalogs"][2], "ThirdItem");
 
     const auto obj = json.get<foo>();
 
@@ -261,7 +261,7 @@ MAKE_TEST(exceptions) {
     };
 
     try {
-        [[maybe_unused]] const auto obj = json{{U8("value"), U8("non-existance")}}.get<foo>();
+        [[maybe_unused]] const auto obj = json{{"value", "non-existance"}}.get<foo>();
     } catch (const std::exception& ex) {
         EXPECT_NE(
             std::string_view{ex.what()}.find(meta::fingerprint{std::type_identity<foo::catalog>{}}.friendly_name()),
@@ -269,9 +269,9 @@ MAKE_TEST(exceptions) {
     }
 
     try {
-        [[maybe_unused]] const auto obj = json{{U8("non_existance"), U8("whatever")}}.get<foo>();
+        [[maybe_unused]] const auto obj = json{{"non_existance", "whatever"}}.get<foo>();
     } catch (const std::exception& ex) {
-        EXPECT_NE(std::string_view{ex.what()}.find(U8("Failed to deserialize the JSON value to the data member.")),
+        EXPECT_NE(std::string_view{ex.what()}.find("Failed to deserialize the JSON value to the data member."),
             std::string_view::npos);
     }
 }

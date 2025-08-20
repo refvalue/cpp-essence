@@ -114,7 +114,7 @@ namespace essence::io {
             for (size_type bytes_read{};
                 (bytes_read = _read(pipe_read_.get(), buffer.data(), static_cast<std::uint32_t>(buffer.size() - 1)))
                 > 0;) {
-                buffer[bytes_read] = U8('\0');
+                buffer[bytes_read] = '\0';
                 on_message_.try_invoke(std::string_view{buffer.data(), static_cast<std::size_t>(bytes_read)});
             }
         }
@@ -132,20 +132,20 @@ namespace essence::io {
 #else
             if (_pipe(pipe_handles.data()) == -1) {
 #endif
-                throw formatted_runtime_error{U8("Failed to create a pipe for stdio redirection.")};
+                throw formatted_runtime_error{"Failed to create a pipe for stdio redirection."};
             }
 
             pipe_read_.reset(pipe_handles.front());
             pipe_write_.reset(pipe_handles.back());
 
             if (_dup2(pipe_write_.get(), current_stdio_descriptor()) == -1) {
-                throw formatted_runtime_error{U8("Failed to redirect the stdio buffer to the pipe.")};
+                throw formatted_runtime_error{"Failed to redirect the stdio buffer to the pipe."};
             }
 
 #ifdef _WIN32
             if (!SetStdHandle(mode_ == stdio_watcher_mode::output ? STD_OUTPUT_HANDLE : STD_ERROR_HANDLE,
                     reinterpret_cast<HANDLE>(_get_osfhandle(pipe_write_.get())))) {
-                throw formatted_runtime_error{U8("Failed to redirect the underlying Win32 standard handle.")};
+                throw formatted_runtime_error{"Failed to redirect the underlying Win32 standard handle."};
             }
 #endif
         }

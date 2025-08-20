@@ -55,11 +55,11 @@ namespace essence::imaging {
 
         struct bmp_hint {
             [[maybe_unused]] static abi::string name() {
-                return U8("BMP");
+                return "BMP";
             }
 
             [[maybe_unused]] static std::span<const abi::string> file_extensions() noexcept {
-                static const std::array<abi::string, 1> extensions{U8(".bmp")};
+                static const std::array<abi::string, 1> extensions{".bmp"};
 
                 return extensions;
             }

@@ -29,9 +29,9 @@ module essence.net;
 namespace essence::net {
     namespace {
         constexpr std::int32_t digit_base     = 16;
-        constexpr auto zone_id_delimiter      = U8('%');
-        constexpr auto ipv6_segment_delimiter = U8(':');
-        constexpr std::string_view ipv6_abbreviated_zero{U8("::")};
+        constexpr auto zone_id_delimiter      = '%';
+        constexpr auto ipv6_segment_delimiter = ':';
+        constexpr std::string_view ipv6_abbreviated_zero{"::"};
     } // namespace
 
     std::optional<ipv6_address> parse_ipv6_address(std::string_view str) {

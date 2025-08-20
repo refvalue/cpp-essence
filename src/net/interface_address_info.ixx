@@ -31,7 +31,7 @@ export namespace essence::net {
         abi::string id;
         abi::string name;
         abi::vector<ipv4_address> ipv4_addresses;
-        abi::vector<std::array<uint8_t, 16>> ipv6_addresses;
+        abi::vector<std::array<std::uint8_t, 16>> ipv6_addresses;
         std::array<std::uint8_t, 6> mac_address{};
     };
 } // namespace essence::net

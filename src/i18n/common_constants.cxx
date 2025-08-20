@@ -30,15 +30,14 @@ import std;
 
 namespace essence::i18n {
     struct common_constants {
-        static constexpr std::string_view default_working_folder{U8("lang")};
-        static constexpr std::string_view default_language{U8("en-US")};
-        static constexpr std::string_view language_file_extension{U8(".lang")};
+        static constexpr std::string_view default_working_folder{"lang"};
+        static constexpr std::string_view default_language{"en-US"};
+        static constexpr std::string_view language_file_extension{".lang"};
 
-        static constexpr char language_key_value_delimiter{U8('\x1E')};
-        static constexpr char language_key_value_terminator{U8('\x1F')};
+        static constexpr char language_key_value_delimiter{'\x1E'};
+        static constexpr char language_key_value_terminator{'\x1F'};
 
-        static constexpr std::array language_file_magic_flag{
-            U8('M'), U8('I'), U8('S'), U8('C'), U8(' '), U8('L'), U8('A'), U8('N'), U8('G')};
+        static constexpr std::array language_file_magic_flag{'M', 'I', 'S', 'C', ' ', 'L', 'A', 'N', 'G'};
 
         static constexpr std::array<std::uint8_t, 2> language_file_version{0x1, 0x0};
 
@@ -48,4 +47,4 @@ namespace essence::i18n {
         // Ensures that the size of the magic flag is always greater than the size of the version.
         static_assert(language_file_version.size() <= language_file_magic_flag.size());
     };
-} // namespace essence::globalization
+} // namespace essence::i18n

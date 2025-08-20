@@ -38,9 +38,9 @@ MAKE_TEST(stdio_watcher) {
     watcher.on_message([&](std::string_view message) { lines.append(message); });
     watcher.start();
 
-    std::cerr << U8("一些测试内容，Some Tests Included") << '\n';
-    std::cerr << U8("一旦发生错误所有的信息推荐使用 stderr 输出，以和 stdout 区分。") << '\n';
-    std::cerr << U8("Any error that occurrs in the context should be printed via stderr.") << '\n';
+    std::cerr << "一些测试内容，Some Tests Included" << '\n';
+    std::cerr << "一旦发生错误所有的信息推荐使用 stderr 输出，以和 stdout 区分。" << '\n';
+    std::cerr << "Any error that occurrs in the context should be printed via stderr." << '\n';
     std::cerr.flush();
 
     std::this_thread::sleep_for(std::chrono::seconds{3});

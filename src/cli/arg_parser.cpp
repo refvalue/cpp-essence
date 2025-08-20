@@ -34,9 +34,9 @@ namespace essence::cli {
         constexpr meta::fingerprint boolean_type_id{std::type_identity<bool>{}};
 
         const auto help_option = option<bool>{}
-                                     .set_bound_name(U8("help"))
-                                     .set_description(U8("Show this help."))
-                                     .add_aliases(U8("h"), U8("?"))
+                                     .set_bound_name("help")
+                                     .set_description("Show this help.")
+                                     .add_aliases("h", "?")
                                      .as_abstract();
 
         constexpr std::pair<bool, bool> check_option_prefix(std::string_view name) noexcept {
@@ -100,12 +100,12 @@ namespace essence::cli {
 
         void show_help() const {
             on_output_.try_invoke(common_tokens::fixed_help_content);
-            on_output_.try_invoke(format(common_tokens::help_option_header_pattern, U8("Option"), U8("Value"),
-                U8("Default"), U8("Description")));
+            on_output_.try_invoke(
+                format(common_tokens::help_option_header_pattern, "Option", "Value", "Default", "Description"));
 
             for (auto&& item : options_) {
                 on_output_.try_invoke(format(common_tokens::help_option_header_pattern, item.name_hints(),
-                    item.value_hints(), item.default_value_str().value_or(U8("`mandatory`")), item.description()));
+                    item.value_hints(), item.default_value_str().value_or("`mandatory`"), item.description()));
             }
         }
 
@@ -163,7 +163,7 @@ namespace essence::cli {
             for (auto&& item : adapter) {
                 // Outputs the missing options.
                 if (!item.default_value_str()) {
-                    on_error_.try_invoke(format(U8("Missing mandatory option: {}."), item.name_hints()));
+                    on_error_.try_invoke(format("Missing mandatory option: {}.", item.name_hints()));
                     success_ = false;
                 }
 
@@ -213,7 +213,7 @@ namespace essence::cli {
         bool validate_option(std::string_view& value, bool single, bool boolean, const abstract::option& option) const {
             // If combined abbreviations are specified, all types of the options must be bool.
             if (!single && !boolean) {
-                on_error_.try_invoke(U8("All types of combined abbreviations must be bool."));
+                on_error_.try_invoke("All types of combined abbreviations must be bool.");
 
                 return false;
             }
@@ -235,7 +235,7 @@ namespace essence::cli {
                 const auto index = arg.find(common_tokens::equal);
 
                 return std::pair{
-                    trim(arg.substr(0, index)), index == std::string_view::npos ? U8("") : trim(arg.substr(index + 1))};
+                    trim(arg.substr(0, index)), index == std::string_view::npos ? "" : trim(arg.substr(index + 1))};
             }();
 
             auto&& [has_option_prefix, has_option_abbreviation_prefix] = check_option_prefix(name);
@@ -250,7 +250,7 @@ namespace essence::cli {
             // Options like -xyz=abc is illegal.
             if (has_option_abbreviation_prefix && name.size() > 2 && !value.empty()) {
                 on_error_.try_invoke(
-                    format(U8("Explicitly assigning values to combined abbreviations is not allowed: {}."), arg));
+                    format("Explicitly assigning values to combined abbreviations is not allowed: {}.", arg));
 
                 return args_.size();
             }
@@ -272,7 +272,7 @@ namespace essence::cli {
 
                 // --option true/false is omitted.
                 if (any_boolean && next_as_value) {
-                    value = U8("");
+                    value = "";
                 }
 
                 if (!validate_option(value, single, boolean, option)) {
@@ -280,8 +280,8 @@ namespace essence::cli {
                 }
 
                 if (!option.parse_value_and_cache(value)) {
-                    on_error_.try_invoke(format(U8("When parsing the command line argument: {}."), arg));
-                    on_error_.try_invoke(format(U8("Matched option: {}."), option.name_hints()));
+                    on_error_.try_invoke(format("When parsing the command line argument: {}.", arg));
+                    on_error_.try_invoke(format("Matched option: {}.", option.name_hints()));
 
                     return args_.size();
                 }

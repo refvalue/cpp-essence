@@ -28,7 +28,7 @@ module essence.net;
 
 namespace essence::net {
     std::optional<ipv4_address> parse_ipv4_address(std::string_view str) {
-        auto adapter = std::views::split(str, U8('.')) | std::views::transform([](const auto& inner) {
+        auto adapter = std::views::split(str, '.') | std::views::transform([](const auto& inner) {
             auto component = inner | std::views::common | std::ranges::to<std::string>();
 
             return essence::from_string<std::uint8_t>(component);
@@ -56,6 +56,6 @@ namespace essence::net {
     abi::string to_string(const ipv4_address& address) {
         auto&& array = address.get();
 
-        return format_as<abi::string>(U8("{}.{}.{}.{}"), array[0], array[1], array[2], array[3]);
+        return format_as<abi::string>("{}.{}.{}.{}", array[0], array[1], array[2], array[3]);
     }
 } // namespace essence::net

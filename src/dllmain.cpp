@@ -46,7 +46,7 @@ namespace {
                 std::locale::global(std::locale{"C.UTF-8"});
 #endif
             } catch (...) {
-                spdlog::warn(U8("Failed to initialize the locale, then keeping the default."));
+                spdlog::warn("Failed to initialize the locale, then keeping the default.");
             }
         }
     } force_init;

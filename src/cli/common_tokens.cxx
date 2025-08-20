@@ -30,11 +30,11 @@ import std;
 
 namespace essence::cli {
     struct common_tokens {
-        static constexpr std::string_view underscore{U8("_")};
-        static constexpr std::string_view option_name_prefix{U8("--")};
-        static constexpr std::string_view option_abbreviation_prefix{U8("-")};
-        static constexpr std::string_view equal{U8("=")};
-        static constexpr std::string_view fixed_help_content{U8(R"(Passing parameters:
+        static constexpr std::string_view underscore{"_"};
+        static constexpr std::string_view option_name_prefix{"--"};
+        static constexpr std::string_view option_abbreviation_prefix{"-"};
+        static constexpr std::string_view equal{"="};
+        static constexpr std::string_view fixed_help_content{R"(Passing parameters:
 
 --opt1[=]<value>
 --opt2[=]<value1>,<value2>,<value>,...
@@ -44,7 +44,7 @@ namespace essence::cli {
 -s3[[=]true|false]
 
 Available options:
-)")};
-        static constexpr std::string_view help_option_header_pattern{U8("{:<32} {:<28} {:<28} {:<32}")};
+)"};
+        static constexpr std::string_view help_option_header_pattern{"{:<32} {:<28} {:<28} {:<32}"};
     };
 } // namespace essence::cli

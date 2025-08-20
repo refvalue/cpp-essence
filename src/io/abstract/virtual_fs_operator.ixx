@@ -42,7 +42,7 @@ export namespace essence::io::abstract {
          * @param path The path of the file.
          * @return True if the file exists; otherwise false.
          */
-        ES_API(CPPESSENCE) [[nodiscard]] bool exists(std::string_view path) const {
+        [[nodiscard]] ES_API(CPPESSENCE) bool exists(std::string_view path) const {
             return wrapper_->exists(path);
         }
 
@@ -51,7 +51,7 @@ export namespace essence::io::abstract {
          * @param path The path.
          * @return True if the path names a regular file; otherwise false.
          */
-        ES_API(CPPESSENCE) [[nodiscard]] bool is_file(std::string_view path) const {
+        [[nodiscard]] ES_API(CPPESSENCE) bool is_file(std::string_view path) const {
             return wrapper_->is_file(path);
         }
 
@@ -60,7 +60,7 @@ export namespace essence::io::abstract {
          * @param path The path.
          * @return True if the path names a directory; otherwise false.
          */
-        ES_API(CPPESSENCE) [[nodiscard]] bool is_directory(std::string_view path) const {
+        [[nodiscard]] ES_API(CPPESSENCE) bool is_directory(std::string_view path) const {
             return wrapper_->is_directory(path);
         }
 
@@ -70,7 +70,7 @@ export namespace essence::io::abstract {
          * @param mode The open mode.
          * @return A std::iostream to read or write the file.
          */
-        ES_API(CPPESSENCE) [[nodiscard]] std::unique_ptr<std::iostream> open(
+        [[nodiscard]] ES_API(CPPESSENCE) std::unique_ptr<std::iostream> open(
             std::string_view path, std::ios_base::openmode mode = std::ios_base::in | std::ios_base::out) const {
             return wrapper_->open(path, mode);
         }
@@ -81,7 +81,7 @@ export namespace essence::io::abstract {
          * @param mode The open mode.
          * @return A std::istream to read the file.
          */
-        ES_API(CPPESSENCE) [[nodiscard]] std::unique_ptr<std::istream> open_read(
+        [[nodiscard]] ES_API(CPPESSENCE) std::unique_ptr<std::istream> open_read(
             std::string_view path, std::ios_base::openmode mode = std::ios_base::in) const {
             return wrapper_->open_read(path, mode);
         }
@@ -92,7 +92,7 @@ export namespace essence::io::abstract {
          * @param mode The open mode.
          * @return A std::istream to write the file.
          */
-        ES_API(CPPESSENCE) [[nodiscard]] std::unique_ptr<std::ostream> open_write(
+        [[nodiscard]] ES_API(CPPESSENCE) std::unique_ptr<std::ostream> open_write(
             std::string_view path, std::ios_base::openmode mode = std::ios_base::out) const {
             return wrapper_->open_write(path, mode);
         }

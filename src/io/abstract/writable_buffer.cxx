@@ -37,11 +37,11 @@ namespace essence::io::abstract {
             wrapper_->resize(new_size);
         }
 
-        ES_API(CPPESSENCE) [[nodiscard]] std::byte* data() const {
+        [[nodiscard]] ES_API(CPPESSENCE) std::byte* data() const {
             return wrapper_->data();
         }
 
-        ES_API(CPPESSENCE) [[nodiscard]] std::size_t size_bytes() const {
+        [[nodiscard]] ES_API(CPPESSENCE) std::size_t size_bytes() const {
             return wrapper_->size_bytes();
         }
 

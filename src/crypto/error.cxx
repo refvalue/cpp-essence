@@ -50,12 +50,12 @@ namespace essence::crypto {
 
     std::string get_error_string(std::uint64_t code) {
         if (code == 0) {
-            return U8("None");
+            return "None";
         }
 
         // buf must be at least 120 bytes long.
         // https://www.openssl.org/docs/man1.0.2/man3/ERR_error_string.html
-        std::string result(120, U8('\0'));
+        std::string result(120, '\0');
         const std::string_view intermediate{ERR_error_string(code, result.data())};
 
         result.resize(intermediate.size());
@@ -76,10 +76,10 @@ namespace essence::crypto {
         template <typename Arg>
         crypto_error(const std::source_location& location, Arg&& arg)
             : formatted_runtime_error{
-                  location, U8("Message"), std::forward<Arg>(arg), U8("Internal"), get_last_error_string()} {}
+                  location, "Message", std::forward<Arg>(arg), "Internal", get_last_error_string()} {}
 
         template <typename... Args>
         explicit crypto_error(const std::source_location& location, Args&&... args)
-            : formatted_runtime_error{location, std::forward<Args>(args)..., U8("Internal"), get_last_error_string()} {}
+            : formatted_runtime_error{location, std::forward<Args>(args)..., "Internal", get_last_error_string()} {}
     };
 } // namespace essence::crypto

@@ -35,10 +35,10 @@ namespace essence::crypto {
     public:
         pubkey_param_impl(std::span<const zstring_view> cipher_names, std::shared_ptr<void> context)
             : context_{context ? std::static_pointer_cast<EVP_PKEY_CTX>(std::move(context))
-                               : throw formatted_runtime_error{U8("The context must be non-null.")}} {
+                               : throw formatted_runtime_error{"The context must be non-null."}} {
             if (!std::ranges::any_of(cipher_names,
                     [&](zstring_view inner) { return EVP_PKEY_CTX_is_a(context_.get(), inner.c_str()); })) {
-                throw formatted_runtime_error{U8("The public key cipher does not match the given context.")};
+                throw formatted_runtime_error{"The public key cipher does not match the given context."};
             }
         }
 

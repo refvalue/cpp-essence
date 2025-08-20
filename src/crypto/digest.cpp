@@ -37,11 +37,10 @@ namespace essence::crypto {
         template <byte_like_contiguous_range Container>
         Container hex_decode_impl(zstring_view hex, std::optional<char> delimiter) {
             std::size_t size{};
-            const auto inner_delimiter = delimiter ? *delimiter : U8('\0');
+            const auto inner_delimiter = delimiter ? *delimiter : '\0';
 
             if (OPENSSL_hexstr2buf_ex(nullptr, 0, &size, hex.c_str(), inner_delimiter) == 0) {
-                throw formatted_runtime_error{
-                    U8("Failed to calculate the required size of the original buffer.")};
+                throw formatted_runtime_error{"Failed to calculate the required size of the original buffer."};
             }
 
             Container result;
@@ -52,7 +51,7 @@ namespace essence::crypto {
             if (OPENSSL_hexstr2buf_ex(
                     reinterpret_cast<std::uint8_t*>(result.data()), result.size(), &size, hex.c_str(), inner_delimiter)
                 == 0) {
-                throw formatted_runtime_error{U8("Failed to decode the hexadecimal string.")};
+                throw formatted_runtime_error{"Failed to decode the hexadecimal string."};
             }
 
             return result;
@@ -65,14 +64,14 @@ namespace essence::crypto {
             }
 
             if (encoded_text.size() % 4 != 0) {
-                throw formatted_runtime_error{U8("Base64 Text Length"), encoded_text.size(), U8("Message"),
-                    U8("Illegal length of the base64 text, which should be divisible by 4.")};
+                throw formatted_runtime_error{"Base64 Text Length", encoded_text.size(), "Message",
+                    "Illegal length of the base64 text, which should be divisible by 4."};
             }
 
             // Detects all paddings.
             const auto padding_size = [&]() -> std::size_t {
-                if (const auto iter = std::ranges::find_if_not(
-                        std::views::reverse(encoded_text), [](char c) { return c == U8('='); });
+                if (const auto iter =
+                        std::ranges::find_if_not(std::views::reverse(encoded_text), [](char c) { return c == '='; });
                     iter != encoded_text.rend()) {
                     return static_cast<std::size_t>(std::ranges::distance(encoded_text.rbegin(), iter));
                 }
@@ -91,12 +90,12 @@ namespace essence::crypto {
                 static_cast<std::int32_t>(encoded_text.size()));
 
             if (actual_size == -1) {
-                throw formatted_runtime_error{U8("An error occurred when invoking \"EVP_DecodeBlock\".")};
+                throw formatted_runtime_error{"An error occurred when invoking \"EVP_DecodeBlock\"."};
             }
 
             if (result.size() != static_cast<std::size_t>(actual_size)) {
-                throw formatted_runtime_error{U8("Excepted Size"), result.size(), U8("Actual Size"),
-                    actual_size, U8("Message"), U8("The actual size must be equal to the expected size.")};
+                throw formatted_runtime_error{"Excepted Size", result.size(), "Actual Size", actual_size, "Message",
+                    "The actual size must be equal to the expected size."};
             }
 
             // Removes all padding zeros.
@@ -113,7 +112,7 @@ namespace essence::crypto {
                 EVP_MD_CTX_new()};
 
             if (!EVP_DigestInit_ex2(context.get(), make_digest_routine(mode), nullptr)) {
-                throw formatted_runtime_error{U8("Failed to initialize the digest.")};
+                throw formatted_runtime_error{"Failed to initialize the digest."};
             }
 
             std::forward<Callable>(update_handler)(context.get());
@@ -122,7 +121,7 @@ namespace essence::crypto {
             thread_local std::array<std::byte, EVP_MAX_MD_SIZE> hash{};
 
             if (!EVP_DigestFinal_ex(context.get(), reinterpret_cast<std::uint8_t*>(hash.data()), &hash_size)) {
-                throw formatted_runtime_error{U8("Failed to finalize the digest.")};
+                throw formatted_runtime_error{"Failed to finalize the digest."};
             }
 
             return hex_encode(std::span<const std::byte>{hash.data(), hash_size});
@@ -131,21 +130,20 @@ namespace essence::crypto {
 
     abi::string hex_encode(std::span<const std::byte> buffer, std::optional<char> delimiter) {
         std::size_t size{};
-        const auto inner_delimiter = delimiter ? *delimiter : U8('\0');
+        const auto inner_delimiter = delimiter ? *delimiter : '\0';
 
         if (OPENSSL_buf2hexstr_ex(
                 nullptr, 0, &size, reinterpret_cast<const std::uint8_t*>(buffer.data()), buffer.size(), inner_delimiter)
             == 0) {
-            throw formatted_runtime_error{
-                U8("Failed to calculate the required size of the hexadecimal buffer.")};
+            throw formatted_runtime_error{"Failed to calculate the required size of the hexadecimal buffer."};
         }
 
-        abi::string result(size, U8('\0'));
+        abi::string result(size, '\0');
 
         if (OPENSSL_buf2hexstr_ex(result.data(), result.size(), &size,
                 reinterpret_cast<const std::uint8_t*>(buffer.data()), buffer.size(), inner_delimiter)
             == 0) {
-            throw formatted_runtime_error{U8("Failed to generate the hexadecimal string.")};
+            throw formatted_runtime_error{"Failed to generate the hexadecimal string."};
         }
 
         if (!result.empty()) {
@@ -173,13 +171,13 @@ namespace essence::crypto {
         }
 
         // https://www.openssl.org/docs/man3.0/man3/EVP_EncodeBlock.html
-        abi::string result((buffer.size() + 2) / 3 * 4, U8('\0'));
+        abi::string result((buffer.size() + 2) / 3 * 4, '\0');
         auto actual_size = EVP_EncodeBlock(reinterpret_cast<std::uint8_t*>(result.data()),
             reinterpret_cast<const std::uint8_t*>(buffer.data()), static_cast<std::int32_t>(buffer.size()));
 
         if (result.size() != static_cast<std::size_t>(actual_size)) {
-            throw formatted_runtime_error{U8("Excepted Size"), result.size(), U8("Actual Size"), actual_size,
-                U8("Message"), U8("The expected size must be equal to the actual size.")};
+            throw formatted_runtime_error{"Excepted Size", result.size(), "Actual Size", actual_size, "Message",
+                "The expected size must be equal to the actual size."};
         }
 
         return result;
@@ -202,7 +200,7 @@ namespace essence::crypto {
             reinterpret_cast<std::uint8_t*>(hash.data()), &hash_size);
 
         if (result == nullptr) {
-            throw formatted_runtime_error{U8("An error occurred when invoking \"HMAC\".")};
+            throw formatted_runtime_error{"An error occurred when invoking \"HMAC\"."};
         }
 
         return base64_encode(std::span{hash.data(), hash_size});
@@ -210,12 +208,12 @@ namespace essence::crypto {
 
     abi::string make_digest(digest_mode mode, std::span<const std::byte> buffer) {
         if (buffer.data() == nullptr) {
-            throw formatted_runtime_error{U8("A input buffer with null data is not allowed.")};
+            throw formatted_runtime_error{"A input buffer with null data is not allowed."};
         }
 
         return make_digest_impl(mode, [&](EVP_MD_CTX* context) {
             if (!EVP_DigestUpdate(context, buffer.data(), buffer.size())) {
-                throw formatted_runtime_error{U8("Failed to update the digest.")};
+                throw formatted_runtime_error{"Failed to update the digest."};
             }
         });
     }
@@ -229,7 +227,7 @@ namespace essence::crypto {
         std::ifstream stream{fs_path, std::ios::in | std::ios::binary};
 
         if (!stream) {
-            throw formatted_runtime_error{U8("Path"), path, U8("Message"), U8("Failed to open the file.")};
+            throw formatted_runtime_error{"Path", path, "Message", "Failed to open the file."};
         }
 
         thread_local std::array<char, 4096> chunk{};
@@ -240,8 +238,8 @@ namespace essence::crypto {
 
                 if (auto actual_size = stream.read(chunk.data(), static_cast<std::streamsize>(chunk.size())).gcount();
                     !EVP_DigestUpdate(context, chunk.data(), actual_size)) {
-                    throw formatted_runtime_error{U8("Chunk size"), actual_size, U8("Message"),
-                        U8("Failed to update the digest by the current chunk.")};
+                    throw formatted_runtime_error{
+                        "Chunk size", actual_size, "Message", "Failed to update the digest by the current chunk."};
                 }
             }
         });

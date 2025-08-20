@@ -37,17 +37,17 @@ import :filesystem_tokens;
 namespace essence::win32 {
     namespace {
         const std::unordered_map<std::string_view, HKEY, icase_string_hash, std::equal_to<>> predefined_hkeys{
-            {U8("HKEY_LOCAL_MACHINE"), HKEY_CLASSES_ROOT},
-            {U8("HKEY_CURRENT_CONFIG"), HKEY_CURRENT_CONFIG},
-            {U8("HKEY_CURRENT_USER"), HKEY_CURRENT_USER},
-            {U8("HKEY_LOCAL_MACHINE"), HKEY_LOCAL_MACHINE},
-            {U8("HKEY_USERS"), HKEY_USERS},
+            {"HKEY_LOCAL_MACHINE", HKEY_CLASSES_ROOT},
+            {"HKEY_CURRENT_CONFIG", HKEY_CURRENT_CONFIG},
+            {"HKEY_CURRENT_USER", HKEY_CURRENT_USER},
+            {"HKEY_LOCAL_MACHINE", HKEY_LOCAL_MACHINE},
+            {"HKEY_USERS", HKEY_USERS},
 
-            {U8("HKCR"), HKEY_CLASSES_ROOT},
-            {U8("HKCC"), HKEY_CURRENT_CONFIG},
-            {U8("HKCU"), HKEY_CURRENT_USER},
-            {U8("HKLM"), HKEY_LOCAL_MACHINE},
-            {U8("HKU"), HKEY_USERS},
+            {"HKCR", HKEY_CLASSES_ROOT},
+            {"HKCC", HKEY_CURRENT_CONFIG},
+            {"HKCU", HKEY_CURRENT_USER},
+            {"HKLM", HKEY_LOCAL_MACHINE},
+            {"HKU", HKEY_USERS},
         };
 
         template <typename T>
@@ -75,7 +75,7 @@ namespace essence::win32 {
         template <typename... Args>
         void check_registry_error(std::uint32_t code, Args&&... args) {
             if (code != ERROR_SUCCESS) {
-                throw formatted_runtime_error{std::forward<Args>(args)..., U8("Internal"),
+                throw formatted_runtime_error{std::forward<Args>(args)..., "Internal",
                     std::system_category().message(static_cast<std::int32_t>(code))};
             }
         }
@@ -95,7 +95,7 @@ namespace essence::win32 {
                                           filesystem_tokens::preferred_separator_group))};
             }
 
-            throw formatted_runtime_error{U8("Key"), path, U8("Message"), U8("Illegal registry key.")};
+            throw formatted_runtime_error{"Key", path, "Message", "Illegal registry key."};
         }
 
         void set_registry(
@@ -104,7 +104,7 @@ namespace essence::win32 {
 
             check_registry_error(RegSetKeyValueW(key, sub_key.c_str(), to_native_string(name).c_str(), type, value,
                                      static_cast<DWORD>(size)),
-                U8("Key"), path, U8("Name"), name, U8("Message"), U8("Failed to set the registry value."));
+                "Key", path, "Name", name, "Message", "Failed to set the registry value.");
         }
 
         template <typename Container>
@@ -116,8 +116,7 @@ namespace essence::win32 {
             DWORD size{};
 
             check_registry_error(RegGetValueW(key, sub_key.c_str(), wide_name.c_str(), flags, nullptr, nullptr, &size),
-                U8("Key"), path, U8("Name"), name, U8("Message"),
-                U8("Failed to get the storage size of the registry value."));
+                "Key", path, "Name", name, "Message", "Failed to get the storage size of the registry value.");
 
             Container result;
 
@@ -125,8 +124,8 @@ namespace essence::win32 {
             size = static_cast<DWORD>(result.size() * sizeof(typename Container::value_type));
 
             check_registry_error(
-                RegGetValueW(key, sub_key.c_str(), wide_name.c_str(), flags, nullptr, result.data(), &size), U8("Key"),
-                path, U8("Name"), name, U8("Message"), U8("Failed to get the context of the registry value."));
+                RegGetValueW(key, sub_key.c_str(), wide_name.c_str(), flags, nullptr, result.data(), &size), "Key",
+                path, "Name", name, "Message", "Failed to get the context of the registry value.");
 
             return result;
         }
@@ -190,14 +189,14 @@ namespace essence::win32 {
     void delete_registry(std::string_view path) {
         auto&& [key, sub_key] = decompose_registry_path(path);
 
-        check_registry_error(RegDeleteTreeW(key, sub_key.c_str()), U8("Key"), path, U8("Message"),
-            U8("Failed to delete the registry tree."));
+        check_registry_error(
+            RegDeleteTreeW(key, sub_key.c_str()), "Key", path, "Message", "Failed to delete the registry tree.");
     }
 
     void delete_registry(std::string_view path, std::string_view name) {
         auto&& [key, sub_key] = decompose_registry_path(path);
 
-        check_registry_error(RegDeleteKeyValueW(key, sub_key.c_str(), to_native_string(name).c_str()), U8("Key"), path,
-            U8("Name"), name, U8("Message"), U8("Failed to delete the registry value."));
+        check_registry_error(RegDeleteKeyValueW(key, sub_key.c_str(), to_native_string(name).c_str()), "Key", path,
+            "Name", name, "Message", "Failed to delete the registry value.");
     }
 } // namespace essence::win32

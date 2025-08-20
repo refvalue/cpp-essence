@@ -42,17 +42,16 @@ namespace essence::crypto {
         class chain_processor {
         public:
             explicit chain_processor(std::span<abstract::chunk_processor> processors)
-                : buffer_pair_{processors.size() < 2
-                                   ? throw formatted_runtime_error{U8(
-                                         "At least two processors are required to be chained together.")}
-                                   : calculate_max_buffer_size(processors)},
+                : buffer_pair_{processors.size() < 2 ? throw formatted_runtime_error{"At least two processors are "
+                                                                                     "required to be chained together."}
+                                                     : calculate_max_buffer_size(processors)},
                   finalization_buffer_{make_unique_array<std::byte>(buffer_pair_.buffer->size())},
                   swapper_{buffer_pair_.in, buffer_pair_.out} {
                 if (std::ranges::adjacent_find(
                         processors, std::not_equal_to{}, [](const auto& inner) { return inner.transformer(); })
                     != processors.end()) {
                     throw formatted_runtime_error{
-                        U8("All processors must be either transformers or inverse transformers at the same time.")};
+                        "All processors must be either transformers or inverse transformers at the same time."};
                 }
 
                 processors_.reserve(processors.size());
@@ -64,7 +63,7 @@ namespace essence::crypto {
             }
 
             [[nodiscard]] [[maybe_unused]] static abi::string cipher_name() {
-                return U8("chain");
+                return "chain";
             }
 
             [[nodiscard]] [[maybe_unused]] std::size_t buffer_size() const noexcept {

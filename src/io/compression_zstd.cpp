@@ -41,7 +41,7 @@ namespace essence::io {
                 const auto code = ZSTD_getErrorCode(content_size);
 
                 throw formatted_runtime_error{
-                    location, U8("Code"), static_cast<std::int32_t>(code), U8("Message"), ZSTD_getErrorString(code)};
+                    location, "Code", static_cast<std::int32_t>(code), "Message", ZSTD_getErrorString(code)};
             }
 
             return content_size;

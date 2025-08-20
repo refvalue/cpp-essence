@@ -42,13 +42,13 @@ namespace essence::crypto {
             : encryption_{key.type() == asymmetric_key_type::pub},
               error_builder_{
                   .cipher_name  = key.name(),
-                  .routine_name = encryption_ ? U8("Pubkey Encryption") : U8("Pubkey Decryption"),
+                  .routine_name = encryption_ ? "Pubkey Encryption" : "Pubkey Decryption",
               },
               process_routine_{encryption_ ? &EVP_PKEY_encrypt : &EVP_PKEY_decrypt},
               context_{make_evp_pkey_ctx_shared(static_cast<EVP_PKEY*>(key.to_blob()))} {
             error_builder_.check_error(
                 encryption_ ? EVP_PKEY_encrypt_init(context_.get()) : EVP_PKEY_decrypt_init(context_.get()),
-                U8("Failed to initialize the engine."));
+                "Failed to initialize the engine.");
         }
 
         [[nodiscard]] bool encryptor() const noexcept {
@@ -87,14 +87,14 @@ namespace essence::crypto {
 
             error_builder_.check_error(process_routine_(context_.get(), nullptr, &output_size,
                                            reinterpret_cast<const std::uint8_t*>(buffer.data()), buffer.size()),
-                U8("Failed to retrieve the output size."));
+                "Failed to retrieve the output size.");
 
             result.resize(output_size);
 
             error_builder_.check_error(
                 process_routine_(context_.get(), reinterpret_cast<std::uint8_t*>(result.data()), &output_size,
                     reinterpret_cast<const std::uint8_t*>(buffer.data()), buffer.size()),
-                U8("Failed to process the data."));
+                "Failed to process the data.");
 
             return result;
         }

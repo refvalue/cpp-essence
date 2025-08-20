@@ -25,6 +25,7 @@ module;
 #include <essence/char8_t_remediation.hpp>
 
 module essence.basic;
+import std;
 
 namespace essence {
     namespace {
@@ -37,7 +38,7 @@ namespace essence {
                     invoke_optional(std::forward<ExceptionCallback>(exception_callback), inner_ex);
                 } catch (...) {
                     invoke_optional(
-                        std::forward<ExceptionCallback>(exception_callback), std::runtime_error{U8("Unknown error.")});
+                        std::forward<ExceptionCallback>(exception_callback), std::runtime_error{"Unknown error."});
                 }
             }
         }
@@ -70,8 +71,8 @@ namespace essence {
                         invoke_level_callback(current);
                     }
 
-                    result.append(format(
-                        U8("{} {}\n"), std::string(static_cast<std::size_t>(indent) * level, U8('-')), ex.what()));
+                    result.append(
+                        format("{} {}\n", std::string(static_cast<std::size_t>(indent) * level, '-'), ex.what()));
 
                     try {
                         std::rethrow_if_nested(ex);
@@ -86,7 +87,7 @@ namespace essence {
                             std::move(tuple));
 
                     } catch (...) {
-                        spdlog::info(U8("Unknown error."));
+                        spdlog::info("Unknown error.");
                     }
                 });
 

@@ -20,6 +20,8 @@
  * THE SOFTWARE.
  */
 
+module;
+
 #include <essence/compat.hpp>
 
 export module essence.basic:abi.memory;

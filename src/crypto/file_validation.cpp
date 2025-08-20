@@ -30,21 +30,21 @@ import essence.basic;
 namespace essence::crypto {
     namespace {
         constexpr std::array<std::string_view, 15> digest_mode_texts{
-            U8("sha1"),
-            U8("sha224"),
-            U8("sha256"),
-            U8("sha384"),
-            U8("sha512"),
-            U8("sha512_224"),
-            U8("sha512_256"),
-            U8("sha3_224"),
-            U8("sha3_256"),
-            U8("sha3_384"),
-            U8("sha3_512"),
-            U8("shake128"),
-            U8("shake256"),
-            U8("md5"),
-            U8("sm3"),
+            "sha1",
+            "sha224",
+            "sha256",
+            "sha384",
+            "sha512",
+            "sha512_224",
+            "sha512_256",
+            "sha3_224",
+            "sha3_256",
+            "sha3_384",
+            "sha3_512",
+            "shake128",
+            "shake256",
+            "md5",
+            "sm3",
         };
 
         std::filesystem::path make_digest_path(digest_mode mode, std::string_view path) {
@@ -73,8 +73,8 @@ namespace essence::crypto {
 
             stream.write(reinterpret_cast<const char*>(digest.c_str()), static_cast<std::streamsize>(digest.size()));
         } else {
-            throw formatted_runtime_error{U8("Path"), path, U8("Digest Path"),
-                from_u8string(digest_path.u8string()), U8("Message"), U8("Failed to create the validation file.")};
+            throw formatted_runtime_error{"Path", path, "Digest Path", from_u8string(digest_path.u8string()), "Message",
+                "Failed to create the validation file."};
         }
     }
 

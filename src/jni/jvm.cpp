@@ -111,8 +111,8 @@ namespace essence::jni {
                 return env;
             }
 
-            throw formatted_runtime_error{U8("Thread ID"), serialize_thread_id(), U8("Message"),
-                U8("Failed to get the JNI environment for the thread.")};
+            throw formatted_runtime_error{
+                "Thread ID", serialize_thread_id(), "Message", "Failed to get the JNI environment for the thread."};
         }
 
         std::optional<jvm_context> context() const {

@@ -43,7 +43,7 @@ export namespace essence::i18n::abstract {
          * Gets the version of the translator.
          * @return The version.
          */
-        ES_API(CPPESSENCE) [[nodiscard]] std::uint32_t version() const {
+        [[nodiscard]] ES_API(CPPESSENCE) std::uint32_t version() const {
             return wrapper_->version();
         }
 
@@ -51,7 +51,7 @@ export namespace essence::i18n::abstract {
          * Gets the underlying virtual filesystem operator.
          * @return The virtual filesystem operator.
          */
-        ES_API(CPPESSENCE) [[nodiscard]] io::abstract::virtual_fs_operator virtual_fs() const {
+        [[nodiscard]] ES_API(CPPESSENCE) io::abstract::virtual_fs_operator virtual_fs() const {
             return wrapper_->virtual_fs();
         }
 
@@ -67,7 +67,7 @@ export namespace essence::i18n::abstract {
          * Gets the working directory.
          * @return The working directory.
          */
-        ES_API(CPPESSENCE) [[nodiscard]] abi::string working_directory() const {
+        [[nodiscard]] ES_API(CPPESSENCE) abi::string working_directory() const {
             return wrapper_->working_directory();
         }
 
@@ -83,7 +83,7 @@ export namespace essence::i18n::abstract {
          * Gets the current language.
          * @return The current language.
          */
-        ES_API(CPPESSENCE) [[nodiscard]] abi::string language() const {
+        [[nodiscard]] ES_API(CPPESSENCE) abi::string language() const {
             return wrapper_->language();
         }
 
@@ -100,7 +100,7 @@ export namespace essence::i18n::abstract {
          * @param name The unique name of the text.
          * @return The text or the name if not exists.
          */
-        ES_API(CPPESSENCE) [[nodiscard]] abi::string get_text(std::string_view name) const {
+        [[nodiscard]] ES_API(CPPESSENCE) abi::string get_text(std::string_view name) const {
             return wrapper_->get_text(name);
         }
 

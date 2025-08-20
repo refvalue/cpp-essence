@@ -32,8 +32,7 @@ import :util;
 
 namespace essence::crypto {
     dh_param::dh_param(std::shared_ptr<void> context)
-        : opaque_{
-              new pubkey_param_impl(std::array{zstring_view{U8("DH")}, zstring_view{U8("DHX")}}, std::move(context)),
+        : opaque_{new pubkey_param_impl(std::array{zstring_view{"DH"}, zstring_view{"DHX"}}, std::move(context)),
               pubkey_param_impl_deleter} {}
 
     dh_param::dh_param(dh_param&&) noexcept = default;

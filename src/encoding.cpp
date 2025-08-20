@@ -33,6 +33,7 @@ module;
 #endif
 
 module essence.basic;
+import std;
 
 namespace essence {
     namespace {

@@ -37,12 +37,11 @@ namespace essence::crypto {
         template <typename... Args>
         [[noreturn]] void raise_error(logging_string_view hint, Args&&... args) const {
             if (sizeof...(Args) == 0) {
-                throw crypto_error{
-                    hint.location, U8("Cipher"), cipher_name, U8("Routine"), routine_name, U8("Message"), hint.str};
+                throw crypto_error{hint.location, "Cipher", cipher_name, "Routine", routine_name, "Message", hint.str};
             }
 
-            throw crypto_error{hint.location, U8("Cipher"), cipher_name, U8("Routine"), routine_name, hint.str,
-                std::forward<Args>(args)...};
+            throw crypto_error{
+                hint.location, "Cipher", cipher_name, "Routine", routine_name, hint.str, std::forward<Args>(args)...};
         }
 
         template <std::int32_t SpecialUpperBound = 0, typename... Args>

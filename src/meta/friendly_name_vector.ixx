@@ -36,9 +36,9 @@ struct essence::meta::friendly_name<T> {
         std::array<char, nested_name.size() + 9> result{};
         auto iter = result.begin();
 
-        iter = std::ranges::copy(std::string_view{U8("vector<")}, iter).out;
+        iter = std::ranges::copy(std::string_view{"vector<"}, iter).out;
         iter = std::ranges::copy(nested_name, iter).out;
-        iter = std::ranges::copy(std::string_view{U8(">")}, iter).out;
+        iter = std::ranges::copy(std::string_view{">"}, iter).out;
 
         return result;
     }()};

@@ -44,7 +44,7 @@ namespace essence::crypto {
             check_error(
                 raw_update(context, reinterpret_cast<std::uint8_t*>(output.data()), &size,
                     reinterpret_cast<const std::uint8_t*>(input.data()), static_cast<std::int32_t>(input.size())),
-                U8("An error occurred during the update."));
+                "An error occurred during the update.");
 
             output = output.subspan(0, size);
         }
@@ -60,7 +60,7 @@ namespace essence::crypto {
                 }
             }();
 
-            check_error(result, U8("An error occurred during the finalization."));
+            check_error(result, "An error occurred during the finalization.");
             output = output.subspan(0, size);
         }
     };

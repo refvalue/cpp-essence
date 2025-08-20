@@ -66,8 +66,8 @@ export namespace essence::serialization {
             std::string_view internal, BasicJsonContext context) {
 
             throw json_parse_error::create(112, 0U,
-                concat(U8("Accessing class data member '"), member.enclosing_type_name, U8("."), member.name,
-                    U8("' required by JSON key '"), json_key, U8("' -- "), message, U8("\nInternal error: "), internal),
+                concat("Accessing class data member '", member.enclosing_type_name, ".", member.name,
+                    "' required by JSON key '", json_key, "' -- ", message, "\nInternal error: ", internal),
                 context);
         }
 
@@ -149,7 +149,7 @@ export namespace essence::serialization {
                     }
                 } catch (const std::exception& ex) {
                     throw_exception(
-                        item, item.name, U8("Failed to serialize the data member to a JSON value."), ex.what(), &json);
+                        item, item.name, "Failed to serialize the data member to a JSON value.", ex.what(), &json);
                 }
             };
 
@@ -177,8 +177,8 @@ export namespace essence::serialization {
                         from_json(json.value(item.name, BasicJson{}), item.reference);
                     }
                 } catch (const std::exception& ex) {
-                    throw_exception(item, item.name, U8("Failed to deserialize the JSON value to the data member."),
-                        ex.what(), &json);
+                    throw_exception(
+                        item, item.name, "Failed to deserialize the JSON value to the data member.", ex.what(), &json);
                 }
             };
 
@@ -221,8 +221,8 @@ export namespace essence::serialization {
                     value = *enum_value;
                 } else {
                     throw json_parse_error::create(112, 0U,
-                        concat(U8("invalid enumeration name '"), *name, U8("' of type '"),
-                            meta::fingerprint{std::type_identity<U>{}}.friendly_name(), U8("'.")),
+                        concat("invalid enumeration name '", *name, "' of type '",
+                            meta::fingerprint{std::type_identity<U>{}}.friendly_name(), "'."),
                         &json);
                 }
             } else {

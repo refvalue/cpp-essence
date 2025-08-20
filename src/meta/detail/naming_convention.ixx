@@ -29,7 +29,7 @@ import essence.basic;
 import std;
 
 export namespace essence::meta::detail {
-    constexpr auto underscore = U8('_');
+    constexpr auto underscore = '_';
 
     template <std_basic_string T>
     T camelize_or_pascalize(std::string_view name, bool camel) {
@@ -56,7 +56,7 @@ export namespace essence::meta::detail {
             return {};
         }
 
-        T result(name.size() * 2, U8('\0'));
+        T result(name.size() * 2, '\0');
         auto iter_result = result.begin();
 
         *iter_result++ = std::tolower(*name.begin());

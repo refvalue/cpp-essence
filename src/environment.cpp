@@ -23,6 +23,7 @@
 module;
 
 #include <essence/char8_t_remediation.hpp>
+#include <essence/compat.hpp>
 
 #ifdef _WIN32
 #ifndef WIN32_LEAN_AND_MEAN
@@ -45,6 +46,7 @@ module;
 #endif
 
 module essence.basic;
+import std;
 
 namespace essence {
     namespace {
@@ -69,8 +71,8 @@ namespace essence {
         }()};
 
         void create_lazy_rmdir_process() {
-            static constexpr std::string_view rmdir_pattern{U8(R"(rmdir /s /q "{}" & )")};
-            static constexpr std::string_view prefix{U8(R"(cmd.exe /c timeout /t 3 /nobreak > nul & )")};
+            static constexpr std::string_view rmdir_pattern{R"(rmdir /s /q "{}" & )"};
+            static constexpr std::string_view prefix{R"(cmd.exe /c timeout /t 3 /nobreak > nul & )"};
 
             std::string command_line{prefix};
             {
@@ -137,15 +139,13 @@ namespace essence {
         } force_init;
 
         std::filesystem::path get_module_full_path(std::string_view filename) {
-            std::ifstream stream{format(U8("/proc/{}/maps"), getpid()), std::ios_base::in};
+            std::ifstream stream{format("/proc/{}/maps", getpid()), std::ios_base::in};
             std::string line;
 
             while (std::getline(stream, line)) {
-                const auto components = line | std::views::split(U8(' '))
-                                      | std::views::transform([](const auto& inner) {
-                                            return std::filesystem::path{inner.begin(), inner.end()};
-                                        })
-                                      | std::views::filter([](const auto& inner) { return inner.is_absolute(); })
+                const auto components = line | std::views::split(' ') | std::views::transform([](const auto& inner) {
+                    return std::filesystem::path{inner.begin(), inner.end()};
+                }) | std::views::filter([](const auto& inner) { return inner.is_absolute(); })
                                       | std::ranges::to<std::vector>();
 
                 if (!components.empty() && components.back().filename() == filename) {
@@ -192,7 +192,7 @@ namespace essence {
 
         std::call_once(flag, [] {
             static_cast<void>(std::atexit([] {
-                spdlog::info(U8("Starting to delete scheduled directories..."));
+                spdlog::info("Starting to delete scheduled directories...");
 #ifdef _WIN32
                 create_lazy_rmdir_process();
 #else

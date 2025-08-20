@@ -30,8 +30,8 @@ import essence.basic;
 
 namespace essence::crypto {
     void* rsa_keygen_param::generate_key_blob() const try {
-        return evp_pkey_q_keygen(U8("RSA"), key_bits).release();
+        return evp_pkey_q_keygen("RSA", key_bits).release();
     } catch (const std::exception&) {
-        aggregate_error::throw_nested(formatted_runtime_error{U8("Key Bits"), key_bits});
+        aggregate_error::throw_nested(formatted_runtime_error{"Key Bits", key_bits});
     }
 } // namespace essence::crypto

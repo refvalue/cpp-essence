@@ -22,6 +22,7 @@
 
 module essence.basic;
 import :abi.memory;
+import std;
 
 namespace essence {
     abi::string serialize_thread_id() {

@@ -32,8 +32,8 @@ using namespace essence;
 #define MAKE_TEST(name) TEST(encoding_test, name)
 
 MAKE_TEST(conversion) {
-    static constexpr std::string_view str{U8("Hello world!")};
-    static constexpr std::string_view cjk_str{U8("中日韩汉字")};
+    static constexpr std::string_view str{"Hello world!"};
+    static constexpr std::string_view cjk_str{"中日韩汉字"};
 
     static constexpr std::wstring_view wide_str{L"Hello world!"};
     static constexpr std::wstring_view wide_cjk_str{L"中日韩汉字"};

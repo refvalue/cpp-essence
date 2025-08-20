@@ -35,24 +35,24 @@ export namespace essence::meta::detail {
      * Some tokens of the C++ programming language.
      */
     struct language_tokens {
-        ES_API(CPPESSENCE) static constexpr literal_string reference { U8("&") };
-        ES_API(CPPESSENCE) static constexpr literal_string dot { U8(".") };
-        ES_API(CPPESSENCE) static constexpr literal_string scope { U8("::") };
-        ES_API(CPPESSENCE) static constexpr literal_string arrow { U8("->") };
-        ES_API(CPPESSENCE) static constexpr literal_string comma { U8(",") };
-        ES_API(CPPESSENCE) static constexpr literal_string semicolon { U8(";") };
+        ES_API(CPPESSENCE) static constexpr literal_string reference { "&" };
+        ES_API(CPPESSENCE) static constexpr literal_string dot { "." };
+        ES_API(CPPESSENCE) static constexpr literal_string scope { "::" };
+        ES_API(CPPESSENCE) static constexpr literal_string arrow { "->" };
+        ES_API(CPPESSENCE) static constexpr literal_string comma { "," };
+        ES_API(CPPESSENCE) static constexpr literal_string semicolon { ";" };
 
-        ES_API(CPPESSENCE) static constexpr literal_string enum_prefix { U8("enum ") };
-        ES_API(CPPESSENCE) static constexpr literal_string class_prefix { U8("class ") };
-        ES_API(CPPESSENCE) static constexpr literal_string struct_prefix { U8("struct ") };
+        ES_API(CPPESSENCE) static constexpr literal_string enum_prefix { "enum " };
+        ES_API(CPPESSENCE) static constexpr literal_string class_prefix { "class " };
+        ES_API(CPPESSENCE) static constexpr literal_string struct_prefix { "struct " };
 
-        ES_API(CPPESSENCE) static constexpr literal_string left_parentheses { U8("(") };
-        ES_API(CPPESSENCE) static constexpr literal_string left_angle_bracket { U8("<") };
-        ES_API(CPPESSENCE) static constexpr literal_string left_square_bracket { U8("[") };
+        ES_API(CPPESSENCE) static constexpr literal_string left_parentheses { "(" };
+        ES_API(CPPESSENCE) static constexpr literal_string left_angle_bracket { "<" };
+        ES_API(CPPESSENCE) static constexpr literal_string left_square_bracket { "[" };
 
-        ES_API(CPPESSENCE) static constexpr literal_string right_parentheses { U8(")") };
-        ES_API(CPPESSENCE) static constexpr literal_string right_angle_bracket { U8(">") };
-        ES_API(CPPESSENCE) static constexpr literal_string right_square_bracket { U8("]") };
+        ES_API(CPPESSENCE) static constexpr literal_string right_parentheses { ")" };
+        ES_API(CPPESSENCE) static constexpr literal_string right_angle_bracket { ">" };
+        ES_API(CPPESSENCE) static constexpr literal_string right_square_bracket { "]" };
 
         ES_API(CPPESSENCE)
         static constexpr literal_string left_enclosing_tokens{

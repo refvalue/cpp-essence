@@ -37,8 +37,8 @@ using namespace essence::crypto;
 #define MAKE_TEST(name) TEST(crypto_test, name)
 
 MAKE_TEST(file_validation) {
-    static constexpr std::string_view str{U8("Hello world!")};
-    const auto file_name = format(U8("{}.txt"), test_info_->name());
+    static constexpr std::string_view str{"Hello world!"};
+    const auto file_name = format("{}.txt", test_info_->name());
 
     {
         get_native_fs_operator().open_write(file_name)->write(str.data(), str.size());
@@ -56,23 +56,23 @@ MAKE_TEST(file_validation) {
 }
 
 MAKE_TEST(digest) {
-    static constexpr std::string_view str{U8("Hello world!")};
+    static constexpr std::string_view str{"Hello world!"};
     static constexpr std::array digest_cases{
-        std::pair{digest_mode::sm3, U8("0E4EBFDE39B5789B457B3D9ED2D38057CEED47BE5D9728A88287AD51F5C1C3D2")},
-        std::pair{digest_mode::md5, U8("86FB269D190D2C85F6E0468CECA42A20")},
-        std::pair{digest_mode::sha1, U8("D3486AE9136E7856BC42212385EA797094475802")},
-        std::pair{digest_mode::sha224, U8("7E81EBE9E604A0C97FEF0E4CFE71F9BA0ECBA13332BDE953AD1C66E4")},
-        std::pair{digest_mode::sha256, U8("C0535E4BE2B79FFD93291305436BF889314E4A3FAEC05ECFFCBB7DF31AD9E51A")},
+        std::pair{digest_mode::sm3, "0E4EBFDE39B5789B457B3D9ED2D38057CEED47BE5D9728A88287AD51F5C1C3D2"},
+        std::pair{digest_mode::md5, "86FB269D190D2C85F6E0468CECA42A20"},
+        std::pair{digest_mode::sha1, "D3486AE9136E7856BC42212385EA797094475802"},
+        std::pair{digest_mode::sha224, "7E81EBE9E604A0C97FEF0E4CFE71F9BA0ECBA13332BDE953AD1C66E4"},
+        std::pair{digest_mode::sha256, "C0535E4BE2B79FFD93291305436BF889314E4A3FAEC05ECFFCBB7DF31AD9E51A"},
         std::pair{digest_mode::sha384,
-            U8("86255FA2C36E4B30969EAE17DC34C772CBEBDFC58B58403900BE87614EB1A34B8780263F255EB5E65CA9BBB8641CCCFE")},
+            "86255FA2C36E4B30969EAE17DC34C772CBEBDFC58B58403900BE87614EB1A34B8780263F255EB5E65CA9BBB8641CCCFE"},
         std::pair{digest_mode::sha512, U8("F6CDE2A0F819314CDDE55FC227D8D7DAE3D28CC556222A0A8AD66D91CCAD4AAD6094F517A218"
                                           "2360C9AACF6A3DC323162CB6FD8CDFFEDB0FE038F55E85FFB5B6")},
-        std::pair{digest_mode::sha512_224, U8("B48C4994A3D2B6B48AE7FA6FCC09F33DC0C985109C0B7493FD3C74D0")},
-        std::pair{digest_mode::sha512_256, U8("F8162AD49196C1C12BDDBCFF1D362DDACF03AE246B6A7864B75C244B965FE475")},
-        std::pair{digest_mode::sha3_224, U8("D3EE9B1BA1990FECFD794D2F30E0207AAA7BE5D37D463073096D86F8")},
-        std::pair{digest_mode::sha3_256, U8("D6EA8F9A1F22E1298E5A9506BD066F23CC56001F5D36582344A628649DF53AE8")},
+        std::pair{digest_mode::sha512_224, "B48C4994A3D2B6B48AE7FA6FCC09F33DC0C985109C0B7493FD3C74D0"},
+        std::pair{digest_mode::sha512_256, "F8162AD49196C1C12BDDBCFF1D362DDACF03AE246B6A7864B75C244B965FE475"},
+        std::pair{digest_mode::sha3_224, "D3EE9B1BA1990FECFD794D2F30E0207AAA7BE5D37D463073096D86F8"},
+        std::pair{digest_mode::sha3_256, "D6EA8F9A1F22E1298E5A9506BD066F23CC56001F5D36582344A628649DF53AE8"},
         std::pair{digest_mode::sha3_384,
-            U8("F9210511D0B2862BDCB672DAA3F6A4284576CCB24D5B293B366B39C24C41A6918464035EC4466B12E22056BF559C7A49")},
+            "F9210511D0B2862BDCB672DAA3F6A4284576CCB24D5B293B366B39C24C41A6918464035EC4466B12E22056BF559C7A49"},
         std::pair{digest_mode::sha3_512, U8("95DECC72F0A50AE4D9D5378E1B2252587CFC71977E43292C8F1B84648248509F1BC18BC6F0"
                                             "B0D0B8606A643EFF61D611AE84E6FBD4A2683165706BD6FD48B334")},
     };
@@ -83,21 +83,21 @@ MAKE_TEST(digest) {
         ASSERT_STREQ(make_digest(mode, str).c_str(), hash);
     }
 
-    static constexpr std::string_view hmac_key{U8("123456")};
+    static constexpr std::string_view hmac_key{"123456"};
     static constexpr std::array hmac_cases{
-        std::pair{digest_mode::sm3, U8("oSa6DkCGgM1RVYdAdBtPzTXJnDy9go/H0JynXx1N7i8=")},
-        std::pair{digest_mode::md5, U8("qSYgzjx1zYRx6md4P7oiFA==")},
-        std::pair{digest_mode::sha1, U8("sbtF0ndTgjZikFHXMSX0U95RoeM=")},
-        std::pair{digest_mode::sha224, U8("iGTtVE4ZZkY5jRu1wdQeVPWBtnlgmBCADR46dg==")},
-        std::pair{digest_mode::sha256, U8("f0jADrIur8rVdJ/yFztA8d3uil9gOJKK69hbCCE3H8Y=")},
-        std::pair{digest_mode::sha384, U8("ziks7H1KBv1gJigsWggHXM4PBh4LjLabKrJDxSEeQmvu9JpunVXMhfNgvsPFlsOL")},
+        std::pair{digest_mode::sm3, "oSa6DkCGgM1RVYdAdBtPzTXJnDy9go/H0JynXx1N7i8="},
+        std::pair{digest_mode::md5, "qSYgzjx1zYRx6md4P7oiFA=="},
+        std::pair{digest_mode::sha1, "sbtF0ndTgjZikFHXMSX0U95RoeM="},
+        std::pair{digest_mode::sha224, "iGTtVE4ZZkY5jRu1wdQeVPWBtnlgmBCADR46dg=="},
+        std::pair{digest_mode::sha256, "f0jADrIur8rVdJ/yFztA8d3uil9gOJKK69hbCCE3H8Y="},
+        std::pair{digest_mode::sha384, "ziks7H1KBv1gJigsWggHXM4PBh4LjLabKrJDxSEeQmvu9JpunVXMhfNgvsPFlsOL"},
         std::pair{digest_mode::sha512,
-            U8("k5ucMeh8B5vj/INDpYVBEaZMsBlhhZLJmzFnzhdIviNTXaqtBwjsPTg/cc4ZPXlyxHL75eU6NoeXxlBLjx1uPA==")},
-        std::pair{digest_mode::sha3_224, U8("GvN8xwWUI53BgN8Zz6fDp1ccOnR4CCPby6l1Ww==")},
-        std::pair{digest_mode::sha3_256, U8("1O8w4E84LFHgsut5YdmPeCZOHirQVemnFLpNcnPBr9k=")},
-        std::pair{digest_mode::sha3_384, U8("tytwzoHr+eLNO/niMsYZR845epPj58DizKbyUUFUq7ALMG3fCJBomcJx0JKNFJ8z")},
+            "k5ucMeh8B5vj/INDpYVBEaZMsBlhhZLJmzFnzhdIviNTXaqtBwjsPTg/cc4ZPXlyxHL75eU6NoeXxlBLjx1uPA=="},
+        std::pair{digest_mode::sha3_224, "GvN8xwWUI53BgN8Zz6fDp1ccOnR4CCPby6l1Ww=="},
+        std::pair{digest_mode::sha3_256, "1O8w4E84LFHgsut5YdmPeCZOHirQVemnFLpNcnPBr9k="},
+        std::pair{digest_mode::sha3_384, "tytwzoHr+eLNO/niMsYZR845epPj58DizKbyUUFUq7ALMG3fCJBomcJx0JKNFJ8z"},
         std::pair{digest_mode::sha3_512,
-            U8("cyTBn/T3NYPc2hfo16fCwdGW7FRw2zcXlynANn66lPBWAxtE1FrLhBg/ibtBq4jIw1iQdjJGGNnX23RDMhJ+Zw==")},
+            "cyTBn/T3NYPc2hfo16fCwdGW7FRw2zcXlynANn66lPBWAxtE1FrLhBg/ibtBq4jIw1iQdjJGGNnX23RDMhJ+Zw=="},
     };
 
     for (auto&& [mode, hash] : hmac_cases) {
@@ -107,9 +107,9 @@ MAKE_TEST(digest) {
 
 MAKE_TEST(base64) {
     static const essence::abi::vector<std::byte> binary{std::byte{0}, std::byte{1}, std::byte{2}, std::byte{3}};
-    static constexpr zstring_view str{U8("Something like that!!!")};
-    static constexpr zstring_view base64_binary{U8("AAECAw==")};
-    static constexpr zstring_view base64_str{U8("U29tZXRoaW5nIGxpa2UgdGhhdCEhIQ==")};
+    static constexpr zstring_view str{"Something like that!!!"};
+    static constexpr zstring_view base64_binary{"AAECAw=="};
+    static constexpr zstring_view base64_str{"U29tZXRoaW5nIGxpa2UgdGhhdCEhIQ=="};
 
     ASSERT_STREQ(base64_encode(binary).c_str(), base64_binary.c_str());
     ASSERT_STREQ(base64_encode(str).c_str(), base64_str.c_str());
@@ -119,9 +119,9 @@ MAKE_TEST(base64) {
 
 MAKE_TEST(hex) {
     static const essence::abi::vector<std::byte> binary{std::byte{0}, std::byte{1}, std::byte{2}, std::byte{3}};
-    static constexpr zstring_view str{U8("Something like that!!!")};
-    static constexpr zstring_view hex_binary{U8("00010203")};
-    static constexpr zstring_view hex_str{U8("536F6D657468696E67206C696B652074686174212121")};
+    static constexpr zstring_view str{"Something like that!!!"};
+    static constexpr zstring_view hex_binary{"00010203"};
+    static constexpr zstring_view hex_str{"536F6D657468696E67206C696B652074686174212121"};
 
     ASSERT_STREQ(hex_encode(binary).c_str(), hex_binary.c_str());
     ASSERT_STREQ(hex_encode(str).c_str(), hex_str.c_str());
@@ -131,12 +131,12 @@ MAKE_TEST(hex) {
 
 MAKE_TEST(symmetric_cipher) {
     static constexpr std::array cases{
-        std::array{U8("aes-128-cbc"), U8("Hello world!"), U8("Ym3Ssw7VEm0kzw9ObL+Mmw==")},
-        std::array{U8("sm4-cbc"), U8("Hello world!"), U8("5RATMZ5UMyBf9WU1fM3YaA==")},
+        std::array{"aes-128-cbc", "Hello world!", "Ym3Ssw7VEm0kzw9ObL+Mmw=="},
+        std::array{"sm4-cbc", "Hello world!", "5RATMZ5UMyBf9WU1fM3YaA=="},
     };
 
-    static constexpr std::string_view key{U8("0123456789ABCDEF")};
-    static constexpr std::string_view iv{U8("ABCDEFGHIJKLMNOP")};
+    static constexpr std::string_view key{"0123456789ABCDEF"};
+    static constexpr std::string_view iv{"ABCDEFGHIJKLMNOP"};
 
     for (auto&& [name, plaintext, ciphertext] : cases) {
         const symmetric_cipher_provider encryptor{
@@ -151,9 +151,9 @@ MAKE_TEST(symmetric_cipher) {
 }
 
 MAKE_TEST(symmetric_cipher_chunked) {
-    static constexpr zstring_view name{U8("aes-128-cbc")};
-    static constexpr std::string_view key{U8("0123456789ABCDEF")};
-    static constexpr std::string_view iv{U8("ABCDEFGHIJKLMNOP")};
+    static constexpr zstring_view name{"aes-128-cbc"};
+    static constexpr std::string_view key{"0123456789ABCDEF"};
+    static constexpr std::string_view iv{"ABCDEFGHIJKLMNOP"};
 
     static constexpr zstring_view str{
         U8("In a distant corner of the universe, a small planet named Zephyria harbored an ancient secret buried "
@@ -161,7 +161,7 @@ MAKE_TEST(symmetric_cipher_chunked) {
            "bioluminescent skin that glowed under the moonlight, casting a serene blue hue across their villages. They "
            "lived in harmony with nature, drawing power from the vibrant flora that dotted their landscapes.")};
 
-    const auto file_name = format(U8("{}.txt"), test_info_->name());
+    const auto file_name = format("{}.txt", test_info_->name());
     {
         std::ispanstream input_stream{str};
         ostream encryption_stream{
@@ -172,7 +172,7 @@ MAKE_TEST(symmetric_cipher_chunked) {
             std::ostreambuf_iterator{encryption_stream});
     }
 
-    std::string buffer(str.size(), U8('\0'));
+    std::string buffer(str.size(), '\0');
 
     {
         const auto input_stream = get_native_fs_operator().open_read(file_name);

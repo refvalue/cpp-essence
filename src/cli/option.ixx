@@ -52,9 +52,9 @@ export namespace essence::cli {
         using element_type  = std::conditional_t<std_basic_string<T>, T, range_value_t_or_self_t<T>>;
         using set_hash_type = std::conditional_t<std_basic_string<element_type>, string_hash, std::hash<element_type>>;
 
-        static constexpr std::string_view delimiter{U8(",")};
-        static constexpr std::string_view optional_pattern{U8("[]")};
-        static constexpr std::string_view keyword_pattern{U8("``")};
+        static constexpr std::string_view delimiter{","};
+        static constexpr std::string_view optional_pattern{"[]"};
+        static constexpr std::string_view keyword_pattern{"``"};
         static constexpr meta::fingerprint type_id{std::type_identity<T>{}};
 
         /**
@@ -159,7 +159,7 @@ export namespace essence::cli {
                 }
 
                 if (!success) {
-                    raise_error(U8("Invalid value."));
+                    raise_error("Invalid value.");
 
                     return success;
                 }
@@ -291,8 +291,8 @@ export namespace essence::cli {
                 const auto values =
                     valid_value_strs_ | std::views::join_with(delimiter) | std::ranges::to<abi::string>();
 
-                raise_error(U8("The value was out of range."));
-                raise_error(U8("One of the following values is allowed:"));
+                raise_error("The value was out of range.");
+                raise_error("One of the following values is allowed:");
                 raise_error(values);
             }
         }
@@ -302,7 +302,7 @@ export namespace essence::cli {
                 if ((success = inner.has_value())) {
                     validate_range(*inner, success);
                 } else {
-                    raise_error(U8("Invalid value."));
+                    raise_error("Invalid value.");
                 }
 
                 return success;

@@ -43,7 +43,7 @@ export namespace essence::imaging::abstract {
          * Gets the underlying type hint.
          * @return The type hint.
          */
-        ES_API(CPPESSENCE) [[nodiscard]] io::abstract::bitstream_type_hint hint() const {
+        [[nodiscard]] ES_API(CPPESSENCE) io::abstract::bitstream_type_hint hint() const {
             return wrapper_->hint();
         }
 
@@ -52,7 +52,7 @@ export namespace essence::imaging::abstract {
          * @param stream The input stream.
          * @return The image header if succeeds; otherwise std::nullopt.
          */
-        ES_API(CPPESSENCE) [[nodiscard]] std::optional<image_general_header> get(std::istream& stream) const {
+        [[nodiscard]] ES_API(CPPESSENCE) std::optional<image_general_header> get(std::istream& stream) const {
             return wrapper_->get(stream);
         }
 
@@ -61,7 +61,7 @@ export namespace essence::imaging::abstract {
          * @param buffer The memory buffer.
          * @return The image header if succeeds; otherwise std::nullopt.
          */
-        ES_API(CPPESSENCE) [[nodiscard]] std::optional<image_general_header> get(std::span<const std::byte> buffer) const {
+        [[nodiscard]] ES_API(CPPESSENCE) std::optional<image_general_header> get(std::span<const std::byte> buffer) const {
             return wrapper_->get(buffer);
         }
 

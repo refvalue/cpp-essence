@@ -53,11 +53,11 @@ namespace essence::imaging {
 
         struct jfif_hint {
             [[maybe_unused]] static abi::string name() {
-                return U8("JFIF");
+                return "JFIF";
             }
 
             [[maybe_unused]] static std::span<const abi::string> file_extensions() noexcept {
-                static const std::array<abi::string, 3> extensions{U8(".jfif"), U8(".jpeg"), U8(".jpg")};
+                static const std::array<abi::string, 3> extensions{".jfif",".jpeg", ".jpg"};
 
                 return extensions;
             }

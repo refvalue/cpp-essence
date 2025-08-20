@@ -42,7 +42,7 @@ namespace essence::crypto {
                 : encryption_{encryption}, padding_mode_{padding_mode},
                   builder_{
                       .cipher_name  = abi::string{cipher_name},
-                      .routine_name = encryption ? U8("Encrytion") : U8("Decryption"),
+                      .routine_name = encryption ? "Encrytion" : "Decryption",
                   },
                   helper_{
                       .raw_update   = &EVP_CipherUpdate,
@@ -53,31 +53,30 @@ namespace essence::crypto {
                   context_{EVP_CIPHER_CTX_new()} {
 
                 if (builder_.cipher_name.empty()) {
-                    builder_.raise_error(U8("The cipher name must be non-empty."));
+                    builder_.raise_error("The cipher name must be non-empty.");
                 }
 
                 auto cipher_info = get_symmetric_cipher_info(cipher_name);
 
                 if (!cipher_info) {
-                    builder_.raise_error(U8("Could not find the cipher name."));
+                    builder_.raise_error("Could not find the cipher name.");
                 }
 
                 if (key.size() != cipher_info->key_length) {
-                    builder_.raise_error(U8("Expected Key Length"), cipher_info->key_length, U8("Actual Key Length"),
-                        key.size(), U8("Message"),
-                        U8("The actual key length must be equal to the expected key length of the cipher."));
+                    builder_.raise_error("Expected Key Length", cipher_info->key_length, "Actual Key Length",
+                        key.size(), "Message",
+                        "The actual key length must be equal to the expected key length of the cipher.");
                 }
 
                 if (iv.size() != cipher_info->iv_length) {
-                    builder_.raise_error(U8("Expected IV Length"), cipher_info->iv_length, U8("Actual IV Length"),
-                        iv.size(), U8("Message"),
-                        U8("The actual IV length must be equal to the expected IV length of the cipher."));
+                    builder_.raise_error("Expected IV Length", cipher_info->iv_length, "Actual IV Length", iv.size(),
+                        "Message", "The actual IV length must be equal to the expected IV length of the cipher.");
                 }
 
                 builder_.check_error(EVP_CipherInit_ex(context_.get(), static_cast<const EVP_CIPHER*>(cipher_info->id),
                                          nullptr, reinterpret_cast<const std::uint8_t*>(key.data()),
                                          reinterpret_cast<const std::uint8_t*>(iv.data()), encryption),
-                    U8("An error occurred during the initialization."));
+                    "An error occurred during the initialization.");
             }
 
             [[nodiscard]] [[maybe_unused]] bool transformer() const noexcept {
@@ -102,7 +101,7 @@ namespace essence::crypto {
 
             [[maybe_unused]] void init() const {
                 builder_.check_error(EVP_CipherInit_ex(context_.get(), nullptr, nullptr, nullptr, nullptr, encryption_),
-                    U8("An error occurred during the re-initialization."));
+                    "An error occurred during the re-initialization.");
 
                 // Always succeeds.
                 // https://www.openssl.org/docs/man1.0.2/man3/EVP_CIPHER_CTX_set_padding.html

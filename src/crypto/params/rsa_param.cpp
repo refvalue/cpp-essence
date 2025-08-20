@@ -33,8 +33,7 @@ import essence.basic;
 
 namespace essence::crypto {
     rsa_param::rsa_param(std::shared_ptr<void> context)
-        : opaque_{new pubkey_param_impl{
-                      std::array{zstring_view{U8("RSA")}, zstring_view{U8("RSA2")}, zstring_view{U8("RSA-PSS")}},
+        : opaque_{new pubkey_param_impl{std::array{zstring_view{"RSA"}, zstring_view{"RSA2"}, zstring_view{"RSA-PSS"}},
                       std::move(context)},
               pubkey_param_impl_deleter} {}
 

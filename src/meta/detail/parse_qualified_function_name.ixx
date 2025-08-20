@@ -36,10 +36,9 @@ import std;
 
 export namespace essence::meta::detail {
 #if defined(_MSC_VER) && defined(_WIN64)
-    constexpr std::array calling_conventions{U8("__cdecl"), U8("__vectorcall")};
+    constexpr std::array calling_conventions{"__cdecl", "__vectorcall"};
 #elif defined(_MSC_VER) && defined(_WIN32)
-    constexpr std::array calling_conventions{
-        U8("__cdecl"), U8("__stdcall"), U8("__fastcall"), U8("__vectorcall"), U8("__thiscall")};
+    constexpr std::array calling_conventions{"__cdecl", "__stdcall", "__fastcall", "__vectorcall", "__thiscall"};
 #elif defined(__clang__) || defined(__GNUC__)
     constexpr std::array<const char*, 0> calling_conventions{};
 #else

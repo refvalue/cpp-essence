@@ -134,7 +134,7 @@ export namespace essence {
 
                 if (!result) {
                     throw formatted_runtime_error{
-                        U8("A delegate with a return value cannot be invoked, within which no subscriber exists.")};
+                        "A delegate with a return value cannot be invoked, within which no subscriber exists."};
                 }
 
                 return std::move(*result);

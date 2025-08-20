@@ -51,7 +51,7 @@ export namespace essence::meta::detail {
      */
     template <typename T, identifier_param Param = identifier_param{}>
     consteval auto get_literal_string() noexcept {
-        return parse_raw_identifier_name(U8("essence::meta::detail::get_literal_string<"), ES_UNIFORM_FUNCSIG,
+        return parse_raw_identifier_name("essence::meta::detail::get_literal_string<", ES_UNIFORM_FUNCSIG,
             identifier_param{
                 .ensure_correctness      = Param.ensure_correctness,
                 .preview_first_character = Param.preview_first_character,
@@ -67,7 +67,7 @@ export namespace essence::meta::detail {
      */
     template <auto Value, typename T, identifier_param Param = identifier_param{}>
     consteval auto get_literal_string() noexcept {
-        return parse_raw_identifier_name(U8("essence::meta::detail::get_literal_string<"), ES_UNIFORM_FUNCSIG,
+        return parse_raw_identifier_name("essence::meta::detail::get_literal_string<", ES_UNIFORM_FUNCSIG,
             identifier_param{
                 .type                    = false,
                 .ensure_correctness      = Param.ensure_correctness,
@@ -83,7 +83,7 @@ export namespace essence::meta::detail {
      */
     template <typename T, identifier_param Param = identifier_param{}>
     consteval auto get_short_literal_string() noexcept {
-        return parse_raw_identifier_name(U8("essence::meta::detail::get_short_literal_string<"), ES_UNIFORM_FUNCSIG,
+        return parse_raw_identifier_name("essence::meta::detail::get_short_literal_string<", ES_UNIFORM_FUNCSIG,
             identifier_param{
                 .shortened               = true,
                 .ensure_correctness      = Param.ensure_correctness,
@@ -100,7 +100,7 @@ export namespace essence::meta::detail {
      */
     template <auto Value, typename T, identifier_param Param = identifier_param{}>
     consteval auto get_short_literal_string() noexcept {
-        return parse_raw_identifier_name(U8("essence::meta::detail::get_short_literal_string<"), ES_UNIFORM_FUNCSIG,
+        return parse_raw_identifier_name("essence::meta::detail::get_short_literal_string<", ES_UNIFORM_FUNCSIG,
             identifier_param{
                 .type                    = false,
                 .shortened               = true,
@@ -119,7 +119,7 @@ export namespace essence::meta::detail {
         requires(std::is_pointer_v<decltype(Value)> && std::is_function_v<std::remove_pointer_t<decltype(Value)>>)
     consteval auto get_function_name() noexcept {
         return parse_qualified_function_name(
-            parse_raw_identifier_name(U8("essence::meta::detail::get_function_name<"), ES_UNIFORM_FUNCSIG,
+            parse_raw_identifier_name("essence::meta::detail::get_function_name<", ES_UNIFORM_FUNCSIG,
                 identifier_param{
                     .type                    = false,
                     .ensure_correctness      = Param.ensure_correctness,

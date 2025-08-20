@@ -37,13 +37,13 @@ namespace essence::crypto {
         constexpr auto encode_ctx_deleter = [](EVP_ENCODE_CTX* inner) { EVP_ENCODE_CTX_free(inner); };
 
         const cipher_error_builder encoding_builder{
-            .cipher_name  = U8("base64"),
-            .routine_name = U8("Encoding"),
+            .cipher_name  = "base64",
+            .routine_name = "Encoding",
         };
 
         const cipher_error_builder decoding_builder{
-            .cipher_name  = U8("base64"),
-            .routine_name = U8("Decoding"),
+            .cipher_name  = "base64",
+            .routine_name = "Decoding",
         };
 
         const chunk_processing_helper base64_encoding_helper{
@@ -71,7 +71,7 @@ namespace essence::crypto {
                           return context;
                       }
 
-                      throw formatted_runtime_error{U8("Failed to allocate the base64 encoding context.")};
+                      throw formatted_runtime_error{"Failed to allocate the base64 encoding context."};
                   }()},
                   helper_{[]() -> const auto& {
                       if constexpr (Encoder) {

@@ -39,7 +39,7 @@ export namespace essence::i18n {
 
         ES_API(CPPESSENCE) explicit simple_messages(std::size_t refs = 0) : facet{refs} {}
 
-        ES_API(CPPESSENCE) [[nodiscard]] abi::string get(std::string_view name) const {
+        [[nodiscard]] ES_API(CPPESSENCE) abi::string get(std::string_view name) const {
             return do_get(name);
         }
 
