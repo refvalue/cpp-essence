@@ -27,7 +27,7 @@ module;
 export module essence.basic:abi.memory;
 import std;
 
-export extern "C" {
+export {
     ES_API(CPPESSENCE) void* es_alloc(std::size_t size) noexcept;
     ES_API(CPPESSENCE) void* es_aligned_alloc(std::size_t size, std::size_t alignment) noexcept;
     ES_API(CPPESSENCE) void es_dealloc(void* ptr, std::size_t size) noexcept;

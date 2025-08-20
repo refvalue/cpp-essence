@@ -173,7 +173,7 @@ namespace essence {
 #else
         if (Dl_info info{}; dladdr(address, &info)) {
             if (std::filesystem::path path{info.dli_fname}; path.is_relative()) {
-                return abi::to_abi_string(get_module_full_path(path.string()).general_string());
+                return abi::to_abi_string(get_module_full_path(path.string()).generic_string());
             }
 
             return info.dli_fname;

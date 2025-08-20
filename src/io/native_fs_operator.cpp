@@ -21,7 +21,6 @@
  */
 
 module essence.io;
-import essence.basic;
 import std;
 
 namespace essence::io {
