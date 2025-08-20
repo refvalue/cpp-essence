@@ -21,6 +21,7 @@
  */
 
 export module essence.basic:argb_color;
+
 import std;
 
 export namespace essence {

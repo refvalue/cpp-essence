@@ -25,6 +25,7 @@ module;
 #include <essence/compat.hpp>
 
 export module essence.serialization:basic_json;
+
 import lib.nlohmann_json;
 
 export namespace essence {

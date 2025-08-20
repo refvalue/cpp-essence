@@ -21,10 +21,11 @@
  */
 
 export module essence.meta:runtime.enumeration;
+
+import std;
 import :common_types;
 import :enumeration;
 import :naming_convention;
-import std;
 
 export namespace essence::meta::runtime {
     /**

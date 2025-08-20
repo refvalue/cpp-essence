@@ -21,8 +21,9 @@
  */
 
 export module essence.basic:yuv_color;
-import :argb_color;
+
 import std;
+import :argb_color;
 
 export namespace essence {
     /**

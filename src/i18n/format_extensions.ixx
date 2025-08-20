@@ -21,9 +21,10 @@
  */
 
 export module essence.i18n:format_extensions;
+
+import std;
 import :localized_arg;
 import essence.basic;
-import std;
 
 export namespace essence::i18n {
     /**

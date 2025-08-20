@@ -21,8 +21,9 @@
  */
 
 module essence.net;
-import essence.basic;
+
 import std;
+import essence.basic;
 
 namespace essence::net {
     abi::vector<interface_address_info> get_interfaces_addresses() {

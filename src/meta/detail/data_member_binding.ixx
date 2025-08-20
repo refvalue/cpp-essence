@@ -21,8 +21,9 @@
  */
 
 export module essence.meta:detail.data_member_binding;
-import :detail.data_member_matching;
+
 import std;
+import :detail.data_member_matching;
 
 export namespace essence::meta::detail {
     template <typename T>

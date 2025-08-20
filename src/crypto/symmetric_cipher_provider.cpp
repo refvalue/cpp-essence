@@ -26,6 +26,11 @@ module;
 
 module essence.crypto;
 
+import std;
+import :abstract.chunk_processor;
+import :common_types;
+import essence.basic;
+
 namespace essence::crypto {
     namespace {
         struct update_tag {};

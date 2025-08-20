@@ -21,6 +21,7 @@
  */
 
 export module essence.basic:optional;
+
 import std;
 
 export namespace essence {

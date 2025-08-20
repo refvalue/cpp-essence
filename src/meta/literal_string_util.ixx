@@ -21,8 +21,9 @@
  */
 
 export module essence.meta:literal_string_util;
-import :literal_string;
+
 import std;
+import :literal_string;
 
 export namespace essence::meta {
     /**

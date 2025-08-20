@@ -20,12 +20,12 @@
  * THE SOFTWARE.
  */
 
-module;
-
-#include <essence/char8_t_remediation.hpp>
-
 module essence.i18n;
+
+import std;
+import :abstract.translator;
 import :common_constants;
+import essence.io;
 
 namespace essence::i18n {
     namespace {
@@ -37,11 +37,11 @@ namespace essence::i18n {
             immutable_translator(io::abstract::virtual_fs_operator fs_operator, std::string_view working_directory,
                 std::string_view language)
                 : language_{language}, working_directory_{working_directory}, fs_operator_{std::move(fs_operator)} {
-                auto path = std::filesystem::path{to_u8string(working_directory)} / to_u8string(language);
+                auto path = std::filesystem::path{working_directory | std::ranges::to<std::u8string>()} / language;
 
                 path.replace_extension(common_constants::language_file_extension);
 
-                auto path_str = from_u8string(path.generic_u8string());
+                const auto path_str = path.generic_u8string() | std::ranges::to<std::string>();
 
                 if (!fs_operator_.exists(path_str)) {
                     throw formatted_runtime_error{

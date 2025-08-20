@@ -21,8 +21,9 @@
  */
 
 export module essence.basic:scope;
-import :noncopyable;
+
 import std;
+import :noncopyable;
 
 export namespace essence {
     template <std::invocable Callable>

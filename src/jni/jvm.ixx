@@ -27,8 +27,9 @@ module;
 #include <jni.h>
 
 export module essence.jni:jvm;
-import :global_ref;
+
 import std;
+import :global_ref;
 
 export namespace essence::jni {
     /**

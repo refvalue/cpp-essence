@@ -20,13 +20,9 @@
  * THE SOFTWARE.
  */
 
-module;
-
-#ifndef _MSC_VER
-#include <essence/char8_t_remediation.hpp>
-#endif
-
 export module essence.meta:detail.parse_raw_identifier_name;
+
+import std;
 import :detail.extract_keyword;
 import :detail.extraction_param;
 import :detail.get_signature_suffix_size;
@@ -34,7 +30,6 @@ import :detail.language_tokens;
 import :identifier_param;
 import :literal_string;
 import essence.basic;
-import std;
 
 export namespace essence::meta::detail {
     /**

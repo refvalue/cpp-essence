@@ -21,8 +21,9 @@
  */
 
 export module essence.cli:validation_result;
-import essence.basic;
+
 import std;
+import essence.basic;
 
 export namespace essence::cli {
     /**

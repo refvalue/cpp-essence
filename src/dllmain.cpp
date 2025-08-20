@@ -22,10 +22,10 @@
 
 module;
 
-#include <essence/char8_t_remediation.hpp>
 #include <essence/compat.hpp>
 
 module essence.basic;
+
 import std;
 
 #ifdef __UCLIBC__

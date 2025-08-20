@@ -26,12 +26,12 @@ module;
 #define NOMINMAX
 #define NOGDI
 
-#include <essence/char8_t_remediation.hpp>
-
 #include <Windows.h>
 #include <shellapi.h>
 
 module essence.win32;
+
+import std;
 import :filesystem_tokens;
 
 namespace essence::win32 {

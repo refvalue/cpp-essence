@@ -20,12 +20,13 @@
  * THE SOFTWARE.
  */
 
-module;
-
-#include <essence/char8_t_remediation.hpp>
-
 module essence.cli;
+
+import std;
+import :abstract.option;
+import :common_types;
 import :common_tokens;
+import :option_result;
 import essence.basic;
 import essence.meta;
 

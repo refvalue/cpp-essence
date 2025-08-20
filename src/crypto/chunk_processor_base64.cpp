@@ -22,13 +22,16 @@
 
 module;
 
-#include <essence/char8_t_remediation.hpp>
-
 #include <openssl/evp.h>
 
 module essence.crypto;
+
+import std;
+import :abstract.chunk_processor;
+import :common_types;
 import :chunk_processing_helper;
 import :cipher_error_builder;
+import essence.basic;
 
 extern "C" void evp_encode_ctx_set_flags(EVP_ENCODE_CTX* ctx, unsigned int flags);
 

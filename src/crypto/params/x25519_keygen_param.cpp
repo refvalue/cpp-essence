@@ -20,11 +20,8 @@
  * THE SOFTWARE.
  */
 
-module;
-
-#include <essence/char8_t_remediation.hpp>
-
 module essence.crypto;
+
 import :util;
 import essence.basic;
 

@@ -21,8 +21,9 @@
  */
 
 export module essence.win32:registry;
-import essence.basic;
+
 import std;
+import essence.basic;
 
 export namespace essence::win32 {
     abi::string get_registry_string(std::string_view path, std::string_view name);

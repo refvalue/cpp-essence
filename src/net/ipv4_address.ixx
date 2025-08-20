@@ -25,8 +25,9 @@ module;
 #include <essence/compat.hpp>
 
 export module essence.net:ipv4_address;
-import essence.basic;
+
 import std;
+import essence.basic;
 
 export namespace essence::net {
     /**

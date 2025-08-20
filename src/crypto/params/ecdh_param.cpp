@@ -22,19 +22,19 @@
 
 module;
 
-#include <essence/char8_t_remediation.hpp>
-
 #include <openssl/ec.h>
 
 module essence.crypto;
+
+import :common_types;
 import :params.pubkey_param_impl;
 import :util;
 import essence.basic;
 
 namespace essence::crypto {
     ecdh_param::ecdh_param(std::shared_ptr<void> context)
-        : opaque_{new pubkey_param_impl{std::array{zstring_view{"ECDH"}}, std::move(context)},
-              pubkey_param_impl_deleter} {}
+        : opaque_{
+              new pubkey_param_impl{std::array{zstring_view{"ECDH"}}, std::move(context)}, pubkey_param_impl_deleter} {}
 
     ecdh_param::ecdh_param(ecdh_param&&) noexcept = default;
 

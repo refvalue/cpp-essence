@@ -21,6 +21,7 @@
  */
 
 export module essence.basic:type_traits;
+
 import std;
 
 export namespace essence {

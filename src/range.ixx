@@ -21,8 +21,9 @@
  */
 
 export module essence.basic:range;
-import :char_and_byte;
+
 import std;
+import :char_and_byte;
 
 namespace essence::detail {
     /**

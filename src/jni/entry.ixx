@@ -27,6 +27,7 @@ module;
 #include <jni.h>
 
 export module essence.jni:entry;
+
 import std;
 
 export namespace essence::jni {

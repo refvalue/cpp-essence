@@ -25,9 +25,10 @@ module;
 #include <essence/compat.hpp>
 
 export module essence.basic:encoding;
+
+import std;
 import :abi.string;
 import :abi.vector;
-import std;
 
 export namespace essence {
 #ifdef _WIN32

@@ -27,9 +27,10 @@ module;
 #include <jni.h>
 
 export module essence.jni:iterator;
+
+import std;
 import :global_ref;
 import :local_ref;
-import std;
 
 export namespace essence::jni {
     using std::strong_ordering;

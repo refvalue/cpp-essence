@@ -24,8 +24,8 @@
 
 #include <gtest/gtest.h>
 
-import essence.basic;
 import std;
+import essence.basic;
 
 using namespace essence;
 

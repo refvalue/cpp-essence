@@ -22,9 +22,10 @@
 
 
 export module essence.cli:option_result;
+
+import std;
 import :abstract.option;
 import essence.basic;
-import std;
 
 export namespace essence::cli {
     /**

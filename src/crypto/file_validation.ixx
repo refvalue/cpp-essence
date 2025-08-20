@@ -25,8 +25,9 @@ module;
 #include <essence/compat.hpp>
 
 export module essence.crypto:file_validation;
-import :common_types;
+
 import std;
+import :common_types;
 
 export namespace essence::crypto {
     /**

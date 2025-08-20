@@ -22,13 +22,13 @@
 
 module;
 
-#include <essence/char8_t_remediation.hpp>
 #include <essence/compat.hpp>
 
 export module essence.meta:detail.language_tokens;
+
+import std;
 import :literal_string;
 import essence.basic;
-import std;
 
 export namespace essence::meta::detail {
     /**

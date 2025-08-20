@@ -21,10 +21,11 @@
  */
 
 export module essence.meta:detail.find_at_depth;
+
+import std;
 import :detail.language_tokens;
 import :literal_string;
 import essence.basic;
-import std;
 
 export namespace essence::meta::detail {
     template <find_mode_type = find_mode_type::reserved>

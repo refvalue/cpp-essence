@@ -20,10 +20,6 @@
  * THE SOFTWARE.
  */
 
-module;
-
-#include <essence/char8_t_remediation.hpp>
-
 module essence.net;
 
 namespace essence::net {

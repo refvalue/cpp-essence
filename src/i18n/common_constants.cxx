@@ -20,13 +20,10 @@
  * THE SOFTWARE.
  */
 
-module;
-
-#include <essence/char8_t_remediation.hpp>
-
 module essence.i18n:common_constants;
-import essence.basic;
+
 import std;
+import essence.basic;
 
 namespace essence::i18n {
     struct common_constants {

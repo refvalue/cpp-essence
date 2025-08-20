@@ -21,9 +21,10 @@
  */
 
 export module essence.meta:fingerprint;
+
+import std;
 import :friendly_name_base;
 import :friendly_name_vector;
-import std;
 
 export namespace essence::meta {
     /**

@@ -25,6 +25,7 @@ module;
 #include <essence/compat.hpp>
 
 export module essence.basic:abi.memory;
+
 import std;
 
 export {

@@ -22,8 +22,9 @@
 
 
 export module essence.meta:literal_string;
-import essence.basic;
+
 import std;
+import essence.basic;
 
 export namespace essence::meta {
     /**

@@ -23,10 +23,11 @@
 module;
 
 export module essence.serialization:detail.json;
+
+import std;
 import :basic_json;
 import essence.basic;
 import essence.meta;
-import std;
 
 export namespace essence::serialization::detail {
     template <typename T>

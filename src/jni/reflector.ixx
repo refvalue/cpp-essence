@@ -27,9 +27,10 @@ module;
 #include <jni.h>
 
 export module essence.jni:reflector;
+
+import std;
 import :global_ref;
 import essence.basic;
-import std;
 
 export namespace essence::jni::detail {
     template <typename T>

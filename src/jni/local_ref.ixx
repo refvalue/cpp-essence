@@ -27,8 +27,9 @@ module;
 #include <jni.h>
 
 export module essence.jni:local_ref;
-import :common_types;
+
 import std;
+import :common_types;
 
 export namespace essence::jni {
     class local_ref {

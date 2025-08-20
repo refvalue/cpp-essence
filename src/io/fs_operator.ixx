@@ -25,9 +25,10 @@ module;
 #include <essence/compat.hpp>
 
 export module essence.io:fs_operator;
+
+import std;
 import :abstract.virtual_fs_operator;
 import :cmrc_fs_operator;
-import std;
 
 export namespace essence::io {
     /**

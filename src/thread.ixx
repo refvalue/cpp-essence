@@ -25,8 +25,9 @@ module;
 #include <essence/compat.hpp>
 
 export module essence.basic:thread;
-import :abi.string;
+
 import std;
+import :abi.string;
 
 export namespace essence {
     /**

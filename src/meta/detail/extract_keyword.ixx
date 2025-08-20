@@ -21,9 +21,10 @@
  */
 
 export module essence.meta:detail.extract_keyword;
+
+import std;
 import :detail.extraction_param;
 import essence.basic;
-import std;
 
 export namespace essence::meta::detail {
     /**

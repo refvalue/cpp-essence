@@ -21,10 +21,11 @@
  */
 
 export module essence.meta:naming_convention;
+
+import std;
 import :common_types;
 import :detail.naming_convention;
 import essence.basic;
-import std;
 
 export namespace essence::meta {
     consteval auto get_enum_searching_range(naming_convention) noexcept {

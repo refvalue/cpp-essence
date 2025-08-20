@@ -25,9 +25,10 @@ module;
 #include <essence/compat.hpp>
 
 export module essence.i18n:translator;
+
+import std;
 import :abstract.translator;
 import essence.io;
-import std;
 
 export namespace essence::i18n {
     /**

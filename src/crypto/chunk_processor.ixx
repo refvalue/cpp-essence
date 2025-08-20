@@ -25,10 +25,11 @@ module;
 #include <essence/compat.hpp>
 
 export module essence.crypto:chunk_processor;
+
+import std;
 import :abstract.chunk_processor;
 import :common_types;
 import essence.basic;
-import std;
 
 export namespace essence::crypto {
     /**

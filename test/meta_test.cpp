@@ -24,9 +24,9 @@
 
 #include <gtest/gtest.h>
 
+import std;
 import essence.basic;
 import essence.meta;
-import std;
 
 #define MAKE_TEST(name) TEST(meta_test, name)
 

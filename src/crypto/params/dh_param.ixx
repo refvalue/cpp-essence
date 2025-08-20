@@ -25,9 +25,10 @@ module;
 #include <essence/compat.hpp>
 
 export module essence.crypto:params.dh_param;
+
+import std;
 import :common_types;
 import essence.basic;
-import std;
 
 export namespace essence::crypto {
     class dh_param {

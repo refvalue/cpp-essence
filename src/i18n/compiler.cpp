@@ -20,12 +20,12 @@
  * THE SOFTWARE.
  */
 
-module;
-
-#include <essence/char8_t_remediation.hpp>
-
 module essence.i18n;
+
+import std;
+import :abstract.compiler;
 import :common_constants;
+import essence.basic;
 import essence.crypto;
 import essence.serialization;
 
@@ -48,7 +48,7 @@ namespace essence::i18n {
 
                 try {
                     stream.exceptions(std::ios_base::badbit | std::ios_base::failbit);
-                    stream.open(std::filesystem::path{to_u8string(path)}, std::ios::out | std::ios::binary);
+                    stream.open(std::filesystem::path{path  | std::ranges::to<std::u8string>()}, std::ios::out | std::ios::binary);
                 } catch (const std::exception& ex) {
                     throw formatted_runtime_error{
                         "Language File", path, "Message", "Failed to create the language file.", "Internal", ex.what()};

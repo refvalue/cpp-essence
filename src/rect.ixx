@@ -21,6 +21,7 @@
  */
 
 export module essence.basic:rect;
+
 import std;
 
 export namespace essence {

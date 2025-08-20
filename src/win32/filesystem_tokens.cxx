@@ -20,13 +20,10 @@
  * THE SOFTWARE.
  */
 
-module;
-
-#include <essence/char8_t_remediation.hpp>
-
 module essence.win32:filesystem_tokens;
-import essence.basic;
+
 import std;
+import essence.basic;
 
 namespace essence::win32 {
     struct filesystem_tokens {

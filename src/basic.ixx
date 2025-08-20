@@ -34,7 +34,6 @@ export import :basic_string;
 export import :basic_vector;
 export import :boolean;
 export import :char_and_byte;
-export import :char8_t_remediation;
 export import :delegate;
 export import :encoding;
 export import :environment;

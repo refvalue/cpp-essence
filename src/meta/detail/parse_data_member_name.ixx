@@ -21,9 +21,10 @@
  */
 
 export module essence.meta:detail.parse_data_member_name;
+
+import std;
 import :detail.extract_keyword;
 import :detail.language_tokens;
-import std;
 
 export namespace essence::meta::detail {
     /**

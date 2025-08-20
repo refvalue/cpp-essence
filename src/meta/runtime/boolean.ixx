@@ -21,8 +21,9 @@
  */
 
 export module essence.meta:runtime.boolean;
-import :boolean;
+
 import std;
+import :boolean;
 
 export namespace essence::meta::runtime {
     /**

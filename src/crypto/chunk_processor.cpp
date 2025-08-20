@@ -20,11 +20,11 @@
  * THE SOFTWARE.
  */
 
-module;
-
-#include <essence/char8_t_remediation.hpp>
-
 module essence.crypto;
+
+import std;
+import :abstract.chunk_processor;
+import :common_types;
 import :inout_buffer_pair;
 import essence.basic;
 import essence.memory;

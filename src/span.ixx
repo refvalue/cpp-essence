@@ -21,6 +21,7 @@
  */
 
 export module essence.basic:span;
+
 import std;
 
 export namespace essence {

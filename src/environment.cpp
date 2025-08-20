@@ -22,7 +22,6 @@
 
 module;
 
-#include <essence/char8_t_remediation.hpp>
 #include <essence/compat.hpp>
 
 #ifdef _WIN32
@@ -46,7 +45,12 @@ module;
 #endif
 
 module essence.basic;
+
 import std;
+import :abi.string;
+import :abi.vector;
+import :encoding;
+import lib.spdlog;
 
 namespace essence {
     namespace {
@@ -79,7 +83,8 @@ namespace essence {
                 std::scoped_lock lock{deleting_mutex};
 
                 for (auto&& item : directories_to_delete) {
-                    command_line.append(format(rmdir_pattern, from_u8string(item.u8string())));
+                    command_line.append(
+                        format(rmdir_pattern, item.generic_u8string() | std::ranges::to<std::string>()));
                 }
             }
 
@@ -208,6 +213,6 @@ namespace essence {
 
         std::scoped_lock lock{deleting_mutex};
 
-        directories_to_delete.emplace_back(to_u8string(path));
+        directories_to_delete.emplace_back(path | std::ranges::to<std::u8string>());
     }
 } // namespace essence

@@ -25,12 +25,13 @@ module;
 #include <essence/compat.hpp>
 
 export module essence.cli:arg_parser;
+
+import std;
 import :abstract.option;
 import :common_types;
 import :option_result;
 import essence.basic;
 import essence.meta;
-import std;
 
 export namespace essence::cli {
     /**

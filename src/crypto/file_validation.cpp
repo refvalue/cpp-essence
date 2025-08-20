@@ -20,11 +20,11 @@
  * THE SOFTWARE.
  */
 
-module;
-
-#include <essence/char8_t_remediation.hpp>
 
 module essence.crypto;
+
+import std;
+import :common_types;
 import essence.basic;
 
 namespace essence::crypto {
@@ -71,9 +71,10 @@ namespace essence::crypto {
         if (std::ofstream stream{digest_path, std::ios::trunc | std::ios::binary | std::ios::out}) {
             const auto digest = make_file_digest(mode, path);
 
-            stream.write(reinterpret_cast<const char*>(digest.c_str()), static_cast<std::streamsize>(digest.size()));
+            stream.write(digest.c_str(), static_cast<std::streamsize>(digest.size()));
         } else {
-            throw formatted_runtime_error{"Path", path, "Digest Path", from_u8string(digest_path.u8string()), "Message",
+            throw formatted_runtime_error{"Path", path, "Digest Path",
+                digest_path.generic_u8string() | std::ranges::to<std::string>(), "Message",
                 "Failed to create the validation file."};
         }
     }

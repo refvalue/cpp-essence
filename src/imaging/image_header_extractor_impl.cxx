@@ -21,6 +21,7 @@
  */
 
 module essence.imaging:image_header_extractor_impl;
+
 import std;
 
 namespace essence::imaging {

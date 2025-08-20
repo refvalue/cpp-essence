@@ -21,9 +21,10 @@
  */
 
 export module essence.serialization:json;
+
+import std;
 import lib.nlohmann_json;
 import :json_serializer;
-import std;
 
 export namespace essence {
     using json = nlohmann::basic_json<std::map, std::vector, std::string, bool, std::int64_t, std::uint64_t, double,

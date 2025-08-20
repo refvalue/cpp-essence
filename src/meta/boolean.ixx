@@ -25,8 +25,9 @@ module;
 #include <essence/compat.hpp>
 
 export module essence.meta:boolean;
-import :identifier;
+
 import std;
+import :identifier;
 
 export namespace essence::meta {
     /**

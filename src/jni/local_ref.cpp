@@ -22,6 +22,8 @@
 
 module essence.jni;
 
+import std;
+
 namespace essence::jni {
     local_ref::local_ref() noexcept : ref_{} {}
 

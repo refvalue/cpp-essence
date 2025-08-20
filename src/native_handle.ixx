@@ -21,6 +21,7 @@
  */
 
 export module essence.basic:native_handle;
+
 import std;
 
 export namespace essence {

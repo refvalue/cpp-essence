@@ -20,13 +20,10 @@
  * THE SOFTWARE.
  */
 
-module;
-
-#include <essence/char8_t_remediation.hpp>
-
 export module essence.io:cmrc_fs_operator;
-import essence.basic;
+
 import std;
+import essence.basic;
 
 export namespace essence::io {
     template <std::move_constructible T>

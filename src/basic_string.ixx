@@ -21,6 +21,7 @@
  */
 
 export module essence.basic:basic_string;
+
 import std;
 
 export namespace essence {

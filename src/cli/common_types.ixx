@@ -21,6 +21,7 @@
  */
 
 export module essence.cli:common_types;
+
 import std;
 
 export namespace essence::cli {

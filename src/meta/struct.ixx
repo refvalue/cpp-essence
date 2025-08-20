@@ -21,12 +21,13 @@
  */
 
 export module essence.meta:structure;
+
+import std;
 import :detail.data_member_binding;
 import :detail.fake_object_wrapper;
 import :detail.parse_data_member_name;
 import :identifier;
 import essence.basic;
-import std;
 
 export namespace essence::meta {
     /**

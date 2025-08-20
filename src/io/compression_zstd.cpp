@@ -22,16 +22,16 @@
 
 module;
 
-#include <essence/char8_t_remediation.hpp>
 #include <essence/compat.hpp>
 
 #include <zstd.h>
 #include <zstd_errors.h>
 
 module essence.io;
+
+import std;
 import :compression_routines;
 import essence.basic;
-import std;
 
 namespace essence::io {
     namespace {

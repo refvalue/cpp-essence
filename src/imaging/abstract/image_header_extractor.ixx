@@ -25,9 +25,10 @@ module;
 #include <essence/compat.hpp>
 
 export module essence.imaging:abstract.image_header_extractor;
+
+import std;
 import :image_general_header;
 import essence.io;
-import std;
 
 export namespace essence::imaging::abstract {
     /**

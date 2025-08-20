@@ -24,10 +24,10 @@
 
 #include <gtest/gtest.h>
 
+import std;
 import essence.basic;
 import essence.cli;
 import essence.unit_test.lang;
-import std;
 
 using namespace essence;
 

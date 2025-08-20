@@ -21,8 +21,9 @@
  */
 
 module essence.imaging:extractors;
-import :abstract.image_header_extractor;
+
 import std;
+import :abstract.image_header_extractor;
 
 namespace essence::imaging {
     namespace {

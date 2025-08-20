@@ -21,6 +21,7 @@
  */
 
 export module essence.basic:char_and_byte;
+
 import std;
 
 export namespace essence {

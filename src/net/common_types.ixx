@@ -21,6 +21,7 @@
  */
 
 export module essence.net:common_types;
+
 import std;
 
 export namespace essence::net {

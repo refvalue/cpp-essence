@@ -25,8 +25,9 @@ module;
 #include <essence/compat.hpp>
 
 export module essence.io:bitstream_type_judger;
-import :abstract.bitstream_type_hint;
+
 import std;
+import :abstract.bitstream_type_hint;
 
 export namespace essence::io {
     /**

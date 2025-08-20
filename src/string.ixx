@@ -22,15 +22,14 @@
 
 module;
 
-#include <essence/char8_t_remediation.hpp>
 #include <essence/compat.hpp>
 
 export module essence.basic:string;
+
+import std;
 import :abi.string;
 import :char_and_byte;
-import :char8_t_remediation;
 import :hashing;
-import std;
 
 export namespace essence {
     ES_API(CPPESSENCE) constexpr std::string_view ascii_blank_chars{" \t"};

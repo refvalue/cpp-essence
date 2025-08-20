@@ -21,8 +21,9 @@
  */
 
 export module essence.meta:identifier;
-import :detail.identifier;
+
 import std;
+import :detail.identifier;
 
 export namespace essence::meta {
     /**

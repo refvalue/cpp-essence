@@ -21,8 +21,9 @@
  */
 
 export module essence.basic:abi.string;
-import :abi.memory;
+
 import std;
+import :abi.memory;
 
 export namespace essence::abi {
     template <typename T>

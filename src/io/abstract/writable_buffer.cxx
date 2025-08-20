@@ -25,6 +25,7 @@ module;
 #include <essence/compat.hpp>
 
 module essence.io:abstract.writable_buffer;
+
 import std;
 
 namespace essence::io::abstract {

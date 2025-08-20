@@ -22,11 +22,14 @@
 
 module;
 
-#include <essence/char8_t_remediation.hpp>
-
 #include <jni.h>
 
 module essence.jni;
+
+import std;
+import :common_types;
+import :global_ref;
+import :local_ref;
 import essence.meta;
 
 namespace essence::jni {

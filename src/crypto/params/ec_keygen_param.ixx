@@ -25,6 +25,7 @@ module;
 #include <essence/compat.hpp>
 
 export module essence.crypto:params.ec_keygen_param;
+
 import essence.basic;
 
 export namespace essence::crypto {

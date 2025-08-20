@@ -21,10 +21,11 @@
  */
 
 export module essence.meta:enumeration;
+
+import std;
 import :detail.language_tokens;
 import :identifier;
 import essence.basic;
-import std;
 
 export namespace essence::meta {
     /**

@@ -27,6 +27,7 @@ module;
 #endif
 
 export module essence.memory:atomic_readable_buffer;
+
 import std;
 
 export namespace essence {

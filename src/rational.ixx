@@ -21,6 +21,7 @@
  */
 
 export module essence.basic:rational;
+
 import std;
 
 export namespace essence {

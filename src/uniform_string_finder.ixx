@@ -21,6 +21,7 @@
  */
 
 export module essence.basic:uniform_string_finder;
+
 import std;
 
 export namespace essence {

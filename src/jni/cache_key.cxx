@@ -25,8 +25,9 @@ module;
 #include <jni.h>
 
 module essence.jni:cache_key;
-import essence.basic;
+
 import std;
+import essence.basic;
 
 namespace essence::jni {
     struct cache_key {

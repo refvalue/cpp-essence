@@ -21,12 +21,13 @@
  */
 
 export module essence.meta:runtime.structure;
+
+import std;
 import :common_types;
 import :detail.data_member_binding;
 import :identifier;
 import :naming_convention;
 import :structure;
-import std;
 
 export namespace essence::meta::runtime {
     /**

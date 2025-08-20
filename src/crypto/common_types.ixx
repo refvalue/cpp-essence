@@ -21,8 +21,9 @@
  */
 
 export module essence.crypto:common_types;
-import essence.basic;
+
 import std;
+import essence.basic;
 
 export namespace essence::crypto {
     struct use_public_tag {};

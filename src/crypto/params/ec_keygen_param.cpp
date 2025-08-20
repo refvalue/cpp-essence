@@ -20,13 +20,12 @@
  * THE SOFTWARE.
  */
 
-module;
-
-#include <essence/char8_t_remediation.hpp>
 
 module essence.crypto;
-import :util;
+
 import std;
+import :util;
+import essence.basic;
 
 namespace essence::crypto {
     void* ec_keygen_param::generate_key_blob() const try {

@@ -20,16 +20,14 @@
  * THE SOFTWARE.
  */
 
-module;
-
-#include <essence/char8_t_remediation.hpp>
 
 export module essence.meta:friendly_name_base;
+
+import std;
 import :common_types;
 import :identifier;
 import :literal_string;
 import essence.basic;
-import std;
 
 export namespace essence::meta {
     template <typename T, typename Tag = void>

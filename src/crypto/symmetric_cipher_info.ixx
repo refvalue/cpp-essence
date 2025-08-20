@@ -21,6 +21,7 @@
  */
 
 export module essence.crypto:symmetric_cipher_info;
+
 import std;
 
 namespace essence::crypto {

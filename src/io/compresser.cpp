@@ -21,8 +21,12 @@
  */
 
 module essence.io;
+
+import std;
 import :abstract.writable_buffer;
+import :common_types;
 import :compression_routines;
+import essence.basic;
 
 namespace essence::io {
     class compresser::impl {

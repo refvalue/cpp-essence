@@ -20,12 +20,12 @@
  * THE SOFTWARE.
  */
 
-module;
-
-#include <essence/char8_t_remediation.hpp>
-
 module essence.imaging;
+
+import std;
+import :abstract.image_header_extractor;
 import :extractors;
+import :image_general_header;
 import essence.basic;
 import essence.io;
 
@@ -68,7 +68,7 @@ namespace essence::imaging {
 
             try {
                 stream.exceptions(std::ios::badbit);
-                stream.open(std::filesystem::path{to_u8string(path)}, std::ios::in | std::ios::binary);
+                stream.open(std::filesystem::path{path  | std::ranges::to<std::u8string>()}, std::ios::in | std::ios::binary);
             } catch (const std::exception& ex) {
                 throw formatted_runtime_error{
                     "File", path, "Message", "Failed to open the image file.", "Internal", ex.what()};

@@ -21,8 +21,9 @@
  */
 
 export module essence.basic:abi.map;
-import :abi.memory;
+
 import std;
+import :abi.memory;
 
 export namespace essence::abi {
     template <typename Key, typename Value, typename Compare = std::less<Key>>

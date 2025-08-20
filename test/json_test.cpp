@@ -24,11 +24,11 @@
 
 #include <gtest/gtest.h>
 
+import std;
 import essence.basic;
 import essence.io;
 import essence.meta;
 import essence.serialization;
-import std;
 
 using namespace essence;
 

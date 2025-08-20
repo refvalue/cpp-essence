@@ -23,8 +23,9 @@ module;
 #include <essence/compat.hpp>
 
 export module essence.io:stdio_watcher;
-import :common_types;
+
 import std;
+import :common_types;
 
 export namespace essence::io {
     class stdio_watcher {

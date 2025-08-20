@@ -22,9 +22,9 @@
 
 #include <gtest/gtest.h>
 
+import std;
 import essence.basic;
 import essence.io;
-import std;
 
 using namespace essence;
 using namespace essence::io;
@@ -46,7 +46,7 @@ MAKE_TEST(stdio_watcher) {
     std::this_thread::sleep_for(std::chrono::seconds{3});
     watcher.stop();
 
-    ASSERT_STREQ(
-        lines.c_str(), U8("一些测试内容，Some Tests Included\n一旦发生错误所有的信息推荐使用 stderr 输出，以和 stdout "
-                          "区分。\nAny error that occurrs in the context should be printed via stderr.\n"));
+    ASSERT_STREQ(lines.c_str(),
+        "一些测试内容，Some Tests Included\n一旦发生错误所有的信息推荐使用 stderr 输出，以和 stdout "
+        "区分。\nAny error that occurrs in the context should be printed via stderr.\n");
 }

@@ -20,14 +20,11 @@
  * THE SOFTWARE.
  */
 
-module;
-
-#include <essence/char8_t_remediation.hpp>
-
 export module essence.meta:friendly_name_vector;
+
+import std;
 import :friendly_name_base;
 import essence.basic;
-import std;
 
 export template <essence::std_vector T>
 struct essence::meta::friendly_name<T> {

@@ -21,7 +21,9 @@
  */
 
 module essence.io;
+
 import std;
+import :abstract.virtual_fs_operator;
 
 namespace essence::io {
     namespace {
@@ -31,7 +33,7 @@ namespace essence::io {
             auto stream = std::make_unique<T>();
 
             stream->exceptions(std::ios_base::badbit);
-            stream->open(std::filesystem::path{to_u8string(path)}, mode);
+            stream->open(std::filesystem::path{path | std::ranges::to<std::u8string>()}, mode);
 
             return stream;
         }
@@ -40,19 +42,19 @@ namespace essence::io {
             [[nodiscard]] [[maybe_unused]] static bool exists(std::string_view path) noexcept {
                 std::error_code code;
 
-                return std::filesystem::exists(to_u8string(path), code);
+                return std::filesystem::exists(path | std::ranges::to<std::u8string>(), code);
             }
 
             [[nodiscard]] [[maybe_unused]] static bool is_file(std::string_view path) noexcept {
                 std::error_code code;
 
-                return std::filesystem::is_regular_file(to_u8string(path), code);
+                return std::filesystem::is_regular_file(path | std::ranges::to<std::u8string>(), code);
             }
 
             [[nodiscard]] [[maybe_unused]] static bool is_directory(std::string_view path) noexcept {
                 std::error_code code;
 
-                return std::filesystem::is_directory(to_u8string(path), code);
+                return std::filesystem::is_directory(path | std::ranges::to<std::u8string>(), code);
             }
 
             [[nodiscard]] [[maybe_unused]] static std::unique_ptr<std::iostream> open(

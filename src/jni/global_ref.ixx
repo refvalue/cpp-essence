@@ -27,8 +27,9 @@ module;
 #include <jni.h>
 
 export module essence.jni:global_ref;
-import :common_types;
+
 import std;
+import :common_types;
 
 export namespace essence::jni {
     class global_ref {

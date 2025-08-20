@@ -21,6 +21,7 @@
  */
 
 export module essence.basic:boolean;
+
 import std;
 
 export namespace essence {

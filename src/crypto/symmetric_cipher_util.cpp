@@ -26,6 +26,10 @@ module;
 
 module essence.crypto;
 
+import std;
+import :symmetric_cipher_info;
+import essence.basic;
+
 namespace essence::crypto {
     abi::vector<abi::string> get_all_symmetric_cipher_names() {
         abi::vector<abi::string> result;

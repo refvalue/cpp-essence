@@ -25,9 +25,10 @@ module;
 #include <essence/compat.hpp>
 
 export module essence.i18n:abstract.compiler;
+
+import std;
 import essence.basic;
 import essence.serialization;
-import std;
 
 export namespace essence::i18n::abstract {
     /**

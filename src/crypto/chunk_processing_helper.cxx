@@ -20,13 +20,10 @@
  * THE SOFTWARE.
  */
 
-module;
-
-#include <essence/char8_t_remediation.hpp>
-
 module essence.crypto:chunk_processing_helper;
-import essence.basic;
+
 import std;
+import essence.basic;
 
 namespace essence::crypto {
     template <typename T, typename R = std::int32_t>

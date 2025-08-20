@@ -21,6 +21,7 @@
  */
 
 export module essence.basic:basic_vector;
+
 import std;
 
 export namespace essence {

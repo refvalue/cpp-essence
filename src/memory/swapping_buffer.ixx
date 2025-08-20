@@ -21,8 +21,9 @@
  */
 
 export module essence.memory:swapping_buffer;
-import essence.basic;
+
 import std;
+import essence.basic;
 
 export namespace essence::memory {
     /**

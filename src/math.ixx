@@ -27,6 +27,7 @@ module;
 #endif
 
 export module essence.basic:math;
+
 import std;
 
 export namespace essence {

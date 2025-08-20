@@ -21,6 +21,7 @@
  */
 
 export module essence.meta:detail.data_member_matching;
+
 import std;
 
 export namespace essence::meta::detail {

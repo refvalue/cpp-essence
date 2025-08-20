@@ -25,6 +25,9 @@ module;
 #include <openssl/evp.h>
 
 module essence.crypto;
+
+import std;
+import :abstract.chunk_processor;
 import :inout_buffer_pair;
 import essence.io;
 

@@ -25,8 +25,9 @@ module;
 #include <essence/compat.hpp>
 
 export module essence.i18n:simple_messages;
-import essence.basic;
+
 import std;
+import essence.basic;
 
 export namespace essence::i18n {
     /**

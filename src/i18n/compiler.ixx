@@ -25,9 +25,10 @@ module;
 #include <essence/compat.hpp>
 
 export module essence.i18n:compiler;
+
+import std;
 import :abstract.compiler;
 import essence.basic;
-import std;
 
 export namespace essence::i18n {
     /**

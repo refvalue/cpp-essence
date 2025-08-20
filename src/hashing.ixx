@@ -25,6 +25,7 @@ module;
 #include <cstdint>
 
 export module essence.basic:hashing;
+
 import std;
 
 #if UINTPTR_MAX == UINT64_MAX

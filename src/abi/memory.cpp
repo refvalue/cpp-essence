@@ -21,6 +21,7 @@
  */
 
 module essence.basic;
+
 import std;
 
 void* es_alloc(std::size_t size) noexcept {

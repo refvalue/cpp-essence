@@ -22,18 +22,17 @@
 
 module;
 
-#include <essence/char8_t_remediation.hpp>
-
 #include <openssl/buffer.h>
 #include <openssl/crypto.h>
 #include <openssl/evp.h>
 
 module essence.crypto:util;
+
+import std;
 import :abstract.chunk_processor;
 import :common_types;
 import :error;
 import essence.basic;
-import std;
 
 namespace essence::crypto {
     using bio_unique_ptr   = std::unique_ptr<BIO, void (*)(BIO*)>;

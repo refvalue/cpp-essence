@@ -25,9 +25,9 @@ module;
 #include <essence/compat.hpp>
 
 export module essence.basic:environment;
+
 import :abi.string;
 import :abi.vector;
-import std;
 
 export namespace essence {
     /**

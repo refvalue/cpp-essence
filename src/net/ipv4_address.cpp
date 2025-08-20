@@ -20,11 +20,10 @@
  * THE SOFTWARE.
  */
 
-module;
-
-#include <essence/char8_t_remediation.hpp>
-
 module essence.net;
+
+import std;
+import essence.basic;
 
 namespace essence::net {
     std::optional<ipv4_address> parse_ipv4_address(std::string_view str) {

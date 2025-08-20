@@ -26,13 +26,12 @@ module;
 #include <essence/compat.hpp>
 #endif
 
-#include <essence/char8_t_remediation.hpp>
-
 module essence.io:compression_routines;
+
+import std;
 import :common_types;
 import :abstract.writable_buffer;
 import essence.basic;
-import std;
 
 namespace essence::io {
     struct compression_routines {

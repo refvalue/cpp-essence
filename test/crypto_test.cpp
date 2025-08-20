@@ -24,11 +24,11 @@
 
 #include <gtest/gtest.h>
 
+import std;
 import essence.basic;
 import essence.io;
 import essence.crypto;
 import essence.meta;
-import std;
 
 using namespace essence;
 using namespace essence::io;
@@ -65,16 +65,16 @@ MAKE_TEST(digest) {
         std::pair{digest_mode::sha256, "C0535E4BE2B79FFD93291305436BF889314E4A3FAEC05ECFFCBB7DF31AD9E51A"},
         std::pair{digest_mode::sha384,
             "86255FA2C36E4B30969EAE17DC34C772CBEBDFC58B58403900BE87614EB1A34B8780263F255EB5E65CA9BBB8641CCCFE"},
-        std::pair{digest_mode::sha512, U8("F6CDE2A0F819314CDDE55FC227D8D7DAE3D28CC556222A0A8AD66D91CCAD4AAD6094F517A218"
-                                          "2360C9AACF6A3DC323162CB6FD8CDFFEDB0FE038F55E85FFB5B6")},
+        std::pair{digest_mode::sha512, "F6CDE2A0F819314CDDE55FC227D8D7DAE3D28CC556222A0A8AD66D91CCAD4AAD6094F517A218"
+                                       "2360C9AACF6A3DC323162CB6FD8CDFFEDB0FE038F55E85FFB5B6"},
         std::pair{digest_mode::sha512_224, "B48C4994A3D2B6B48AE7FA6FCC09F33DC0C985109C0B7493FD3C74D0"},
         std::pair{digest_mode::sha512_256, "F8162AD49196C1C12BDDBCFF1D362DDACF03AE246B6A7864B75C244B965FE475"},
         std::pair{digest_mode::sha3_224, "D3EE9B1BA1990FECFD794D2F30E0207AAA7BE5D37D463073096D86F8"},
         std::pair{digest_mode::sha3_256, "D6EA8F9A1F22E1298E5A9506BD066F23CC56001F5D36582344A628649DF53AE8"},
         std::pair{digest_mode::sha3_384,
             "F9210511D0B2862BDCB672DAA3F6A4284576CCB24D5B293B366B39C24C41A6918464035EC4466B12E22056BF559C7A49"},
-        std::pair{digest_mode::sha3_512, U8("95DECC72F0A50AE4D9D5378E1B2252587CFC71977E43292C8F1B84648248509F1BC18BC6F0"
-                                            "B0D0B8606A643EFF61D611AE84E6FBD4A2683165706BD6FD48B334")},
+        std::pair{digest_mode::sha3_512, "95DECC72F0A50AE4D9D5378E1B2252587CFC71977E43292C8F1B84648248509F1BC18BC6F0"
+                                         "B0D0B8606A643EFF61D611AE84E6FBD4A2683165706BD6FD48B334"},
     };
 
     ASSERT_STREQ(md5_hash(str).c_str(), digest_cases[1].second);
@@ -156,10 +156,10 @@ MAKE_TEST(symmetric_cipher_chunked) {
     static constexpr std::string_view iv{"ABCDEFGHIJKLMNOP"};
 
     static constexpr zstring_view str{
-        U8("In a distant corner of the universe, a small planet named Zephyria harbored an ancient secret buried "
-           "beneath its vast oceans. The inhabitants, known as the Zephyrians, had evolved uniquely with "
-           "bioluminescent skin that glowed under the moonlight, casting a serene blue hue across their villages. They "
-           "lived in harmony with nature, drawing power from the vibrant flora that dotted their landscapes.")};
+        "In a distant corner of the universe, a small planet named Zephyria harbored an ancient secret buried "
+        "beneath its vast oceans. The inhabitants, known as the Zephyrians, had evolved uniquely with "
+        "bioluminescent skin that glowed under the moonlight, casting a serene blue hue across their villages. They "
+        "lived in harmony with nature, drawing power from the vibrant flora that dotted their landscapes."};
 
     const auto file_name = format("{}.txt", test_info_->name());
     {

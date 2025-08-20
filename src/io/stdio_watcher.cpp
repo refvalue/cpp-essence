@@ -43,9 +43,10 @@ module;
 #define _read   read
 #endif
 
-#include <essence/char8_t_remediation.hpp>
-
 module essence.io;
+
+import std;
+import :common_types;
 import essence.basic;
 
 namespace essence::io {

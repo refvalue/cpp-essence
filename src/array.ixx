@@ -21,6 +21,7 @@
  */
 
 export module essence.basic:array;
+
 import std;
 
 export namespace essence {

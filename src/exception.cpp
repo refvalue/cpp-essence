@@ -20,12 +20,14 @@
  * THE SOFTWARE.
  */
 
-module;
-
-#include <essence/char8_t_remediation.hpp>
-
 module essence.basic;
+
 import std;
+import :abi.string;
+import :abi.vector;
+import :exception;
+import :functional;
+import lib.spdlog;
 
 namespace essence {
     namespace {

@@ -20,15 +20,13 @@
  * THE SOFTWARE.
  */
 
-module;
-
-#include <essence/char8_t_remediation.hpp>
 
 export module essence.meta:detail.identifier;
+
+import std;
 import :parse_qualified_function_name;
 import :detail.parse_raw_identifier_name;
 import essence.basic;
-import std;
 
 /*
  * With GCC 11, __PRETTY_FUNCTION__ provides more detailed information than

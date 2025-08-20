@@ -21,10 +21,11 @@
  */
 
 export module essence.net:interface_address_info;
+
+import std;
 import :ipv4_address;
 import :ipv6_address;
 import essence.basic;
-import std;
 
 export namespace essence::net {
     struct interface_address_info {

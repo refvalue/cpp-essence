@@ -22,13 +22,15 @@
 
 module;
 
-#include <essence/char8_t_remediation.hpp>
-
 #include <openssl/evp.h>
 
 module essence.crypto;
+
+import std;
+import :asymmetric_key;
 import :cipher_error_builder;
 import :util;
+import essence.basic;
 
 namespace essence::crypto {
     namespace {

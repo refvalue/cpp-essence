@@ -22,8 +22,6 @@
 
 module;
 
-#include <essence/char8_t_remediation.hpp>
-
 #include <jni.h>
 
 module essence.jni;

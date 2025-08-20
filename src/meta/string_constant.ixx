@@ -21,6 +21,7 @@
  */
 
 export module essence.meta:string_constant;
+
 import :literal_string;
 
 export namespace essence::meta {

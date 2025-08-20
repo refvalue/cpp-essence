@@ -21,6 +21,7 @@
  */
 
 export module essence.meta:detail.extraction_param;
+
 import std;
 
 export namespace essence::meta::detail {

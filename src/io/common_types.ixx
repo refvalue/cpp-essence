@@ -21,6 +21,7 @@
  */
 
 export module essence.io:common_types;
+
 import std;
 
 export namespace essence::io {

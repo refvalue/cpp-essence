@@ -22,14 +22,16 @@
 
 module;
 
-#include <essence/char8_t_remediation.hpp>
-
 #include <openssl/evp.h>
 #include <openssl/pem.h>
 
 module essence.crypto;
+
+import std;
+import :common_types;
 import :error;
 import :util;
+import essence.basic;
 
 extern "C" {
 int evp_keymgmt_util_has(EVP_PKEY* pk, int selection);

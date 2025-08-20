@@ -35,9 +35,9 @@ export namespace nlohmann {
     using ::nlohmann::ordered_json;
     using ::nlohmann::ordered_map;
     using ::nlohmann::to_json;
-} // namespace nlohmann::json_abi_v3_11_3
+} // namespace nlohmann
 
-export namespace nlohmann::json_abi_v3_11_3::detail {
+export namespace nlohmann::json_abi_v3_12_0::detail {
     using detail::binary_reader;
     using detail::binary_writer;
     using detail::concat;
@@ -54,5 +54,4 @@ export namespace nlohmann::json_abi_v3_11_3::detail {
     using detail::parser;
     using detail::priority_tag;
     using detail::to_json_fn;
-    using detail::unknown_size;
-} // namespace nlohmann::json_abi_v3_11_3::detail
+} // namespace nlohmann::json_abi_v3_12_0::detail

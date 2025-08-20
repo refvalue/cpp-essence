@@ -20,14 +20,10 @@
  * THE SOFTWARE.
  */
 
-module;
-
-#include <essence/char8_t_remediation.hpp>
-
 export module essence.basic:error_extensions;
-import :char8_t_remediation;
-import :format_remediation;
+
 import std;
+import :format_remediation;
 
 namespace essence::detail {
     template <std::size_t N>

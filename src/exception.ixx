@@ -25,12 +25,13 @@ module;
 #include <essence/compat.hpp>
 
 export module essence.basic:exception;
+
+import std;
 import :abi.string;
 import :abi.vector;
-import std;
 
 export namespace essence {
-    constexpr std::int32_t default_nested_exception_indent = 2;
+    ES_API(CPPESSENCE) constexpr std::int32_t default_nested_exception_indent = 2;
 
     class aggregate_error : public std::runtime_error {
     public:

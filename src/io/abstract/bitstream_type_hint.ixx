@@ -25,8 +25,9 @@ module;
 #include <essence/compat.hpp>
 
 export module essence.io:abstract.bitstream_type_hint;
-import essence.basic;
+
 import std;
+import essence.basic;
 
 export namespace essence::io::abstract {
     /**

@@ -25,8 +25,9 @@ module;
 #include <essence/compat.hpp>
 
 export module essence.crypto:ostream;
-import :abstract.chunk_processor;
+
 import std;
+import :abstract.chunk_processor;
 
 export namespace essence::crypto {
     /**

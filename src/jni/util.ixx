@@ -27,12 +27,13 @@ module;
 #include <jni.h>
 
 export module essence.jni:util;
+
+import std;
 import :common_types;
 import :global_ref;
 import :iterator;
 import :local_ref;
 import essence.basic;
-import std;
 
 export namespace essence::jni {
     using jobject_bit_transformer_type = std::function<local_ref(const std::byte* source)>;

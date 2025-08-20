@@ -22,9 +22,10 @@
 
 module;
 
-#include <essence/char8_t_remediation.hpp>
-
 module essence.jni;
+
+import :global_ref;
+import :local_ref;
 import essence.basic;
 
 namespace essence::jni {
@@ -36,10 +37,8 @@ namespace essence::jni {
 
     jobject_array_iterator::jobject_array_iterator(jobjectArray array, jsize index)
         : env_{jvm::instance().ensure_env()},
-          size_{array ? env_->GetArrayLength(array)
-                      : throw formatted_runtime_error{"The array must be non-null."}},
-          index_{index < size_ ? index : throw formatted_runtime_error{"The index is out of range."}},
-          array_{array} {}
+          size_{array ? env_->GetArrayLength(array) : throw formatted_runtime_error{"The array must be non-null."}},
+          index_{index < size_ ? index : throw formatted_runtime_error{"The index is out of range."}}, array_{array} {}
 
     jobject_array_iterator::jobject_array_iterator(const jobject_array_iterator&) = default;
 

@@ -21,8 +21,9 @@
  */
 
 export module essence.basic:functional;
-import :boolean;
+
 import std;
+import :boolean;
 
 namespace essence::detail {
     template <typename R, typename T, typename... Args>

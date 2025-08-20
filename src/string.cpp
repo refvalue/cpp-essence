@@ -21,7 +21,9 @@
  */
 
 module essence.basic;
+
 import std;
+import :abi.string;
 
 namespace essence {
     abi::string to_lower(std::string_view str) {

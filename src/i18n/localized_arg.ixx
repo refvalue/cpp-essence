@@ -21,9 +21,10 @@
  */
 
 export module essence.i18n:localized_arg;
+
+import std;
 import :simple_messages;
 import essence.basic;
-import std;
 
 export namespace essence::i18n {
     template <typename T>

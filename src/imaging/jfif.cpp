@@ -22,10 +22,11 @@
 
 module;
 
-#include <essence/char8_t_remediation.hpp>
 #include <essence/compat.hpp>
 
 module essence.imaging;
+
+import std;
 import :extractors;
 import :image_header_extractor_impl;
 import :image_general_header;

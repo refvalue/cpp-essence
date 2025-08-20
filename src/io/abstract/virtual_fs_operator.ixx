@@ -25,6 +25,7 @@ module;
 #include <essence/compat.hpp>
 
 export module essence.io:abstract.virtual_fs_operator;
+
 import std;
 
 export namespace essence::io::abstract {

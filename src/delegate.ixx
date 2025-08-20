@@ -26,13 +26,11 @@ module;
 #include <version>
 #endif
 
-#include <essence/char8_t_remediation.hpp>
-
 export module essence.basic:delegate;
-import :char8_t_remediation;
+
+import std;
 import :error_extensions;
 import :scope;
-import std;
 
 export namespace essence {
     template <typename Function>

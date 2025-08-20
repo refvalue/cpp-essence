@@ -21,8 +21,9 @@
  */
 
 export module essence.basic:numeric_conversion;
-import :basic_string;
+
 import std;
+import :basic_string;
 
 namespace essence::detail {
     template <typename T, typename... Args>

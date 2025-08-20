@@ -22,15 +22,15 @@
 
 module;
 
-#include <essence/char8_t_remediation.hpp>
 #include <essence/compat.hpp>
 
 export module essence.cli:option;
+
+import std;
 import :abstract.option;
 import :common_types;
 import essence.basic;
 import essence.meta;
-import std;
 
 export namespace essence::cli {
     /**

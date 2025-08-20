@@ -25,6 +25,7 @@ module;
 #include <jni.h>
 
 export module essence.jni:common_types;
+
 import std;
 
 export namespace essence::jni {

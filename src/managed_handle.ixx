@@ -21,9 +21,10 @@
  */
 
 export module essence.basic:managed_handle;
+
+import std;
 import :functional;
 import :native_handle;
-import std;
 
 export namespace essence {
     template <typename Callable, typename T = function_arg_type<Callable>>

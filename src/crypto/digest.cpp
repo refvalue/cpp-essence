@@ -22,15 +22,17 @@
 
 module;
 
-#include <essence/char8_t_remediation.hpp>
-
 #include <openssl/crypto.h>
 #include <openssl/evp.h>
 #include <openssl/hmac.h>
 #include <openssl/sha.h>
 
 module essence.crypto;
+
+import std;
+import :common_types;
 import :util;
+import essence.basic;
 
 namespace essence::crypto {
     namespace {

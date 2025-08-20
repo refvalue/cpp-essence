@@ -21,6 +21,7 @@
  */
 
 export module essence.memory:nonuniform_grid_buffer;
+
 import std;
 
 export namespace essence {

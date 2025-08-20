@@ -25,6 +25,7 @@ module;
 #include <essence/compat.hpp>
 
 export module essence.crypto:params.rsa_keygen_param;
+
 import std;
 
 export namespace essence::crypto {

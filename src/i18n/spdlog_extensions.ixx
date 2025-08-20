@@ -21,9 +21,10 @@
  */
 
 export module essence.i18n:spdlog_extensions;
+
+import std;
 import :localized_arg;
 import essence.basic;
-import std;
 
 namespace spdlog::i18n::detail {
     constexpr auto spdlog_info_func = []<typename... Args>(

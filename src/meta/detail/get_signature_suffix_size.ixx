@@ -21,10 +21,11 @@
  */
 
 export module essence.meta:detail.get_signature_suffix_size;
+
+import std;
 import :detail.find_at_depth;
 import :detail.language_tokens;
 import :literal_string;
-import std;
 
 export namespace essence::meta::detail {
     /**

@@ -20,19 +20,14 @@
  * THE SOFTWARE.
  */
 
-module;
-
-#if defined(_MSC_VER) && defined(_WIN32)
-#include <essence/char8_t_remediation.hpp>
-#endif
-
 export module essence.meta:parse_qualified_function_name;
+
+import std;
 import :detail.find_at_depth;
 import :detail.language_tokens;
 import :detail.parse_raw_identifier_name;
 import :literal_string;
 import essence.basic;
-import std;
 
 export namespace essence::meta::detail {
 #if defined(_MSC_VER) && defined(_WIN64)

@@ -25,6 +25,7 @@ module;
 #include <essence/compat.hpp>
 
 export module essence.net:interface;
+
 import :interface_address_info;
 import essence.basic;
 

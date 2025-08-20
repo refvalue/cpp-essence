@@ -20,13 +20,11 @@
  * THE SOFTWARE.
  */
 
-module;
-
-#include <essence/char8_t_remediation.hpp>
-
 module essence.io;
-import essence.basic;
+
 import std;
+import :abstract.bitstream_type_hint;
+import essence.basic;
 
 namespace essence::io {
     namespace {
@@ -83,7 +81,8 @@ namespace essence::io {
 
             try {
                 stream.exceptions(std::ios::badbit);
-                stream.open(std::filesystem::path{to_u8string(path)}, std::ios::in | std::ios::binary);
+                stream.open(
+                    std::filesystem::path{path | std::ranges::to<std::u8string>()}, std::ios::in | std::ios::binary);
             } catch (const std::exception& ex) {
                 throw formatted_runtime_error{
                     "File", path, "Message", "Failed to open the file.", "Internal", ex.what()};

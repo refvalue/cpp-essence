@@ -22,13 +22,15 @@
 
 module;
 
-#include <essence/char8_t_remediation.hpp>
-
 #include <openssl/dh.h>
 
 module essence.crypto;
+
+import std;
+import :common_types;
 import :params.pubkey_param_impl;
 import :util;
+import essence.basic;
 
 namespace essence::crypto {
     dh_param::dh_param(std::shared_ptr<void> context)

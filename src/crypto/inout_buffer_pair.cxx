@@ -21,9 +21,10 @@
  */
 
 module essence.crypto:inout_buffer_pair;
+
+import std;
 import :abstract.chunk_processor;
 import essence.basic;
-import std;
 
 namespace essence::crypto {
     std::size_t calculate_output_buffer_size(const abstract::chunk_processor& processor) {

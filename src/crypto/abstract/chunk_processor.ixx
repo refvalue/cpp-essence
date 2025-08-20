@@ -21,8 +21,9 @@
  */
 
 export module essence.crypto:abstract.chunk_processor;
-import essence.basic;
+
 import std;
+import essence.basic;
 
 export namespace essence::crypto::abstract {
     /**

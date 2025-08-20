@@ -22,13 +22,13 @@
 
 module;
 
-#include <essence/char8_t_remediation.hpp>
-
 #include <jni.h>
 
 module essence.jni;
+
 import :cache_key;
 import :jvm;
+import :global_ref;
 import :local_ref;
 import essence.basic;
 import essence.meta;

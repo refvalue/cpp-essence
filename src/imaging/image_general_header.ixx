@@ -21,6 +21,7 @@
  */
 
 export module essence.imaging:image_general_header;
+
 import std;
 
 export namespace essence::imaging {

@@ -21,6 +21,7 @@
  */
 
 export module essence.basic:flags;
+
 import std;
 
 export namespace essence {

@@ -20,13 +20,10 @@
  * THE SOFTWARE.
  */
 
-module;
-
-#include <essence/char8_t_remediation.hpp>
-
 export module essence.meta:detail.naming_convention;
-import essence.basic;
+
 import std;
+import essence.basic;
 
 export namespace essence::meta::detail {
     constexpr auto underscore = '_';

@@ -21,6 +21,7 @@
  */
 
 export module essence.basic:memory;
+
 import std;
 
 export namespace essence {

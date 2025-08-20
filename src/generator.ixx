@@ -21,6 +21,7 @@
  */
 
 export module essence.basic:generator;
+
 import std;
 
 export namespace essence {

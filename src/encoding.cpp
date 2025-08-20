@@ -33,7 +33,12 @@ module;
 #endif
 
 module essence.basic;
+
 import std;
+import :encoding;
+import :char_and_byte;
+import :abi.string;
+import :abi.vector;
 
 namespace essence {
     namespace {
