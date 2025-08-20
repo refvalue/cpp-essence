@@ -93,7 +93,6 @@ target_include_directories(
 target_compile_definitions(
     ${target_name}
     PUBLIC
-    _TURN_OFF_PLATFORM_STRING=1 # For cpprestsdk.
     $<$<BOOL:${ES_HAVE_STD_FORMAT}>:CPP_ESSENCE_USE_STD_FORMAT=1>
 )
 

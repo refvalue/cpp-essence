@@ -21,7 +21,6 @@
  */
 
 export module essence.win32:registry;
-
 import essence.basic;
 import std;
 

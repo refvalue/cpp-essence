@@ -118,7 +118,7 @@ es_make_openssl(
     SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/third-party/openssl
 )
 
-message(STATUS "====OPENSSL_CRYPTO_LIBRARY: ${OPENSSL_CRYPTO_LIBRARY}")
+message(STATUS "OPENSSL_CRYPTO_LIBRARY: ${OPENSSL_CRYPTO_LIBRARY}")
 
 set(
     zlibng_cmake_args
