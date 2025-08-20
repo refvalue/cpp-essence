@@ -22,16 +22,6 @@ file(
     *.cpp
 )
 
-if(WIN32)
-    set(platform_suffix win32)
-elseif(APPLE)
-    set(platform_suffix macos)
-elseif(UNIX)
-    set(platform_suffix linux)
-else()
-    message(FATAL_ERROR "Unsupported platform.")
-endif()
-
 macro(es_filter_sources pattern)
     list(
         FILTER private_sources
@@ -51,6 +41,16 @@ endmacro()
 
 # Excludes compat and JNI sources which is an independent target.
 es_filter_sources([=[^.*/(jni|compat)/.*(.ixx|.cxx|.cpp)$]=])
+
+if(WIN32)
+    es_filter_sources([=[^.*(macos|linux)/.*(.ixx|.cxx|.cpp)$]=])
+elseif(APPLE)
+    es_filter_sources([=[^.*(win32|linux)/.*(.ixx|.cxx|.cpp)$]=])
+elseif(UNIX)
+    es_filter_sources([=[^.*(win32|macos)/.*(.ixx|.cxx|.cpp)$]=])
+else()
+    message(FATAL_ERROR "Unsupported platform.")
+endif()
 
 # Excludes all sources depending on <thread>, <atomic> when using Emscripten.
 if(EMSCRIPTEN)
