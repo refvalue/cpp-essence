@@ -25,7 +25,6 @@ module;
 #include <essence/char8_t_remediation.hpp>
 
 export module essence.io:cmrc_fs_operator;
-import :spanstream;
 import essence.basic;
 import std;
 
@@ -52,21 +51,20 @@ export namespace essence::io {
 
         static std::unique_ptr<std::iostream> open(
             [[maybe_unused]] std::string_view path, [[maybe_unused]] std::ios_base::openmode mode) {
-            throw formatted_runtime_error{
-                U8("This CMRC file is read-only and cannot be opened as std::iostream.")};
+            throw formatted_runtime_error{U8("This CMRC file is read-only and cannot be opened as std::iostream.")};
         }
 
         [[nodiscard]] std::unique_ptr<std::istream> open_read(
             std::string_view path, std::ios_base::openmode mode) const {
             auto file = impl_.open(std::string{path});
 
-            return std::make_unique<ispanstream>(std::span{file.begin(), file.end()}, mode);
+            return std::make_unique<std::ispanstream>(
+                std::span{const_cast<char*>(file.begin()), const_cast<char*>(file.end())}, mode);
         }
 
         static std::unique_ptr<std::ostream> open_write(
             [[maybe_unused]] std::string_view path, [[maybe_unused]] std::ios_base::openmode mode) {
-            throw formatted_runtime_error{
-                U8("This CMRC file is read-only and cannot be opened as std::ostream.")};
+            throw formatted_runtime_error{U8("This CMRC file is read-only and cannot be opened as std::ostream.")};
         }
 
     private:

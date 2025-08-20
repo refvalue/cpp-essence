@@ -20,6 +20,10 @@
  * THE SOFTWARE.
  */
 
+module;
+
+#include <essence/compat.hpp>
+
 export module essence.i18n:simple_messages;
 import essence.basic;
 import std;
@@ -33,13 +37,13 @@ export namespace essence::i18n {
     public:
         inline static std::locale::id id;
 
-        explicit simple_messages(std::size_t refs = 0) : facet{refs} {}
+        ES_API(CPPESSENCE) explicit simple_messages(std::size_t refs = 0) : facet{refs} {}
 
-        [[nodiscard]] abi::string get(std::string_view name) const {
+        ES_API(CPPESSENCE) [[nodiscard]] abi::string get(std::string_view name) const {
             return do_get(name);
         }
 
     protected:
         [[nodiscard]] virtual abi::string do_get(std::string_view name) const = 0;
     };
-} // namespace essence::globalization
+} // namespace essence::i18n

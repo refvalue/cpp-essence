@@ -28,7 +28,7 @@ module essence.win32:filesystem_tokens;
 import essence.basic;
 import std;
 
-namespace essence::win {
+namespace essence::win32 {
     struct filesystem_tokens {
         static constexpr char generic_separator              = U8('/');
         static constexpr char preferred_separator            = U8('\\');

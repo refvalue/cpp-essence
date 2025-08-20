@@ -20,6 +20,10 @@
  * THE SOFTWARE.
  */
 
+module;
+
+#include <essence/compat.hpp>
+
 export module essence.i18n:abstract.translator;
 import essence.basic;
 import essence.io;
@@ -39,7 +43,7 @@ export namespace essence::i18n::abstract {
          * Gets the version of the translator.
          * @return The version.
          */
-        [[nodiscard]] std::uint32_t version() const {
+        ES_API(CPPESSENCE) [[nodiscard]] std::uint32_t version() const {
             return wrapper_->version();
         }
 
@@ -47,7 +51,7 @@ export namespace essence::i18n::abstract {
          * Gets the underlying virtual filesystem operator.
          * @return The virtual filesystem operator.
          */
-        [[nodiscard]] io::abstract::virtual_fs_operator virtual_fs() const {
+        ES_API(CPPESSENCE) [[nodiscard]] io::abstract::virtual_fs_operator virtual_fs() const {
             return wrapper_->virtual_fs();
         }
 
@@ -55,7 +59,7 @@ export namespace essence::i18n::abstract {
          * Sets the underlying virtual filesystem operator.
          * @param fs_operator The virtual filesystem operator.
          */
-        void set_virtual_fs(io::abstract::virtual_fs_operator fs_operator) const {
+        ES_API(CPPESSENCE) void set_virtual_fs(io::abstract::virtual_fs_operator fs_operator) const {
             wrapper_->set_virtual_fs(std::move(fs_operator));
         }
 
@@ -63,7 +67,7 @@ export namespace essence::i18n::abstract {
          * Gets the working directory.
          * @return The working directory.
          */
-        [[nodiscard]] abi::string working_directory() const {
+        ES_API(CPPESSENCE) [[nodiscard]] abi::string working_directory() const {
             return wrapper_->working_directory();
         }
 
@@ -71,7 +75,7 @@ export namespace essence::i18n::abstract {
          * Sets the working directory.
          * @param directory The working directory.
          */
-        void set_working_directory(std::string_view directory) const {
+        ES_API(CPPESSENCE) void set_working_directory(std::string_view directory) const {
             wrapper_->set_working_directory(directory);
         }
 
@@ -79,7 +83,7 @@ export namespace essence::i18n::abstract {
          * Gets the current language.
          * @return The current language.
          */
-        [[nodiscard]] abi::string language() const {
+        ES_API(CPPESSENCE) [[nodiscard]] abi::string language() const {
             return wrapper_->language();
         }
 
@@ -87,7 +91,7 @@ export namespace essence::i18n::abstract {
          * Sets the current language.
          * @param name The current language.
          */
-        void set_language(std::string_view name) const {
+        ES_API(CPPESSENCE) void set_language(std::string_view name) const {
             wrapper_->set_language(name);
         }
 
@@ -96,7 +100,7 @@ export namespace essence::i18n::abstract {
          * @param name The unique name of the text.
          * @return The text or the name if not exists.
          */
-        [[nodiscard]] abi::string get_text(std::string_view name) const {
+        ES_API(CPPESSENCE) [[nodiscard]] abi::string get_text(std::string_view name) const {
             return wrapper_->get_text(name);
         }
 

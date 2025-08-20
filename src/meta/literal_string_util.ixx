@@ -116,7 +116,7 @@ export namespace essence::meta {
         static constexpr auto value = [] {
             struct removal_metadata {
                 decltype(S) result;
-                std::size_t actual_size;
+                std::size_t actual_size{};
             };
 
             constexpr auto metadata = [] {

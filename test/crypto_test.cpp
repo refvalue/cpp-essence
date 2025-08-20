@@ -163,7 +163,7 @@ MAKE_TEST(symmetric_cipher_chunked) {
 
     const auto file_name = format(U8("{}.txt"), test_info_->name());
     {
-        ispanstream input_stream{str};
+        std::ispanstream input_stream{str};
         ostream encryption_stream{
             file_name, (make_symmetric_cipher_chunk_processor(name, cipher_padding_mode::pkcs7, key, iv),
                            make_base64_encoder(), make_chain)};
@@ -176,7 +176,7 @@ MAKE_TEST(symmetric_cipher_chunked) {
 
     {
         const auto input_stream = get_native_fs_operator().open_read(file_name);
-        ostream decryption_stream{std::make_shared<ospanstream>(buffer),
+        ostream decryption_stream{std::make_shared<std::ospanstream>(buffer),
             (make_base64_decoder(),
                 make_symmetric_cipher_chunk_processor(name, cipher_padding_mode::pkcs7, key, iv, false), make_chain)};
 

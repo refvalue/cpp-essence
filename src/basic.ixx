@@ -46,7 +46,6 @@ export import :functional;
 export import :generator;
 export import :hashing;
 export import :interruptable_timer;
-export import :library_state;
 export import :managed_handle;
 export import :math;
 export import :memory;

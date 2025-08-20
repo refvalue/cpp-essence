@@ -107,7 +107,7 @@ export namespace essence {
          * Gets the underlying buffer as a mutable byte span.
          * @return The mutable byte span.
          */
-        std::span<std::byte, byte_stride * Rows> underlying_buffer() noexcept {
+        [[nodiscard]] std::span<std::byte, byte_stride * Rows> underlying_buffer() noexcept {
             return std::as_writable_bytes(std::span{buffer_});
         }
 
@@ -115,7 +115,7 @@ export namespace essence {
          * Gets the underlying buffer as a const byte span.
          * @return The const byte span.
          */
-        std::span<const std::byte, byte_stride * Rows> underlying_buffer() const noexcept {
+        [[nodiscard]] std::span<const std::byte, byte_stride * Rows> underlying_buffer() const noexcept {
             return std::as_bytes(std::span{buffer_});
         }
 

@@ -33,11 +33,8 @@ module;
 
 module essence.win32;
 import :filesystem_tokens;
-import :util;
-import essence.basic;
-import std;
 
-namespace essence::win {
+namespace essence::win32 {
     namespace {
         const std::unordered_map<std::string_view, HKEY, icase_string_hash, std::equal_to<>> predefined_hkeys{
             {U8("HKEY_LOCAL_MACHINE"), HKEY_CLASSES_ROOT},
@@ -78,7 +75,8 @@ namespace essence::win {
         template <typename... Args>
         void check_registry_error(std::uint32_t code, Args&&... args) {
             if (code != ERROR_SUCCESS) {
-                throw formatted_runtime_error{std::forward<Args>(args)..., U8("Internal"), get_system_error(code)};
+                throw formatted_runtime_error{std::forward<Args>(args)..., U8("Internal"),
+                    std::system_category().message(static_cast<std::int32_t>(code))};
             }
         }
 
@@ -175,7 +173,7 @@ namespace essence::win {
         set_registry(path, name, REG_BINARY, values.data(), values.size());
     }
 
-    void set_registry(std::string_view path, std::string_view name, zstring_view value, bool expand_sz = false) {
+    void set_registry(std::string_view path, std::string_view name, zstring_view value, bool expand_sz) {
         const auto native = to_native_string(value);
 
         set_registry(path, name, expand_sz ? REG_EXPAND_SZ : REG_SZ, native.c_str(), native.size() * sizeof(wchar_t));

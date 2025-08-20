@@ -42,15 +42,15 @@ export namespace essence {
         using hash_type      = std::hash<std::string_view>;
         using is_transparent = void;
 
-        std::size_t operator()(const char* str) const {
+        ES_API(CPPESSENCE) std::size_t operator()(const char* str) const {
             return hash_type{}(str);
         }
 
-        std::size_t operator()(std::string_view str) const {
+        ES_API(CPPESSENCE) std::size_t operator()(std::string_view str) const {
             return hash_type{}(str);
         }
 
-        std::size_t operator()(const std::string& str) const {
+        ES_API(CPPESSENCE) std::size_t operator()(const std::string& str) const {
             return hash_type{}(str);
         }
     };
@@ -61,15 +61,15 @@ export namespace essence {
     struct icase_string_hash {
         using is_transparent = void;
 
-        std::size_t operator()(const char* str) const {
+        ES_API(CPPESSENCE) std::size_t operator()(const char* str) const {
             return (*this)(std::string_view{str});
         }
 
-        std::size_t operator()(const std::string& str) const {
+        ES_API(CPPESSENCE) std::size_t operator()(const std::string& str) const {
             return (*this)(std::string_view{str});
         }
 
-        std::size_t operator()(std::string_view value) const {
+        ES_API(CPPESSENCE) std::size_t operator()(std::string_view value) const {
             std::size_t result{};
 
             std::ranges::for_each(value, [&](char c) { hash_combine(result, to_lower(c)); });

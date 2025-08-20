@@ -23,6 +23,7 @@
 module;
 
 #include <essence/char8_t_remediation.hpp>
+#include <essence/compat.hpp>
 
 export module essence.serialization:json_serializer;
 import :basic_json;
@@ -36,19 +37,19 @@ export namespace essence::serialization {
      * Stashes the current 'enum_to_string' and 'naming_convention' configurations during the serialization.
      */
     struct json_serializer_base {
-        static bool& get_enum_to_string_ref() noexcept {
+        ES_API(CPPESSENCE) static bool& get_enum_to_string_ref() noexcept {
             thread_local bool enabled{};
 
             return enabled;
         }
 
-        static meta::naming_convention& get_naming_convention_ref() noexcept {
+        ES_API(CPPESSENCE) static meta::naming_convention& get_naming_convention_ref() noexcept {
             thread_local auto convention = detail::get_json_naming_convention<std::type_identity<void>>();
 
             return convention;
         }
 
-        static void reset() noexcept {
+        ES_API(CPPESSENCE) static void reset() noexcept {
             get_enum_to_string_ref()    = {};
             get_naming_convention_ref() = detail::get_json_naming_convention<std::type_identity<void>>();
         }
@@ -196,7 +197,8 @@ export namespace essence::serialization {
             requires(std::same_as<typename BasicJson::string_t::value_type, char> && std::is_enum_v<U>)
         static void to_json(BasicJson& json, const U& value) {
             if (get_enum_to_string_ref()) {
-                nlohmann_to_json(json, meta::convert_naming_convention(meta::runtime::to_string(value), get_naming_convention_ref()));
+                nlohmann_to_json(json,
+                    meta::convert_naming_convention(meta::runtime::to_string(value), get_naming_convention_ref()));
             } else {
                 nlohmann_to_json(json, value);
             }

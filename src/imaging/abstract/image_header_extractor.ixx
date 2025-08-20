@@ -20,6 +20,10 @@
  * THE SOFTWARE.
  */
 
+module;
+
+#include <essence/compat.hpp>
+
 export module essence.imaging:abstract.image_header_extractor;
 import :image_general_header;
 import essence.io;
@@ -39,7 +43,7 @@ export namespace essence::imaging::abstract {
          * Gets the underlying type hint.
          * @return The type hint.
          */
-        [[nodiscard]] io::abstract::bitstream_type_hint hint() const {
+        ES_API(CPPESSENCE) [[nodiscard]] io::abstract::bitstream_type_hint hint() const {
             return wrapper_->hint();
         }
 
@@ -48,7 +52,7 @@ export namespace essence::imaging::abstract {
          * @param stream The input stream.
          * @return The image header if succeeds; otherwise std::nullopt.
          */
-        [[nodiscard]] std::optional<image_general_header> get(std::istream& stream) const {
+        ES_API(CPPESSENCE) [[nodiscard]] std::optional<image_general_header> get(std::istream& stream) const {
             return wrapper_->get(stream);
         }
 
@@ -57,7 +61,7 @@ export namespace essence::imaging::abstract {
          * @param buffer The memory buffer.
          * @return The image header if succeeds; otherwise std::nullopt.
          */
-        [[nodiscard]] std::optional<image_general_header> get(std::span<const std::byte> buffer) const {
+        ES_API(CPPESSENCE) [[nodiscard]] std::optional<image_general_header> get(std::span<const std::byte> buffer) const {
             return wrapper_->get(buffer);
         }
 

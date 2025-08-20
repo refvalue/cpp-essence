@@ -57,17 +57,6 @@ if(EMSCRIPTEN)
     es_filter_sources([=[^((.*(thread|delegate|interruptable_timer|atomic_readable_buffer)|.*/params/.*|.*/crypto/.*(asymm|pubkey).*))(.ixx|.cxx|.cpp)$]=])
 endif()
 
-if(NOT ES_WITH_NET)
-    es_filter_sources([=[^.*/net/.*(.ixx|.cxx|.cpp)$]=])
-endif()
-
-if(NOT ANDROID OR NOT ES_WITH_NET)
-    list(
-        FILTER private_sources
-        EXCLUDE REGEX "^.*jni_entry.cpp$"
-    )
-endif()
-
 include(ESUtil)
 es_dump_list(miu_sources)
 es_dump_list(internal_piu_sources)
@@ -137,28 +126,6 @@ if(NOT EMSCRIPTEN)
         ${target_name}
         PUBLIC
         CPP_ESSENCE_HAS_THREADS=1
-    )
-endif()
-
-if(ES_WITH_NET)
-    target_link_libraries(
-        ${target_name}
-        PRIVATE
-        cpprestsdk::cpprest
-    )
-
-    if(CMAKE_CROSSCOMPILING)
-        target_link_libraries(
-            ${target_name}
-            PRIVATE
-            Boost::boost
-        )
-    endif()
-
-    target_compile_definitions(
-        ${target_name}
-        PUBLIC
-        CPP_ESSENCE_HAS_NET=1
     )
 endif()
 

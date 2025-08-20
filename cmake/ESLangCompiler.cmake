@@ -107,7 +107,7 @@ function(es_add_lang_resources target_name)
 
     if("${target_type}" STREQUAL "EXECUTABLE")
         set(cxx_modules_access PRIVATE)
-    elseif()
+    else()
         set(cxx_modules_access PUBLIC)
     endif()
 

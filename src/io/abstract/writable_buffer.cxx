@@ -20,6 +20,10 @@
  * THE SOFTWARE.
  */
 
+module;
+
+#include <essence/compat.hpp>
+
 module essence.io:abstract.writable_buffer;
 import std;
 
@@ -29,19 +33,19 @@ namespace essence::io::abstract {
         template <std::ranges::contiguous_range T>
         explicit writable_buffer(T& ref) : wrapper_{std::make_unique<wrapper<T>>(ref)} {}
 
-        void resize(std::size_t new_size) const {
+        ES_API(CPPESSENCE) void resize(std::size_t new_size) const {
             wrapper_->resize(new_size);
         }
 
-        [[nodiscard]] std::byte* data() const {
+        ES_API(CPPESSENCE) [[nodiscard]] std::byte* data() const {
             return wrapper_->data();
         }
 
-        [[nodiscard]] std::size_t size_bytes() const {
+        ES_API(CPPESSENCE) [[nodiscard]] std::size_t size_bytes() const {
             return wrapper_->size_bytes();
         }
 
-        void shrink_to_fit() const {
+        ES_API(CPPESSENCE) void shrink_to_fit() const {
             wrapper_->shrink_to_fit();
         }
 

@@ -24,22 +24,4 @@ export module essence.net:common_types;
 import std;
 
 export namespace essence::net {
-    struct dummy_body_tag {};
-
-    enum class message_direction {
-        upload,
-        download,
-    };
-
-    using http_progress_handler = std::function<void(
-        message_direction direction, std::uint64_t bytes_so_far, std::optional<std::uint64_t> content_size)>;
-
-    using http_percentage_handler = std::function<void(message_direction direction, float percentage)>;
-
-    struct http_progress_handlers {
-        http_progress_handler on_progress;
-        http_percentage_handler on_percentage;
-    };
-
-    using error_handler = std::function<void(std::string_view message)>;
 } // namespace essence::net

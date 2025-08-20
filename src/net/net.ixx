@@ -22,23 +22,8 @@
 
 export module essence.net;
 
-export import :abstract.sse_connection;
-
 export import :common_types;
-export import :cors;
-export import :download;
-export import :http_client;
-export import :http_client_abstract;
-export import :http_client_config;
-export import :http_headers_proxy;
-export import :http_listener_config;
 export import :interface;
 export import :interface_address_info;
 export import :ipv4_address;
 export import :ipv6_address;
-export import :net_error;
-export import :rest_api;
-export import :sse_client;
-export import :sse_message;
-export import :sse_server;
-export import :uri;

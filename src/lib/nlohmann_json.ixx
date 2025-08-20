@@ -27,13 +27,15 @@ module;
 export module lib.nlohmann_json;
 
 export namespace nlohmann {
-    using nlohmann::adl_serializer;
-    using nlohmann::basic_json;
-    using nlohmann::from_json;
-    using nlohmann::json;
-    using nlohmann::json_pointer;
-    using nlohmann::to_json;
-} // namespace nlohmann
+    using ::nlohmann::adl_serializer;
+    using ::nlohmann::basic_json;
+    using ::nlohmann::from_json;
+    using ::nlohmann::json;
+    using ::nlohmann::json_pointer;
+    using ::nlohmann::ordered_json;
+    using ::nlohmann::ordered_map;
+    using ::nlohmann::to_json;
+} // namespace nlohmann::json_abi_v3_11_3
 
 export namespace nlohmann::json_abi_v3_11_3::detail {
     using detail::binary_reader;
@@ -52,4 +54,5 @@ export namespace nlohmann::json_abi_v3_11_3::detail {
     using detail::parser;
     using detail::priority_tag;
     using detail::to_json_fn;
+    using detail::unknown_size;
 } // namespace nlohmann::json_abi_v3_11_3::detail

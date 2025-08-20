@@ -30,6 +30,4 @@ export import :cmrc_fs_operator;
 export import :common_types;
 export import :compresser;
 export import :fs_operator;
-export import :spanbuf;
-export import :spanstream;
 export import :stdio_watcher;

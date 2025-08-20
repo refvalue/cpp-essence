@@ -1,16 +1,15 @@
 ﻿# CMakeList.txt : Top-level CMake project file, do global configuration
 # and include sub-projects here.
 #
-cmake_minimum_required(VERSION 3.30)
+cmake_minimum_required(VERSION 4.0.0)
 
 # Set experimental flag to enable `import std` support from CMake.
 # This must be enabled before C++ language support.
-set(CMAKE_EXPERIMENTAL_CXX_IMPORT_STD "0e5b6991-d74f-4b3d-a41c-cf096e0b2508")
+set(CMAKE_EXPERIMENTAL_CXX_IMPORT_STD "d0edc3af-4c50-42ea-a356-e2862fe7a444")
 set(CMAKE_CXX_MODULE_STD ON)
 
-project(cpp-essence CXX)
+project(cpp-essence C CXX)
 
-option(ES_WITH_NET "Whether to include the net support." ON)
 option(ES_WITH_JNI "Whether to include JNI support." ON)
 option(ES_WITH_TESTS "Whether to compile tests." ON)
 option(ES_WITH_LANG_COMPILER "Whether to compile the language compiler for globalization." ON)
@@ -18,10 +17,6 @@ option(ES_EMBEDDED_WASM "Whether to embed .wasm files into glue scripts." OFF)
 option(ES_STATIC_RUNTIME "Whether to statically link to the C++ standard library." OFF)
 
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
-
-if(ES_WITH_NET AND EMSCRIPTEN)
-    message(FATAL_ERROR "The net support has not been implemented on WebAssembly.")
-endif()
 
 if(ANDROID)
     set(ES_WITH_JNI OFF)
