@@ -58,7 +58,7 @@ include(FeatureTests.cmake)
 include(Dependencies.cmake)
 
 set(ES_PACKAGING_TARGETS "")
-set(ES_PROJECT_VERSION 0.2.0)
+set(ES_PROJECT_VERSION 0.3.0)
 
 add_subdirectory(src)
 
@@ -85,6 +85,6 @@ message(STATUS "ES_PACKAGING_TARGETS: ${ES_PACKAGING_TARGETS}")
 es_make_install_package(
     TARGETS ${ES_PACKAGING_TARGETS}
     PACKAGE_NAME CppEssence
-    VERSION 0.2.0
+    VERSION ${ES_PROJECT_VERSION}
     PATH_VARS CMAKE_INSTALL_PREFIX
 )
