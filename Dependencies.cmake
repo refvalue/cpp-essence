@@ -108,6 +108,8 @@ es_make_install_third_party_library(
     INSTALL_DIR ${CMAKE_INSTALL_PREFIX}
 )
 
+es_regex_replace_in_file("${CMAKE_INSTALL_PREFIX}/include/spdlog/details/os.h" [=[^SPDLOG_CONSTEXPR static const]=] [=[SPDLOG_CONSTEXPR inline const]=])
+
 es_make_openssl(
     REQUIRED
     STATIC

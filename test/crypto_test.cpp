@@ -20,8 +20,6 @@
  * THE SOFTWARE.
  */
 
-#include <essence/char8_t_remediation.hpp>
-
 #include <gtest/gtest.h>
 
 import std;

@@ -18,8 +18,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#include <essence/char8_t_remediation.hpp>
-
 #include <gtest/gtest.h>
 
 import std;

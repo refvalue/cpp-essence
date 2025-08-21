@@ -54,4 +54,5 @@ export namespace nlohmann::json_abi_v3_12_0::detail {
     using detail::parser;
     using detail::priority_tag;
     using detail::to_json_fn;
+    using detail::unknown_size;
 } // namespace nlohmann::json_abi_v3_12_0::detail

@@ -18,36 +18,32 @@
 #  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 #  THE SOFTWARE.
 
-import re
 import sys
+import re
+from pathlib import Path
+from typing import Sequence, Tuple
+def replace_in_file(filepath: Path, rules: Sequence[Tuple[str, str]]):
+    text = filepath.read_text(encoding="utf-8")
+    total_count = 0
 
-def patch_exported_modular_target(script_file: str):
-    index = None
-    prefix = None
+    for pattern, replacement in rules:
+        patched, count = re.subn(pattern, replacement, text, flags=re.MULTILINE)
+        if count > 0:
+            print(f"[INFO] Replaced {count} occurrence(s) of `{pattern}` -> `{replacement}`.")
+        text = patched
+        total_count += count
 
-    with open(script_file, 'r') as file:
-        lines = file.readlines()
-
-    for i, line in enumerate(lines):
-        if match := re.match(r'^(.*IMPORTED_CXX_MODULES_LINK_LIBRARIES).*$', line):
-            index = i
-            prefix = match.group(1)
-            continue
-
-        if re.match(r'^.*FILES.*$', line):
-            lines[i] = re.sub(r'"\$\{_IMPORT_PREFIX}/[^\"]*\.(cpp|cxx)"', '', lines[i])
-            print('[INFO] Patched: ', lines[i])
-            continue
-
-        match = re.match(r'^.*INTERFACE_LINK_LIBRARIES(.*[\r\n]*)', line)
-
-        if match and index is not None:
-            lines[index] = prefix + match.group(1)
-            print('[INFO] Patched: ', lines[index])
-            index = None
-
-    with open(script_file, 'w') as file:
-        file.writelines(lines)
+    if total_count > 0:
+        filepath.write_text(text, encoding="utf-8")
+        print(f"[INFO] Patched {total_count} occurrence(s) in `{filepath}`.")
+    else:
+        print(f"[INFO] No matches found in `{filepath}`.")
 
 if __name__ == "__main__":
-    patch_exported_modular_target(sys.argv[1])
+    if len(sys.argv) < 4 or (len(sys.argv) - 2) % 2 != 0:
+        print("Usage: regex_patch.py <file> <pattern1> <replacement1> [<pattern2> <replacement2> ...]")
+        sys.exit(1)
+
+    filepath = Path(sys.argv[1])
+    rules = list(zip(sys.argv[2::2], sys.argv[3::2]))
+    replace_in_file(filepath, rules)

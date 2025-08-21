@@ -309,3 +309,10 @@ function(es_get_all_targets directory result)
 
     set(${result} ${${result}} PARENT_SCOPE)
 endfunction()
+
+function(es_regex_replace_in_file path)
+    es_execute_process(
+        COMMAND python3 "${_es_util_absolute_current_dir}/py/regex_replace_in_file.py" "${path}" ${ARGN}
+        WORKING_DIRECTORY ${_es_util_absolute_current_dir}
+    )
+endfunction()
