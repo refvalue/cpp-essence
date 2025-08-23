@@ -22,6 +22,8 @@ import sys
 import re
 from pathlib import Path
 from typing import Sequence, Tuple
+
+
 def replace_in_file(filepath: Path, rules: Sequence[Tuple[str, str]]):
     text = filepath.read_text(encoding="utf-8")
     total_count = 0
@@ -38,6 +40,7 @@ def replace_in_file(filepath: Path, rules: Sequence[Tuple[str, str]]):
         print(f"[INFO] Patched {total_count} occurrence(s) in `{filepath}`.")
     else:
         print(f"[INFO] No matches found in `{filepath}`.")
+
 
 if __name__ == "__main__":
     if len(sys.argv) < 4 or (len(sys.argv) - 2) % 2 != 0:

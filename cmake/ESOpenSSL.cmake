@@ -62,7 +62,7 @@ function(es_make_openssl_impl)
         set(make_command nmake.exe)
         list(APPEND environment_variables CL=/MP)
     else()
-        set(configure_command ${ARG_SOURCE_DIR}/config)
+        set(configure_command sh ${ARG_SOURCE_DIR}/config)
         set(make_command make)
 
         if(CMAKE_SIZEOF_VOID_P EQUAL 8)

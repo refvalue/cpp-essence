@@ -23,6 +23,7 @@
 export module essence.io:cmrc_fs_operator;
 
 import std;
+import :spanstream;
 import essence.basic;
 
 export namespace essence::io {
@@ -55,7 +56,7 @@ export namespace essence::io {
             std::string_view path, std::ios_base::openmode mode) const {
             auto file = impl_.open(std::string{path});
 
-            return std::make_unique<std::ispanstream>(
+            return std::make_unique<ispanstream>(
                 std::span{const_cast<char*>(file.begin()), const_cast<char*>(file.end())}, mode);
         }
 

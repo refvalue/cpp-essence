@@ -21,6 +21,7 @@
 import re
 import sys
 
+
 def patch_exported_modular_target(script_file: str):
     index = None
     prefix = None
@@ -48,6 +49,7 @@ def patch_exported_modular_target(script_file: str):
 
     with open(script_file, 'w') as file:
         file.writelines(lines)
+
 
 if __name__ == "__main__":
     patch_exported_modular_target(sys.argv[1])

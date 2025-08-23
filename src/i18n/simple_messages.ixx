@@ -34,13 +34,13 @@ export namespace essence::i18n {
      * An implementation of the std::locale::facet which encapsulates
      *        retrieval of strings via the user-defined do_get function.
      */
-    class simple_messages : public std::locale::facet {
+    class ES_API(CPPESSENCE) simple_messages : public std::locale::facet {
     public:
         inline static std::locale::id id;
 
-        ES_API(CPPESSENCE) explicit simple_messages(std::size_t refs = 0) : facet{refs} {}
+        explicit simple_messages(std::size_t refs = 0) : facet{refs} {}
 
-        [[nodiscard]] ES_API(CPPESSENCE) abi::string get(std::string_view name) const {
+        [[nodiscard]] abi::string get(std::string_view name) const {
             return do_get(name);
         }
 

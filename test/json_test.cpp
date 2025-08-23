@@ -78,7 +78,7 @@ MAKE_TEST(from_spanstream) {
   ]
 })"};
 
-    test_json_io(std::ispanstream{std::span{str}});
+    test_json_io(io::ispanstream{std::span{str}});
 }
 
 MAKE_TEST(serialization) {

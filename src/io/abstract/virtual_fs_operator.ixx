@@ -32,7 +32,7 @@ export namespace essence::io::abstract {
     /**
      * Provides an ability to operator files on a virtual file system defined by the user.
      */
-    class virtual_fs_operator {
+    class ES_API(CPPESSENCE) virtual_fs_operator {
     public:
         template <typename T>
             requires(!std::same_as<std::decay_t<T>, virtual_fs_operator>)
@@ -43,7 +43,7 @@ export namespace essence::io::abstract {
          * @param path The path of the file.
          * @return True if the file exists; otherwise false.
          */
-        [[nodiscard]] ES_API(CPPESSENCE) bool exists(std::string_view path) const {
+        [[nodiscard]] bool exists(std::string_view path) const {
             return wrapper_->exists(path);
         }
 
@@ -52,7 +52,7 @@ export namespace essence::io::abstract {
          * @param path The path.
          * @return True if the path names a regular file; otherwise false.
          */
-        [[nodiscard]] ES_API(CPPESSENCE) bool is_file(std::string_view path) const {
+        [[nodiscard]] bool is_file(std::string_view path) const {
             return wrapper_->is_file(path);
         }
 
@@ -61,7 +61,7 @@ export namespace essence::io::abstract {
          * @param path The path.
          * @return True if the path names a directory; otherwise false.
          */
-        [[nodiscard]] ES_API(CPPESSENCE) bool is_directory(std::string_view path) const {
+        [[nodiscard]] bool is_directory(std::string_view path) const {
             return wrapper_->is_directory(path);
         }
 
@@ -71,7 +71,7 @@ export namespace essence::io::abstract {
          * @param mode The open mode.
          * @return A std::iostream to read or write the file.
          */
-        [[nodiscard]] ES_API(CPPESSENCE) std::unique_ptr<std::iostream> open(
+        [[nodiscard]] std::unique_ptr<std::iostream> open(
             std::string_view path, std::ios_base::openmode mode = std::ios_base::in | std::ios_base::out) const {
             return wrapper_->open(path, mode);
         }
@@ -82,7 +82,7 @@ export namespace essence::io::abstract {
          * @param mode The open mode.
          * @return A std::istream to read the file.
          */
-        [[nodiscard]] ES_API(CPPESSENCE) std::unique_ptr<std::istream> open_read(
+        [[nodiscard]] std::unique_ptr<std::istream> open_read(
             std::string_view path, std::ios_base::openmode mode = std::ios_base::in) const {
             return wrapper_->open_read(path, mode);
         }
@@ -93,7 +93,7 @@ export namespace essence::io::abstract {
          * @param mode The open mode.
          * @return A std::istream to write the file.
          */
-        [[nodiscard]] ES_API(CPPESSENCE) std::unique_ptr<std::ostream> open_write(
+        [[nodiscard]] std::unique_ptr<std::ostream> open_write(
             std::string_view path, std::ios_base::openmode mode = std::ios_base::out) const {
             return wrapper_->open_write(path, mode);
         }

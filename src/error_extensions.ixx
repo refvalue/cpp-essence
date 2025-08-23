@@ -20,6 +20,10 @@
  * THE SOFTWARE.
  */
 
+module;
+
+#include <essence/compat.hpp>
+
 export module essence.basic:error_extensions;
 
 import std;
@@ -61,7 +65,7 @@ export namespace essence {
      *        of the source file name, the line number, the column number and can be constructed with
      *        the same arguments as those passed to the essence::format function.
      */
-    class formatted_runtime_error : public std::runtime_error {
+    class ES_API(CPPESSENCE) formatted_runtime_error : public std::runtime_error {
     public:
         template <typename... Args>
         explicit formatted_runtime_error(logging_string_view hint, Args&&... args)
@@ -96,6 +100,6 @@ export namespace essence {
         }
 
     private:
-        std::source_location location_;
+        ES_API(CPPESSENCE) std::source_location location_;
     };
 } // namespace essence

@@ -68,7 +68,8 @@ namespace essence::imaging {
 
             try {
                 stream.exceptions(std::ios::badbit);
-                stream.open(std::filesystem::path{path  | std::ranges::to<std::u8string>()}, std::ios::in | std::ios::binary);
+                stream.open(
+                    std::filesystem::path{path | std::ranges::to<std::u8string>()}, std::ios::in | std::ios::binary);
             } catch (const std::exception& ex) {
                 throw formatted_runtime_error{
                     "File", path, "Message", "Failed to open the image file.", "Internal", ex.what()};

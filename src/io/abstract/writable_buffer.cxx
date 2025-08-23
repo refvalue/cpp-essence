@@ -29,24 +29,24 @@ module essence.io:abstract.writable_buffer;
 import std;
 
 namespace essence::io::abstract {
-    class writable_buffer {
+    class ES_API(CPPESSENCE) writable_buffer {
     public:
         template <std::ranges::contiguous_range T>
         explicit writable_buffer(T& ref) : wrapper_{std::make_unique<wrapper<T>>(ref)} {}
 
-        ES_API(CPPESSENCE) void resize(std::size_t new_size) const {
+        void resize(std::size_t new_size) const {
             wrapper_->resize(new_size);
         }
 
-        [[nodiscard]] ES_API(CPPESSENCE) std::byte* data() const {
+        [[nodiscard]] std::byte* data() const {
             return wrapper_->data();
         }
 
-        [[nodiscard]] ES_API(CPPESSENCE) std::size_t size_bytes() const {
+        [[nodiscard]] std::size_t size_bytes() const {
             return wrapper_->size_bytes();
         }
 
-        ES_API(CPPESSENCE) void shrink_to_fit() const {
+        void shrink_to_fit() const {
             wrapper_->shrink_to_fit();
         }
 

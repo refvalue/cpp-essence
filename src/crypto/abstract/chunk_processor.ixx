@@ -20,6 +20,10 @@
  * THE SOFTWARE.
  */
 
+module;
+
+#include <essence/compat.hpp>
+
 export module essence.crypto:abstract.chunk_processor;
 
 import std;
@@ -30,7 +34,7 @@ export namespace essence::crypto::abstract {
      * Provides a uniform interface for processing crypto chunks.
      * @remark This interface always keeps uniquely referenced.
      */
-    class chunk_processor {
+    class ES_API(CPPESSENCE) chunk_processor {
     public:
         template <typename T>
             requires(!std::same_as<std::decay_t<T>, chunk_processor>)

@@ -236,8 +236,9 @@ export namespace essence::cli {
         }
 
         option& set_valid_values(std::span<const element_type> values) {
+#ifdef _MSC_VER
             using std::ranges::_Pipe::operator|;
-
+#endif
             decltype(valid_values_){values.begin(), values.end()}.swap(valid_values_);
 
             auto adapter = valid_values_ | std::views::transform(&option::to_element_string);

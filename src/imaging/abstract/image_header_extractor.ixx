@@ -34,7 +34,7 @@ export namespace essence::imaging::abstract {
     /**
      * Extracts a general image header from image file data.
      */
-    class image_header_extractor {
+    class ES_API(CPPESSENCE) image_header_extractor {
     public:
         template <typename T>
             requires(!std::same_as<std::decay_t<T>, image_header_extractor>)
@@ -44,7 +44,7 @@ export namespace essence::imaging::abstract {
          * Gets the underlying type hint.
          * @return The type hint.
          */
-        [[nodiscard]] ES_API(CPPESSENCE) io::abstract::bitstream_type_hint hint() const {
+        [[nodiscard]] io::abstract::bitstream_type_hint hint() const {
             return wrapper_->hint();
         }
 
@@ -53,7 +53,7 @@ export namespace essence::imaging::abstract {
          * @param stream The input stream.
          * @return The image header if succeeds; otherwise std::nullopt.
          */
-        [[nodiscard]] ES_API(CPPESSENCE) std::optional<image_general_header> get(std::istream& stream) const {
+        [[nodiscard]] std::optional<image_general_header> get(std::istream& stream) const {
             return wrapper_->get(stream);
         }
 
@@ -62,7 +62,7 @@ export namespace essence::imaging::abstract {
          * @param buffer The memory buffer.
          * @return The image header if succeeds; otherwise std::nullopt.
          */
-        [[nodiscard]] ES_API(CPPESSENCE) std::optional<image_general_header> get(std::span<const std::byte> buffer) const {
+        [[nodiscard]] std::optional<image_general_header> get(std::span<const std::byte> buffer) const {
             return wrapper_->get(buffer);
         }
 

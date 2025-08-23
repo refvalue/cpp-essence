@@ -34,7 +34,7 @@ export namespace essence::i18n::abstract {
     /**
      * A translator for retrieving texts in multi-languages.
      */
-    class translator {
+    class ES_API(CPPESSENCE) translator {
     public:
         template <typename T>
             requires(!std::same_as<std::decay_t<T>, translator>)
@@ -44,7 +44,7 @@ export namespace essence::i18n::abstract {
          * Gets the version of the translator.
          * @return The version.
          */
-        [[nodiscard]] ES_API(CPPESSENCE) std::uint32_t version() const {
+        [[nodiscard]] std::uint32_t version() const {
             return wrapper_->version();
         }
 
@@ -52,7 +52,7 @@ export namespace essence::i18n::abstract {
          * Gets the underlying virtual filesystem operator.
          * @return The virtual filesystem operator.
          */
-        [[nodiscard]] ES_API(CPPESSENCE) io::abstract::virtual_fs_operator virtual_fs() const {
+        [[nodiscard]] io::abstract::virtual_fs_operator virtual_fs() const {
             return wrapper_->virtual_fs();
         }
 
@@ -60,7 +60,7 @@ export namespace essence::i18n::abstract {
          * Sets the underlying virtual filesystem operator.
          * @param fs_operator The virtual filesystem operator.
          */
-        ES_API(CPPESSENCE) void set_virtual_fs(io::abstract::virtual_fs_operator fs_operator) const {
+        void set_virtual_fs(io::abstract::virtual_fs_operator fs_operator) const {
             wrapper_->set_virtual_fs(std::move(fs_operator));
         }
 
@@ -68,7 +68,7 @@ export namespace essence::i18n::abstract {
          * Gets the working directory.
          * @return The working directory.
          */
-        [[nodiscard]] ES_API(CPPESSENCE) abi::string working_directory() const {
+        [[nodiscard]] abi::string working_directory() const {
             return wrapper_->working_directory();
         }
 
@@ -76,7 +76,7 @@ export namespace essence::i18n::abstract {
          * Sets the working directory.
          * @param directory The working directory.
          */
-        ES_API(CPPESSENCE) void set_working_directory(std::string_view directory) const {
+        void set_working_directory(std::string_view directory) const {
             wrapper_->set_working_directory(directory);
         }
 
@@ -84,7 +84,7 @@ export namespace essence::i18n::abstract {
          * Gets the current language.
          * @return The current language.
          */
-        [[nodiscard]] ES_API(CPPESSENCE) abi::string language() const {
+        [[nodiscard]] abi::string language() const {
             return wrapper_->language();
         }
 
@@ -92,7 +92,7 @@ export namespace essence::i18n::abstract {
          * Sets the current language.
          * @param name The current language.
          */
-        ES_API(CPPESSENCE) void set_language(std::string_view name) const {
+        void set_language(std::string_view name) const {
             wrapper_->set_language(name);
         }
 
@@ -101,7 +101,7 @@ export namespace essence::i18n::abstract {
          * @param name The unique name of the text.
          * @return The text or the name if not exists.
          */
-        [[nodiscard]] ES_API(CPPESSENCE) abi::string get_text(std::string_view name) const {
+        [[nodiscard]] abi::string get_text(std::string_view name) const {
             return wrapper_->get_text(name);
         }
 

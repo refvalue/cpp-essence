@@ -37,83 +37,83 @@ export namespace essence::cli::abstract {
      * A CLI option, i.e. --xxx=yyy.
      * @tparam T The data type of the option.
      */
-    class option {
+    class ES_API(CPPESSENCE) option {
     public:
         template <typename T>
             requires(!std::same_as<std::decay_t<T>, option>)
         explicit option(T&& value) : wrapper_{std::make_shared<wrapper<T>>(std::forward<T>(value))} {}
 
-        ES_API(CPPESSENCE) [[nodiscard]] abi::string bound_name() const {
+        [[nodiscard]] abi::string bound_name() const {
             return wrapper_->bound_name();
         }
 
-        ES_API(CPPESSENCE) const option& set_bound_name(std::string_view name) const { // NOLINT(*-use-nodiscard)
+        const option& set_bound_name(std::string_view name) const { // NOLINT(*-use-nodiscard)
             wrapper_->set_bound_name(name);
 
             return *this;
         }
 
-        ES_API(CPPESSENCE) [[nodiscard]] abi::string description() const {
+        [[nodiscard]] abi::string description() const {
             return wrapper_->description();
         }
 
-        ES_API(CPPESSENCE) [[nodiscard]] const option& set_description(std::string_view description) const {
+        [[nodiscard]] const option& set_description(std::string_view description) const {
             wrapper_->set_description(description);
 
             return *this;
         }
 
-        ES_API(CPPESSENCE) [[nodiscard]] std::span<const abi::string> aliases() const {
+        [[nodiscard]] std::span<const abi::string> aliases() const {
             return wrapper_->aliases();
         }
 
-        ES_API(CPPESSENCE) const option& add_aliases(std::span<const abi::string> aliases) const { // NOLINT(*-use-nodiscard)
+        const option& add_aliases(std::span<const abi::string> aliases) const { // NOLINT(*-use-nodiscard)
             wrapper_->add_aliases(aliases);
 
             return *this;
         }
 
-        ES_API(CPPESSENCE) [[nodiscard]] std::optional<abi::string> default_value_str() const {
+        [[nodiscard]] std::optional<abi::string> default_value_str() const {
             return wrapper_->default_value_str();
         }
 
-        ES_API(CPPESSENCE) [[nodiscard]] std::span<const abi::string> valid_value_strs() const {
+        [[nodiscard]] std::span<const abi::string> valid_value_strs() const {
             return wrapper_->valid_value_strs();
         }
 
-        ES_API(CPPESSENCE) [[nodiscard]] abi::string name_hints() const {
+        [[nodiscard]] abi::string name_hints() const {
             return wrapper_->name_hints();
         }
 
-        ES_API(CPPESSENCE) [[nodiscard]] abi::string value_hints() const {
+        [[nodiscard]] abi::string value_hints() const {
             return wrapper_->value_hints();
         }
 
-        ES_API(CPPESSENCE) [[nodiscard]] bool check_target_type(meta::fingerprint id) const {
+        [[nodiscard]] bool check_target_type(meta::fingerprint id) const {
             return wrapper_->check_target_type(id);
         }
 
-        ES_API(CPPESSENCE) [[nodiscard]] bool parse_value_and_cache(std::string_view value) const {
+        [[nodiscard]] bool parse_value_and_cache(std::string_view value) const {
             return wrapper_->parse_value_and_cache(value);
         }
 
-        ES_API(CPPESSENCE) void validate(std::string_view value, validation_result& result) const {
+        void validate(std::string_view value, validation_result& result) const {
             wrapper_->validate(value, result);
         }
 
-        ES_API(CPPESSENCE) void raise_error(std::string_view message) const {
+        void raise_error(std::string_view message) const {
             wrapper_->raise_error(message);
         }
 
-        ES_API(CPPESSENCE) [[nodiscard]] void* underlying_ptr() const noexcept {
+        [[nodiscard]] void* underlying_ptr() const noexcept {
             return wrapper_.get();
         }
 
-        ES_API(CPPESSENCE) void on_validation(const validation_handler& handler) const {
+        void on_validation(const validation_handler& handler) const {
             wrapper_->on_validation(handler);
         }
 
-        ES_API(CPPESSENCE) void on_error(const output_handler& handler) const {
+        void on_error(const output_handler& handler) const {
             wrapper_->on_error(handler);
         }
 

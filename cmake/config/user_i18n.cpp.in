@@ -2,10 +2,10 @@ module;
 
 #include <cmrc/cmrc.hpp>
 
+CMRC_DECLARE(@ES_USER_NAMESPACE@);
+
 module @ES_USER_NAME@;
 import essence.io;
-
-CMRC_DECLARE(@ES_USER_NAMESPACE@);
 
 namespace @ES_USER_NAMESPACE@ {
     const essence::i18n::abstract::translator& get_bounded_translator() {

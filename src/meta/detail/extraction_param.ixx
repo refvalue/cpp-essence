@@ -30,11 +30,10 @@ export namespace essence::meta::detail {
         return {};
     };
 
-    template <typename Callable = decltype(default_extra_size_func)>
+    template <typename Callable = std::size_t (*)(std::string_view str, std::size_t prefix_size)>
         requires std::is_invocable_r_v<std::size_t, Callable, std::string_view, std::size_t>
     struct extraction_param {
         using extra_size_func_type = Callable;
-
         bool preview_first_character{};
         bool ensure_correctness{true};
         std::size_t suffix_size{};

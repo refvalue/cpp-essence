@@ -34,7 +34,7 @@ export namespace essence::i18n::abstract {
     /**
      * A compiler to translate globalized texts into particular binary sequences.
      */
-    class compiler {
+    class ES_API(CPPESSENCE) compiler {
     public:
         template <typename T>
             requires(!std::same_as<std::decay_t<T>, compiler>)
@@ -44,7 +44,7 @@ export namespace essence::i18n::abstract {
          * Gets the version of the compiler.
          * @return The version.
          */
-        ES_API(CPPESSENCE) [[nodiscard]] std::uint32_t version() const {
+        [[nodiscard]] std::uint32_t version() const {
             return wrapper_->version();
         }
 
@@ -53,7 +53,7 @@ export namespace essence::i18n::abstract {
          * @param json The JSON value.
          * @param path The path of the file.
          */
-        ES_API(CPPESSENCE) void to_file(const abi::json& json, std::string_view path) const {
+        void to_file(const abi::json& json, std::string_view path) const {
             wrapper_->to_file(json, path);
         }
 
@@ -62,7 +62,7 @@ export namespace essence::i18n::abstract {
          * @param json The JSON value.
          * @return The byte array.
          */
-        ES_API(CPPESSENCE) [[nodiscard]] abi::vector<std::byte> to_bytes(const abi::json& json) const {
+        [[nodiscard]] abi::vector<std::byte> to_bytes(const abi::json& json) const {
             return wrapper_->to_bytes(json);
         }
 
@@ -71,7 +71,7 @@ export namespace essence::i18n::abstract {
          * @param json The JSON value.
          * @return The base64 string.
          */
-        ES_API(CPPESSENCE) [[nodiscard]] abi::string to_base64(const abi::json& json) const {
+        [[nodiscard]] abi::string to_base64(const abi::json& json) const {
             return wrapper_->to_base64(json);
         }
 
@@ -112,4 +112,4 @@ export namespace essence::i18n::abstract {
 
         std::shared_ptr<base> wrapper_;
     };
-} // namespace essence::globalization::abstract
+} // namespace essence::i18n::abstract
