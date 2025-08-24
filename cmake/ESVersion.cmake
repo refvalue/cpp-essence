@@ -6,7 +6,7 @@ function(es_target_version_definitions)
     set(one_value_args PREFIX VERSION)
     set(multi_value_args TARGETS)
     cmake_parse_arguments(PARSE_ARGV 0 ARG "${options}" "${one_value_args}" "${multi_value_args}")
-    es_ensure_parameters(${CMAKE_CURRENT_FUNCTION} ARG PREFIX VERSION TARGETS)
+    es_ensure_parameters(ARG PREFIX VERSION TARGETS)
 
     if(ARG_PRIVATE)
         set(visibility PRIVATE)

@@ -20,7 +20,7 @@ function(es_install_include_dirs target_name)
     get_target_property(target_include_dirs ${target_name} INTERFACE_INCLUDE_DIRECTORIES)
 
     if(ARG_REQUIRED)
-        es_ensure_parameters(es_install_include_dirs "" target_include_dirs)
+        es_ensure_parameters("" target_include_dirs)
     endif()
 
     foreach(item IN LISTS target_include_dirs)
@@ -60,7 +60,7 @@ function(es_install_files target_name)
     set(one_value_args "")
     set(multi_value_args FILES DESTINATIONS)
     cmake_parse_arguments(ARG "${options}" "${one_value_args}" "${multi_value_args}" ${target_install_files})
-    es_ensure_parameters(es_install_files ARG FILES DESTINATIONS)
+    es_ensure_parameters(ARG FILES DESTINATIONS)
 
     # Parses all file groups.
     es_split_list(
@@ -94,7 +94,7 @@ function(es_set_target_versions)
     set(one_value_args VERSION RESULT_VARIABLE_HAS_LIBRARY RESULT_VARIABLE_LIBRARY_TARGETS RESULT_VARIABLE_NON_LIBRARY_TARGETS)
     set(multi_value_args TARGETS)
     cmake_parse_arguments(PARSE_ARGV 0 ARG "${options}" "${one_value_args}" "${multi_value_args}")
-    es_ensure_parameters(es_make_install_package ARG TARGETS VERSION)
+    es_ensure_parameters(ARG TARGETS VERSION)
 
     # A target version may be 1.2.3 and a so version may be 1 respectively.
     if("${ARG_VERSION}" MATCHES [=[^([0-9]+)(\.[0-9]+)?(\.[0-9]+)?$]=])
@@ -157,7 +157,7 @@ function(es_make_install_package)
     set(one_value_args PACKAGE_NAME VERSION INCLUDE_DIR)
     set(multi_value_args TARGETS PATH_VARS)
     cmake_parse_arguments(PARSE_ARGV 0 ARG "${options}" "${one_value_args}" "${multi_value_args}")
-    es_ensure_parameters(es_make_install_package ARG TARGETS VERSION)
+    es_ensure_parameters(ARG TARGETS VERSION)
 
     es_set_target_versions(
         TARGETS ${ARG_TARGETS}
@@ -168,7 +168,7 @@ function(es_make_install_package)
     )
 
     if(has_library_target)
-        es_ensure_parameters(es_make_install_package ARG PACKAGE_NAME)
+        es_ensure_parameters(ARG PACKAGE_NAME)
     endif()
 
     if(has_library_target)

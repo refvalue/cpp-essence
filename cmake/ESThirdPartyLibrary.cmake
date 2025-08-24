@@ -7,7 +7,7 @@ function(es_make_install_third_party_library_impl name)
     set(one_value_args SOURCE_DIR BINARY_DIR INSTALL_DIR TOOLCHAIN_FILE GENERATOR)
     set(multi_value_args CMAKE_ARGS RESULT_INSTALL_DIR PACKAGE_CONFIG_DIRS RESULT_FIND_PACKAGE_OPTIONS)
     cmake_parse_arguments(PARSE_ARGV 1 ARG "${options}" "${one_value_args}" "${multi_value_args}")
-    es_ensure_parameters(es_make_third_party_library ARG SOURCE_DIR RESULT_FIND_PACKAGE_OPTIONS)
+    es_ensure_parameters(ARG SOURCE_DIR RESULT_FIND_PACKAGE_OPTIONS)
 
     es_make_default_binary_dir_and_install_dir(
         SOURCE_DIR ${ARG_SOURCE_DIR}

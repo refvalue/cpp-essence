@@ -81,8 +81,10 @@ es_make_install_third_party_library(
     -DJSON_BuildTests=OFF
     ${extra_cmake_args}
     SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/third-party/json
-    INSTALL_DIR ${CMAKE_INSTALL_PREFIX}
+    RESULT_INSTALL_DIR ES_THIRD_PARTY_INSTALL_DIR
 )
+
+message(STATUS "ES_THIRD_PARTY_INSTALL_DIR: ${ES_THIRD_PARTY_INSTALL_DIR}")
 
 if(ES_HAVE_STD_FORMAT)
     set(spdlog_extra_args -DSPDLOG_USE_STD_FORMAT=ON)

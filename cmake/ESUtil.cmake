@@ -22,7 +22,7 @@ function(es_split_generator_expression expression stage content)
     endif()
 endfunction()
 
-macro(es_ensure_parameters name prefix)
+macro(es_ensure_parameters prefix)
     if("${prefix}" STREQUAL "")
         set(final_prefix "")
     else()
@@ -33,7 +33,7 @@ macro(es_ensure_parameters name prefix)
     # In a macro ARGC ARGV and ARGN is not a variable that needs to be surrounded by ${}.
     foreach(item IN ITEMS ${ARGN})
         if(NOT ${final_prefix}${item})
-            message(FATAL_ERROR "[${name}] ${item} cannot be empty.")
+            message(FATAL_ERROR "[${CMAKE_CURRENT_FUNCTION}] ${item} cannot be empty.")
         endif()
     endforeach()
 endmacro()
@@ -43,7 +43,7 @@ function(es_split_list)
     set(one_value_args LIST DELIMITER RESULT_VARIABLE_PREFIX RESULT_VARIABLE_COUNT)
     set(multi_value_args "")
     cmake_parse_arguments(PARSE_ARGV 0 ARG "${options}" "${one_value_args}" "${multi_value_args}")
-    es_ensure_parameters(es_split_list ARG LIST DELIMITER RESULT_VARIABLE_PREFIX RESULT_VARIABLE_COUNT)
+    es_ensure_parameters(ARG LIST DELIMITER RESULT_VARIABLE_PREFIX RESULT_VARIABLE_COUNT)
 
     string(LENGTH "${ARG_DELIMITER}" delimiter_length)
 
@@ -106,7 +106,7 @@ function(es_replace_file_name_directory)
     set(one_value_args FILE DIRECTORY RESULT)
     set(multi_value_args "")
     cmake_parse_arguments(PARSE_ARGV 0 ARG "${options}" "${one_value_args}" "${multi_value_args}")
-    es_ensure_parameters(es_replace_file_name_directory ARG FILE DIRECTORY RESULT)
+    es_ensure_parameters(ARG FILE DIRECTORY RESULT)
 
     get_filename_component(file_name ${ARG_FILE} NAME)
     get_filename_component(result ${file_name} ABSOLUTE BASE_DIR ${ARG_DIRECTORY})
@@ -118,10 +118,9 @@ function(es_make_default_binary_dir_and_install_dir)
     set(one_value_args SOURCE_DIR PREFIX RESULT_BINARY_DIR RESULT_INSTALL_DIR)
     set(multi_value_args "")
     cmake_parse_arguments(PARSE_ARGV 0 ARG "${options}" "${one_value_args}" "${multi_value_args}")
-    es_ensure_parameters(es_replace_file_name_directory ARG PREFIX RESULT_INSTALL_DIR)
+    es_ensure_parameters(ARG SOURCE_DIR PREFIX RESULT_INSTALL_DIR)
 
     if(ARG_RESULT_BINARY_DIR)
-        es_ensure_parameters(es_replace_file_name_directory ARG SOURCE_DIR)
         es_replace_file_name_directory(
             FILE ${ARG_SOURCE_DIR}
             DIRECTORY ${CMAKE_BINARY_DIR}/${ARG_PREFIX}
@@ -131,7 +130,13 @@ function(es_make_default_binary_dir_and_install_dir)
         set(${ARG_RESULT_BINARY_DIR} ${binary_dir} PARENT_SCOPE)
     endif()
 
-    set(${ARG_RESULT_INSTALL_DIR} ${CMAKE_BINARY_DIR}/${ARG_PREFIX}/install PARENT_SCOPE)
+    es_replace_file_name_directory(
+        FILE ${ARG_SOURCE_DIR}
+        DIRECTORY ${CMAKE_INSTALL_PREFIX}/${ARG_PREFIX}
+        RESULT install_dir
+    )
+
+    set(${ARG_RESULT_INSTALL_DIR} ${install_dir} PARENT_SCOPE)
 endfunction()
 
 function(es_execute_process)
@@ -139,7 +144,7 @@ function(es_execute_process)
     set(one_value_args WORKING_DIRECTORY STDOUT_VARIABLE STDERR_VARIABLE)
     set(multi_value_args COMMAND ENVIRONMENT_VARIABLES)
     cmake_parse_arguments(PARSE_ARGV 0 ARG "${options}" "${one_value_args}" "${multi_value_args}")
-    es_ensure_parameters(es_execute_process ARG COMMAND WORKING_DIRECTORY)
+    es_ensure_parameters(ARG COMMAND WORKING_DIRECTORY)
 
     message(STATUS "[${CMAKE_CURRENT_FUNCTION}][Command] ${ARG_COMMAND}")
     message(STATUS "[${CMAKE_CURRENT_FUNCTION}][Working Directory] ${ARG_WORKING_DIRECTORY}")
@@ -274,7 +279,7 @@ function(es_add_to_env)
     set(one_value_args NAME VALUE)
     set(multi_value_args "")
     cmake_parse_arguments(PARSE_ARGV 0 ARG "${options}" "${one_value_args}" "${multi_value_args}")
-    es_ensure_parameters(es_add_to_env ARG NAME VALUE)
+    es_ensure_parameters(ARG NAME VALUE)
 
     if(CMAKE_HOST_SYSTEM_NAME STREQUAL "Windows")
         set(delimiter ";")

@@ -6,7 +6,7 @@ function(es_patch_compat_impl)
     set(one_value_args TARGET TOOLCHAIN_TARGET_NAME BASE_DIR RESULT_CMAKE_FILE COMPAT_ROOT)
     set(multi_value_args "")
     cmake_parse_arguments(PARSE_ARGV 0 ARG "${options}" "${one_value_args}" "${multi_value_args}")
-    es_ensure_parameters(es_patch_compat ARG TARGET TOOLCHAIN_TARGET_NAME RESULT_CMAKE_FILE)
+    es_ensure_parameters(ARG TARGET TOOLCHAIN_TARGET_NAME RESULT_CMAKE_FILE)
 
     if(ARG_BASE_DIR)
         set(base_dir ${ARG_BASE_DIR})

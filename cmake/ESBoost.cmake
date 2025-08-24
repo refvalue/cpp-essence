@@ -7,7 +7,7 @@ function(es_write_boost_user_config_file)
     set(one_value_args TOOLSET FILE RESULT_TOOLSET_ABBREVIATION)
     set(multi_value_args "")
     cmake_parse_arguments(PARSE_ARGV 0 ARG "${options}" "${one_value_args}" "${multi_value_args}")
-    es_ensure_parameters(es_write_boost_project_jam_file ARG TOOLSET FILE RESULT_TOOLSET_ABBREVIATION)
+    es_ensure_parameters(ARG TOOLSET FILE RESULT_TOOLSET_ABBREVIATION)
 
     get_filename_component(toolset_file_name ${ARG_TOOLSET} NAME_WE)
     message(STATUS "[${CMAKE_CURRENT_FUNCTION}][toolset_file_name] ${toolset_file_name}")
@@ -60,7 +60,7 @@ function(es_make_boost_impl)
     set(one_value_args SOURCE_DIR BINARY_DIR INSTALL_DIR TOOLSET TARGET_OS RESULT_FIND_PACKAGE_OPTIONS)
     set(multi_value_args "")
     cmake_parse_arguments(PARSE_ARGV 0 ARG "${options}" "${one_value_args}" "${multi_value_args}")
-    es_ensure_parameters(es_make_boost ARG SOURCE_DIR RESULT_FIND_PACKAGE_OPTIONS)
+    es_ensure_parameters(ARG SOURCE_DIR RESULT_FIND_PACKAGE_OPTIONS)
 
     es_make_default_binary_dir_and_install_dir(
         SOURCE_DIR ${ARG_SOURCE_DIR}

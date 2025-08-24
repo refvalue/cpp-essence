@@ -17,7 +17,7 @@ function(es_make_openssl_impl)
     set(one_value_args SOURCE_DIR BINARY_DIR CROSS_COMPILE CROSS_PLATFORM CC RESULT_FIND_PACKAGE_OPTIONS)
     set(multi_value_args "")
     cmake_parse_arguments(PARSE_ARGV 0 ARG "${options}" "${one_value_args}" "${multi_value_args}")
-    es_ensure_parameters(es_make_openssl ARG SOURCE_DIR RESULT_FIND_PACKAGE_OPTIONS)
+    es_ensure_parameters(ARG SOURCE_DIR RESULT_FIND_PACKAGE_OPTIONS)
 
     es_make_default_binary_dir_and_install_dir(
         SOURCE_DIR ${ARG_SOURCE_DIR}
@@ -43,7 +43,7 @@ function(es_make_openssl_impl)
     set(environment_variables "")
 
     if(ARG_CROSS_COMPILE)
-        es_ensure_parameters(es_make_openssl ARG CROSS_PLATFORM)
+        es_ensure_parameters(ARG CROSS_PLATFORM)
         set(configure_command ${ARG_SOURCE_DIR}/Configure)
         set(configure_args ${ARG_CROSS_PLATFORM} CROSS_COMPILE=${ARG_CROSS_COMPILE})
         set(make_command make)
@@ -140,7 +140,7 @@ function(es_make_openssl_impl)
     endif()
 
     # (Re-)configure the project only when necessary.
-    if(NOT EXISTS ${binary_dir}/makefile)
+    if(NOT EXISTS ${binary_dir}/configdata.pm)
         # OpenSSL 1.1.0 changed the behavior of install rules.
         # You should specify both --prefix and --openssldir to ensure make install works as expected.
         # https://wiki.openssl.org/index.php/Compilation_and_Installation#PREFIX_and_OPENSSLDIR

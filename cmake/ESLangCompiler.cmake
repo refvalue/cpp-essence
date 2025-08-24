@@ -34,7 +34,7 @@ function(es_add_lang_resources target_name)
     set(one_value_args NAME ROOT_DIRECTORY NAMESPACE RESULT_VARIABLE_LANG_TARGET_NAME)
     set(multi_value_args "")
     cmake_parse_arguments(PARSE_ARGV 1 ARG "${options}" "${one_value_args}" "${multi_value_args}")
-    es_ensure_parameters(es_execute_process ARG NAME ROOT_DIRECTORY NAMESPACE)
+    es_ensure_parameters(ARG NAME ROOT_DIRECTORY NAMESPACE)
 
     set(cmrc_target_name ${target_name}-lang-resources)
     set(output_dir ${CMAKE_BINARY_DIR}/_deps/lang/${target_name})

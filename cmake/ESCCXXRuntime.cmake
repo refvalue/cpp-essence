@@ -7,7 +7,7 @@ function(es_make_c_cxx_runtime_flags)
     set(one_value_args MSVC_OPTION_PREFIX RESULT_DEBUG_FLAGS RESULT_RELEASE_FLAGS RESULT_MSVC_RUNTIME_LIBRARY)
     set(multi_value_args "")
     cmake_parse_arguments(PARSE_ARGV 0 ARG "${options}" "${one_value_args}" "${multi_value_args}")
-    es_ensure_parameters(es_make_c_cxx_runtime_flags ARG RESULT_DEBUG_FLAGS RESULT_RELEASE_FLAGS)
+    es_ensure_parameters(ARG RESULT_DEBUG_FLAGS RESULT_RELEASE_FLAGS)
 
     if(ARG_MSVC_OPTION_PREFIX)
         set(msvc_option_prefix ${ARG_MSVC_OPTION_PREFIX})
