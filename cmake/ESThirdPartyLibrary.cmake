@@ -1,6 +1,6 @@
 include_guard()
-include(${CMAKE_CURRENT_LIST_DIR}/ESUtil.cmake)
-include(${CMAKE_CURRENT_LIST_DIR}/ESCCXXRuntime.cmake)
+include("${CMAKE_CURRENT_LIST_DIR}/ESUtil.cmake")
+include("${CMAKE_CURRENT_LIST_DIR}/ESCCXXRuntime.cmake")
 
 function(es_make_install_third_party_library_impl name)
     set(options SYNC_BUILD_TYPE NO_INHERIT_TOOLCHAIN_FILE PARALLEL_BUILD REQUIRED MODULE DEFAULT_FIND_PACKAGE STATIC_RUNTIME)
@@ -10,47 +10,47 @@ function(es_make_install_third_party_library_impl name)
     es_ensure_parameters(ARG SOURCE_DIR RESULT_FIND_PACKAGE_OPTIONS)
 
     es_make_default_binary_dir_and_install_dir(
-        SOURCE_DIR ${ARG_SOURCE_DIR}
+        SOURCE_DIR "${ARG_SOURCE_DIR}"
         PREFIX third-party
         RESULT_BINARY_DIR default_binary_dir
         RESULT_INSTALL_DIR default_install_dir
     )
 
     if(ARG_BINARY_DIR)
-        set(binary_dir ${ARG_BINARY_DIR})
+        set(binary_dir "${ARG_BINARY_DIR}")
     else()
-        set(binary_dir ${default_binary_dir})
+        set(binary_dir "${default_binary_dir}")
     endif()
 
     if(ARG_INSTALL_DIR)
-        set(install_dir ${ARG_INSTALL_DIR})
+        set(install_dir "${ARG_INSTALL_DIR}")
     else()
-        set(install_dir ${default_install_dir})
+        set(install_dir "${default_install_dir}")
     endif()
 
     # Uses an explicit string variable to avoid semicolons from a list.
-    set(cmake_args -DCMAKE_INSTALL_PREFIX=${install_dir})
+    set(cmake_args "-DCMAKE_INSTALL_PREFIX=${install_dir}")
 
     if(NOT ARG_NO_INHERIT_TOOLCHAIN_FILE AND NOT ARG_TOOLCHAIN_FILE)
         if(CMAKE_TOOLCHAIN_FILE)
-            list(APPEND cmake_args -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE})
+            list(APPEND cmake_args "-DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}")
         else()
             list(
                 APPEND cmake_args
-                -DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}
-                -DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}
+                "-DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}"
+                "-DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}"
             )
         endif()
     elseif(ARG_TOOLCHAIN_FILE)
-        list(APPEND cmake_args -DCMAKE_TOOLCHAIN_FILE=${ARG_TOOLCHAIN_FILE})
+        list(APPEND cmake_args "-DCMAKE_TOOLCHAIN_FILE=${ARG_TOOLCHAIN_FILE}")
     endif()
 
     if(ARG_GENERATOR)
-        list(APPEND cmake_args -G ${ARG_GENERATOR})
+        list(APPEND cmake_args -G "${ARG_GENERATOR}")
     endif()
 
     if(ARG_SYNC_BUILD_TYPE)
-        list(APPEND cmake_args -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE})
+        list(APPEND cmake_args "-DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}")
     endif()
 
     if(NOT EMSCRIPTEN)
@@ -64,19 +64,19 @@ function(es_make_install_third_party_library_impl name)
 
             list(
                 APPEND cmake_args
-                -DCMAKE_C_FLAGS_DEBUG=${debug_flags}
-                -DCMAKE_C_FLAGS_RELEASE=${release_flags}
-                -DCMAKE_CXX_FLAGS_DEBUG=${debug_flags}
-                -DCMAKE_CXX_FLAGS_RELEASE=${release_flags}
-                -DCMAKE_MSVC_RUNTIME_LIBRARY=${msvc_runtime_library}
+                "-DCMAKE_C_FLAGS_DEBUG=${debug_flags}"
+                "-DCMAKE_C_FLAGS_RELEASE=${release_flags}"
+                "-DCMAKE_CXX_FLAGS_DEBUG=${debug_flags}"
+                "-DCMAKE_CXX_FLAGS_RELEASE=${release_flags}"
+                "-DCMAKE_MSVC_RUNTIME_LIBRARY=${msvc_runtime_library}"
             )
         endif()
     endif()
 
     list(
         APPEND cmake_args
-        -DCMAKE_C_FLAGS=${CMAKE_C_FLAGS}
-        -DCMAKE_CXX_FLAGS=${CMAKE_CXX_FLAGS}
+        "-DCMAKE_C_FLAGS=${CMAKE_C_FLAGS}"
+        "-DCMAKE_CXX_FLAGS=${CMAKE_CXX_FLAGS}"
     )
 
     file(MAKE_DIRECTORY ${binary_dir})
@@ -84,43 +84,43 @@ function(es_make_install_third_party_library_impl name)
     if(WIN32)
         set(env_vars "")
     else()
-        set(env_vars PKG_CONFIG_PATH=$ENV{PKG_CONFIG_PATH})
+        set(env_vars ENVIRONMENT_VARIABLES "PKG_CONFIG_PATH=$ENV{PKG_CONFIG_PATH}")
     endif()
 
     message(STATUS "[${CMAKE_CURRENT_FUNCTION}][PKG_CONFIG_PATH] $ENV{PKG_CONFIG_PATH}")
 
     # (Re-)configure the project only when necessary.
-    if(NOT EXISTS ${binary_dir}/CMakeCache.txt)
+    if(NOT EXISTS "${binary_dir}/CMakeCache.txt")
         es_execute_process(
-            COMMAND ${CMAKE_COMMAND} ${cmake_args} ${ARG_CMAKE_ARGS} ${ARG_SOURCE_DIR}
-            WORKING_DIRECTORY ${binary_dir}
+            COMMAND "${CMAKE_COMMAND}" ${cmake_args} ${ARG_CMAKE_ARGS} "${ARG_SOURCE_DIR}"
+            WORKING_DIRECTORY "${binary_dir}"
             ${env_vars}
         )
     endif()
 
     if(ARG_PARALLEL_BUILD)
         es_thread_pool_worker_count(worker_count)
-        set(additional_args -j${worker_count})
+        set(additional_args "-j${worker_count}")
     else()
         set(additional_args "")
     endif()
 
     es_execute_process(
-        COMMAND ${CMAKE_COMMAND} --build . ${additional_args} --target install
-        WORKING_DIRECTORY ${binary_dir}
+        COMMAND "${CMAKE_COMMAND}" --build . ${additional_args} --target install
+        WORKING_DIRECTORY "${binary_dir}"
         ${env_vars}
     )
 
     if(ARG_RESULT_INSTALL_DIR)
         foreach(item IN LISTS ARG_RESULT_INSTALL_DIR)
-            set(${item} ${install_dir} PARENT_SCOPE)
+            set(${item} "${install_dir}" PARENT_SCOPE)
         endforeach()
     endif()
 
     if(ARG_PACKAGE_CONFIG_DIR)
-        set(package_config_dirs ${install_dir}/${ARG_PACKAGE_CONFIG_DIRS})
+        set(package_config_dir "${install_dir}/${ARG_PACKAGE_CONFIG_DIRS}")
     else()
-        set(package_config_dirs ${install_dir})
+        set(package_config_dir "${install_dir}")
     endif()
 
     if(ARG_REQUIRED)
@@ -136,7 +136,7 @@ function(es_make_install_third_party_library_impl name)
     if(NOT ARG_DEFAULT_FIND_PACKAGE AND NOT ARG_MODULE)
         list(
             APPEND find_package_options
-            HINTS ${package_config_dirs}
+            HINTS "${package_config_dir}"
             NO_DEFAULT_PATH
             CMAKE_FIND_ROOT_PATH_BOTH
         )
@@ -165,7 +165,7 @@ macro(es_make_install_third_party_library name)
     cmake_policy(POP)
 
     if(NOT WIN32)
-        es_pkg_config_add_path(${es_make_install_third_party_library_install_dir}/lib/pkgconfig)
+        es_pkg_config_add_path("${es_make_install_third_party_library_install_dir}/lib/pkgconfig")
     endif()
 
     unset(es_make_install_third_party_library_find_package_options)

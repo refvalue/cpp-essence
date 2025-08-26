@@ -22,7 +22,7 @@ endif()
 
 message(STATUS "runtime_args: ${runtime_args}")
 
-if(CMAKE_HOST_SYSTEM_NAME STREQUAL "Windows")
+if("${CMAKE_HOST_SYSTEM_NAME}" STREQUAL "Windows")
     FetchContent_Declare(
         perl-windows
         URL https://github.com/refvalue/cpp-essence/releases/download/v5.36.0-perl-windows/perl-5.36-windows.zip
@@ -80,10 +80,11 @@ es_make_install_third_party_library(
     CMAKE_ARGS
     -DJSON_BuildTests=OFF
     ${extra_cmake_args}
-    SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/third-party/json
+    SOURCE_DIR "${CMAKE_CURRENT_LIST_DIR}/third-party/json"
     RESULT_INSTALL_DIR ES_THIRD_PARTY_INSTALL_DIR
 )
 
+list(APPEND CMAKE_PREFIX_PATH "${ES_THIRD_PARTY_INSTALL_DIR}")
 message(STATUS "ES_THIRD_PARTY_INSTALL_DIR: ${ES_THIRD_PARTY_INSTALL_DIR}")
 
 if(ES_HAVE_STD_FORMAT)
@@ -106,11 +107,10 @@ es_make_install_third_party_library(
     -DCMAKE_PREFIX_PATH=${CMAKE_INSTALL_PREFIX}
     ${extra_cmake_args}
     ${spdlog_extra_args}
-    SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/third-party/spdlog
-    INSTALL_DIR ${CMAKE_INSTALL_PREFIX}
+    SOURCE_DIR "${CMAKE_CURRENT_LIST_DIR}/third-party/spdlog"
 )
 
-es_regex_replace_in_file("${CMAKE_INSTALL_PREFIX}/include/spdlog/details/os.h" [=[^SPDLOG_CONSTEXPR static const]=] [=[SPDLOG_CONSTEXPR inline const]=])
+es_regex_replace_in_file("${ES_THIRD_PARTY_INSTALL_DIR}/include/spdlog/details/os.h" [=[^SPDLOG_CONSTEXPR static const]=] [=[SPDLOG_CONSTEXPR inline const]=])
 
 es_make_openssl(
     REQUIRED
@@ -119,7 +119,7 @@ es_make_openssl(
     PARALLEL_BUILD
     SYNC_BUILD_TYPE
     ${extra_openssl_args}
-    SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/third-party/openssl
+    SOURCE_DIR "${CMAKE_CURRENT_LIST_DIR}/third-party/openssl"
 )
 
 message(STATUS "OPENSSL_CRYPTO_LIBRARY: ${OPENSSL_CRYPTO_LIBRARY}")
@@ -149,7 +149,7 @@ es_make_install_third_party_library(
     SYNC_BUILD_TYPE
     GENERATOR ${CMAKE_GENERATOR}
     CMAKE_ARGS ${zlibng_cmake_args}
-    SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/third-party/zlib-ng
+    SOURCE_DIR "${CMAKE_CURRENT_LIST_DIR}/third-party/zlib-ng"
     RESULT_INSTALL_DIR ZLIB_ROOT
 )
 
@@ -167,5 +167,5 @@ es_make_install_third_party_library(
     -DZSTD_BUILD_PROGRAMS=OFF
     -DZSTD_MULTITHREAD_SUPPORT=OFF
     ${extra_cmake_args}
-    SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/third-party/zstd/build/cmake
+    SOURCE_DIR "${CMAKE_CURRENT_LIST_DIR}/third-party/zstd/build/cmake"
 )

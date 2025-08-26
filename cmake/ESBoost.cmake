@@ -1,6 +1,6 @@
 include_guard()
-include(${CMAKE_CURRENT_LIST_DIR}/ESUtil.cmake)
-include(${CMAKE_CURRENT_LIST_DIR}/ESEmscripten.cmake)
+include("${CMAKE_CURRENT_LIST_DIR}/ESUtil.cmake")
+include("${CMAKE_CURRENT_LIST_DIR}/ESEmscripten.cmake")
 
 function(es_write_boost_user_config_file)
     set(options KEEP_OLD_FILE)
@@ -28,22 +28,22 @@ function(es_write_boost_user_config_file)
     set(map_g++- gcc)
     set(map_gcc- gcc)
 
-    set(toolset_file_first_part ${CMAKE_MATCH_1})
-    set(toolset_file_second_part ${CMAKE_MATCH_2})
+    set(toolset_file_first_part "${CMAKE_MATCH_1}")
+    set(toolset_file_second_part "${CMAKE_MATCH_2}")
 
     # Handles situations like gcc-11 g++-11.
-    if(toolset_file_second_part MATCHES [=[[0-9]+]=])
-        set(toolset_key ${toolset_file_first_part})
+    if("${toolset_file_second_part}" MATCHES [=[[0-9]+]=])
+        set(toolset_key "${toolset_file_first_part}")
     else()
-        set(toolset_key ${toolset_file_second_part})
+        set(toolset_key "${toolset_file_second_part}")
     endif()
 
     set(toolset_map_key "map_${toolset_key}")
 
     if(NOT "${${toolset_map_key}}" STREQUAL "")
-        set(toolset_name ${${toolset_map_key}})
+        set(toolset_name "${${toolset_map_key}}")
     else()
-        set(toolset_name ${toolset_key})
+        set(toolset_name "${toolset_key}")
     endif()
 
     message(STATUS "[${CMAKE_CURRENT_FUNCTION}][toolset_name] ${toolset_name}")
@@ -52,7 +52,7 @@ function(es_write_boost_user_config_file)
         file(WRITE ${ARG_FILE} "using ${toolset_name} : : \"${ARG_TOOLSET}\" : ;")
     endif()
 
-    set(${ARG_RESULT_TOOLSET_ABBREVIATION} ${toolset_name} PARENT_SCOPE)
+    set(${ARG_RESULT_TOOLSET_ABBREVIATION} "${toolset_name}" PARENT_SCOPE)
 endfunction()
 
 function(es_make_boost_impl)
@@ -63,46 +63,46 @@ function(es_make_boost_impl)
     es_ensure_parameters(ARG SOURCE_DIR RESULT_FIND_PACKAGE_OPTIONS)
 
     es_make_default_binary_dir_and_install_dir(
-        SOURCE_DIR ${ARG_SOURCE_DIR}
+        SOURCE_DIR "${ARG_SOURCE_DIR}"
         PREFIX third-party
         RESULT_BINARY_DIR default_binary_dir
         RESULT_INSTALL_DIR default_install_dir
     )
 
     if(ARG_BINARY_DIR)
-        set(binary_dir ${ARG_BINARY_DIR})
+        set(binary_dir "${ARG_BINARY_DIR}")
     else()
-        set(binary_dir ${default_binary_dir})
+        set(binary_dir "${default_binary_dir}")
     endif()
 
     if(ARG_INSTALL_DIR)
-        set(install_dir ${ARG_INSTALL_DIR})
+        set(install_dir "${ARG_INSTALL_DIR}")
     else()
-        set(install_dir ${default_install_dir})
+        set(install_dir "${default_install_dir}")
     endif()
 
     # Replaces CMAKE_EXECUTABLE_SUFFIX with host_executable_suffix here to avoid .js when Emscripten designated.
-    set(b2_program ${ARG_SOURCE_DIR}/b2${ES_HOST_EXECUTABLE_SUFFIX})
+    set(b2_program "${ARG_SOURCE_DIR}/b2${ES_HOST_EXECUTABLE_SUFFIX}")
 
     # Bootstrap the boost archive if necessary.
-    if(NOT EXISTS ${b2_program})
+    if(NOT EXISTS "${b2_program}")
         # Assumes cross-compiling using em++ on Windows.
-        if(CMAKE_HOST_SYSTEM_NAME STREQUAL "Windows")
+        if("${CMAKE_HOST_SYSTEM_NAME}" STREQUAL "Windows")
             es_execute_process(
                 COMMAND bootstrap.bat
-                WORKING_DIRECTORY ${ARG_SOURCE_DIR}
+                WORKING_DIRECTORY "${ARG_SOURCE_DIR}"
             )
         else()
             es_execute_process(
                 COMMAND sh bootstrap.sh
-                WORKING_DIRECTORY ${ARG_SOURCE_DIR}
+                WORKING_DIRECTORY "${ARG_SOURCE_DIR}"
             )
         endif()
     endif()
 
     if(ARG_SYNC_BUILD_TYPE)
         string(TOLOWER "${CMAKE_BUILD_TYPE}" build_type)
-        set(additional_args variant=${build_type})
+        set(additional_args "variant=${build_type}")
     else()
         set(additional_args "")
     endif()
@@ -113,7 +113,7 @@ function(es_make_boost_impl)
     endif()
 
     if(ARG_STATIC)
-        list(APPEND additional_args link=static)
+        list(APPEND additional_args "link=static")
         set(Boost_USE_STATIC_LIBS ON PARENT_SCOPE)
     endif()
 
@@ -121,10 +121,10 @@ function(es_make_boost_impl)
     set(cxxflags "cxxflags=")
 
     if(ARG_STATIC_RUNTIME)
-        list(APPEND additional_args runtime-link=static)
+        list(APPEND additional_args "runtime-link=static")
         set(Boost_USE_STATIC_RUNTIME ON PARENT_SCOPE)
 
-        if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+        if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
             string(APPEND cflags "-static-libgcc")
             string(APPEND cxxflags "-static-libgcc")
         endif()
@@ -135,16 +135,16 @@ function(es_make_boost_impl)
     if(ARG_TOOLSET)
         set(user_config_file ${binary_dir}/user-config.jam)
         es_write_boost_user_config_file(
-            TOOLSET ${ARG_TOOLSET}
-            FILE ${user_config_file}
+            TOOLSET "${ARG_TOOLSET}"
+            FILE "${user_config_file}"
             KEEP_OLD_FILE
             RESULT_TOOLSET_ABBREVIATION toolset_abbreviation
         )
 
         list(
             APPEND additional_args
-            toolset=${toolset_abbreviation}
-            --user-config=${user_config_file}
+            "toolset=${toolset_abbreviation}"
+            "--user-config=${user_config_file}"
         )
     endif()
 

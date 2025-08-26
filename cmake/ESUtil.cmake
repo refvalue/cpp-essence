@@ -1,9 +1,9 @@
 include_guard()
 
 # CMAKE_CURRENT_LIST_DIR will change within functions (with a dynamic scope).
-set(_es_util_absolute_current_dir ${CMAKE_CURRENT_LIST_DIR})
+set(_es_util_absolute_current_dir "${CMAKE_CURRENT_LIST_DIR}")
 
-if(CMAKE_HOST_SYSTEM_NAME STREQUAL "Windows")
+if("${CMAKE_HOST_SYSTEM_NAME}" STREQUAL "Windows")
     set(ES_HOST_EXECUTABLE_SUFFIX ".exe")
 else()
     set(ES_HOST_EXECUTABLE_SUFFIX "")
@@ -14,11 +14,11 @@ function(es_split_generator_expression expression stage content)
     if("${expression}" MATCHES [=[^\$\<([^\:]+)\:(.*)\>$]=])
         # Uses set(${var} xxx PARENT_SCOPE) to assign values to function arguments respectively.
         # ${var} may refer to the name of the actual parameter.
-        set(${stage} ${CMAKE_MATCH_1} PARENT_SCOPE)
-        set(${content} ${CMAKE_MATCH_2} PARENT_SCOPE)
+        set(${stage} "${CMAKE_MATCH_1}" PARENT_SCOPE)
+        set(${content} "${CMAKE_MATCH_2}" PARENT_SCOPE)
     else()
         set(${stage} "" PARENT_SCOPE)
-        set(${content} ${expression} PARENT_SCOPE)
+        set(${content} "${expression}" PARENT_SCOPE)
     endif()
 endfunction()
 
@@ -26,7 +26,7 @@ macro(es_ensure_parameters prefix)
     if("${prefix}" STREQUAL "")
         set(final_prefix "")
     else()
-        set(final_prefix ${prefix}_)
+        set(final_prefix "${prefix}_")
     endif()
 
     # ARGN contains all parameters past the explicitly declared parameters.
@@ -85,7 +85,7 @@ function(es_split_list)
     # Parses the remaining elements.
     if(last_index LESS_EQUAL list_end)
         list(SUBLIST ${ARG_LIST} ${last_index} -1 result_${result_index})
-        set(${ARG_RESULT_VARIABLE_PREFIX}_${result_index} ${result_${result_index}} PARENT_SCOPE)
+        set(${ARG_RESULT_VARIABLE_PREFIX}_${result_index} "${result_${result_index}}" PARENT_SCOPE)
         math(EXPR result_index "${result_index} + 1")
     endif()
 
@@ -95,10 +95,10 @@ endfunction()
 function(es_get_vs_install_dir result)
     get_filename_component(vs_ide_path [=[[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\devenv.exe;]]=] ABSOLUTE BASE_DIR "")
     string(REPLACE [=["]=] "" vs_ide_path ${vs_ide_path})
-    get_filename_component(vs_ide_path ${vs_ide_path} DIRECTORY)
-    get_filename_component(vs_ide_path ${vs_ide_path} DIRECTORY)
-    get_filename_component(vs_ide_path ${vs_ide_path} DIRECTORY)
-    set(${result} ${vs_ide_path} PARENT_SCOPE)
+    get_filename_component(vs_ide_path "${vs_ide_path}" DIRECTORY)
+    get_filename_component(vs_ide_path "${vs_ide_path}" DIRECTORY)
+    get_filename_component(vs_ide_path "${vs_ide_path}" DIRECTORY)
+    set(${result} "${vs_ide_path}" PARENT_SCOPE)
 endfunction()
 
 function(es_replace_file_name_directory)
@@ -108,9 +108,9 @@ function(es_replace_file_name_directory)
     cmake_parse_arguments(PARSE_ARGV 0 ARG "${options}" "${one_value_args}" "${multi_value_args}")
     es_ensure_parameters(ARG FILE DIRECTORY RESULT)
 
-    get_filename_component(file_name ${ARG_FILE} NAME)
-    get_filename_component(result ${file_name} ABSOLUTE BASE_DIR ${ARG_DIRECTORY})
-    set(${ARG_RESULT} ${result} PARENT_SCOPE)
+    get_filename_component(file_name "${ARG_FILE}" NAME)
+    get_filename_component(result "${file_name}" ABSOLUTE BASE_DIR "${ARG_DIRECTORY}")
+    set(${ARG_RESULT} "${result}" PARENT_SCOPE)
 endfunction()
 
 function(es_make_default_binary_dir_and_install_dir)
@@ -122,21 +122,15 @@ function(es_make_default_binary_dir_and_install_dir)
 
     if(ARG_RESULT_BINARY_DIR)
         es_replace_file_name_directory(
-            FILE ${ARG_SOURCE_DIR}
-            DIRECTORY ${CMAKE_BINARY_DIR}/${ARG_PREFIX}
+            FILE "${ARG_SOURCE_DIR}"
+            DIRECTORY "${CMAKE_BINARY_DIR}/${ARG_PREFIX}"
             RESULT binary_dir
         )
 
-        set(${ARG_RESULT_BINARY_DIR} ${binary_dir} PARENT_SCOPE)
+        set(${ARG_RESULT_BINARY_DIR} "${binary_dir}" PARENT_SCOPE)
     endif()
 
-    es_replace_file_name_directory(
-        FILE ${ARG_SOURCE_DIR}
-        DIRECTORY ${CMAKE_INSTALL_PREFIX}/${ARG_PREFIX}
-        RESULT install_dir
-    )
-
-    set(${ARG_RESULT_INSTALL_DIR} ${install_dir} PARENT_SCOPE)
+    set(${ARG_RESULT_INSTALL_DIR} "${CMAKE_INSTALL_PREFIX}/${ARG_PREFIX}" PARENT_SCOPE)
 endfunction()
 
 function(es_execute_process)
@@ -151,9 +145,9 @@ function(es_execute_process)
 
     if(ARG_ENVIRONMENT_VARIABLES)
         message(STATUS "[${CMAKE_CURRENT_FUNCTION}][Environment Variables] ${ARG_ENVIRONMENT_VARIABLES}")
-        set(additional_args COMMAND ${CMAKE_COMMAND} -E env ${ARG_ENVIRONMENT_VARIABLES} ${ARG_COMMAND})
+        set(additional_args COMMAND "${CMAKE_COMMAND}" -E env ${ARG_ENVIRONMENT_VARIABLES} "${ARG_COMMAND}")
     else()
-        set(additional_args COMMAND ${ARG_COMMAND})
+        set(additional_args COMMAND "${ARG_COMMAND}")
     endif()
 
     if(ARG_STDOUT_VARIABLE)
@@ -165,13 +159,13 @@ function(es_execute_process)
     endif()
 
     execute_process(
-        WORKING_DIRECTORY ${ARG_WORKING_DIRECTORY}
+        WORKING_DIRECTORY "${ARG_WORKING_DIRECTORY}"
         RESULT_VARIABLE exit_code
         ${additional_args}
     )
 
-    set(${ARG_STDOUT_VARIABLE} ${stdout_variable} PARENT_SCOPE)
-    set(${ARG_STDERR_VARIABLE} ${stderr_variable} PARENT_SCOPE)
+    set(${ARG_STDOUT_VARIABLE} "${stdout_variable}" PARENT_SCOPE)
+    set(${ARG_STDERR_VARIABLE} "${stderr_variable}" PARENT_SCOPE)
 
     if(NOT exit_code EQUAL 0)
         message(FATAL_ERROR "\"${ARG_COMMAND}\" failed with exit code ${exit_code}.")
@@ -181,7 +175,7 @@ endfunction()
 function(es_find_nmake)
     es_execute_process(
         COMMAND ${CMAKE_COMMAND} -G "Visual Studio 17 2022" -P fragments/FindNMake.cmake
-        WORKING_DIRECTORY ${_es_util_absolute_current_dir}
+        WORKING_DIRECTORY "${_es_util_absolute_current_dir}"
         STDOUT_VARIABLE output_text
     )
 endfunction()
@@ -238,12 +232,12 @@ endmacro()
 function(es_dump_list)
     message(STATUS "[${CMAKE_CURRENT_FUNCTION}][Lists] ${ARGN}")
     foreach(item IN LISTS ${ARGN})
-        message(STATUS [${CMAKE_CURRENT_FUNCTION}][Value] ${item})
+        message(STATUS "[${CMAKE_CURRENT_FUNCTION}][Value] ${item}")
     endforeach()
 endfunction()
 
 function(es_pkg_config_add_path)
-    set(pkg_config_path $ENV{PKG_CONFIG_PATH})
+    set(pkg_config_path "$ENV{PKG_CONFIG_PATH}")
     list(INSERT pkg_config_path 0 ${ARGN})
     list(REMOVE_DUPLICATES pkg_config_path)
     set(ENV{PKG_CONFIG_PATH} "${pkg_config_path}")
@@ -266,7 +260,7 @@ function(es_datetime result)
     endif()
 
     execute_process(
-        COMMAND ${command}
+        COMMAND "${command}"
         OUTPUT_VARIABLE current_date
         OUTPUT_STRIP_TRAILING_WHITESPACE
     )
@@ -281,7 +275,7 @@ function(es_add_to_env)
     cmake_parse_arguments(PARSE_ARGV 0 ARG "${options}" "${one_value_args}" "${multi_value_args}")
     es_ensure_parameters(ARG NAME VALUE)
 
-    if(CMAKE_HOST_SYSTEM_NAME STREQUAL "Windows")
+    if("${CMAKE_HOST_SYSTEM_NAME}" STREQUAL "Windows")
         set(delimiter ";")
     else()
         set(delimiter ":")
@@ -318,6 +312,6 @@ endfunction()
 function(es_regex_replace_in_file path)
     es_execute_process(
         COMMAND python3 "${_es_util_absolute_current_dir}/py/regex_replace_in_file.py" "${path}" ${ARGN}
-        WORKING_DIRECTORY ${_es_util_absolute_current_dir}
+        WORKING_DIRECTORY "${_es_util_absolute_current_dir}"
     )
 endfunction()

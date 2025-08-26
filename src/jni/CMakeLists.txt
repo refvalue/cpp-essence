@@ -67,7 +67,7 @@ target_compile_features(
     cxx_std_23
 )
 
-if(NOT CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+if(NOT "${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
     target_link_options(
         ${target_name}
         PRIVATE

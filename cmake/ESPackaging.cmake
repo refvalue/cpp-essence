@@ -1,8 +1,8 @@
 include_guard()
-include(${CMAKE_CURRENT_LIST_DIR}/ESUtil.cmake)
+include("${CMAKE_CURRENT_LIST_DIR}/ESUtil.cmake")
 
 # CMAKE_CURRENT_LIST_DIR will change within functions (with a dynamic scope).
-set(_es_packaging_absolute_current_dir ${CMAKE_CURRENT_LIST_DIR})
+set(_es_packaging_absolute_current_dir "${CMAKE_CURRENT_LIST_DIR}")
 
 define_property(
     TARGET
@@ -29,7 +29,7 @@ function(es_install_include_dirs target_name)
         # Adds include directories without $<INSTALL_INTERFACE:xxx> items.
         if("${stage}" STREQUAL "" OR "${stage}" STREQUAL "BUILD_INTERFACE")
             install(
-                DIRECTORY ${content}/
+                DIRECTORY "${content}/"
                 DESTINATION include
                 FILES_MATCHING
                 PATTERN "*.h"
@@ -83,7 +83,7 @@ function(es_install_files target_name)
         list(GET ARG_DESTINATIONS ${index} destination)
         install(
             FILES ${file_group_${index}}
-            DESTINATION ${destination}
+            DESTINATION "${destination}"
             COMPONENT Devel
         )
     endforeach()
@@ -174,19 +174,19 @@ function(es_make_install_package)
     if(has_library_target)
         include(CMakePackageConfigHelpers)
 
-        set(package_config_file ${ARG_PACKAGE_NAME}Config.cmake)
-        set(package_version_file ${ARG_PACKAGE_NAME}ConfigVersion.cmake)
-        set(package_config_dir lib/cmake/${ARG_PACKAGE_NAME})
+        set(package_config_file "${ARG_PACKAGE_NAME}Config.cmake")
+        set(package_version_file "${ARG_PACKAGE_NAME}ConfigVersion.cmake")
+        set(package_config_dir "lib/cmake/${ARG_PACKAGE_NAME}")
 
         configure_package_config_file(
-            ${package_config_file}.in
-            ${CMAKE_CURRENT_BINARY_DIR}/${package_config_file}
-            INSTALL_DESTINATION ${package_config_dir}
+            "${package_config_file}.in"
+            "${CMAKE_CURRENT_BINARY_DIR}/${package_config_file}"
+            INSTALL_DESTINATION "${package_config_dir}"
             PATH_VARS ${ARG_PATH_VARS}
         )
 
         write_basic_package_version_file(
-            ${CMAKE_CURRENT_BINARY_DIR}/${package_version_file}
+            "${CMAKE_CURRENT_BINARY_DIR}/${package_version_file}"
             VERSION ${ARG_VERSION}
             COMPATIBILITY AnyNewerVersion
         )
@@ -195,14 +195,13 @@ function(es_make_install_package)
     endif()
 
     if(ARG_INCLUDE_DIR)
-        set(include_dir ${ARG_INCLUDE_DIR})
+        set(include_dir "${ARG_INCLUDE_DIR}")
     else()
-        set(include_dir include)
+        set(include_dir "include")
     endif()
 
-    set(miu_dir lib/miu)
+    set(miu_dir "lib/miu")
     install(CODE "file(MAKE_DIRECTORY \"${CMAKE_INSTALL_PREFIX}/${include_dir}\")")
-
 
     # Exports library targets.
     install(
@@ -211,13 +210,13 @@ function(es_make_install_package)
         LIBRARY DESTINATION lib
         ARCHIVE DESTINATION lib
         RUNTIME DESTINATION bin
-        INCLUDES DESTINATION ${include_dir}
+        INCLUDES DESTINATION "${include_dir}"
 
         FILE_SET HEADERS
-        DESTINATION ${include_dir}
+        DESTINATION "${include_dir}"
 
         FILE_SET CXX_MODULES
-        DESTINATION ${miu_dir}
+        DESTINATION "${miu_dir}"
     )
 
     # Exports non-library targets.
@@ -226,7 +225,7 @@ function(es_make_install_package)
         LIBRARY DESTINATION lib
         ARCHIVE DESTINATION lib
         RUNTIME DESTINATION bin
-        INCLUDES DESTINATION ${include_dir}
+        INCLUDES DESTINATION "${include_dir}"
     )
 
     foreach(item IN LISTS ARG_TARGETS)
@@ -247,18 +246,18 @@ function(es_make_install_package)
         # Installs the package targets file.
         install(
             EXPORT ${package_targets}
-            FILE ${package_targets}.cmake
+            FILE "${package_targets}.cmake"
             NAMESPACE ${ARG_PACKAGE_NAME}::
-            DESTINATION ${package_config_dir}
-            CXX_MODULES_DIRECTORY ${miu_dir}
+            DESTINATION "${package_config_dir}"
+            CXX_MODULES_DIRECTORY "${miu_dir}"
         )
 
         # Installs the config file and the version file of the package.
         install(
             FILES
-            ${CMAKE_CURRENT_BINARY_DIR}/${package_config_file}
-            ${CMAKE_CURRENT_BINARY_DIR}/${package_version_file}
-            DESTINATION ${package_config_dir}
+            "${CMAKE_CURRENT_BINARY_DIR}/${package_config_file}"
+            "${CMAKE_CURRENT_BINARY_DIR}/${package_version_file}"
+            DESTINATION "${package_config_dir}"
             COMPONENT Devel
         )
 

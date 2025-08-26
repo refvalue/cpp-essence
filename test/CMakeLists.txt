@@ -54,7 +54,7 @@ else()
         GTest::gtest_main
     )
 
-    if(NOT CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+    if(NOT "${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
         target_link_options(
             ${target_name}
             PRIVATE

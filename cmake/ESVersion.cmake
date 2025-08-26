@@ -1,5 +1,5 @@
 include_guard()
-include(${CMAKE_CURRENT_LIST_DIR}/ESUtil.cmake)
+include("${CMAKE_CURRENT_LIST_DIR}/ESUtil.cmake")
 
 function(es_target_version_definitions)
     set(options PUBLIC INTERFACE PRIVATE)
