@@ -100,6 +100,6 @@ export namespace essence {
         }
 
     private:
-        ES_API(CPPESSENCE) std::source_location location_;
+        std::source_location location_;
     };
 } // namespace essence
