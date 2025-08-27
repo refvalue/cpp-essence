@@ -93,6 +93,8 @@ endif()
 
 if(WIN32)
     set(spdlog_extra_args -DSPDLOG_WCHAR_CONSOLE=ON -DSPDLOG_WCHAR_SUPPORT=ON)
+else()
+    set(spdlog_extra_args "")
 endif()
 
 es_make_install_third_party_library(
