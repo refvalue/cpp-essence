@@ -24,6 +24,22 @@ module;
 
 #include <essence/compat.hpp>
 
+#ifdef _WIN32
+#ifndef WIN32_LEAN_AND_MEAN
+#define WIN32_LEAN_AND_MEAN
+#endif
+
+#ifndef NOGDI
+#define NOGDI
+#endif
+
+#ifndef NOMINMAX
+#define NOMINMAX
+#endif
+
+#include <Windows.h>
+#endif
+
 module essence.basic;
 
 import std;
@@ -42,6 +58,8 @@ namespace {
             try {
 #ifdef _WIN32
                 std::locale::global(std::locale{"en_US.UTF-8"});
+
+                SetConsoleOutputCP(CP_UTF8);
 #else
                 std::locale::global(std::locale{"C.UTF-8"});
 #endif
