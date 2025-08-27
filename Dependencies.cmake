@@ -91,6 +91,10 @@ if(NOT ES_HAVE_STD_FORMAT)
     message(FATAL_ERROR "std::format must be supported when compiling this library.")
 endif()
 
+if(WIN32)
+    set(spdlog_extra_args -DSPDLOG_WCHAR_CONSOLE=ON -DSPDLOG_WCHAR_SUPPORT=ON)
+endif()
+
 es_make_install_third_party_library(
     spdlog
     REQUIRED
