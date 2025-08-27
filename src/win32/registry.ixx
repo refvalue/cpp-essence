@@ -27,8 +27,8 @@ import essence.basic;
 
 export namespace essence::win32 {
     abi::string get_registry_string(std::string_view path, std::string_view name);
-    std::vector<abi::string> get_registry_multi_string(std::string_view path, std::string_view name);
-    std::vector<std::byte> get_registry_binary(std::string_view path, std::string_view name);
+    abi::vector<abi::string> get_registry_multi_string(std::string_view path, std::string_view name);
+    abi::vector<std::byte> get_registry_binary(std::string_view path, std::string_view name);
     std::uint32_t get_registry_dword(std::string_view path, std::string_view name);
     std::uint64_t get_registry_qword(std::string_view path, std::string_view name);
     void set_registry(std::string_view path, std::string_view name, std::span<const std::string> values);

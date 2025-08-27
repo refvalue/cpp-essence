@@ -137,18 +137,18 @@ namespace essence::win32 {
             get_registry<std::wstring>(path, name, RRF_RT_REG_SZ).c_str()); // NOLINT(*-redundant-string-cstr)
     }
 
-    std::vector<abi::string> get_registry_multi_string(std::string_view path, std::string_view name) {
+    abi::vector<abi::string> get_registry_multi_string(std::string_view path, std::string_view name) {
         const auto buffer = get_registry<std::wstring>(path, name, RRF_RT_REG_MULTI_SZ);
         auto lines        = buffer | std::views::take(buffer.size() - 1) | std::views::split(L'\0')
                    | std::views::transform(
                        [](const auto& inner) { return to_utf8_string(std::wstring_view{inner.begin(), inner.end()}); })
-                   | std::ranges::to<std::vector>();
+                   | std::ranges::to<abi::vector>();
 
         return lines;
     }
 
-    std::vector<std::byte> get_registry_binary(std::string_view path, std::string_view name) {
-        return get_registry<std::vector<std::byte>>(path, name, RRF_RT_REG_BINARY);
+    abi::vector<std::byte> get_registry_binary(std::string_view path, std::string_view name) {
+        return get_registry<abi::vector<std::byte>>(path, name, RRF_RT_REG_BINARY);
     }
 
     std::uint32_t get_registry_dword(std::string_view path, std::string_view name) {
