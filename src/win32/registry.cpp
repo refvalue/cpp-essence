@@ -142,7 +142,7 @@ namespace essence::win32 {
         auto lines        = buffer | std::views::take(buffer.size() - 1) | std::views::split(L'\0')
                    | std::views::transform(
                        [](const auto& inner) { return to_utf8_string(std::wstring_view{inner.begin(), inner.end()}); })
-                   | std::ranges::to<abi::vector>();
+                   | std::ranges::to<abi::vector<abi::string>>();
 
         return lines;
     }
