@@ -87,9 +87,7 @@ es_make_install_third_party_library(
 list(APPEND CMAKE_PREFIX_PATH "${ES_THIRD_PARTY_INSTALL_DIR}")
 message(STATUS "ES_THIRD_PARTY_INSTALL_DIR: ${ES_THIRD_PARTY_INSTALL_DIR}")
 
-if(ES_HAVE_STD_FORMAT)
-    set(spdlog_extra_args -DSPDLOG_USE_STD_FORMAT=ON)
-else()
+if(NOT ES_HAVE_STD_FORMAT)
     message(FATAL_ERROR "std::format must be supported when compiling this library.")
 endif()
 
@@ -104,6 +102,7 @@ es_make_install_third_party_library(
     -DSPDLOG_BUILD_PIC=ON
     -DSPDLOG_BUILD_EXAMPLE=OFF
     -DSPDLOG_BUILD_EXAMPLE_HO=OFF
+    -DSPDLOG_USE_STD_FORMAT=ON
     -DCMAKE_PREFIX_PATH=${CMAKE_INSTALL_PREFIX}
     ${extra_cmake_args}
     ${spdlog_extra_args}

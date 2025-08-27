@@ -29,20 +29,20 @@ function(es_make_install_third_party_library_impl name)
     endif()
 
     # Uses an explicit string variable to avoid semicolons from a list.
-    set(cmake_args "-DCMAKE_INSTALL_PREFIX=${install_dir}")
+    set(cmake_args -DCMAKE_INSTALL_PREFIX="${install_dir}")
 
     if(NOT ARG_NO_INHERIT_TOOLCHAIN_FILE AND NOT ARG_TOOLCHAIN_FILE)
         if(CMAKE_TOOLCHAIN_FILE)
-            list(APPEND cmake_args "-DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}")
+            list(APPEND cmake_args -DCMAKE_TOOLCHAIN_FILE="${CMAKE_TOOLCHAIN_FILE}")
         else()
             list(
                 APPEND cmake_args
-                "-DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}"
-                "-DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}"
+                -DCMAKE_C_COMPILER="${CMAKE_C_COMPILER}"
+                -DCMAKE_CXX_COMPILER="${CMAKE_CXX_COMPILER}"
             )
         endif()
     elseif(ARG_TOOLCHAIN_FILE)
-        list(APPEND cmake_args "-DCMAKE_TOOLCHAIN_FILE=${ARG_TOOLCHAIN_FILE}")
+        list(APPEND cmake_args -DCMAKE_TOOLCHAIN_FILE="${ARG_TOOLCHAIN_FILE}")
     endif()
 
     if(ARG_GENERATOR)
@@ -50,7 +50,7 @@ function(es_make_install_third_party_library_impl name)
     endif()
 
     if(ARG_SYNC_BUILD_TYPE)
-        list(APPEND cmake_args "-DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}")
+        list(APPEND cmake_args -DCMAKE_BUILD_TYPE="${CMAKE_BUILD_TYPE}")
     endif()
 
     if(NOT EMSCRIPTEN)
@@ -64,27 +64,29 @@ function(es_make_install_third_party_library_impl name)
 
             list(
                 APPEND cmake_args
-                "-DCMAKE_C_FLAGS_DEBUG=${debug_flags}"
-                "-DCMAKE_C_FLAGS_RELEASE=${release_flags}"
-                "-DCMAKE_CXX_FLAGS_DEBUG=${debug_flags}"
-                "-DCMAKE_CXX_FLAGS_RELEASE=${release_flags}"
-                "-DCMAKE_MSVC_RUNTIME_LIBRARY=${msvc_runtime_library}"
+                -DCMAKE_C_FLAGS_DEBUG="${debug_flags}"
+                -DCMAKE_C_FLAGS_RELEASE="${release_flags}"
+                -DCMAKE_CXX_FLAGS_DEBUG="${debug_flags}"
+                -DCMAKE_CXX_FLAGS_RELEASE="${release_flags}"
+                -DCMAKE_MSVC_RUNTIME_LIBRARY="${msvc_runtime_library}"
             )
         endif()
     endif()
 
     list(
         APPEND cmake_args
-        "-DCMAKE_C_FLAGS=${CMAKE_C_FLAGS}"
-        "-DCMAKE_CXX_FLAGS=${CMAKE_CXX_FLAGS}"
+        -DCMAKE_C_FLAGS="${CMAKE_C_FLAGS}"
+        -DCMAKE_CXX_FLAGS="${CMAKE_CXX_FLAGS}"
     )
+
+    es_dump_list(cmake_args)
 
     file(MAKE_DIRECTORY ${binary_dir})
 
     if(WIN32)
         set(env_vars "")
     else()
-        set(env_vars ENVIRONMENT_VARIABLES "PKG_CONFIG_PATH=$ENV{PKG_CONFIG_PATH}")
+        set(env_vars ENVIRONMENT_VARIABLES PKG_CONFIG_PATH="$ENV{PKG_CONFIG_PATH}")
     endif()
 
     message(STATUS "[${CMAKE_CURRENT_FUNCTION}][PKG_CONFIG_PATH] $ENV{PKG_CONFIG_PATH}")

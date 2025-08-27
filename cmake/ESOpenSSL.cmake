@@ -45,7 +45,7 @@ function(es_make_openssl_impl)
     if(ARG_CROSS_COMPILE)
         es_ensure_parameters(ARG CROSS_PLATFORM)
         set(configure_command "${ARG_SOURCE_DIR}/Configure")
-        set(configure_args "${ARG_CROSS_PLATFORM}" "CROSS_COMPILE=${ARG_CROSS_COMPILE}")
+        set(configure_args "${ARG_CROSS_PLATFORM}" CROSS_COMPILE="${ARG_CROSS_COMPILE}")
         set(make_command "make")
     elseif("${CMAKE_HOST_SYSTEM_NAME}" STREQUAL "Windows")
         set(configure_args "${ARG_SOURCE_DIR}/Configure")
@@ -85,11 +85,11 @@ function(es_make_openssl_impl)
     endif()
 
     if(ARG_CC)
-        list(APPEND configure_args "CC=${ARG_CC}")
+        list(APPEND configure_args CC="${ARG_CC}")
     elseif(use_emcc)
         list(APPEND configure_args CC=cc AR=ar NM=nm RANLIB=ranlib STRIP=strip)
     elseif(NOT WIN32)
-        list(APPEND configure_args "CC=${CMAKE_C_COMPILER}")
+        list(APPEND configure_args CC="${CMAKE_C_COMPILER}")
     endif()
 
     if(ARG_STATIC)
@@ -152,7 +152,7 @@ function(es_make_openssl_impl)
         endif()
 
         es_execute_process(
-            COMMAND ${configure_command} ${configure_args} "--prefix=${install_dir}" "--openssldir=${install_dir}" no-asm no-tests ${ARG_UNPARSED_ARGUMENTS}
+            COMMAND ${configure_command} ${configure_args} --prefix="${install_dir}" --openssldir="${install_dir}" no-asm no-tests ${ARG_UNPARSED_ARGUMENTS}
             WORKING_DIRECTORY "${binary_dir}"
             ${env_args}
         )

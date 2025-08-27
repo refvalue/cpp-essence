@@ -102,7 +102,7 @@ function(es_make_boost_impl)
 
     if(ARG_SYNC_BUILD_TYPE)
         string(TOLOWER "${CMAKE_BUILD_TYPE}" build_type)
-        set(additional_args "variant=${build_type}")
+        set(additional_args variant="${build_type}")
     else()
         set(additional_args "")
     endif()
@@ -143,8 +143,8 @@ function(es_make_boost_impl)
 
         list(
             APPEND additional_args
-            "toolset=${toolset_abbreviation}"
-            "--user-config=${user_config_file}"
+            toolset="${toolset_abbreviation}"
+            --user-config="${user_config_file}"
         )
     endif()
 
